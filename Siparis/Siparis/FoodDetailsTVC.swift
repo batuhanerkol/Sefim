@@ -44,6 +44,18 @@ class FoodDetailsTVC: UITableViewController {
             editButton.title = "Düzenle"
         }
     }
+    
+   
+    override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
+        if (editingStyle == .delete){
+            foodNameArray.remove(at: indexPath.item)
+            tableView.deleteRows(at: [indexPath], with: .automatic)
+            
+        
+    
+            
+        }
+    }
     override func tableView(_ tableView: UITableView, canMoveRowAt indexPath: IndexPath) -> Bool {
         return true
     }
@@ -52,6 +64,7 @@ class FoodDetailsTVC: UITableViewController {
         let item = foodNameArray[sourceIndexPath.row]
         foodNameArray.remove(at: sourceIndexPath.row)
         foodNameArray.insert(item, at: destinationIndexPath.row)
+        
     }
     
     @IBAction func addButtonClicked(_ sender: UIBarButtonItem) {
@@ -60,8 +73,8 @@ class FoodDetailsTVC: UITableViewController {
     }
     func getData(){
         let query = PFQuery(className: "FoodTitle")
-      
          query.whereKey("foodNameOwner", equalTo: "\(PFUser.current()!.username!)")
+      
            query.findObjectsInBackground { (objects, error) in
             
             if error != nil{

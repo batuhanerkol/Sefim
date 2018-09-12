@@ -11,6 +11,7 @@ import Parse
 
 class AddFoodInformationVC: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
 
+    @IBOutlet weak var confirmButton: UIButton!
     @IBOutlet weak var priceTextField: UITextField!
     @IBOutlet weak var longTextField: UITextView!
     @IBOutlet weak var textField: UITextField!
@@ -38,8 +39,10 @@ class AddFoodInformationVC: UIViewController, UIImagePickerControllerDelegate, U
     }
 
     @IBAction func confirmButtonPressed(_ sender: Any) {
+        self.confirmButton.isHidden = true
         
-        if textField.text != "" {
+        if textField.text != "" && longTextField.text != "" && priceTextField.text != ""  {
+    
             let foodInformation = PFObject(className: "FoodTitle")
             foodInformation["foodName"] = textField.text!
             foodInformation["foodInformation"] = longTextField.text!
@@ -48,12 +51,14 @@ class AddFoodInformationVC: UIViewController, UIImagePickerControllerDelegate, U
             let uuid = UUID().uuidString
             foodInformation["fooduuid"] = "\(uuid) \(PFUser.current()!.username!)"
             
-            if let imageData = UIImageJPEGRepresentation(selectedImage.image!, 0.5){
+            if let imageData = UIImageJPEGRepresentation(selectedImage.image!, 0.9){
                 foodInformation["image"] = PFFile(name: "image.jpg", data: imageData)
             }
+            
             foodInformation.saveInBackground { (success, error) in
                 
                 if self.textField.text != "" && self.longTextField.text != "" && self.priceTextField.text != ""{
+                    
                 if error != nil{
                     let alert = UIAlertController(title: "HATA", message: error?.localizedDescription, preferredStyle: UIAlertControllerStyle.alert)
                     let okButton = UIAlertAction(title: "TAMAM", style: UIAlertActionStyle.cancel, handler: nil)
@@ -61,20 +66,31 @@ class AddFoodInformationVC: UIViewController, UIImagePickerControllerDelegate, U
                     self.present(alert, animated: true, completion: nil)
                 }
                 else{
+                   
                     print("success")
                     self.priceTextField.text = ""
                     self.textField.text = ""
                     self.longTextField.text = ""
                     self.selectedImage.image = UIImage(named: "fotosecin.jpg")
+                   
+                    
                 }
             }
+                else if self.textField.text == "" || self.longTextField.text == "" || self.priceTextField.text == ""{
+                    let alert = UIAlertController(title: "HATA", message: "Lütfen Bilgileri Tam Giriniz", preferredStyle: UIAlertControllerStyle.alert)
+                    let okButton = UIAlertAction(title: "TAMAM", style: UIAlertActionStyle.cancel, handler: nil)
+                    alert.addAction(okButton)
+                    self.present(alert, animated: true, completion: nil)
+                   
+                }
             }
         }
-        else{
+        else if self.textField.text == "" || self.longTextField.text == "" || self.priceTextField.text == ""{
             let alert = UIAlertController(title: "HATA", message: "Lütfen Bilgileri Tam Giriniz", preferredStyle: UIAlertControllerStyle.alert)
             let okButton = UIAlertAction(title: "TAMAM", style: UIAlertActionStyle.cancel, handler: nil)
             alert.addAction(okButton)
             self.present(alert, animated: true, completion: nil)
+            
         }
         
     }

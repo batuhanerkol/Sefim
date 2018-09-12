@@ -360,6 +360,7 @@
                         <viewLayoutGuide key="safeArea" id="yhn-lN-b1R"/>
                     </view>
                     <connections>
+                        <outlet property="confirmButton" destination="B0I-xg-YZy" id="NYi-7l-oUA"/>
                         <outlet property="longTextField" destination="1Rc-ms-9Vd" id="bLu-hU-wq9"/>
                         <outlet property="priceTextField" destination="x2s-a5-pBK" id="YvY-qA-w7A"/>
                         <outlet property="selectedImage" destination="hUp-9c-GvE" id="7eu-OX-UsX"/>
@@ -450,7 +451,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Lhu-gk-UHR" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="5031" y="-351"/>
+            <point key="canvasLocation" x="4898" y="-419"/>
         </scene>
         <!--Food Information ShowVC-->
         <scene sceneID="bF9-Vb-N90">
@@ -561,7 +562,7 @@
         <image name="fotosecin.jpg" width="2100" height="1575"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="TaP-KR-vuL"/>
+        <segue reference="5EF-zS-xQm"/>
         <segue reference="w0M-8p-9bV"/>
     </inferredMetricsTieBreakers>
 </document>

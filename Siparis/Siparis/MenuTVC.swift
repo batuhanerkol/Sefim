@@ -9,6 +9,8 @@
 import UIKit
 import Parse
 
+
+
 class MenuTVC: UITableViewController {
 
     @IBOutlet var titleTableView: UITableView!
@@ -23,7 +25,7 @@ class MenuTVC: UITableViewController {
         
        tableView.delegate = self
         tableView.dataSource = self
-       
+  
        getData()
     }
 
