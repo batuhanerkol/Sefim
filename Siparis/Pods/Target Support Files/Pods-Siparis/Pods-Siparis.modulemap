@@ -1,0 +1,6 @@
+framework module Pods_Siparis {
+  umbrella header "Pods-Siparis-umbrella.h"
+
+  export *
+  module * { export * }
+}

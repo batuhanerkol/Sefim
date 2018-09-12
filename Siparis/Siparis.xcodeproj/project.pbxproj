@@ -1,0 +1,456 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 50;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		013495FCE6E95FF809EAFECA /* Pods_Siparis.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9134C9FA788C8B1E178C22F6 /* Pods_Siparis.framework */; };
+		B99B3F68213E8678002D017A /* SignedUpVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = B99B3F67213E8678002D017A /* SignedUpVC.swift */; };
+		B9D1F03D2148270100C52EAC /* fotosecin.jpg in Resources */ = {isa = PBXBuildFile; fileRef = B9D1F03C2148270000C52EAC /* fotosecin.jpg */; };
+		B9F529CA2143DDD200BD45A6 /* MenuTVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9F529C92143DDD200BD45A6 /* MenuTVC.swift */; };
+		B9F529CE2144239E00BD45A6 /* AddFoodTitleVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9F529CD2144239E00BD45A6 /* AddFoodTitleVC.swift */; };
+		B9F529D02144364F00BD45A6 /* FoodDetailsTVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9F529CF2144364F00BD45A6 /* FoodDetailsTVC.swift */; };
+		B9F529D621443C2000BD45A6 /* AddFoodInformationVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9F529D521443C2000BD45A6 /* AddFoodInformationVC.swift */; };
+		B9F529DA2144449600BD45A6 /* FoodInformationShowVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9F529D92144449600BD45A6 /* FoodInformationShowVC.swift */; };
+		B9FCE50D213D8486006BCB6C /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9FCE50C213D8486006BCB6C /* AppDelegate.swift */; };
+		B9FCE50F213D8486006BCB6C /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9FCE50E213D8486006BCB6C /* ViewController.swift */; };
+		B9FCE512213D8486006BCB6C /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B9FCE510213D8486006BCB6C /* Main.storyboard */; };
+		B9FCE514213D8488006BCB6C /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B9FCE513213D8488006BCB6C /* Assets.xcassets */; };
+		B9FCE517213D8488006BCB6C /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B9FCE515213D8488006BCB6C /* LaunchScreen.storyboard */; };
+		B9FCE51F213D8E49006BCB6C /* SingInVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9FCE51E213D8E49006BCB6C /* SingInVC.swift */; };
+		B9FCE523213D90B8006BCB6C /* konumVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9FCE522213D90B8006BCB6C /* konumVC.swift */; };
+		B9FCE525213D90CE006BCB6C /* KareKodVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9FCE524213D90CE006BCB6C /* KareKodVC.swift */; };
+		B9FCE527213D90E0006BCB6C /* MasaVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9FCE526213D90E0006BCB6C /* MasaVC.swift */; };
+		B9FCE529213D90F5006BCB6C /* IsletmeProfilVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9FCE528213D90F5006BCB6C /* IsletmeProfilVC.swift */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		257F260B6429E26C1436ECBD /* Pods-Siparis.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Siparis.release.xcconfig"; path = "Pods/Target Support Files/Pods-Siparis/Pods-Siparis.release.xcconfig"; sourceTree = "<group>"; };
+		9134C9FA788C8B1E178C22F6 /* Pods_Siparis.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Siparis.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		B99B3F67213E8678002D017A /* SignedUpVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignedUpVC.swift; sourceTree = "<group>"; };
+		B9D1F03C2148270000C52EAC /* fotosecin.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = fotosecin.jpg; sourceTree = "<group>"; };
+		B9F529C92143DDD200BD45A6 /* MenuTVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuTVC.swift; sourceTree = "<group>"; };
+		B9F529CD2144239E00BD45A6 /* AddFoodTitleVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddFoodTitleVC.swift; sourceTree = "<group>"; };
+		B9F529CF2144364F00BD45A6 /* FoodDetailsTVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FoodDetailsTVC.swift; sourceTree = "<group>"; };
+		B9F529D521443C2000BD45A6 /* AddFoodInformationVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddFoodInformationVC.swift; sourceTree = "<group>"; };
+		B9F529D92144449600BD45A6 /* FoodInformationShowVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FoodInformationShowVC.swift; sourceTree = "<group>"; };
+		B9FCE509213D8486006BCB6C /* Siparis.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Siparis.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		B9FCE50C213D8486006BCB6C /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		B9FCE50E213D8486006BCB6C /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		B9FCE511213D8486006BCB6C /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		B9FCE513213D8488006BCB6C /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		B9FCE516213D8488006BCB6C /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		B9FCE518213D8488006BCB6C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		B9FCE51E213D8E49006BCB6C /* SingInVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SingInVC.swift; sourceTree = "<group>"; };
+		B9FCE522213D90B8006BCB6C /* konumVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = konumVC.swift; sourceTree = "<group>"; };
+		B9FCE524213D90CE006BCB6C /* KareKodVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KareKodVC.swift; sourceTree = "<group>"; };
+		B9FCE526213D90E0006BCB6C /* MasaVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MasaVC.swift; sourceTree = "<group>"; };
+		B9FCE528213D90F5006BCB6C /* IsletmeProfilVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IsletmeProfilVC.swift; sourceTree = "<group>"; };
+		C4FBEC4FE39D0A3680A56A0E /* Pods-Siparis.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Siparis.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Siparis/Pods-Siparis.debug.xcconfig"; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		B9FCE506213D8486006BCB6C /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				013495FCE6E95FF809EAFECA /* Pods_Siparis.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		29178C92C26C58142E7548F0 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				C4FBEC4FE39D0A3680A56A0E /* Pods-Siparis.debug.xcconfig */,
+				257F260B6429E26C1436ECBD /* Pods-Siparis.release.xcconfig */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
+		B9FCE500213D8486006BCB6C = {
+			isa = PBXGroup;
+			children = (
+				B9FCE50B213D8486006BCB6C /* Siparis */,
+				B9FCE50A213D8486006BCB6C /* Products */,
+				29178C92C26C58142E7548F0 /* Pods */,
+				D572AEFFCA2B723CED72558B /* Frameworks */,
+			);
+			sourceTree = "<group>";
+		};
+		B9FCE50A213D8486006BCB6C /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				B9FCE509213D8486006BCB6C /* Siparis.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		B9FCE50B213D8486006BCB6C /* Siparis */ = {
+			isa = PBXGroup;
+			children = (
+				B9FCE50C213D8486006BCB6C /* AppDelegate.swift */,
+				B9FCE50E213D8486006BCB6C /* ViewController.swift */,
+				B9FCE51E213D8E49006BCB6C /* SingInVC.swift */,
+				B9F529C92143DDD200BD45A6 /* MenuTVC.swift */,
+				B9F529CD2144239E00BD45A6 /* AddFoodTitleVC.swift */,
+				B9F529CF2144364F00BD45A6 /* FoodDetailsTVC.swift */,
+				B9F529D521443C2000BD45A6 /* AddFoodInformationVC.swift */,
+				B9F529D92144449600BD45A6 /* FoodInformationShowVC.swift */,
+				B9FCE522213D90B8006BCB6C /* konumVC.swift */,
+				B9FCE524213D90CE006BCB6C /* KareKodVC.swift */,
+				B9FCE526213D90E0006BCB6C /* MasaVC.swift */,
+				B9FCE528213D90F5006BCB6C /* IsletmeProfilVC.swift */,
+				B99B3F67213E8678002D017A /* SignedUpVC.swift */,
+				B9D1F03C2148270000C52EAC /* fotosecin.jpg */,
+				B9FCE510213D8486006BCB6C /* Main.storyboard */,
+				B9FCE513213D8488006BCB6C /* Assets.xcassets */,
+				B9FCE515213D8488006BCB6C /* LaunchScreen.storyboard */,
+				B9FCE518213D8488006BCB6C /* Info.plist */,
+			);
+			path = Siparis;
+			sourceTree = "<group>";
+		};
+		D572AEFFCA2B723CED72558B /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				9134C9FA788C8B1E178C22F6 /* Pods_Siparis.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		B9FCE508213D8486006BCB6C /* Siparis */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = B9FCE51B213D8488006BCB6C /* Build configuration list for PBXNativeTarget "Siparis" */;
+			buildPhases = (
+				B32B1B9A3ED6E4E5FE3F5A28 /* [CP] Check Pods Manifest.lock */,
+				B9FCE505213D8486006BCB6C /* Sources */,
+				B9FCE506213D8486006BCB6C /* Frameworks */,
+				B9FCE507213D8486006BCB6C /* Resources */,
+				93FF21C6129AE1C470A3711E /* [CP] Embed Pods Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = Siparis;
+			productName = Siparis;
+			productReference = B9FCE509213D8486006BCB6C /* Siparis.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		B9FCE501213D8486006BCB6C /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastSwiftUpdateCheck = 0940;
+				LastUpgradeCheck = 0940;
+				ORGANIZATIONNAME = "Batuhan Erkol";
+				TargetAttributes = {
+					B9FCE508213D8486006BCB6C = {
+						CreatedOnToolsVersion = 9.4.1;
+					};
+				};
+			};
+			buildConfigurationList = B9FCE504213D8486006BCB6C /* Build configuration list for PBXProject "Siparis" */;
+			compatibilityVersion = "Xcode 9.3";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = B9FCE500213D8486006BCB6C;
+			productRefGroup = B9FCE50A213D8486006BCB6C /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				B9FCE508213D8486006BCB6C /* Siparis */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		B9FCE507213D8486006BCB6C /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				B9FCE517213D8488006BCB6C /* LaunchScreen.storyboard in Resources */,
+				B9D1F03D2148270100C52EAC /* fotosecin.jpg in Resources */,
+				B9FCE514213D8488006BCB6C /* Assets.xcassets in Resources */,
+				B9FCE512213D8486006BCB6C /* Main.storyboard in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		93FF21C6129AE1C470A3711E /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${SRCROOT}/Pods/Target Support Files/Pods-Siparis/Pods-Siparis-frameworks.sh",
+				"${BUILT_PRODUCTS_DIR}/Bolts/Bolts.framework",
+				"${BUILT_PRODUCTS_DIR}/Parse/Parse.framework",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Bolts.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Parse.framework",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Siparis/Pods-Siparis-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		B32B1B9A3ED6E4E5FE3F5A28 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-Siparis-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		B9FCE505213D8486006BCB6C /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				B9FCE529213D90F5006BCB6C /* IsletmeProfilVC.swift in Sources */,
+				B9FCE525213D90CE006BCB6C /* KareKodVC.swift in Sources */,
+				B9FCE50F213D8486006BCB6C /* ViewController.swift in Sources */,
+				B9F529CA2143DDD200BD45A6 /* MenuTVC.swift in Sources */,
+				B9FCE523213D90B8006BCB6C /* konumVC.swift in Sources */,
+				B9F529D02144364F00BD45A6 /* FoodDetailsTVC.swift in Sources */,
+				B9F529CE2144239E00BD45A6 /* AddFoodTitleVC.swift in Sources */,
+				B9FCE51F213D8E49006BCB6C /* SingInVC.swift in Sources */,
+				B99B3F68213E8678002D017A /* SignedUpVC.swift in Sources */,
+				B9F529D621443C2000BD45A6 /* AddFoodInformationVC.swift in Sources */,
+				B9F529DA2144449600BD45A6 /* FoodInformationShowVC.swift in Sources */,
+				B9FCE527213D90E0006BCB6C /* MasaVC.swift in Sources */,
+				B9FCE50D213D8486006BCB6C /* AppDelegate.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXVariantGroup section */
+		B9FCE510213D8486006BCB6C /* Main.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				B9FCE511213D8486006BCB6C /* Base */,
+			);
+			name = Main.storyboard;
+			sourceTree = "<group>";
+		};
+		B9FCE515213D8488006BCB6C /* LaunchScreen.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				B9FCE516213D8488006BCB6C /* Base */,
+			);
+			name = LaunchScreen.storyboard;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		B9FCE519213D8488006BCB6C /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.4;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			};
+			name = Debug;
+		};
+		B9FCE51A213D8488006BCB6C /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.4;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				SDKROOT = iphoneos;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		B9FCE51C213D8488006BCB6C /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = C4FBEC4FE39D0A3680A56A0E /* Pods-Siparis.debug.xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = F5SRK5G3ZB;
+				INFOPLIST_FILE = Siparis/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.batuhanerkol.Siparis;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 4.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		B9FCE51D213D8488006BCB6C /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 257F260B6429E26C1436ECBD /* Pods-Siparis.release.xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = F5SRK5G3ZB;
+				INFOPLIST_FILE = Siparis/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.batuhanerkol.Siparis;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 4.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		B9FCE504213D8486006BCB6C /* Build configuration list for PBXProject "Siparis" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				B9FCE519213D8488006BCB6C /* Debug */,
+				B9FCE51A213D8488006BCB6C /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		B9FCE51B213D8488006BCB6C /* Build configuration list for PBXNativeTarget "Siparis" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				B9FCE51C213D8488006BCB6C /* Debug */,
+				B9FCE51D213D8488006BCB6C /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = B9FCE501213D8486006BCB6C /* Project object */;
+}
