@@ -66,7 +66,6 @@ class AddFoodInformationVC: UIViewController, UIImagePickerControllerDelegate, U
                     self.textField.text = ""
                     self.longTextField.text = ""
                     self.selectedImage.image = UIImage(named: "fotosecin.jpg")
-                   
                 }
             }
             }

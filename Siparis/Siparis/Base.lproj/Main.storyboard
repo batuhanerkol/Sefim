@@ -428,12 +428,12 @@
                     </view>
                     <connections>
                         <outlet property="textField" destination="Z1V-M0-1tu" id="0Bu-TG-BTD"/>
-                        <segue destination="Nd2-zW-TMi" kind="show" identifier="AddFoodTitleVCToMenuTVC" id="YXk-rG-O86"/>
+                        <segue destination="jgL-SV-XSR" kind="show" identifier="AddFoodTitleVCToMenuTVC" id="5EF-zS-xQm"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Lhu-gk-UHR" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="5012" y="-418"/>
+            <point key="canvasLocation" x="5031" y="-351"/>
         </scene>
         <!--Food Information ShowVC-->
         <scene sceneID="bF9-Vb-N90">
@@ -544,7 +544,7 @@
         <image name="fotosecin.jpg" width="2100" height="1575"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="YXk-rG-O86"/>
+        <segue reference="5EF-zS-xQm"/>
         <segue reference="w0M-8p-9bV"/>
     </inferredMetricsTieBreakers>
 </document>

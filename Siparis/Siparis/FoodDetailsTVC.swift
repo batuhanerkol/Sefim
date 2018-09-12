@@ -53,9 +53,11 @@ class FoodDetailsTVC: UITableViewController {
                 for object in objects! {
                     self.foodNameArray.append(object.object(forKey: "foodName") as! String)
                 }
-                self.tableView.reloadData()
+               
             }
+             self.tableView.reloadData()
         }
+        
     }
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "FoodDetaisTVCToFoodInformationShowVC"{
