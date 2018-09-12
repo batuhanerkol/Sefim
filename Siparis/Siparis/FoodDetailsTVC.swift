@@ -10,7 +10,9 @@ import UIKit
 import Parse
 
 class FoodDetailsTVC: UITableViewController {
-
+    @IBOutlet weak var editButton: UIBarButtonItem!
+    @IBOutlet var nameTableView: UITableView!
+    
       var foodNameArray = [String]()
       var chosenFood = ""
     
@@ -32,6 +34,26 @@ class FoodDetailsTVC: UITableViewController {
         cell.textLabel?.text = foodNameArray[indexPath.row]
         return cell
     }
+    @IBAction func editButtonPressed(_ sender: UIBarButtonItem) {
+        nameTableView.isEditing = !nameTableView.isEditing
+        
+        switch nameTableView.isEditing {
+        case true:
+            editButton.title = "Tamam"
+        case false:
+            editButton.title = "Düzenle"
+        }
+    }
+    override func tableView(_ tableView: UITableView, canMoveRowAt indexPath: IndexPath) -> Bool {
+        return true
+    }
+    
+    override func tableView(_ tableView: UITableView, moveRowAt sourceIndexPath: IndexPath, to destinationIndexPath: IndexPath) {
+        let item = foodNameArray[sourceIndexPath.row]
+        foodNameArray.remove(at: sourceIndexPath.row)
+        foodNameArray.insert(item, at: destinationIndexPath.row)
+    }
+    
     @IBAction func addButtonClicked(_ sender: UIBarButtonItem) {
         
         performSegue(withIdentifier: "FoodDetailsTVCToFoodDetailsVC", sender: nil)

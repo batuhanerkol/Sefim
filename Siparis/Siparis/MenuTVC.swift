@@ -11,6 +11,9 @@ import Parse
 
 class MenuTVC: UITableViewController {
 
+    @IBOutlet var titleTableView: UITableView!
+    @IBOutlet weak var editButton: UIBarButtonItem!
+    
     var foodTitleArray = [String]()
 
     var chosenFood = ""
@@ -39,6 +42,36 @@ class MenuTVC: UITableViewController {
         performSegue(withIdentifier: "MenuVCToAddFoodTitleVC", sender: nil)
         }
     
+    @IBAction func editButtonPressed(_ sender: UIBarButtonItem) {
+        
+        titleTableView.isEditing = !titleTableView.isEditing
+        
+        switch titleTableView.isEditing {
+        case true:
+            editButton.title = "Tamam"
+         case false:
+            editButton.title = "Düzenle"
+        }
+    }
+    
+    override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
+        if (editingStyle == .delete){
+            foodTitleArray.remove(at: indexPath.item)
+            tableView.deleteRows(at: [indexPath], with: .automatic)
+        }
+    }
+    
+    
+    override func tableView(_ tableView: UITableView, canMoveRowAt indexPath: IndexPath) -> Bool {
+        return true
+    }
+    
+    override func tableView(_ tableView: UITableView, moveRowAt sourceIndexPath: IndexPath, to destinationIndexPath: IndexPath) {
+        let item = foodTitleArray[sourceIndexPath.row]
+        foodTitleArray.remove(at: sourceIndexPath.row)
+        foodTitleArray.insert(item, at: destinationIndexPath.row)
+    }
+    
     func getData(){
         let query = PFQuery(className: "FoodTitle")
         query.whereKey("foodOwner", equalTo: "\(PFUser.current()!.username!)")
@@ -54,7 +87,6 @@ class MenuTVC: UITableViewController {
                     self.foodTitleArray.removeAll(keepingCapacity: false)
                     for object in objects! {
                         self.foodTitleArray.append(object.object(forKey: "foodTitle") as! String)
-                        
                     }
                     self.tableView.reloadData()
             }

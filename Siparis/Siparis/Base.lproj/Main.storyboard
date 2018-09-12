@@ -6,6 +6,7 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14088"/>
+        <capability name="Navigation items with more than one left or right bar item" minToolsVersion="7.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -289,13 +290,22 @@
                         </connections>
                     </tableView>
                     <navigationItem key="navigationItem" title="Yemek Bilgileri" id="NTZ-nm-6MR">
-                        <barButtonItem key="rightBarButtonItem" systemItem="add" id="gjF-f7-0of">
-                            <connections>
-                                <action selector="addButtonClicked:" destination="yzF-pl-0p8" id="Chg-L7-Q4p"/>
-                            </connections>
-                        </barButtonItem>
+                        <rightBarButtonItems>
+                            <barButtonItem systemItem="add" id="gjF-f7-0of">
+                                <connections>
+                                    <action selector="addButtonClicked:" destination="yzF-pl-0p8" id="Chg-L7-Q4p"/>
+                                </connections>
+                            </barButtonItem>
+                            <barButtonItem title="Düzenle" id="EeW-wE-uAp">
+                                <connections>
+                                    <action selector="editButtonPressed:" destination="yzF-pl-0p8" id="hdV-p5-ZfL"/>
+                                </connections>
+                            </barButtonItem>
+                        </rightBarButtonItems>
                     </navigationItem>
                     <connections>
+                        <outlet property="editButton" destination="EeW-wE-uAp" id="DIn-60-IZF"/>
+                        <outlet property="nameTableView" destination="Wbd-XJ-xlH" id="2UJ-59-qlP"/>
                         <segue destination="cfI-Yz-y4o" kind="show" identifier="FoodDetailsTVCToFoodDetailsVC" id="fS2-7j-EXp"/>
                         <segue destination="wfm-3T-t7A" kind="show" identifier="FoodDetaisTVCToFoodInformationShowVC" id="k1Y-jm-Ipi"/>
                     </connections>
@@ -384,6 +394,11 @@
                         </connections>
                     </tableView>
                     <navigationItem key="navigationItem" title="Menu" id="wbh-Jq-3Et">
+                        <barButtonItem key="leftBarButtonItem" title="Düzenle" id="Po8-In-TEm">
+                            <connections>
+                                <action selector="editButtonPressed:" destination="jgL-SV-XSR" id="YIE-UU-aQq"/>
+                            </connections>
+                        </barButtonItem>
                         <barButtonItem key="rightBarButtonItem" systemItem="add" id="k3Z-CG-SGt">
                             <connections>
                                 <action selector="addButtonPressed:" destination="jgL-SV-XSR" id="kJt-hQ-sF1"/>
@@ -391,13 +406,15 @@
                         </barButtonItem>
                     </navigationItem>
                     <connections>
+                        <outlet property="editButton" destination="Po8-In-TEm" id="nSf-Gp-cbp"/>
+                        <outlet property="titleTableView" destination="DL1-jS-ptS" id="ujM-fQ-4kO"/>
                         <segue destination="q9e-uD-6Q8" kind="show" identifier="MenuVCToAddFoodTitleVC" id="ceq-ov-caF"/>
                         <segue destination="yzF-pl-0p8" kind="show" identifier="MenuToFoodDetailsTVC" id="Y4b-Cu-Bkk"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="7W7-QW-wRC" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="4186" y="-735"/>
+            <point key="canvasLocation" x="4028" y="-711"/>
         </scene>
         <!--Add Food TitleVC-->
         <scene sceneID="Byd-MU-1iU">
@@ -544,7 +561,7 @@
         <image name="fotosecin.jpg" width="2100" height="1575"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="5EF-zS-xQm"/>
+        <segue reference="TaP-KR-vuL"/>
         <segue reference="w0M-8p-9bV"/>
     </inferredMetricsTieBreakers>
 </document>
