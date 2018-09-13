@@ -73,7 +73,7 @@ class MenuTVC: UITableViewController {
     func deleteData(){
         let query = PFQuery(className: "FoodTitle")
         query.whereKey("foodOwner", equalTo: "\(PFUser.current()!.username!)")
-        query.whereKeyExists("foodTitle")
+        query.whereKey("foodTitle", equalTo:"başlangıçlar") //kullanıcın seçtiğine nasıl eşitleyeceğini bul
         query.findObjectsInBackground { (objects, error) in
             if error != nil{
                 let alert = UIAlertController(title: "HATA", message: error?.localizedDescription, preferredStyle: UIAlertControllerStyle.alert)
@@ -81,18 +81,16 @@ class MenuTVC: UITableViewController {
                 alert.addAction(okButton)
                 self.present(alert, animated: true, completion: nil)
             }
-            else{
-                self.foodTitleArray.removeAll(keepingCapacity: false)
+            else {
+                self.foodTitleArray.removeAll(keepingCapacity: false) // sadece seçilenin nasıl silineceğini bul
                 for object in objects! {
-                    object.deleteEventually()
+                    object.deleteInBackground()
                 }
                 self.tableView.reloadData()
             }
         }
     }
-    
-    
-    
+
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
             if segue.identifier == "MenuToFoodDetailsTVC"{
                 let destinationVC = segue.destination as! FoodDetailsTVC
@@ -128,6 +126,7 @@ class MenuTVC: UITableViewController {
         if (editingStyle == .delete){
             foodTitleArray.remove(at: indexPath.item)
             tableView.deleteRows(at: [indexPath], with: .automatic)
+            deleteData()
         }
     }
     }
