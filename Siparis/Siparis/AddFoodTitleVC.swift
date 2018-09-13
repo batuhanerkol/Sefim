@@ -11,16 +11,17 @@ import Parse
 
 class AddFoodTitleVC: UIViewController {
     
+    @IBOutlet weak var addButton: UIButton!
     
     @IBOutlet weak var textField: UITextField!
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
+self.addButton.isHidden = false
     }
 
     @IBAction func addButtonPressed(_ sender: Any) {
-        
+        self.addButton.isHidden = true
             if textField.text != "" {
                 
                 let foodTitle = PFObject(className: "FoodTitle")

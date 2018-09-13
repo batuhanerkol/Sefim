@@ -426,14 +426,14 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <textField opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Z1V-M0-1tu">
-                                <rect key="frame" x="16" y="64" width="343" height="30"/>
+                                <rect key="frame" x="16" y="94" width="343" height="30"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <nil key="textColor"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits"/>
                             </textField>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Va5-dD-XOA">
-                                <rect key="frame" x="125" y="102" width="125" height="62"/>
+                                <rect key="frame" x="125" y="132" width="125" height="62"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <state key="normal" title="Ekle"/>
                                 <connections>
@@ -445,6 +445,7 @@
                         <viewLayoutGuide key="safeArea" id="8TQ-hE-NjU"/>
                     </view>
                     <connections>
+                        <outlet property="addButton" destination="Va5-dD-XOA" id="NIF-aT-fIX"/>
                         <outlet property="textField" destination="Z1V-M0-1tu" id="0Bu-TG-BTD"/>
                         <segue destination="jgL-SV-XSR" kind="show" identifier="AddFoodTitleVCToMenuTVC" id="5EF-zS-xQm"/>
                     </connections>
