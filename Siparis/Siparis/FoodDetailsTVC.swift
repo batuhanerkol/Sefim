@@ -9,20 +9,23 @@
 import UIKit
 import Parse
 
+
+
+
 class FoodDetailsTVC: UITableViewController {
     @IBOutlet weak var editButton: UIBarButtonItem!
     @IBOutlet var nameTableView: UITableView!
     
-      var foodNameArray = [String]()
-      var chosenFood = ""
-    
+
+    var chosenFood = ""
+    var foodNameArray = [String]()
+
       
     override func viewDidLoad() {
         super.viewDidLoad()
         
         tableView.delegate = self
         tableView.dataSource = self
-        
         getData()
     }
     
@@ -60,15 +63,17 @@ class FoodDetailsTVC: UITableViewController {
                 }
                
             }
-             self.tableView.reloadData()
+             self.nameTableView.reloadData()
+
         }
         
     }
     
-    func deleteData(){
+    func deleteData(foodIndexName : String){
         let query = PFQuery(className: "FoodTitle")
-        query.whereKey("foodOwner", equalTo: "\(PFUser.current()!.username!)")
-        query.whereKeyExists("foodName")
+//        query.whereKey("foodOwner", equalTo: "\(PFUser.current()!.username!)")
+        query.whereKey("foodName", equalTo: foodIndexName)
+        
         query.findObjectsInBackground { (objects, error) in
             if error != nil{
                 let alert = UIAlertController(title: "HATA", message: error?.localizedDescription, preferredStyle: UIAlertControllerStyle.alert)
@@ -79,9 +84,8 @@ class FoodDetailsTVC: UITableViewController {
             else{
                 self.foodNameArray.removeAll(keepingCapacity: false)
                 for object in objects! {
-                    object.deleteEventually()
+                    object.deleteInBackground()
                 }
-                self.tableView.reloadData()
             }
         }
     }
@@ -93,14 +97,18 @@ class FoodDetailsTVC: UITableViewController {
     }
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         self.chosenFood = foodNameArray[indexPath.row]
+
         performSegue(withIdentifier: "FoodDetaisTVCToFoodInformationShowVC", sender: nil)
     }
     override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
         if (editingStyle == .delete){
+            let foodIndexName = nameTableView.cellForRow(at: indexPath)?.textLabel?.text!
+
             foodNameArray.remove(at: indexPath.item)
             tableView.deleteRows(at: [indexPath], with: .automatic)
             
-            deleteData()
+           
+            deleteData(foodIndexName: foodIndexName!)
         }
     }
     override func tableView(_ tableView: UITableView, canMoveRowAt indexPath: IndexPath) -> Bool {

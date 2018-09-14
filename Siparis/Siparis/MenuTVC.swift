@@ -73,7 +73,7 @@ class MenuTVC: UITableViewController {
     func deleteData(){
         let query = PFQuery(className: "FoodTitle")
         query.whereKey("foodOwner", equalTo: "\(PFUser.current()!.username!)")
-        query.whereKey("foodTitle", equalTo:"başlangıçlar") //kullanıcın seçtiğine nasıl eşitleyeceğini bul
+        //kullanıcın seçtiğine nasıl eşitleyeceğini bul
         query.findObjectsInBackground { (objects, error) in
             if error != nil{
                 let alert = UIAlertController(title: "HATA", message: error?.localizedDescription, preferredStyle: UIAlertControllerStyle.alert)

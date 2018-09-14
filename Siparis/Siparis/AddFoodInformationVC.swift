@@ -8,7 +8,6 @@
 
 import UIKit
 import Parse
-
 class AddFoodInformationVC: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
 
     @IBOutlet weak var confirmButton: UIButton!
@@ -16,6 +15,7 @@ class AddFoodInformationVC: UIViewController, UIImagePickerControllerDelegate, U
     @IBOutlet weak var longTextField: UITextView!
     @IBOutlet weak var textField: UITextField!
     @IBOutlet weak var selectedImage: UIImageView!
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -40,7 +40,6 @@ class AddFoodInformationVC: UIViewController, UIImagePickerControllerDelegate, U
 
     @IBAction func confirmButtonPressed(_ sender: Any) {
         self.confirmButton.isHidden = true
-        
         if textField.text != "" && longTextField.text != "" && priceTextField.text != ""  {
     
             let foodInformation = PFObject(className: "FoodTitle")
@@ -68,10 +67,12 @@ class AddFoodInformationVC: UIViewController, UIImagePickerControllerDelegate, U
                 else{
                    
                     print("success")
+                    
                     self.priceTextField.text = ""
                     self.textField.text = ""
                     self.longTextField.text = ""
                     self.selectedImage.image = UIImage(named: "fotosecin.jpg")
+                    
                    
                     
                 }
