@@ -75,7 +75,7 @@ class FoodDetailsTVC: UITableViewController {
     
     func deleteData(foodIndexName : String){
         let query = PFQuery(className: "FoodTitle")
-//        query.whereKey("foodOwner", equalTo: "\(PFUser.current()!.username!)")
+       query.whereKey("foodNameOwner", equalTo: "\(PFUser.current()!.username!)")
         query.whereKey("foodName", equalTo: foodIndexName)
         
         query.findObjectsInBackground { (objects, error) in
