@@ -26,7 +26,7 @@ self.addButton.isHidden = false
                 
                 let foodTitle = PFObject(className: "FoodTitle")
                 foodTitle["foodTitle"] = textField.text!
-                foodTitle["foodOwner"] = PFUser.current()!.username!
+                foodTitle["foodTitleOwner"] = PFUser.current()!.username!
                 
                 foodTitle.saveInBackground { (success, error) in
                     

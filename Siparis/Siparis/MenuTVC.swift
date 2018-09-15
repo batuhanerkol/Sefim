@@ -51,7 +51,7 @@ class MenuTVC: UITableViewController {
    
     func getData(){
         let query = PFQuery(className: "FoodTitle")
-        query.whereKey("foodOwner", equalTo: "\(PFUser.current()!.username!)")
+        query.whereKey("foodTitleOwner", equalTo: "\(PFUser.current()!.username!)")
         query.findObjectsInBackground { (objects, error) in
     
                 if error != nil{
@@ -70,10 +70,10 @@ class MenuTVC: UITableViewController {
         }
     }
     
-    func deleteData(){
+    func deleteData(foodIndexTitle : String){
         let query = PFQuery(className: "FoodTitle")
-        query.whereKey("foodOwner", equalTo: "\(PFUser.current()!.username!)")
-        //kullanıcın seçtiğine nasıl eşitleyeceğini bul
+        query.whereKey("foodTitleOwner", equalTo: "\(PFUser.current()!.username!)")
+       query.whereKey("foodTitle", equalTo: foodIndexTitle)
         query.findObjectsInBackground { (objects, error) in
             if error != nil{
                 let alert = UIAlertController(title: "HATA", message: error?.localizedDescription, preferredStyle: UIAlertControllerStyle.alert)
@@ -82,11 +82,11 @@ class MenuTVC: UITableViewController {
                 self.present(alert, animated: true, completion: nil)
             }
             else {
-                self.foodTitleArray.removeAll(keepingCapacity: false) // sadece seçilenin nasıl silineceğini bul
+                self.foodTitleArray.removeAll(keepingCapacity: false) 
                 for object in objects! {
                     object.deleteInBackground()
                 }
-                self.tableView.reloadData()
+               
             }
         }
     }
@@ -123,10 +123,13 @@ class MenuTVC: UITableViewController {
     }
     
     override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
+        
         if (editingStyle == .delete){
+             let foodIndexTitle = titleTableView.cellForRow(at: indexPath)?.textLabel?.text!
+            
             foodTitleArray.remove(at: indexPath.item)
             tableView.deleteRows(at: [indexPath], with: .automatic)
-            deleteData()
+            deleteData(foodIndexTitle: foodIndexTitle!)
         }
     }
     }
