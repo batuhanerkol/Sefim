@@ -29,6 +29,10 @@ class FoodDetailsTVC: UITableViewController {
         getData()
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        getData()
+    }
+    
     @IBAction func editButtonPressed(_ sender: UIBarButtonItem) {
         nameTableView.isEditing = !nameTableView.isEditing
         

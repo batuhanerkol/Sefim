@@ -39,9 +39,9 @@ class AddFoodInformationVC: UIViewController, UIImagePickerControllerDelegate, U
     }
 
     @IBAction func confirmButtonPressed(_ sender: Any) {
-        self.confirmButton.isHidden = true
+      
         if textField.text != "" && longTextField.text != "" && priceTextField.text != ""  {
-    
+            self.confirmButton.isHidden = true
             let foodInformation = PFObject(className: "FoodTitle")
             foodInformation["foodName"] = textField.text!
             foodInformation["foodInformation"] = longTextField.text!
@@ -67,7 +67,7 @@ class AddFoodInformationVC: UIViewController, UIImagePickerControllerDelegate, U
                 else{
                    
                     print("success")
-                    
+                     self.confirmButton.isHidden = false
                     self.priceTextField.text = ""
                     self.textField.text = ""
                     self.longTextField.text = ""
