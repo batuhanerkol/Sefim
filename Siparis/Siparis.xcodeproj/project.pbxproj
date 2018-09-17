@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		013495FCE6E95FF809EAFECA /* Pods_Siparis.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9134C9FA788C8B1E178C22F6 /* Pods_Siparis.framework */; };
+		B9706EB0214FB52100234067 /* Model.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = B9706EAE214FB52100234067 /* Model.xcdatamodeld */; };
 		B99B3F68213E8678002D017A /* SignedUpVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = B99B3F67213E8678002D017A /* SignedUpVC.swift */; };
 		B9D1F03D2148270100C52EAC /* fotosecin.jpg in Resources */ = {isa = PBXBuildFile; fileRef = B9D1F03C2148270000C52EAC /* fotosecin.jpg */; };
 		B9F529CA2143DDD200BD45A6 /* MenuTVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9F529C92143DDD200BD45A6 /* MenuTVC.swift */; };
@@ -30,6 +31,7 @@
 /* Begin PBXFileReference section */
 		257F260B6429E26C1436ECBD /* Pods-Siparis.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Siparis.release.xcconfig"; path = "Pods/Target Support Files/Pods-Siparis/Pods-Siparis.release.xcconfig"; sourceTree = "<group>"; };
 		9134C9FA788C8B1E178C22F6 /* Pods_Siparis.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Siparis.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		B9706EAF214FB52100234067 /* Model.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Model.xcdatamodel; sourceTree = "<group>"; };
 		B99B3F67213E8678002D017A /* SignedUpVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignedUpVC.swift; sourceTree = "<group>"; };
 		B9D1F03C2148270000C52EAC /* fotosecin.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = fotosecin.jpg; sourceTree = "<group>"; };
 		B9F529C92143DDD200BD45A6 /* MenuTVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuTVC.swift; sourceTree = "<group>"; };
@@ -112,6 +114,7 @@
 				B9FCE513213D8488006BCB6C /* Assets.xcassets */,
 				B9FCE515213D8488006BCB6C /* LaunchScreen.storyboard */,
 				B9FCE518213D8488006BCB6C /* Info.plist */,
+				B9706EAE214FB52100234067 /* Model.xcdatamodeld */,
 			);
 			path = Siparis;
 			sourceTree = "<group>";
@@ -242,6 +245,7 @@
 				B9FCE529213D90F5006BCB6C /* IsletmeProfilVC.swift in Sources */,
 				B9FCE525213D90CE006BCB6C /* KareKodVC.swift in Sources */,
 				B9FCE50F213D8486006BCB6C /* ViewController.swift in Sources */,
+				B9706EB0214FB52100234067 /* Model.xcdatamodeld in Sources */,
 				B9F529CA2143DDD200BD45A6 /* MenuTVC.swift in Sources */,
 				B9FCE523213D90B8006BCB6C /* konumVC.swift in Sources */,
 				B9F529D02144364F00BD45A6 /* FoodDetailsTVC.swift in Sources */,
@@ -451,6 +455,19 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCVersionGroup section */
+		B9706EAE214FB52100234067 /* Model.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				B9706EAF214FB52100234067 /* Model.xcdatamodel */,
+			);
+			currentVersion = B9706EAF214FB52100234067 /* Model.xcdatamodel */;
+			path = Model.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+/* End XCVersionGroup section */
 	};
 	rootObject = B9FCE501213D8486006BCB6C /* Project object */;
 }

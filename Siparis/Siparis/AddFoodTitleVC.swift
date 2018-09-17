@@ -24,7 +24,7 @@ self.addButton.isHidden = false
         self.addButton.isHidden = true
             if textField.text != "" {
                 
-                let foodTitle = PFObject(className: "FoodTitle")
+                let foodTitle = PFObject(className: "FoodInformation")
                 foodTitle["foodTitle"] = textField.text!
                 foodTitle["foodTitleOwner"] = PFUser.current()!.username!
                 

@@ -50,7 +50,7 @@ class FoodDetailsTVC: UITableViewController {
     }
     func getData(){
     
-        let query = PFQuery(className: "FoodTitle")
+        let query = PFQuery(className: "FoodInformation")
          query.whereKey("foodNameOwner", equalTo: "\(PFUser.current()!.username!)")
          query.whereKey("foodTitle", equalTo: selectecTitle)
            query.findObjectsInBackground { (objects, error) in
