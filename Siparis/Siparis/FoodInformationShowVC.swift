@@ -31,7 +31,7 @@ class FoodInformationShowVC: UIViewController {
   findFood()
     }
     func findFood(){
-        let query = PFQuery(className: "FoodTitle")
+        let query = PFQuery(className: "FoodInformation")
         query.whereKey("foodName", equalTo: self.selectedFood)
         query.findObjectsInBackground { (objects, error) in
             if error != nil{
