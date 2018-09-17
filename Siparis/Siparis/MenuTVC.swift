@@ -9,7 +9,7 @@
 import UIKit
 import Parse
 
-
+var selectecTitle = ""
 
 class MenuTVC: UITableViewController {
 
@@ -100,6 +100,9 @@ class MenuTVC: UITableViewController {
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         self.chosenFood = foodTitleArray[indexPath.row]
+        
+        selectecTitle = (titleTableView.cellForRow(at: indexPath)?.textLabel?.text)!
+        
         self.performSegue(withIdentifier: "MenuToFoodDetailsTVC", sender: nil)
 
     }

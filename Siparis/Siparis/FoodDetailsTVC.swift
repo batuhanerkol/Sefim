@@ -49,9 +49,10 @@ class FoodDetailsTVC: UITableViewController {
         performSegue(withIdentifier: "FoodDetailsTVCToFoodDetailsVC", sender: nil)
     }
     func getData(){
+    
         let query = PFQuery(className: "FoodTitle")
          query.whereKey("foodNameOwner", equalTo: "\(PFUser.current()!.username!)")
-      
+         query.whereKey("foodTitle", equalTo: selectecTitle)
            query.findObjectsInBackground { (objects, error) in
             
             if error != nil{

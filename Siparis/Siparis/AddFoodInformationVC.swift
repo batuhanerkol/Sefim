@@ -47,6 +47,7 @@ class AddFoodInformationVC: UIViewController, UIImagePickerControllerDelegate, U
             foodInformation["foodInformation"] = longTextField.text!
             foodInformation["foodPrice"] = priceTextField.text!
             foodInformation["foodNameOwner"] = PFUser.current()!.username!
+            foodInformation["foodTitle"] = selectecTitle
             let uuid = UUID().uuidString
             foodInformation["fooduuid"] = "\(uuid) \(PFUser.current()!.username!)"
             
