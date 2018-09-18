@@ -105,6 +105,8 @@ class FoodDetailsTVC: UITableViewController {
 
         performSegue(withIdentifier: "FoodDetaisTVCToFoodInformationShowVC", sender: nil)
     }
+    
+    
     override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
         if (editingStyle == .delete){
             let foodIndexName = nameTableView.cellForRow(at: indexPath)?.textLabel?.text!
@@ -116,6 +118,8 @@ class FoodDetailsTVC: UITableViewController {
             deleteData(foodIndexName: foodIndexName!)
         }
     }
+    
+    
     override func tableView(_ tableView: UITableView, canMoveRowAt indexPath: IndexPath) -> Bool {
         return true
     }

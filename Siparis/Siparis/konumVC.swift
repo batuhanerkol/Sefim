@@ -68,7 +68,7 @@ class konumVC: UIViewController, MKMapViewDelegate, CLLocationManagerDelegate {
         
         let location = CLLocationCoordinate2D(latitude: locations[0].coordinate.latitude, longitude: locations[0].coordinate.longitude)
         
-        let span = MKCoordinateSpan(latitudeDelta: 0.05, longitudeDelta: 0.05)
+        let span = MKCoordinateSpan(latitudeDelta: 0.009, longitudeDelta: 0.009)
         let region = MKCoordinateRegion(center: location, span: span);  mapView.setRegion(region, animated: true)
         
         
@@ -76,7 +76,7 @@ class konumVC: UIViewController, MKMapViewDelegate, CLLocationManagerDelegate {
         if self.chosenLongitude != "" && self.chosenLatitude != ""{
             let location = CLLocationCoordinate2D(latitude: Double(self.chosenLatitude)!, longitude: Double(self.chosenLongitude)!)
             
-            let span = MKCoordinateSpan(latitudeDelta: 0.05, longitudeDelta: 0.05)
+            let span = MKCoordinateSpan(latitudeDelta: 0.5, longitudeDelta: 0.5)
             let region = MKCoordinateRegion(center: location, span: span)
             
             self.mapView.setRegion(region, animated: true)
