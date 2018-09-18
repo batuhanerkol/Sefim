@@ -23,6 +23,9 @@ class konumVC: UIViewController, MKMapViewDelegate, CLLocationManagerDelegate {
     var chosenLatitudeArray = [String]()
     var chosenLongitudeArray = [String]()
     
+    var manager = CLLocationManager()
+    var requestCLLocation = CLLocation()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -32,18 +35,21 @@ class konumVC: UIViewController, MKMapViewDelegate, CLLocationManagerDelegate {
         menager.requestWhenInUseAuthorization()
         menager.startUpdatingLocation()
         
-        
         let recognizer = UILongPressGestureRecognizer(target: self, action: #selector(konumVC.chooseLocation(gestureRecognizer:)))
         recognizer.minimumPressDuration = 3
         mapView.addGestureRecognizer(recognizer)
         
         getLocationData()
+        
             }
+ 
     
     override func viewWillAppear(_ animated: Bool) {
      
         getLocationData()
     }
+    
+    
     @objc func chooseLocation(gestureRecognizer: UIGestureRecognizer){
         if gestureRecognizer.state == UIGestureRecognizerState.began{
             let touches = gestureRecognizer.location(in: self.mapView)
@@ -64,6 +70,23 @@ class konumVC: UIViewController, MKMapViewDelegate, CLLocationManagerDelegate {
         
         let span = MKCoordinateSpan(latitudeDelta: 0.05, longitudeDelta: 0.05)
         let region = MKCoordinateRegion(center: location, span: span);  mapView.setRegion(region, animated: true)
+        
+        
+        
+        if self.chosenLongitude != "" && self.chosenLatitude != ""{
+            let location = CLLocationCoordinate2D(latitude: Double(self.chosenLatitude)!, longitude: Double(self.chosenLongitude)!)
+            
+            let span = MKCoordinateSpan(latitudeDelta: 0.05, longitudeDelta: 0.05)
+            let region = MKCoordinateRegion(center: location, span: span)
+            
+            self.mapView.setRegion(region, animated: true)
+            
+            let annotation = MKPointAnnotation()
+            annotation.coordinate = location
+            annotation.title = isletmeTextField.text!
+            self.mapView.addAnnotation(annotation)
+        }
+        
     }
     
     @IBAction func saveButtonPressed(_ sender: Any) {
@@ -108,10 +131,10 @@ class konumVC: UIViewController, MKMapViewDelegate, CLLocationManagerDelegate {
                     
                     self.latitudeLabel.text = "\(self.chosenLatitudeArray.last!)"
                     self.longitudeLabel.text = "\(self.chosenLongitudeArray.last!)"
+                    self.manager.startUpdatingLocation()
                 }
                 
             }
         }
     }
-    
 }
