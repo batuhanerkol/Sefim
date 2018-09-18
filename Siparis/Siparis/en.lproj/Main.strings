@@ -1,0 +1,87 @@
+
+/* Class = "UITabBarItem"; title = "masa"; ObjectID = "0em-By-K48"; */
+"0em-By-K48.title" = "masa";
+
+/* Class = "UITextView"; text = "yemek açıklaması"; ObjectID = "1Rc-ms-9Vd"; */
+"1Rc-ms-9Vd.text" = "yemek açıklaması";
+
+/* Class = "UITextField"; placeholder = "Şifre"; ObjectID = "1lf-L3-YM2"; */
+"1lf-L3-YM2.placeholder" = "Şifre";
+
+/* Class = "UITabBarItem"; title = "Profil"; ObjectID = "4px-sd-WV8"; */
+"4px-sd-WV8.title" = "Profil";
+
+/* Class = "UIButton"; normalTitle = "Kayıt Oluştur"; ObjectID = "6ps-fv-IlH"; */
+"6ps-fv-IlH.normalTitle" = "Kayıt Oluştur";
+
+/* Class = "UIButton"; normalTitle = "Onayla"; ObjectID = "B0I-xg-YZy"; */
+"B0I-xg-YZy.normalTitle" = "Onayla";
+
+/* Class = "UIButton"; normalTitle = "Kayıt Oluştur"; ObjectID = "EXC-EU-gyn"; */
+"EXC-EU-gyn.normalTitle" = "Kayıt Oluştur";
+
+/* Class = "UIBarButtonItem"; title = "Düzenle"; ObjectID = "EeW-wE-uAp"; */
+"EeW-wE-uAp.title" = "Düzenle";
+
+/* Class = "UITextField"; placeholder = "Yemek Adı Giriniz"; ObjectID = "IcL-J0-Qaq"; */
+"IcL-J0-Qaq.placeholder" = "Yemek Adı Giriniz";
+
+/* Class = "UILabel"; text = "Ücret"; ObjectID = "LtK-7w-ncT"; */
+"LtK-7w-ncT.text" = "Ücret";
+
+/* Class = "UINavigationItem"; title = "Yemek Bilgileri"; ObjectID = "NTZ-nm-6MR"; */
+"NTZ-nm-6MR.title" = "Yemek Bilgileri";
+
+/* Class = "UITextField"; placeholder = "e-Mail Adres"; ObjectID = "Pkv-H9-oVA"; */
+"Pkv-H9-oVA.placeholder" = "e-Mail Adres";
+
+/* Class = "UIBarButtonItem"; title = "Düzenle"; ObjectID = "Po8-In-TEm"; */
+"Po8-In-TEm.title" = "Düzenle";
+
+/* Class = "UITextField"; placeholder = "telefon numarası"; ObjectID = "Skn-xK-I3p"; */
+"Skn-xK-I3p.placeholder" = "telefon numarası";
+
+/* Class = "UIBarButtonItem"; title = "ÇIKIŞ"; ObjectID = "StL-GP-kga"; */
+"StL-GP-kga.title" = "ÇIKIŞ";
+
+/* Class = "UIButton"; normalTitle = "Ekle"; ObjectID = "Va5-dD-XOA"; */
+"Va5-dD-XOA.normalTitle" = "Ekle";
+
+/* Class = "UILabel"; text = "SiPARİŞ"; ObjectID = "WhF-l8-cif"; */
+"WhF-l8-cif.text" = "SiPARİŞ";
+
+/* Class = "UITextField"; placeholder = "Şifre"; ObjectID = "auN-jA-8GK"; */
+"auN-jA-8GK.placeholder" = "Şifre";
+
+/* Class = "UITabBarItem"; title = "Menu"; ObjectID = "bP6-s6-xZO"; */
+"bP6-s6-xZO.title" = "Menu";
+
+/* Class = "UITextField"; placeholder = "Şifre Tekrar"; ObjectID = "d7T-Ie-iA1"; */
+"d7T-Ie-iA1.placeholder" = "Şifre Tekrar";
+
+/* Class = "UIButton"; normalTitle = "Kaydet"; ObjectID = "g5d-am-wCv"; */
+"g5d-am-wCv.normalTitle" = "Kaydet";
+
+/* Class = "UITextField"; placeholder = "e-Mail Adresi"; ObjectID = "h2t-wo-nFs"; */
+"h2t-wo-nFs.placeholder" = "e-Mail Adresi";
+
+/* Class = "UILabel"; text = "Yemek İsmi"; ObjectID = "ibZ-w2-5hC"; */
+"ibZ-w2-5hC.text" = "Yemek İsmi";
+
+/* Class = "UITextView"; text = "yemek açıklaması"; ObjectID = "jVE-CQ-ueY"; */
+"jVE-CQ-ueY.text" = "yemek açıklaması";
+
+/* Class = "UIButton"; normalTitle = "Giriş Yap"; ObjectID = "kxN-pn-NmG"; */
+"kxN-pn-NmG.normalTitle" = "Giriş Yap";
+
+/* Class = "UITabBarItem"; title = "siparis"; ObjectID = "q2Q-Pw-f8d"; */
+"q2Q-Pw-f8d.title" = "siparis";
+
+/* Class = "UINavigationItem"; title = "Menu"; ObjectID = "wbh-Jq-3Et"; */
+"wbh-Jq-3Et.title" = "Menu";
+
+/* Class = "UITextField"; placeholder = "Fiyat Giriniz"; ObjectID = "x2s-a5-pBK"; */
+"x2s-a5-pBK.placeholder" = "Fiyat Giriniz";
+
+/* Class = "UITabBarItem"; title = "konum"; ObjectID = "xas-BZ-Y4o"; */
+"xas-BZ-Y4o.title" = "konum";

@@ -33,6 +33,8 @@
 	<string></string>
 	<key>NSPhotoLibraryUsageDescription</key>
 	<string>To Choose a Photo</string>
+	<key>NSLocationWhenInUseUsageDescription</key>
+	<string>To Reach Your Location</string>
 	<key>UIRequiredDeviceCapabilities</key>
 	<array>
 		<string>armv7</string>
