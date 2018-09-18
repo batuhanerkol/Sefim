@@ -91,7 +91,7 @@ class FoodDetailsTVC: UITableViewController {
                 self.foodNameArray.removeAll(keepingCapacity: false)
                 for object in objects! {
                     object.deleteInBackground()
-                    self.tableView.reloadData()
+                    
                 }
             }
         }
