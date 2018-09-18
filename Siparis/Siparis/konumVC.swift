@@ -71,21 +71,21 @@ class konumVC: UIViewController, MKMapViewDelegate, CLLocationManagerDelegate {
         let span = MKCoordinateSpan(latitudeDelta: 0.009, longitudeDelta: 0.009)
         let region = MKCoordinateRegion(center: location, span: span);  mapView.setRegion(region, animated: true)
         
-        
-        
-        if self.chosenLongitude != "" && self.chosenLatitude != ""{
-            let location = CLLocationCoordinate2D(latitude: Double(self.chosenLatitude)!, longitude: Double(self.chosenLongitude)!)
-            
-            let span = MKCoordinateSpan(latitudeDelta: 0.5, longitudeDelta: 0.5)
-            let region = MKCoordinateRegion(center: location, span: span)
-            
-            self.mapView.setRegion(region, animated: true)
-            
-            let annotation = MKPointAnnotation()
-            annotation.coordinate = location
-            annotation.title = isletmeTextField.text!
-            self.mapView.addAnnotation(annotation)
-        }
+        // 2 farklı view controllerdan konum eklenebilir
+//        
+//        if self.chosenLongitude != "" && self.chosenLatitude != ""{
+//            let location = CLLocationCoordinate2D(latitude: Double(self.chosenLatitude)!, longitude: Double(self.chosenLongitude)!)
+//            
+//            let span = MKCoordinateSpan(latitudeDelta: 0.1, longitudeDelta: 0.1)
+//            let region = MKCoordinateRegion(center: location, span: span)
+//            
+//            self.mapView.setRegion(region, animated: true)
+//            
+//            let annotation = MKPointAnnotation()
+//            annotation.coordinate = location
+//            annotation.title = isletmeTextField.text!
+//            self.mapView.addAnnotation(annotation)
+//        }
         
     }
     

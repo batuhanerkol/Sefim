@@ -31,6 +31,7 @@ class FoodDetailsTVC: UITableViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         getData()
+        
     }
     
     @IBAction func editButtonPressed(_ sender: UIBarButtonItem) {
@@ -90,9 +91,11 @@ class FoodDetailsTVC: UITableViewController {
                 self.foodNameArray.removeAll(keepingCapacity: false)
                 for object in objects! {
                     object.deleteInBackground()
+                    self.tableView.reloadData()
                 }
             }
         }
+        
     }
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "FoodDetaisTVCToFoodInformationShowVC"{
@@ -111,7 +114,7 @@ class FoodDetailsTVC: UITableViewController {
         if (editingStyle == .delete){
             let foodIndexName = nameTableView.cellForRow(at: indexPath)?.textLabel?.text!
 
-            foodNameArray.remove(at: indexPath.item)
+            foodNameArray.remove(at: indexPath.item) 
             tableView.deleteRows(at: [indexPath], with: .automatic)
             
            
