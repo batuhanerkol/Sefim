@@ -10,6 +10,7 @@ import UIKit
 import MapKit
 import Parse
 
+var globalBusinessName = ""
 class konumVC: UIViewController, MKMapViewDelegate, CLLocationManagerDelegate {
 
     @IBOutlet weak var longitudeLabel: UILabel!
@@ -18,6 +19,7 @@ class konumVC: UIViewController, MKMapViewDelegate, CLLocationManagerDelegate {
     @IBOutlet weak var mapView: MKMapView!
     var menager = CLLocationManager()
     
+    var selectedPlace = ""
     var chosenLatitude = ""
     var chosenLongitude = ""
     var chosenLatitudeArray = [String]()
@@ -33,86 +35,39 @@ class konumVC: UIViewController, MKMapViewDelegate, CLLocationManagerDelegate {
         menager.delegate = self
         menager.desiredAccuracy = kCLLocationAccuracyBest
         menager.requestWhenInUseAuthorization()
-        menager.startUpdatingLocation()
-        
-        let recognizer = UILongPressGestureRecognizer(target: self, action: #selector(konumVC.chooseLocation(gestureRecognizer:)))
-        recognizer.minimumPressDuration = 3
-        mapView.addGestureRecognizer(recognizer)
         
         getLocationData()
         
             }
- 
-    
-    override func viewWillAppear(_ animated: Bool) {
-     
-        getLocationData()
-    }
-    
-    
-    @objc func chooseLocation(gestureRecognizer: UIGestureRecognizer){
-        if gestureRecognizer.state == UIGestureRecognizerState.began{
-            let touches = gestureRecognizer.location(in: self.mapView)
-            let coordinates = self.mapView.convert(touches, toCoordinateFrom: self.mapView)
-            let annotation =  MKPointAnnotation()
-            annotation.coordinate = coordinates
-            annotation.title = isletmeTextField.text!
-            self.mapView.addAnnotation(annotation)
-            self.chosenLatitude = String(coordinates.latitude)
-            self.chosenLongitude = String(coordinates.longitude)
-            
-        }
-    }
-    
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         
-        let location = CLLocationCoordinate2D(latitude: locations[0].coordinate.latitude, longitude: locations[0].coordinate.longitude)
         
-        let span = MKCoordinateSpan(latitudeDelta: 0.009, longitudeDelta: 0.009)
-        let region = MKCoordinateRegion(center: location, span: span);  mapView.setRegion(region, animated: true)
-        
-        // 2 farklı view controllerdan konum eklenebilir
-//        
-//        if self.chosenLongitude != "" && self.chosenLatitude != ""{
-//            let location = CLLocationCoordinate2D(latitude: Double(self.chosenLatitude)!, longitude: Double(self.chosenLongitude)!)
-//            
-//            let span = MKCoordinateSpan(latitudeDelta: 0.1, longitudeDelta: 0.1)
-//            let region = MKCoordinateRegion(center: location, span: span)
-//            
-//            self.mapView.setRegion(region, animated: true)
-//            
-//            let annotation = MKPointAnnotation()
-//            annotation.coordinate = location
-//            annotation.title = isletmeTextField.text!
-//            self.mapView.addAnnotation(annotation)
-//        }
+        if self.chosenLongitude != "" && self.chosenLatitude != ""{
+            let location = CLLocationCoordinate2D(latitude: Double(self.chosenLatitude)!, longitude: Double(self.chosenLongitude)!)
+            
+            let span = MKCoordinateSpan(latitudeDelta: 0.05, longitudeDelta: 0.05)
+            let region = MKCoordinateRegion(center: location, span: span)
+            
+            self.mapView.setRegion(region, animated: true)
+            
+            let annotation = MKPointAnnotation()
+            annotation.coordinate = location
+            annotation.title = isletmeTextField.text!
+            self.mapView.addAnnotation(annotation)
+        }
         
     }
     
-    @IBAction func saveButtonPressed(_ sender: Any) {
-        let object = PFObject(className: "Locations")
-        object["businessName"] = isletmeTextField.text!
-        object["businessLocationOwner"] = PFUser.current()!.username!
-        object["latitude"] = self.chosenLatitude
-        object["longitude"] = self.chosenLongitude
-        
-        object.saveInBackground { (success, error) in
-            if error != nil{
-                let alert = UIAlertController(title: "HATA", message: error?.localizedDescription, preferredStyle: UIAlertControllerStyle.alert)
-                let okButton = UIAlertAction(title: "TAMAM", style: UIAlertActionStyle.cancel, handler: nil)
-                alert.addAction(okButton)
-                self.present(alert, animated: true, completion: nil)
-            }
-            else{
-                print("success")
-            }
-        }
+    @IBAction func AddLocationPressed(_ sender: Any) {
+            performSegue(withIdentifier: "konumVCToAddLocationVC", sender: nil)
+        globalBusinessName = isletmeTextField.text!
     }
     
     func getLocationData(){
+        
         let query = PFQuery(className: "Locations")
           query.whereKey("businessLocationOwner", equalTo: "\(PFUser.current()!.username!)")
-        
+        query.whereKey("businessName", equalTo: selectedPlace)
         
         query.findObjectsInBackground { (objects, error) in
             if error != nil{
@@ -128,7 +83,9 @@ class konumVC: UIViewController, MKMapViewDelegate, CLLocationManagerDelegate {
                 for object in objects!{
                     self.chosenLatitudeArray.append(object.object(forKey: "latitude") as! String)
                     self.chosenLongitudeArray.append(object.object(forKey: "longitude") as! String)
-                    
+                  
+                    self.menager.startUpdatingLocation()
+
                     self.latitudeLabel.text = "\(self.chosenLatitudeArray.last!)"
                     self.longitudeLabel.text = "\(self.chosenLongitudeArray.last!)"
                     self.manager.startUpdatingLocation()
