@@ -85,6 +85,8 @@ class MenuTVC: UITableViewController {
                 self.foodTitleArray.removeAll(keepingCapacity: false) 
                 for object in objects! {
                     object.deleteInBackground()
+                    self.titleTableView.reloadData()
+                    self.getData()
                 }
                
             }
