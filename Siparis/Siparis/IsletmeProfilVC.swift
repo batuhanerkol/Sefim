@@ -11,6 +11,9 @@ import Parse
 
 class IsletmeProfilVC: UIViewController {
 
+    @IBOutlet weak var businessInformation: UIButton!
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -32,6 +35,7 @@ class IsletmeProfilVC: UIViewController {
         }
         
         }
+    
     }
     
 

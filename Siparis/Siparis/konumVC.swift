@@ -10,12 +10,11 @@ import UIKit
 import MapKit
 import Parse
 
-var globalBusinessName = ""
 class konumVC: UIViewController, MKMapViewDelegate, CLLocationManagerDelegate {
 
+    @IBOutlet weak var addButton: UIButton!
     @IBOutlet weak var longitudeLabel: UILabel!
     @IBOutlet weak var latitudeLabel: UILabel!
-    @IBOutlet weak var isletmeTextField: UITextField!
     @IBOutlet weak var mapView: MKMapView!
     var menager = CLLocationManager()
     
@@ -37,8 +36,13 @@ class konumVC: UIViewController, MKMapViewDelegate, CLLocationManagerDelegate {
         menager.requestWhenInUseAuthorization()
         
         getLocationData()
+        self.navigationItem.hidesBackButton = true
+        
         
             }
+    override func viewWillAppear(_ animated: Bool) {
+             self.addButton.isHidden = true
+    }
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         
         
@@ -52,22 +56,22 @@ class konumVC: UIViewController, MKMapViewDelegate, CLLocationManagerDelegate {
             
             let annotation = MKPointAnnotation()
             annotation.coordinate = location
-            annotation.title = isletmeTextField.text!
+            annotation.title = globalBusiness
             self.mapView.addAnnotation(annotation)
         }
         
     }
     
     @IBAction func AddLocationPressed(_ sender: Any) {
+ 
             performSegue(withIdentifier: "konumVCToAddLocationVC", sender: nil)
-        globalBusinessName = isletmeTextField.text!
     }
     
     func getLocationData(){
         
         let query = PFQuery(className: "Locations")
           query.whereKey("businessLocationOwner", equalTo: "\(PFUser.current()!.username!)")
-        query.whereKey("businessName", equalTo: selectedPlace)
+        query.whereKey("businessName", equalTo: globalBusiness)
         
         query.findObjectsInBackground { (objects, error) in
             if error != nil{
@@ -94,4 +98,35 @@ class konumVC: UIViewController, MKMapViewDelegate, CLLocationManagerDelegate {
             }
         }
     }
+    @IBAction func cleanButtonPressed(_ sender: Any) {
+self.addButton.isHidden = false
+        deleteData()
+    }
+    func deleteData(){
+        let query = PFQuery(className: "Locations")
+        query.whereKey("businessLocationOwner", equalTo: "\(PFUser.current()!.username!)")
+
+        
+        query.findObjectsInBackground { (objects, error) in
+            
+            if error != nil{
+                let alert = UIAlertController(title: "HATA", message: error?.localizedDescription, preferredStyle: UIAlertControllerStyle.alert)
+                let okButton = UIAlertAction(title: "TAMAM", style: UIAlertActionStyle.cancel, handler: nil)
+                alert.addAction(okButton)
+                self.present(alert, animated: true, completion: nil)
+            }
+            else {
+                self.chosenLatitudeArray.removeAll(keepingCapacity: false)
+                self.chosenLongitudeArray.removeAll(keepingCapacity: false)
+                for object in objects! {
+                    object.deleteInBackground()
+                    
+                    self.longitudeLabel.text = ""
+                    self.latitudeLabel.text = ""
+                }
+                
+            }
+        }
+    }
+    
 }

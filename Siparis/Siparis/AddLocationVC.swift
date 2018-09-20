@@ -11,6 +11,7 @@ import MapKit
 import Parse
 
 class AddLocationVC: UIViewController, MKMapViewDelegate, CLLocationManagerDelegate {
+    var chosenBusiness = globalBusiness
     
     var chosenLatitude = ""
     var chosenLongitude = ""
@@ -49,8 +50,11 @@ class AddLocationVC: UIViewController, MKMapViewDelegate, CLLocationManagerDeleg
             
             let touches = gestureRecognizer.location(in: self.mapView)
             let coordinates = self.mapView.convert(touches, toCoordinateFrom: self.mapView)
+            
             let annotation =  MKPointAnnotation()
             annotation.coordinate = coordinates
+            annotation.title = globalBusiness
+            
             self.mapView.addAnnotation(annotation)
             self.chosenLatitude = String(coordinates.latitude)
             self.chosenLongitude = String(coordinates.longitude)
@@ -74,7 +78,7 @@ class AddLocationVC: UIViewController, MKMapViewDelegate, CLLocationManagerDeleg
                 object["businessLocationOwner"] = PFUser.current()!.username!
                 object["latitude"] = self.chosenLatitude
                 object["longitude"] = self.chosenLongitude
-               object["businessName"] = globalBusinessName
+                object["businessName"] = globalBusiness
         
                 object.saveInBackground { (success, error) in
                     if error != nil{
@@ -85,6 +89,7 @@ class AddLocationVC: UIViewController, MKMapViewDelegate, CLLocationManagerDeleg
                     }
                     else{
                         self.performSegue(withIdentifier: "addLocationVCToKonumVC", sender: nil)
+                        
                         print("Location success")
                     }
                 }

@@ -9,12 +9,19 @@
 import UIKit
 import Parse
 
+var globalBusiness = ""
+
 class SignedUpVC: UIViewController {
+    
     
     @IBOutlet weak var userName: UITextField!
     @IBOutlet weak var password1: UITextField!
     @IBOutlet weak var password2: UITextField!
     @IBOutlet weak var phoneNo: UITextField!
+    @IBOutlet weak var nameTextField: UITextField!
+    @IBOutlet weak var lastNameTextField: UITextField!
+    @IBOutlet weak var businessNameTextField: UITextField!
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -40,6 +47,11 @@ class SignedUpVC: UIViewController {
             userSignUp.password = password1.text!
             userSignUp["PhoneNumber"] = phoneNo.text!
             userSignUp.email = userName.text!
+            userSignUp["name"] = nameTextField.text!
+            userSignUp["lastname"] = lastNameTextField.text!
+            userSignUp["businessName"] = businessNameTextField.text!
+            
+            
             
             userSignUp.signUpInBackground { (success, error) in
                 
@@ -51,6 +63,9 @@ class SignedUpVC: UIViewController {
                 }
                 else{
                     print("kullanıcı oluşturuldu")
+                    
+                   globalBusiness = self.businessNameTextField.text!
+                    
                     self.performSegue(withIdentifier: "SignedUpToTabBar", sender: nil)
                     UserDefaults.standard.set(self.userName.text!, forKey: "userName")
                     UserDefaults.standard.synchronize()
