@@ -11,16 +11,19 @@ import MapKit
 import Parse
 
 class AddLocationVC: UIViewController, MKMapViewDelegate, CLLocationManagerDelegate {
-    var chosenBusiness = globalBusiness
     
+    var chosenBusiness = ""
     var chosenLatitude = ""
     var chosenLongitude = ""
+    
     var chosenLatitudeArray = [String]()
     var chosenLongitudeArray = [String]()
     
     var manager = CLLocationManager()
     var requestCLLocation = CLLocation()
 
+  
+    @IBOutlet weak var businessNameTextField: UITextField!
     @IBOutlet weak var mapView: MKMapView!
     @IBOutlet weak var addButton: UIButton!
     
@@ -36,7 +39,6 @@ class AddLocationVC: UIViewController, MKMapViewDelegate, CLLocationManagerDeleg
         let recognizer = UILongPressGestureRecognizer(target: self, action: #selector(AddLocationVC.chooseLocation(gestureRecognizer:)))
         recognizer.minimumPressDuration = 2
         mapView.addGestureRecognizer(recognizer)
-        
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -53,7 +55,7 @@ class AddLocationVC: UIViewController, MKMapViewDelegate, CLLocationManagerDeleg
             
             let annotation =  MKPointAnnotation()
             annotation.coordinate = coordinates
-            annotation.title = globalBusiness
+            annotation.title = businessNameTextField.text!
             
             self.mapView.addAnnotation(annotation)
             self.chosenLatitude = String(coordinates.latitude)
@@ -73,28 +75,39 @@ class AddLocationVC: UIViewController, MKMapViewDelegate, CLLocationManagerDeleg
     }
     
     @IBAction func addButtonClicked(_ sender: Any) {
-                let object = PFObject(className: "Locations")
-
-                object["businessLocationOwner"] = PFUser.current()!.username!
-                object["latitude"] = self.chosenLatitude
-                object["longitude"] = self.chosenLongitude
-                object["businessName"] = globalBusiness
-        
-                object.saveInBackground { (success, error) in
-                    if error != nil{
-                        let alert = UIAlertController(title: "HATA", message: error?.localizedDescription, preferredStyle: UIAlertControllerStyle.alert)
-                        let okButton = UIAlertAction(title: "TAMAM", style: UIAlertActionStyle.cancel, handler: nil)
-                        alert.addAction(okButton)
-                        self.present(alert, animated: true, completion: nil)
-                    }
-                    else{
-                        self.performSegue(withIdentifier: "addLocationVCToKonumVC", sender: nil)
-                        
-                        print("Location success")
-                    }
-                }
+        if businessNameTextField.text != "" {
+       saveLocation()
+        }
+        else{
+            let alert = UIAlertController(title: "HATA", message: "Lütfen İşletme İsmi Giriniz", preferredStyle: UIAlertControllerStyle.alert)
+            let okButton = UIAlertAction(title: "TAMAM", style: UIAlertActionStyle.cancel, handler: nil)
+            alert.addAction(okButton)
+            self.present(alert, animated: true, completion: nil)
+        }
+        self.performSegue(withIdentifier: "addLocationVCToKonumVC", sender: nil)
     }
-
     
-
+    func saveLocation(){
+        
+        let object = PFObject(className: "Locations")
+        
+        object["businessLocationOwner"] = PFUser.current()!.username!
+        object["latitude"] = self.chosenLatitude
+        object["longitude"] = self.chosenLongitude
+        object["businessName"] = businessNameTextField.text!
+        
+        object.saveInBackground { (success, error) in
+            if error != nil{
+                let alert = UIAlertController(title: "HATA", message: error?.localizedDescription, preferredStyle: UIAlertControllerStyle.alert)
+                let okButton = UIAlertAction(title: "TAMAM", style: UIAlertActionStyle.cancel, handler: nil)
+                alert.addAction(okButton)
+                self.present(alert, animated: true, completion: nil)
+            }
+            else{
+                print("Location success")
+            }
+        }
+    }
+    
+    
 }

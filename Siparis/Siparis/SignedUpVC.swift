@@ -9,10 +9,10 @@
 import UIKit
 import Parse
 
-var globalBusiness = ""
 
 class SignedUpVC: UIViewController {
     
+
     
     @IBOutlet weak var userName: UITextField!
     @IBOutlet weak var password1: UITextField!
@@ -20,12 +20,11 @@ class SignedUpVC: UIViewController {
     @IBOutlet weak var phoneNo: UITextField!
     @IBOutlet weak var nameTextField: UITextField!
     @IBOutlet weak var lastNameTextField: UITextField!
-    @IBOutlet weak var businessNameTextField: UITextField!
-    
     
     override func viewDidLoad() {
         super.viewDidLoad()
         self.phoneNo.keyboardType = UIKeyboardType.decimalPad
+       
     }
     
     
@@ -49,9 +48,7 @@ class SignedUpVC: UIViewController {
             userSignUp.email = userName.text!
             userSignUp["name"] = nameTextField.text!
             userSignUp["lastname"] = lastNameTextField.text!
-            userSignUp["businessName"] = businessNameTextField.text!
-            
-            
+    
             
             userSignUp.signUpInBackground { (success, error) in
                 
@@ -63,8 +60,6 @@ class SignedUpVC: UIViewController {
                 }
                 else{
                     print("kullanıcı oluşturuldu")
-                    
-                   globalBusiness = self.businessNameTextField.text!
                     
                     self.performSegue(withIdentifier: "SignedUpToTabBar", sender: nil)
                     UserDefaults.standard.set(self.userName.text!, forKey: "userName")
@@ -88,6 +83,7 @@ class SignedUpVC: UIViewController {
         }
     }
     
+            
         else{
             
             let alert = UIAlertController(title: "HATA", message: "Bir E-mail Giriniz", preferredStyle: UIAlertControllerStyle.alert)
@@ -95,6 +91,8 @@ class SignedUpVC: UIViewController {
             alert.addAction(okButton)
             self.present(alert, animated: true, completion: nil)
         }
+  
+        
     }
 
     // hide keyboard when touches outside keyboard
@@ -102,5 +100,5 @@ class SignedUpVC: UIViewController {
         self.view.endEditing(true)
     }
     
-    
+
 }
