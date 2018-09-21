@@ -9,6 +9,7 @@
 import UIKit
 import MapKit
 import Parse
+import CoreLocation
 
 class AddLocationVC: UIViewController, MKMapViewDelegate, CLLocationManagerDelegate {
     
@@ -67,11 +68,13 @@ class AddLocationVC: UIViewController, MKMapViewDelegate, CLLocationManagerDeleg
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         
         let location = CLLocationCoordinate2D(latitude: locations[0].coordinate.latitude, longitude: locations[0].coordinate.longitude)
-        
+
         let span = MKCoordinateSpan(latitudeDelta: 0.009, longitudeDelta: 0.009)
         let region = MKCoordinateRegion(center: location, span: span)
         mapView.setRegion(region, animated: true)
+        self.mapView.showsUserLocation = true
         
+         self.manager.stopUpdatingLocation()
     }
     
     @IBAction func addButtonClicked(_ sender: Any) {
@@ -108,6 +111,8 @@ class AddLocationVC: UIViewController, MKMapViewDelegate, CLLocationManagerDeleg
             }
         }
     }
-    
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        self.view.endEditing(true)
+    }
     
 }

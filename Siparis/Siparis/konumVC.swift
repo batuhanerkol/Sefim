@@ -26,7 +26,6 @@ class konumVC: UIViewController, MKMapViewDelegate, CLLocationManagerDelegate {
     var chosenLatitudeArray = [String]()
     var chosenLongitudeArray = [String]()
     
-     var menager = CLLocationManager()
     var manager = CLLocationManager()
     var requestCLLocation = CLLocation()
     
@@ -34,20 +33,28 @@ class konumVC: UIViewController, MKMapViewDelegate, CLLocationManagerDelegate {
         super.viewDidLoad()
 
         mapView.delegate = self
-        menager.delegate = self
-        menager.desiredAccuracy = kCLLocationAccuracyBest
-        menager.requestWhenInUseAuthorization()
+        manager.delegate = self
+        manager.desiredAccuracy = kCLLocationAccuracyBest
+        manager.requestWhenInUseAuthorization()
         
         self.navigationItem.hidesBackButton = true
-        
-          getBusinessName()
+    
          getLocationData()
-      
+        
 
             }
     override func viewWillAppear(_ animated: Bool) {
              self.addButton.isHidden = true
         
+    }
+    
+    @IBAction func AddLocationPressed(_ sender: Any) {
+
+            performSegue(withIdentifier: "konumVCToAddLocationVC", sender: nil)
+    }
+    @IBAction func cleanButtonPressed(_ sender: Any) {
+        self.addButton.isHidden = false
+        deleteData()
     }
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         
@@ -61,23 +68,54 @@ class konumVC: UIViewController, MKMapViewDelegate, CLLocationManagerDelegate {
             
             let annotation = MKPointAnnotation()
             annotation.coordinate = location
-           annotation.title = self.chosenbusinessArray.last
+            annotation.title = self.chosenbusinessArray.last
             self.mapView.addAnnotation(annotation)
         }
-        
+         self.manager.stopUpdatingLocation()
     }
     
-    @IBAction func AddLocationPressed(_ sender: Any) {
+//    func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
+//        if annotation is MKUserLocation{
+//            return nil
+//        }
+//        let reuseID = "pin"
+//        var pinView = mapView.dequeueReusableAnnotationView(withIdentifier: reuseID)
+//        if pinView == nil {
+//            pinView = MKAnnotationView(annotation: annotation, reuseIdentifier: reuseID)
+//            let button = UIButton(type:  .detailDisclosure)
+//            pinView?.rightCalloutAccessoryView = button
+//        }
+//            else{
+//                pinView?.annotation = annotation
+//            }
+//
+//        return pinView
+//    }
+//
+//    func mapView(_ mapView: MKMapView, annotationView view: MKAnnotationView, calloutAccessoryControlTapped control: UIControl) {
+//        if self.chosenLatitude != "" && self.chosenLongitude != "" {
+//            self.requestCLLocation = CLLocation(latitude: Double(self.chosenLatitude)!, longitude: Double(self.chosenLongitude)!)
+//
+//            CLGeocoder().reverseGeocodeLocation(requestCLLocation) { (placemarks, error)in
+//                if let placemark = placemarks {
+//                    if placemark.count > 0 {
+//                        let mkPlacemark = MKPlacemark(placemark: placemark[0])
+//                        let mapItem = MKMapItem(placemark: mkPlacemark)
+//                        mapItem.name = self.chosenbusinessArray.last!
+//                        let launchOptions = [MKLaunchOptionsDirectionsModeKey: MKLaunchOptionsDirectionsModeDriving]
+//                        mapItem.openInMaps(launchOptions : launchOptions)
+//                    }
+//                }
+//            }
+//    }
+//    }
 
-            performSegue(withIdentifier: "konumVCToAddLocationVC", sender: nil)
-    }
-    
     func getLocationData(){
         
         let query = PFQuery(className: "Locations")
           query.whereKey("businessLocationOwner", equalTo: "\(PFUser.current()!.username!)")
-        
-        query.findObjectsInBackground { (objects, error) in
+       
+          query.findObjectsInBackground { (objects, error) in
             if error != nil{
                 let alert = UIAlertController(title: "HATA", message: error?.localizedDescription, preferredStyle: UIAlertControllerStyle.alert)
                 let okButton = UIAlertAction(title: "TAMAM", style: UIAlertActionStyle.cancel, handler: nil)
@@ -87,53 +125,30 @@ class konumVC: UIViewController, MKMapViewDelegate, CLLocationManagerDelegate {
             else{
                 self.chosenLatitudeArray.removeAll(keepingCapacity: false)
                 self.chosenLongitudeArray.removeAll(keepingCapacity: false)
+                self.chosenbusinessArray.removeAll(keepingCapacity: false)
                 
                 for object in objects!{
                     self.chosenLatitudeArray.append(object.object(forKey: "latitude") as! String)
                     self.chosenLongitudeArray.append(object.object(forKey: "longitude") as! String)
-             
+                    self.chosenbusinessArray.append(object.object(forKey: "businessName") as! String)
                     
                     
                     self.chosenLatitude = self.chosenLatitudeArray.last!
                     self.chosenLongitude = self.chosenLongitudeArray.last!
-                    self.manager.startUpdatingLocation()
+                    self.selectedName = self.chosenbusinessArray.last!
                     
+                    self.manager.startUpdatingLocation()
+                
                     self.latitudeLabel.text = "\(self.chosenLatitudeArray.last!)"
                     self.longitudeLabel.text = "\(self.chosenLongitudeArray.last!)"
-                    
-                }
-                
-            }
-        }
-    }
-    
-    
-    func getBusinessName(){
-        let query = PFQuery(className: "Locations")
-        query.whereKey("businessLocationOwner", equalTo: "\(PFUser.current()!.username!)")
-        
-        query.findObjectsInBackground { (objects, error) in
-            if error != nil{
-                let alert = UIAlertController(title: "HATA", message: error?.localizedDescription, preferredStyle: UIAlertControllerStyle.alert)
-                let okButton = UIAlertAction(title: "TAMAM", style: UIAlertActionStyle.cancel, handler: nil)
-                alert.addAction(okButton)
-                self.present(alert, animated: true, completion: nil)
-            }
-            else{
-                self.chosenbusinessArray.removeAll(keepingCapacity: false)
-                
-                
-                for object in objects!{
-                    self.chosenbusinessArray.append(object.object(forKey: "businessName") as! String)
-                    
-                    
-                    self.selectedName = self.chosenbusinessArray.last!
-                    self.manager.startUpdatingLocation()
                     self.businessNameLabel.text = "\(self.chosenbusinessArray.last!)"
+                    
+                    
                 }
                 
             }
         }
+        
     }
     
     func deleteData(){
@@ -162,10 +177,7 @@ class konumVC: UIViewController, MKMapViewDelegate, CLLocationManagerDelegate {
         }
     }
     
-    @IBAction func cleanButtonPressed(_ sender: Any) {
-        self.addButton.isHidden = false
-        deleteData()
-    }
+  
     
     
     }
