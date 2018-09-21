@@ -74,41 +74,42 @@ class konumVC: UIViewController, MKMapViewDelegate, CLLocationManagerDelegate {
          self.manager.stopUpdatingLocation()
     }
     
-//    func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
-//        if annotation is MKUserLocation{
-//            return nil
-//        }
-//        let reuseID = "pin"
-//        var pinView = mapView.dequeueReusableAnnotationView(withIdentifier: reuseID)
-//        if pinView == nil {
-//            pinView = MKAnnotationView(annotation: annotation, reuseIdentifier: reuseID)
-//            let button = UIButton(type:  .detailDisclosure)
-//            pinView?.rightCalloutAccessoryView = button
-//        }
-//            else{
-//                pinView?.annotation = annotation
-//            }
-//
-//        return pinView
-//    }
-//
-//    func mapView(_ mapView: MKMapView, annotationView view: MKAnnotationView, calloutAccessoryControlTapped control: UIControl) {
-//        if self.chosenLatitude != "" && self.chosenLongitude != "" {
-//            self.requestCLLocation = CLLocation(latitude: Double(self.chosenLatitude)!, longitude: Double(self.chosenLongitude)!)
-//
-//            CLGeocoder().reverseGeocodeLocation(requestCLLocation) { (placemarks, error)in
-//                if let placemark = placemarks {
-//                    if placemark.count > 0 {
-//                        let mkPlacemark = MKPlacemark(placemark: placemark[0])
-//                        let mapItem = MKMapItem(placemark: mkPlacemark)
-//                        mapItem.name = self.chosenbusinessArray.last!
-//                        let launchOptions = [MKLaunchOptionsDirectionsModeKey: MKLaunchOptionsDirectionsModeDriving]
-//                        mapItem.openInMaps(launchOptions : launchOptions)
-//                    }
-//                }
-//            }
-//    }
-//    }
+    func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
+        if annotation is MKUserLocation{
+            return nil
+        }
+        let reuseID = "pin"
+        var pinView = mapView.dequeueReusableAnnotationView(withIdentifier: reuseID)
+        if pinView == nil {
+            pinView = MKPinAnnotationView(annotation: annotation, reuseIdentifier: reuseID)
+            pinView?.canShowCallout = true
+            let button = UIButton(type:  .detailDisclosure)
+            pinView?.rightCalloutAccessoryView = button
+        }
+            else{
+                pinView?.annotation = annotation
+            }
+
+        return pinView
+    }
+
+    func mapView(_ mapView: MKMapView, annotationView view: MKAnnotationView, calloutAccessoryControlTapped control: UIControl) {
+        if self.chosenLatitude != "" && self.chosenLongitude != "" {
+            self.requestCLLocation = CLLocation(latitude: Double(self.chosenLatitude)!, longitude: Double(self.chosenLongitude)!)
+
+            CLGeocoder().reverseGeocodeLocation(requestCLLocation) { (placemarks, error)in
+                if let placemark = placemarks {
+                    if placemark.count > 0 {
+                        let mkPlacemark = MKPlacemark(placemark: placemark[0])
+                        let mapItem = MKMapItem(placemark: mkPlacemark)
+                        mapItem.name = self.chosenbusinessArray.last!
+                        let launchOptions = [MKLaunchOptionsDirectionsModeKey: MKLaunchOptionsDirectionsModeDriving]
+                        mapItem.openInMaps(launchOptions : launchOptions)
+                    }
+                }
+            }
+    }
+    }
 
     func getLocationData(){
         
