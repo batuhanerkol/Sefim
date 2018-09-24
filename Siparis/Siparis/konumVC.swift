@@ -31,6 +31,8 @@ class konumVC: UIViewController, MKMapViewDelegate, CLLocationManagerDelegate {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        
 
         mapView.delegate = self
         manager.delegate = self
@@ -38,13 +40,11 @@ class konumVC: UIViewController, MKMapViewDelegate, CLLocationManagerDelegate {
         manager.requestWhenInUseAuthorization()
         
         self.navigationItem.hidesBackButton = true
-    
-         getLocationData()
         
-
             }
     override func viewWillAppear(_ animated: Bool) {
              self.addButton.isHidden = true
+            getLocationData()
         
     }
     
@@ -70,6 +70,7 @@ class konumVC: UIViewController, MKMapViewDelegate, CLLocationManagerDelegate {
             annotation.coordinate = location
             annotation.title = self.chosenbusinessArray.last
             self.mapView.addAnnotation(annotation)
+             self.manager.stopUpdatingLocation()
         }
          self.manager.stopUpdatingLocation()
     }
@@ -138,12 +139,15 @@ class konumVC: UIViewController, MKMapViewDelegate, CLLocationManagerDelegate {
                     self.chosenLongitude = self.chosenLongitudeArray.last!
                     self.selectedName = self.chosenbusinessArray.last!
                     
-                    self.manager.startUpdatingLocation()
+                   
                 
                     self.latitudeLabel.text = "\(self.chosenLatitudeArray.last!)"
                     self.longitudeLabel.text = "\(self.chosenLongitudeArray.last!)"
                     self.businessNameLabel.text = "\(self.chosenbusinessArray.last!)"
                     
+                     self.manager.startUpdatingLocation()
+                    
+                    print("lokasyon datası alındı")
                     
                 }
                 
@@ -166,12 +170,17 @@ class konumVC: UIViewController, MKMapViewDelegate, CLLocationManagerDelegate {
             else {
                 self.chosenLatitudeArray.removeAll(keepingCapacity: false)
                 self.chosenLongitudeArray.removeAll(keepingCapacity: false)
+                self.chosenbusinessArray.removeAll(keepingCapacity: false)
                 for object in objects! {
                     object.deleteInBackground()
                     
                     self.longitudeLabel.text = ""
                     self.latitudeLabel.text = ""
                     self.businessNameLabel.text = ""
+                    
+                    let annotation = MKPointAnnotation()
+                     self.mapView.removeAnnotation(annotation)
+                    print("lokasyon silindi")
                 }
                 
             }

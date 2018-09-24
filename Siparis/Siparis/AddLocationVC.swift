@@ -38,7 +38,7 @@ class AddLocationVC: UIViewController, MKMapViewDelegate, CLLocationManagerDeleg
         self.manager.startUpdatingLocation()
         
         let recognizer = UILongPressGestureRecognizer(target: self, action: #selector(AddLocationVC.chooseLocation(gestureRecognizer:)))
-        recognizer.minimumPressDuration = 2
+        recognizer.minimumPressDuration = 1.5
         mapView.addGestureRecognizer(recognizer)
     }
     
@@ -62,6 +62,7 @@ class AddLocationVC: UIViewController, MKMapViewDelegate, CLLocationManagerDeleg
             self.chosenLatitude = String(coordinates.latitude)
             self.chosenLongitude = String(coordinates.longitude)
             
+            print("lokasyon seçildi")
         }
     }
     
@@ -80,6 +81,7 @@ class AddLocationVC: UIViewController, MKMapViewDelegate, CLLocationManagerDeleg
     @IBAction func addButtonClicked(_ sender: Any) {
         if businessNameTextField.text != "" {
        saveLocation()
+            self.performSegue(withIdentifier: "addLocationVCToKonumVC", sender: nil)
         }
         else{
             let alert = UIAlertController(title: "HATA", message: "Lütfen İşletme İsmi Giriniz", preferredStyle: UIAlertControllerStyle.alert)
@@ -87,7 +89,7 @@ class AddLocationVC: UIViewController, MKMapViewDelegate, CLLocationManagerDeleg
             alert.addAction(okButton)
             self.present(alert, animated: true, completion: nil)
         }
-        self.performSegue(withIdentifier: "addLocationVCToKonumVC", sender: nil)
+        
     }
     
     func saveLocation(){
@@ -107,9 +109,10 @@ class AddLocationVC: UIViewController, MKMapViewDelegate, CLLocationManagerDeleg
                 self.present(alert, animated: true, completion: nil)
             }
             else{
-                print("Location success")
+                print("Lokasyon parse kayıt edildi")
             }
         }
+        
     }
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         self.view.endEditing(true)

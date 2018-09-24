@@ -9,27 +9,35 @@
 import UIKit
 
 class KareKodVC: UIViewController {
-
+    
+    @IBOutlet weak var textField: UITextField!
+    @IBOutlet weak var QRImageView: UIImageView!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        // Do any additional setup after loading the view.
-    }
-
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
     }
     
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
+    @IBAction func buttonClicked(_ sender: Any) {
+        
+        if let QRString = textField.text {
+            
+            let data =  QRString.data(using: .ascii, allowLossyConversion: false)
+            let filter = CIFilter(name: "CIQRCodeGenerator")
+            filter?.setValue(data, forKey: "inputMessage")
+            
+            let ciImage = filter?.outputImage
+            
+            let transform = CGAffineTransform(scaleX: 10, y: 10)
+            let transformImage = ciImage?.transformed(by: transform)
+            
+            let image = UIImage(ciImage: transformImage!)
+            QRImageView.image = image
+            
+            
+        }
     }
-    */
-
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        self.view.endEditing(true)
+    }
 }
