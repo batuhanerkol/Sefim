@@ -48,6 +48,7 @@ class AddFoodInformationVC: UIViewController, UIImagePickerControllerDelegate, U
       
         if textField.text != "" && longTextField.text != "" && priceTextField.text != ""  {
             self.confirmButton.isHidden = true
+            
             let foodInformation = PFObject(className: "FoodInformation")
             foodInformation["foodName"] = textField.text!
             foodInformation["foodInformation"] = longTextField.text!

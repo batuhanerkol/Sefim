@@ -32,7 +32,6 @@ class konumVC: UIViewController, MKMapViewDelegate, CLLocationManagerDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        
 
         mapView.delegate = self
         manager.delegate = self
@@ -44,8 +43,12 @@ class konumVC: UIViewController, MKMapViewDelegate, CLLocationManagerDelegate {
             }
     override func viewWillAppear(_ animated: Bool) {
              self.addButton.isHidden = true
-            getLocationData()
         
+        
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        getLocationData()
     }
     
     @IBAction func AddLocationPressed(_ sender: Any) {
