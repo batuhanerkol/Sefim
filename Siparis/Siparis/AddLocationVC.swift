@@ -11,7 +11,7 @@ import MapKit
 import Parse
 import CoreLocation
 
-class AddLocationVC: UIViewController, MKMapViewDelegate, CLLocationManagerDelegate {
+class AddLocationVC: UIViewController, MKMapViewDelegate, CLLocationManagerDelegate,UITextFieldDelegate {
     
     var chosenBusiness = ""
     var chosenLatitude = ""
@@ -30,6 +30,8 @@ class AddLocationVC: UIViewController, MKMapViewDelegate, CLLocationManagerDeleg
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+         self.businessNameTextField.delegate = self
 
         mapView.delegate = self
         self.manager.delegate = self
@@ -117,5 +119,8 @@ class AddLocationVC: UIViewController, MKMapViewDelegate, CLLocationManagerDeleg
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         self.view.endEditing(true)
     }
-    
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        textField.resignFirstResponder()
+        return(true)
+    }
 }

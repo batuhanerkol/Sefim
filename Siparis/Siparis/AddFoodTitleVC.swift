@@ -9,7 +9,7 @@
 import UIKit
 import Parse
 
-class AddFoodTitleVC: UIViewController {
+class AddFoodTitleVC: UIViewController,UITextFieldDelegate {
     
     @IBOutlet weak var addButton: UIButton!
     
@@ -17,6 +17,8 @@ class AddFoodTitleVC: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        self.textField.delegate = self
 self.addButton.isHidden = false
     }
 
@@ -55,6 +57,10 @@ self.addButton.isHidden = false
         }
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         self.view.endEditing(true)
+    }
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        textField.resignFirstResponder()
+        return(true)
     }
     }
     

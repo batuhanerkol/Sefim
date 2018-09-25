@@ -8,14 +8,14 @@
 
 import UIKit
 
-class KareKodVC: UIViewController {
+class KareKodVC: UIViewController , UITextFieldDelegate{
     
     @IBOutlet weak var textField: UITextField!
     @IBOutlet weak var QRImageView: UIImageView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
+    self.textField.delegate = self
     }
     
     @IBAction func buttonClicked(_ sender: Any) {
@@ -39,5 +39,9 @@ class KareKodVC: UIViewController {
     }
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         self.view.endEditing(true)
+    }
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        textField.resignFirstResponder()
+        return(true)
     }
 }

@@ -10,7 +10,7 @@ import UIKit
 import Parse
 
 
-class SignedUpVC: UIViewController {
+class SignedUpVC: UIViewController, UITextFieldDelegate {
     
 
     
@@ -23,6 +23,13 @@ class SignedUpVC: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.userName.delegate = self
+        self.password1.delegate = self
+        self.password2.delegate = self
+        self.phoneNo.delegate = self
+        self.nameTextField.delegate = self
+        self.lastNameTextField.delegate = self
+        
         self.phoneNo.keyboardType = UIKeyboardType.decimalPad
        
     }
@@ -99,6 +106,9 @@ class SignedUpVC: UIViewController {
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         self.view.endEditing(true)
     }
-    
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        textField.resignFirstResponder()
+        return(true)
+    }
 
 }

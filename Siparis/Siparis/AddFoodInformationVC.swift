@@ -8,23 +8,29 @@
 
 import UIKit
 import Parse
-class AddFoodInformationVC: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
+class AddFoodInformationVC: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate,UITextFieldDelegate {
 
+    @IBOutlet weak var longTextField: UITextView!
     @IBOutlet weak var confirmButton: UIButton!
     @IBOutlet weak var priceTextField: UITextField!
-    @IBOutlet weak var longTextField: UITextView!
     @IBOutlet weak var textField: UITextField!
     @IBOutlet weak var selectedImage: UIImageView!
     
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        self.textField.delegate = self
+        self.priceTextField.delegate = self
+     // longtextfield bitti button keyboard kapanma ayarla
+        
           selectedImage.isUserInteractionEnabled = true
         let gestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(AddFoodInformationVC.selectImage))
             selectedImage.addGestureRecognizer(gestureRecognizer)
     }
     
     @objc func selectImage() {
+        
         
         let picker = UIImagePickerController()
         picker.delegate = self
@@ -100,6 +106,10 @@ class AddFoodInformationVC: UIViewController, UIImagePickerControllerDelegate, U
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         self.view.endEditing(true)
         
+    }
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        textField.resignFirstResponder()
+        return(true)
     }
     }
     

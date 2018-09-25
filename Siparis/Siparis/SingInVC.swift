@@ -9,14 +9,15 @@
 import UIKit
 import Parse
 
-class SingInVC: UIViewController {
+class SingInVC: UIViewController,UITextFieldDelegate {
 
     @IBOutlet weak var passwordText: UITextField!
     @IBOutlet weak var userNameText: UITextField!
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        self.userNameText.delegate = self
+        self.passwordText.delegate = self
         
         self.navigationItem.setHidesBackButton(true, animated:true)
         
@@ -61,5 +62,8 @@ class SingInVC: UIViewController {
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         self.view.endEditing(true)
     }
-
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        textField.resignFirstResponder()
+        return(true)
+    }
 }
