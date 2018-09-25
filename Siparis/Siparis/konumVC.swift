@@ -59,6 +59,7 @@ class konumVC: UIViewController, MKMapViewDelegate, CLLocationManagerDelegate {
         self.addButton.isHidden = false
         deleteData()
     }
+        
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         
         if self.chosenLongitude != "" && self.chosenLatitude != ""{

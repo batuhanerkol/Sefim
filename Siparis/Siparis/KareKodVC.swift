@@ -19,6 +19,8 @@ class KareKodVC: UIViewController , UITextFieldDelegate{
     override func viewDidLoad() {
         super.viewDidLoad()
     self.textField.delegate = self
+        textField.isHidden = true
+        deleteButton.isHidden = true
     }
     
     @IBAction func buttonClicked(_ sender: Any) {
@@ -26,17 +28,80 @@ class KareKodVC: UIViewController , UITextFieldDelegate{
         self.deleteButton.isHidden = false
          creatQRCode()
          uploadQRInformation()
-        
+          textField.isHidden = false
        
+    }
+    func isValidEmail(testStr:String) -> Bool {
+        let emailRegEx = "[A-Z0-9a-z._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,64}"
+        let emailTest = NSPredicate(format:"SELF MATCHES %@", emailRegEx)
+        return emailTest.evaluate(with: testStr)
     }
     
     @IBAction func deleteQRButton(_ sender: Any) {
-        deleteData()
-        self.textField.text = ""
-    // sildikten sonra qr kodu kaldırmanın yolunu bul
-        self.deleteButton.isHidden = true
-       self.createButton.isHidden = false
-    }
+        
+        let email = isValidEmail(testStr: textField.text!)
+        if email == true {
+            if textField.text == PFUser.current()!.username!{
+        let query = PFQuery(className: "QRInformation")
+        query.whereKey("QROwner", equalTo: "\(PFUser.current()!.username!)")
+        query.whereKey("QROwner", equalTo: textField.text!)
+        
+        query.findObjectsInBackground { (objects, error) in
+            
+            if error != nil{
+                let alert = UIAlertController(title: "HATA", message: "Lütfen Kullanıcı Adı Mail Adresini Giriniz", preferredStyle: UIAlertControllerStyle.alert)
+                let okButton = UIAlertAction(title: "TAMAM", style: UIAlertActionStyle.cancel, handler: nil)
+                alert.addAction(okButton)
+                self.present(alert, animated: true, completion: nil)
+            }
+                
+                
+            else{
+                
+                if self.textField.text != ""{
+                    
+                    self.textField.text = ""
+                    // sildikten sonra qr kodu kaldırmanın yolunu bul
+                    self.deleteButton.isHidden = true
+                    self.createButton.isHidden = false
+                    for object in objects! {
+                        object.deleteInBackground()
+                        
+                        self.textField.isHidden = true
+                        
+                    }
+                }
+                
+                else{
+                    let alert = UIAlertController(title: "SİlMEK İÇİN E-MAİL ADRESİ GİRİNİZ", message: "", preferredStyle: UIAlertControllerStyle.alert)
+                    let okButton = UIAlertAction(title: "TAMAM", style: UIAlertActionStyle.cancel, handler: nil)
+                    alert.addAction(okButton)
+                    self.present(alert, animated: true, completion: nil)
+                }
+                
+               
+            }
+            
+        }
+        
+        }
+            else{
+                let alert = UIAlertController(title: "Kullanıcı adı mailinizi giriniz", message: "", preferredStyle: UIAlertControllerStyle.alert)
+                let okButton = UIAlertAction(title: "TAMAM", style: UIAlertActionStyle.cancel, handler: nil)
+                alert.addAction(okButton)
+                self.present(alert, animated: true, completion: nil)
+            }
+            }
+        
+        
+        else{
+            let alert = UIAlertController(title: "BİR E-MAİL ADRESİ GİRİNİZ", message: "", preferredStyle: UIAlertControllerStyle.alert)
+            let okButton = UIAlertAction(title: "TAMAM", style: UIAlertActionStyle.cancel, handler: nil)
+            alert.addAction(okButton)
+            self.present(alert, animated: true, completion: nil)
+        }
+        }
+
     
     func creatQRCode(){
         if let QRString = textField.text {
@@ -58,12 +123,7 @@ class KareKodVC: UIViewController , UITextFieldDelegate{
     }
     
     
-    func isValidEmail(testStr:String) -> Bool {
-        let emailRegEx = "[A-Z0-9a-z._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,64}"
-        let emailTest = NSPredicate(format:"SELF MATCHES %@", emailRegEx)
-        return emailTest.evaluate(with: testStr)
-    }
-    
+   
     
     func uploadQRInformation(){
         
@@ -89,30 +149,6 @@ class KareKodVC: UIViewController , UITextFieldDelegate{
             
     }
     }
-    
-    func deleteData(){
-        let query = PFQuery(className: "QRInformation")
-        query.whereKey("QROwner", equalTo: "\(PFUser.current()!.username!)")
-        
-        
-        query.findObjectsInBackground { (objects, error) in
-            if error != nil{
-                let alert = UIAlertController(title: "HATA", message: error?.localizedDescription, preferredStyle: UIAlertControllerStyle.alert)
-                let okButton = UIAlertAction(title: "TAMAM", style: UIAlertActionStyle.cancel, handler: nil)
-                alert.addAction(okButton)
-                self.present(alert, animated: true, completion: nil)
-            }
-            else{
-               
-                for object in objects! {
-                    object.deleteInBackground()
-                }
-            }
-            
-        }
-        
-    }
-    
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         self.view.endEditing(true)
