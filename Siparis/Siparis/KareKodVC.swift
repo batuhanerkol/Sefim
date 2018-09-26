@@ -127,12 +127,11 @@ class KareKodVC: UIViewController , UITextFieldDelegate{
     
     func uploadQRInformation(){
         
-            
             let qrObject = PFObject(className: "QRInformation")
             qrObject["QROwner"] = PFUser.current()!.username!
         
         if let imageData = UIImageJPEGRepresentation(QRImageView.image!, 0.3){
-            qrObject["image"] = PFFile(name: "image.jpg", data: imageData)
+            qrObject["QRimage"] = PFFile(name: "image.jpg", data: imageData)
         }
        
             qrObject.saveInBackground { (objects, error) in

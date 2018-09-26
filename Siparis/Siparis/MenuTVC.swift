@@ -53,7 +53,7 @@ class MenuTVC: UITableViewController {
         let query = PFQuery(className: "FoodInformation")
         query.whereKey("foodTitleOwner", equalTo: "\(PFUser.current()!.username!)")
         query.findObjectsInBackground { (objects, error) in
-    
+
                 if error != nil{
                     let alert = UIAlertController(title: "HATA", message: error?.localizedDescription, preferredStyle: UIAlertControllerStyle.alert)
                     let okButton = UIAlertAction(title: "TAMAM", style: UIAlertActionStyle.cancel, handler: nil)
@@ -69,7 +69,7 @@ class MenuTVC: UITableViewController {
             }
         }
     }
-    
+
     func deleteData(foodIndexTitle : String){
         let query = PFQuery(className: "FoodInformation")
         query.whereKey("foodTitleOwner", equalTo: "\(PFUser.current()!.username!)")

@@ -20,9 +20,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         rememberUser()
         
         let config = ParseClientConfiguration { (ParseMutableClientConfiguration) in
-            ParseMutableClientConfiguration.applicationId = "7e583768f4ee79eea9c846e1464d7d6213bd992e"
-            ParseMutableClientConfiguration.clientKey = "e079245b3112538982f0d1bbb41da1a3b3da735f"
-            ParseMutableClientConfiguration.server = "http://35.164.69.144:80/parse"
+            ParseMutableClientConfiguration.applicationId = "741b0f4ea3b290196f78245e7893fff5e46cac1e"
+            ParseMutableClientConfiguration.clientKey = "cb667b25903077a8ade2f625112798abdffe2ce8"
+            ParseMutableClientConfiguration.server = "http://54.186.194.33:80/parse"
         }
         
         Parse.initialize(with: config)
