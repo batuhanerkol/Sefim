@@ -14,8 +14,12 @@ class MasaVC: UIViewController {
     var yLocation = 10
     var tableNumber = 0
     
-    
-   
+  public var screenWidth: CGFloat {
+        return UIScreen.main.bounds.width
+    }
+     public var screenHeight: CGFloat {
+        return UIScreen.main.bounds.height
+    }
     
     @IBOutlet weak var createButton: UIButton!
     @IBOutlet weak var myScrollView: UIScrollView!
@@ -31,7 +35,7 @@ class MasaVC: UIViewController {
     func createBtn(){
         let button = UIButton()
 
-        button.frame = CGRect(x:   xLocation, y:   yLocation, width: 70, height: 70)
+        button.frame = CGRect(x:   xLocation, y:   yLocation, width: 80, height: 80)
         button.backgroundColor = UIColor.gray
         button.setTitle("\(tableNumber + 1) ", for: .normal)
         button.addTarget(self, action: #selector(buttonAction), for: .touchUpInside)
@@ -54,17 +58,17 @@ class MasaVC: UIViewController {
 
             let textfieldInt: Int? = Int(textField.text!)
             
-            if textfieldInt! < 50 {
+            if textfieldInt! <= 50 {
               
             while tableNumber < textfieldInt! {
                 
                  createBtn()
                  tableNumber = tableNumber + 1
                 
-                if xLocation < 240{
+                if CGFloat(xLocation) < screenWidth{
                 xLocation = xLocation + 90
                 }
-                else if xLocation >= 240 {
+                else if CGFloat(xLocation) >= screenWidth {
                 xLocation = 10
                 yLocation = yLocation + 90
                 }
