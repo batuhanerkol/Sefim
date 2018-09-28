@@ -8,22 +8,23 @@
 
 import UIKit
 import Parse
+import UIKit
 
-class CreateQR: UIViewController {
+class CreateQR: UIViewController{
 
+    @IBOutlet weak var saveToPhotoButton: UIButton!
     @IBOutlet weak var createButton: UIButton!
     @IBOutlet weak var imageView: UIImageView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
-createButton.isHidden = false
-   
+        
+       createButton.isHidden = false
+    
     }
     @IBAction func createButtonClicked(_ sender: Any) {
         creatQRCode()
         uploadQRInformation()
-        
-       
     }
     
     func creatQRCode(){
@@ -42,6 +43,8 @@ createButton.isHidden = false
             imageView.image = image
             
             self.createButton.isHidden = true
+            
+            
         }
     }
     func uploadQRInformation(){
@@ -51,8 +54,9 @@ createButton.isHidden = false
         
         if let imageData = UIImageJPEGRepresentation(imageView.image!, 0.3){
             qrObject["QRImage"] = PFFile(name: "image.jpg", data: imageData)
+            
+            
         }
-        
         qrObject.saveInBackground { (objects, error) in
             
             if error != nil{
@@ -66,5 +70,28 @@ createButton.isHidden = false
             }
             
         }
+        
+       
     }
+    
+    func saveToPhotoLibrary(){
+
+        let imageData = UIImagePNGRepresentation(imageView.image!)
+        let compresedImage = UIImage(data: imageData!)
+        UIImageWriteToSavedPhotosAlbum(compresedImage!, nil, nil, nil )
+
+        let alert = UIAlertController(title: "QR KOD Fotoğraflara Kaydedildi", message: "", preferredStyle: .alert)
+        let okAction = UIAlertAction(title: "Tamam", style: .default, handler: nil)
+        alert.addAction(okAction)
+        self.present(alert, animated: true, completion: nil)
+    }
+    
+    
+   
+    @IBAction func saveToPhotoButtonPressed(_ sender: Any) {
+        
+     saveToPhotoLibrary()
+    }
+  
+    
 }

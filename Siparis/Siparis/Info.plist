@@ -27,6 +27,8 @@
 		<key>NSAllowsArbitraryLoads</key>
 		<true/>
 	</dict>
+	<key>NSPhotoLibraryAddUsageDescription</key>
+	<string>QR Kod Kaydetmek İçin</string>
 	<key>CFBundleDisplayName</key>
 	<string></string>
 	<key>UIMainStoryboardFile</key>
