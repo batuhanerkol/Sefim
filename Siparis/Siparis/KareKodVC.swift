@@ -11,6 +11,8 @@ import Parse
 
 class KareKodVC: UIViewController , UITextFieldDelegate{
     
+    var imageArray = [PFFile]()
+    
     @IBOutlet weak var createButton: UIButton!
     @IBOutlet weak var deleteButton: UIButton!
     @IBOutlet weak var textField: UITextField!
@@ -19,16 +21,22 @@ class KareKodVC: UIViewController , UITextFieldDelegate{
     override func viewDidLoad() {
         super.viewDidLoad()
     self.textField.delegate = self
+        
         textField.isHidden = true
         deleteButton.isHidden = true
+        
+        self.navigationItem.hidesBackButton = true
+        
+        
+        
     }
     
     @IBAction func buttonClicked(_ sender: Any) {
         self.createButton.isHidden = true
         self.deleteButton.isHidden = false
-         creatQRCode()
-         uploadQRInformation()
           textField.isHidden = false
+        
+        performSegue(withIdentifier: "KareKodToCreateQR", sender: nil)
        
     }
     func isValidEmail(testStr:String) -> Bool {
@@ -102,53 +110,39 @@ class KareKodVC: UIViewController , UITextFieldDelegate{
         }
         }
 
-    
-    func creatQRCode(){
-        if let QRString = textField.text {
+    func getQRData(){
+         let query = PFQuery(className: "QRInformation")
+        query.whereKey("QROwner", equalTo: "\(PFUser.current()!.username!)")
+        query.findObjectsInBackground { (objects, error) in
             
-            let data =  QRString.data(using: .ascii, allowLossyConversion: false)
-            let filter = CIFilter(name: "CIQRCodeGenerator")
-            filter?.setValue(data, forKey: "inputMessage")
-            
-            let ciImage = filter?.outputImage
-            
-            let transform = CGAffineTransform(scaleX: 10, y: 10)
-            let transformImage = ciImage?.transformed(by: transform)
-            
-            let image = UIImage(ciImage: transformImage!)
-            QRImageView.image = image
-            
-            
-    }
-    }
-    
-    
-   
-    
-    func uploadQRInformation(){
-        
-            let qrObject = PFObject(className: "QRInformation")
-            qrObject["QROwner"] = PFUser.current()!.username!
-        
-        if let imageData = UIImageJPEGRepresentation(QRImageView.image!, 0.3){
-            qrObject["QRimage"] = PFFile(name: "image.jpg", data: imageData)
-        }
-       
-            qrObject.saveInBackground { (objects, error) in
+            if error != nil{
+                let alert = UIAlertController(title: "HATA", message: error?.localizedDescription, preferredStyle: UIAlertControllerStyle.alert)
+                let okButton = UIAlertAction(title: "TAMAM", style: UIAlertActionStyle.cancel, handler: nil)
+                alert.addAction(okButton)
+                self.present(alert, animated: true, completion: nil)
+            }
                 
-                if error != nil{
-                    let alert = UIAlertController(title: "HATA", message: error?.localizedDescription, preferredStyle: UIAlertControllerStyle.alert)
-                    let okButton = UIAlertAction(title: "TAMAM", style: UIAlertActionStyle.cancel, handler: nil)
-                    alert.addAction(okButton)
-                    self.present(alert, animated: true, completion: nil)
+            else{
+                self.imageArray.removeAll(keepingCapacity: false)
+                
+                for object in objects!{
+                    self.imageArray.append(object.object(forKey: "QRImage") as! PFFile)
+                    self.imageArray.last?.getDataInBackground(block: { (data, error) in
+                        if error != nil{
+                            let alert = UIAlertController(title: "HATA", message: error?.localizedDescription, preferredStyle: UIAlertControllerStyle.alert)
+                            let okButton = UIAlertAction(title: "TAMAM", style: UIAlertActionStyle.cancel, handler: nil)
+                            alert.addAction(okButton)
+                            self.present(alert, animated: true, completion: nil)
+                        }
+                        else{
+                            self.QRImageView.image = UIImage(data: (data)!)
+                        }
+                    })
                 }
-                else{
-                    print("QR kayıt edildi")
-                }
-            
+
+            }
+        }
     }
-    }
-    
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         self.view.endEditing(true)
     }

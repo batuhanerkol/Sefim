@@ -10,10 +10,11 @@ import UIKit
 
 class MasaVC: UIViewController {
 
-    var x = 20
-    var y = 120
+    var xLocation = 10
+    var yLocation = 120
    
     
+    @IBOutlet weak var deleteButton: UIButton!
     @IBOutlet weak var textField: UITextField!
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -21,15 +22,13 @@ class MasaVC: UIViewController {
     }
     func createButton(){
         let button = UIButton()
-        button.frame = CGRect(x:   x, y:   y, width: 65, height: 65)
+        button.frame = CGRect(x:   xLocation, y:   yLocation, width: 70, height: 70)
         button.backgroundColor = UIColor.red
         button.setTitle("masa: ", for: .normal)
         button.addTarget(self, action: #selector(buttonAction), for: .touchUpInside)
         self.view.addSubview(button)
         
         print("button created")
-        
-       
     }
     @objc func buttonAction(sender: UIButton!) {
         print("Button tapped")
@@ -39,12 +38,28 @@ class MasaVC: UIViewController {
         
         if textField.text != ""{
             
-             var tableNumber = 0
+            var tableNumber = 0
             let textfieldInt: Int? = Int(textField.text!)
+            
+            if textfieldInt! < 50 {
             while tableNumber < textfieldInt! {
                 createButton()
                  tableNumber = tableNumber + 1
-                y = y + 70
+                
+                if xLocation < 280{
+                xLocation = xLocation + 80
+                }
+                else if xLocation >= 280 {
+                xLocation = 10
+                yLocation = yLocation + 80
+                }
+            }
+        }
+            else{
+                let alert = UIAlertController(title: "En Fazla 50 Masa Olabilir", message: "", preferredStyle: UIAlertControllerStyle.alert)
+                let okButton = UIAlertAction(title: "TAMAM", style: UIAlertActionStyle.cancel, handler: nil)
+                alert.addAction(okButton)
+                self.present(alert, animated: true, completion: nil)
             }
         }
         else{
@@ -56,5 +71,8 @@ class MasaVC: UIViewController {
     }
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         self.view.endEditing(true)
+    }
+    @IBAction func deleteButtonPressed(_ sender: Any) {
+        
     }
 }
