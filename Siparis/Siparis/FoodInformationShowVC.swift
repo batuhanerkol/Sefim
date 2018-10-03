@@ -33,6 +33,7 @@ class FoodInformationShowVC: UIViewController {
     func findFood(){
         let query = PFQuery(className: "FoodInformation")
         query.whereKey("foodName", equalTo: self.selectedFood)
+        
         query.findObjectsInBackground { (objects, error) in
             if error != nil{
                 let alert = UIAlertController(title: "HATA", message: error?.localizedDescription, preferredStyle: UIAlertControllerStyle.alert)
