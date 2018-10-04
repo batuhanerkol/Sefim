@@ -24,6 +24,8 @@ class MasaVC: UIViewController {
     var tableNumberArray = [String]()
     var tableNumberText = ""
     
+    var deneme = 0
+    
     
     
   public var screenWidth: CGFloat {
@@ -65,10 +67,47 @@ class MasaVC: UIViewController {
     
     
     func getButtonWhenAppOpen(){
-        if textField.text != ""{
-            
 
+        let query = PFQuery(className: "TableNumbers")
+        query.whereKey("TableOwner", equalTo: "\(PFUser.current()!.username!)")
+        
+        query.findObjectsInBackground { (objects, error) in
+            if error != nil{
+                let alert = UIAlertController(title: "HATA", message: error?.localizedDescription, preferredStyle: UIAlertControllerStyle.alert)
+                let okButton = UIAlertAction(title: "TAMAM", style: UIAlertActionStyle.cancel, handler: nil)
+                alert.addAction(okButton)
+                self.present(alert, animated: true, completion: nil)
+            }
+            else{
+                for object in objects!{
+                    self.tableNumberArray.append(object.object(forKey: "NumberOfTable") as! String)
+                    self.tableNumberLabel.text = "\(self.tableNumberArray.last!)"
+                    
+                    self.textField.text! = self.tableNumberLabel.text!
+                    
+                    self.deneme = Int(self.tableNumberLabel.text!)!
+                    
+                    
+                }
+                while self.tableNumber < self.deneme {
+                    print("LALA")
+                    self.createBtn()
+                    self.tableNumber = self.tableNumber + 1
+                    
+                    if CGFloat(self.xLocation) < self.screenWidth - CGFloat(self.buttonWidth * 2) {
+                        self.xLocation = self.xLocation + self.buttonWidth + self.spacer
+                    }
+                    else if CGFloat(self.xLocation) >= self.screenWidth - CGFloat(self.buttonWidth * 2)  {
+                        self.xLocation = 10
+                        self.yLocation = self.yLocation + self.buttonWidth + self.spacer
+                    }
+                    
+                }
+            }
         }
+        print(self.deneme)
+       
+        
     }
     func getTableNumberData(){
     
@@ -207,7 +246,7 @@ class MasaVC: UIViewController {
                     print("Masa Silindi")
                     
                 }
-//                self.button.removeFromSuperview()
+//                ilerde yeni button vb eklerken buradan düzelt
                 var i = Int(self.tableNumberLabel.text!)! + 3
                 while self.view.subviews.count > 4 {
                     self.view.subviews[i].removeFromSuperview()
