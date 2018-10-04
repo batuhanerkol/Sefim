@@ -40,7 +40,7 @@ class CreateQR: UIViewController{
             let transformImage = ciImage?.transformed(by: transform)
             
             let image = UIImage(ciImage: transformImage!)
-            imageView.image = image
+            self.imageView.image = image
             
             self.createButton.isHidden = true
             
@@ -48,15 +48,16 @@ class CreateQR: UIViewController{
         }
     }
     func uploadQRInformation(){
-        
         let qrObject = PFObject(className: "QRInformation")
         qrObject["QROwner"] = PFUser.current()!.username!
         
-        if let imageData = UIImageJPEGRepresentation(imageView.image!, 0.3){
+        
+        if let imageData = UIImagePNGRepresentation(self.imageView.image!){
+            print("LALA")
             qrObject["QRImage"] = PFFile(name: "image.jpg", data: imageData)
-            
-            
         }
+        
+
         qrObject.saveInBackground { (objects, error) in
             
             if error != nil{

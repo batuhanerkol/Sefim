@@ -101,7 +101,8 @@ class MasaVC: UIViewController {
         button.backgroundColor = UIColor.gray
         button.setTitle("\(tableNumber + 1) ", for: .normal)
         button.addTarget(self, action: #selector(buttonAction), for: .touchUpInside)
-
+        
+        
         self.view.addSubview(button)
         print("button created")
         
@@ -190,6 +191,7 @@ class MasaVC: UIViewController {
     func deleteTableData(){
         let query = PFQuery(className: "TableNumbers")
         query.whereKey("TableOwner", equalTo: "\(PFUser.current()!.username!)")
+        
         query.findObjectsInBackground { (objects, error) in
             if error != nil{
                 let alert = UIAlertController(title: "HATA", message: error?.localizedDescription, preferredStyle: UIAlertControllerStyle.alert)
@@ -200,13 +202,23 @@ class MasaVC: UIViewController {
             else{
                 self.tableNumberArray.removeAll(keepingCapacity: false)
                 for object in objects!{
-                     object.deleteInBackground()
-                    self.tableNumberLabel.text = ""
+                    object.deleteInBackground()
+                  
                     print("Masa Silindi")
+                    
                 }
-                self.button.removeFromSuperview()
+//                self.button.removeFromSuperview()
+                var i = Int(self.tableNumberLabel.text!)! + 3
+                while self.view.subviews.count > 4 {
+                    self.view.subviews[i].removeFromSuperview()
+                    i -= 1
+                }
+                
+
             }
         }
+        xLocation = 10
+        yLocation = 100
     }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
