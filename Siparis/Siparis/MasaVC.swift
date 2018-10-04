@@ -44,8 +44,9 @@ class MasaVC: UIViewController {
         
         buttonSizes()
         getTableNumberData()
-
+        getButtonWhenAppOpen()
     }
+  
  
     func buttonSizes(){
         if screenWidth > 1000{
@@ -62,6 +63,13 @@ class MasaVC: UIViewController {
         }
     }
     
+    
+    func getButtonWhenAppOpen(){
+        if textField.text != ""{
+            
+
+        }
+    }
     func getTableNumberData(){
     
         let query = PFQuery(className: "TableNumbers")
@@ -78,14 +86,16 @@ class MasaVC: UIViewController {
                 for object in objects!{
                  self.tableNumberArray.append(object.object(forKey: "NumberOfTable") as! String)
                 self.tableNumberLabel.text = "\(self.tableNumberArray.last!)"
+                    
+                       self.textField.text! = self.tableNumberLabel.text!
                 }
             }
         }
-    }
-    
-    func createBtn(){
         
-        let button = UIButton()
+    }
+    var button = UIButton()
+    func createBtn(){
+        button = UIButton()
 
         button.frame = CGRect(x:   xLocation, y:   yLocation, width: buttonWidth, height: buttonHeight)
         button.backgroundColor = UIColor.gray
@@ -160,10 +170,11 @@ class MasaVC: UIViewController {
                 alert.addAction(okButton)
                 self.present(alert, animated: true, completion: nil)
             }
-            tableNumberLabel.text = textField.text!
+            tableNumberLabel.text!=textField.text!
             textField.text! = ""
             createButton.isHidden = true
             deleteButton.isHidden = false
+            
         }
     
         else{
@@ -173,6 +184,7 @@ class MasaVC: UIViewController {
             self.present(alert, animated: true, completion: nil)
         }
     }
+        
     }
     
     func deleteTableData(){
@@ -192,6 +204,7 @@ class MasaVC: UIViewController {
                     self.tableNumberLabel.text = ""
                     print("Masa Silindi")
                 }
+                self.button.removeFromSuperview()
             }
         }
     }
