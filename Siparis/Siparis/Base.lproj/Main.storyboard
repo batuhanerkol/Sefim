@@ -426,10 +426,10 @@
                                 </connections>
                             </button>
                             <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="8z1-fi-aZA">
-                                <rect key="frame" x="0.0" y="64" width="414" height="445"/>
+                                <rect key="frame" x="0.0" y="20" width="414" height="538"/>
                             </imageView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="DUx-Bw-KB5">
-                                <rect key="frame" x="0.0" y="559" width="414" height="56"/>
+                                <rect key="frame" x="0.0" y="608" width="414" height="56"/>
                                 <color key="backgroundColor" red="0.30840110780000002" green="0.5618229508" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="56" id="fHa-Ag-gVA"/>
@@ -462,6 +462,7 @@
                         <outlet property="createButton" destination="eij-f9-vkA" id="ibE-iv-YLb"/>
                         <outlet property="imageView" destination="8z1-fi-aZA" id="awY-rb-KDR"/>
                         <outlet property="saveToPhotoButton" destination="DUx-Bw-KB5" id="FLr-ZW-Jxs"/>
+                        <segue destination="J62-qa-2pb" kind="show" identifier="CreateQRToKareKodVC" id="phh-ai-P4w"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="IBP-6E-YAx" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -1094,6 +1095,7 @@
     <inferredMetricsTieBreakers>
         <segue reference="5EF-zS-xQm"/>
         <segue reference="w0M-8p-9bV"/>
+        <segue reference="phh-ai-P4w"/>
         <segue reference="lbU-UB-LdC"/>
     </inferredMetricsTieBreakers>
 </document>

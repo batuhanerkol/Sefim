@@ -60,12 +60,16 @@ class CreateQR: UIViewController, UINavigationControllerDelegate, UIImagePickerC
         UIImageWriteToSavedPhotosAlbum(output!, nil, nil, nil)
         
         let alert = UIAlertController(title: "QR Fotoğraflara Kaydedildi", message: "", preferredStyle: .alert)
-        let okayAction = UIAlertAction(title: "Okay", style: .default, handler: nil)
-        alert.addAction(okayAction)
+        let okAction = UIAlertAction(title: "Tamam", style: UIAlertActionStyle.default) {
+            UIAlertAction in
+            NSLog("OK Pressed")
+            self.performSegue(withIdentifier: "CreateQRToKareKodVC", sender: nil)
+        }
+        alert.addAction(okAction)
         self.present(alert, animated: true, completion: nil)
  
         saveToPhotoButton.isHidden = true
-        self.imageView.image = UIImage(named: "fotosecin.jpg")
+        
      
     }
 }
