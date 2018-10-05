@@ -9,10 +9,11 @@
 import UIKit
 import Parse
 
-class KareKodVC: UIViewController , UITextFieldDelegate{
+class KareKodVC: UIViewController , UITextFieldDelegate,UIImagePickerControllerDelegate, UINavigationControllerDelegate{
     
     var imageArray = [PFFile]()
     
+    @IBOutlet weak var saveToParseButton: UIButton!
     @IBOutlet weak var createButton: UIButton!
     @IBOutlet weak var deleteButton: UIButton!
     @IBOutlet weak var textField: UITextField!
@@ -26,11 +27,28 @@ class KareKodVC: UIViewController , UITextFieldDelegate{
         deleteButton.isHidden = true
         
         self.navigationItem.hidesBackButton = true
+        if QRImageView.image == nil {
+            self.QRImageView.image = UIImage(named: "fotosecin.jpg")
+        }
         
         
-        
+        QRImageView.isUserInteractionEnabled = true
+        let gestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(KareKodVC.selectImage))
+        QRImageView.addGestureRecognizer(gestureRecognizer)
     }
-    
+    @objc func selectImage() {
+        
+        let picker = UIImagePickerController()
+        picker.delegate = self
+        picker.sourceType = .photoLibrary
+        picker.allowsEditing = true
+        self.present(picker, animated: true, completion: nil)
+    }
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
+        QRImageView.image = info[UIImagePickerControllerEditedImage] as? UIImage
+        self.dismiss(animated: true, completion: nil)
+    }
+
     @IBAction func buttonClicked(_ sender: Any) {
         self.createButton.isHidden = true
         self.deleteButton.isHidden = false
@@ -149,5 +167,27 @@ class KareKodVC: UIViewController , UITextFieldDelegate{
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         textField.resignFirstResponder()
         return(true)
+    }
+    @IBAction func savetoParseButtonClicked(_ sender: Any) {
+        
+         let QRObject = PFObject(className: "ORInformation")
+         QRObject["QROwner"] = PFUser.current()!.username!
+        if let imageData = UIImageJPEGRepresentation(QRImageView.image!, 0.5){
+            QRObject["image"] = PFFile(name: "image.jpg", data: imageData)
+        }
+        QRObject.saveEventually { (objects, error) in
+            if error != nil{
+                let alert = UIAlertController(title: "HATA", message: error?.localizedDescription, preferredStyle: UIAlertControllerStyle.alert)
+                let okButton = UIAlertAction(title: "TAMAM", style: UIAlertActionStyle.cancel, handler: nil)
+                alert.addAction(okButton)
+                self.present(alert, animated: true, completion: nil)
+            }
+            else{
+                let alert = UIAlertController(title: "QR Veri Tabanına Kaydedildi", message: "", preferredStyle: UIAlertControllerStyle.alert)
+                let okButton = UIAlertAction(title: "TAMAM", style: UIAlertActionStyle.cancel, handler: nil)
+                alert.addAction(okButton)
+                self.present(alert, animated: true, completion: nil)
+            }
+        }
     }
 }

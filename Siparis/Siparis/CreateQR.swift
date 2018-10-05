@@ -65,13 +65,10 @@ class CreateQR: UIViewController, UINavigationControllerDelegate, UIImagePickerC
         self.present(alert, animated: true, completion: nil)
  
         saveToPhotoButton.isHidden = true
+        self.imageView.image = UIImage(named: "fotosecin.jpg")
      
     }
    
-    func uploadQRInformation(){
-        
-        
-    }
     @IBAction func saveToParseButtonClicked(_ sender: Any) {
         
         let image = UIImagePickerController()
@@ -82,26 +79,7 @@ class CreateQR: UIViewController, UINavigationControllerDelegate, UIImagePickerC
         
         saveToParseButton.isHidden = true
         
-        let qrObject = PFObject(className: "QRInformation")
-        qrObject["QROwner"] = PFUser.current()!.username!
-        
-        if let imageData = UIImageJPEGRepresentation(imageView.image!, 0.5){
-            qrObject["QRImage"] = PFFile(name: "image.jpg", data: imageData)
-        }
-        qrObject.saveInBackground { (objects, error) in
-            
-            if error != nil{
-                let alert = UIAlertController(title: "HATA", message: error?.localizedDescription, preferredStyle: UIAlertControllerStyle.alert)
-                let okButton = UIAlertAction(title: "TAMAM", style: UIAlertActionStyle.cancel, handler: nil)
-                alert.addAction(okButton)
-                self.present(alert, animated: true, completion: nil)
-            }
-            else{
-                
-            }
-            
-        }
-        
+       
        
     }
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
