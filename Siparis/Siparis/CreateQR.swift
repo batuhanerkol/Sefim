@@ -11,8 +11,9 @@ import Parse
 import UIKit
 import Photos
 
-class CreateQR: UIViewController{
+class CreateQR: UIViewController, UINavigationControllerDelegate, UIImagePickerControllerDelegate{
 
+    @IBOutlet weak var saveToParseButton: UIButton!
     @IBOutlet weak var saveToPhotoButton: UIButton!
     @IBOutlet weak var createButton: UIButton!
     @IBOutlet weak var imageView: UIImageView!
@@ -25,8 +26,6 @@ class CreateQR: UIViewController{
     }
     @IBAction func createButtonClicked(_ sender: Any) {
         creatQRCode()
-        uploadQRInformation()
-        
     }
     
     func creatQRCode(){
@@ -49,52 +48,8 @@ class CreateQR: UIViewController{
           
         }
     }
-    func uploadQRInformation(){
-        let qrObject = PFObject(className: "QRInformation")
-        qrObject["QROwner"] = PFUser.current()!.username!
-    
-        if let imageData = UIImageJPEGRepresentation(imageView.image!, 0.5){
-            qrObject["QRImage"] = PFFile(name: "image.jpg", data: imageData)
-           
-        }
-        
-
-        qrObject.saveInBackground { (objects, error) in
-            
-            if error != nil{
-                let alert = UIAlertController(title: "HATA", message: error?.localizedDescription, preferredStyle: UIAlertControllerStyle.alert)
-                let okButton = UIAlertAction(title: "TAMAM", style: UIAlertActionStyle.cancel, handler: nil)
-                alert.addAction(okButton)
-                self.present(alert, animated: true, completion: nil)
-            }
-            else{
-                print("QR kayıt edildi")
-            }
-            
-        }
-        
-       
-    }
-    
-    func saveToPhotoLibrary(){
-        
-        do {
-            let imageUrl = URL(string: PFUser.current()!.username!)
-            let imageData = try Data(contentsOf: imageUrl!)
-            let image = UIImage(data: imageData)
-            
-            let imagePngData = UIImagePNGRepresentation(image!)
-            let savedImage = UIImage(data: imagePngData!)
-            UIImageWriteToSavedPhotosAlbum(savedImage!, nil, nil, nil)
-        }
-        catch{
-            print(error)
-        }
-
-    }
-    
-    
    
+    
     @IBAction func saveToPhotoButtonPressed(_ sender: Any) {
         
         UIGraphicsBeginImageContext(imageView.frame.size)
@@ -108,9 +63,56 @@ class CreateQR: UIViewController{
         let okayAction = UIAlertAction(title: "Okay", style: .default, handler: nil)
         alert.addAction(okayAction)
         self.present(alert, animated: true, completion: nil)
-
+ 
+        saveToPhotoButton.isHidden = true
      
     }
-  
-    
+   
+    func uploadQRInformation(){
+        
+        
+    }
+    @IBAction func saveToParseButtonClicked(_ sender: Any) {
+        
+        let image = UIImagePickerController()
+        image.delegate = self
+        image.sourceType = UIImagePickerControllerSourceType.photoLibrary
+        image.allowsEditing = false
+        self.present(image, animated: true)
+        
+        saveToParseButton.isHidden = true
+        
+        let qrObject = PFObject(className: "QRInformation")
+        qrObject["QROwner"] = PFUser.current()!.username!
+        
+        if let imageData = UIImageJPEGRepresentation(imageView.image!, 0.5){
+            qrObject["QRImage"] = PFFile(name: "image.jpg", data: imageData)
+        }
+        qrObject.saveInBackground { (objects, error) in
+            
+            if error != nil{
+                let alert = UIAlertController(title: "HATA", message: error?.localizedDescription, preferredStyle: UIAlertControllerStyle.alert)
+                let okButton = UIAlertAction(title: "TAMAM", style: UIAlertActionStyle.cancel, handler: nil)
+                alert.addAction(okButton)
+                self.present(alert, animated: true, completion: nil)
+            }
+            else{
+                
+            }
+            
+        }
+        
+       
+    }
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
+        if let image = info[UIImagePickerControllerOriginalImage] as? UIImage{
+            imageView.image = image
+        }else{
+            let alert = UIAlertController(title: "Lütfen Tekrar Deneyin", message: "", preferredStyle: UIAlertControllerStyle.alert)
+            let okButton = UIAlertAction(title: "TAMAM", style: UIAlertActionStyle.cancel, handler: nil)
+            alert.addAction(okButton)
+            self.present(alert, animated: true, completion: nil)
+        }
+        self.dismiss(animated: true, completion: nil)
+    }
 }

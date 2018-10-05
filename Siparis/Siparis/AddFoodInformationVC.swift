@@ -57,7 +57,8 @@ class AddFoodInformationVC: UIViewController, UIImagePickerControllerDelegate, U
             foodInformation["foodTitle"] = selectecTitle
             let uuid = UUID().uuidString
             foodInformation["fooduuid"] = "\(uuid) \(PFUser.current()!.username!)"
-            if let imageData = UIImageJPEGRepresentation(selectedImage.image!, 0.3){
+            
+            if let imageData = UIImageJPEGRepresentation(selectedImage.image!, 0.5){
                 foodInformation["image"] = PFFile(name: "image.jpg", data: imageData)
             }
             

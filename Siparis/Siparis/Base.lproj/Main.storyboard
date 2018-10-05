@@ -342,18 +342,14 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <textField opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="e-mail giriniz" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="fFy-RY-gva">
-                                <rect key="frame" x="16" y="437" width="344" height="30"/>
+                                <rect key="frame" x="1" y="437" width="413" height="30"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <nil key="textColor"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits" returnKeyType="done"/>
                             </textField>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ut3-Rw-KcC">
-                                <rect key="frame" x="16" y="85" width="343" height="301"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                            </imageView>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="VY0-sy-Htq">
-                                <rect key="frame" x="0.0" y="530" width="375" height="57"/>
+                                <rect key="frame" x="0.0" y="530" width="414" height="57"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" red="1" green="0.14913141730000001" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <state key="normal" title="Kare Kod SIFIRLA">
@@ -364,7 +360,7 @@
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ruF-45-8V8">
-                                <rect key="frame" x="1" y="475" width="375" height="57"/>
+                                <rect key="frame" x="1" y="475" width="413" height="57"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <state key="normal" title="Kod Oluştur">
@@ -374,6 +370,10 @@
                                     <action selector="buttonClicked:" destination="J62-qa-2pb" eventType="touchUpInside" id="949-kn-OXd"/>
                                 </connections>
                             </button>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ut3-Rw-KcC">
+                                <rect key="frame" x="1" y="64" width="413" height="374"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            </imageView>
                         </subviews>
                         <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <viewLayoutGuide key="safeArea" id="OIo-Nu-tcJ"/>
@@ -389,7 +389,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="qXv-xi-9JN" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="6680.8000000000002" y="243.32833583208398"/>
+            <point key="canvasLocation" x="6679.7101449275369" y="242.93478260869568"/>
         </scene>
         <!--CreateQR-->
         <scene sceneID="JB6-vP-VoT">
@@ -400,11 +400,8 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="eij-f9-vkA">
-                                <rect key="frame" x="0.0" y="507" width="414" height="53"/>
+                                <rect key="frame" x="0.0" y="507" width="414" height="59"/>
                                 <color key="backgroundColor" red="0.016804177310000001" green="0.19835099580000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="53" id="sOn-Gn-YyQ"/>
-                                </constraints>
                                 <fontDescription key="fontDescription" type="system" pointSize="24"/>
                                 <state key="normal" title="1 - QR Oluştur">
                                     <color key="titleColor" red="0.99999600649999998" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -416,10 +413,12 @@
                             <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="8z1-fi-aZA">
                                 <rect key="frame" x="0.0" y="64" width="414" height="445"/>
                             </imageView>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="DUx-Bw-KB5">
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="DUx-Bw-KB5">
                                 <rect key="frame" x="0.0" y="559" width="414" height="56"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" red="0.30840110780000002" green="0.5618229508" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="56" id="fHa-Ag-gVA"/>
+                                </constraints>
                                 <fontDescription key="fontDescription" type="system" pointSize="24"/>
                                 <state key="normal" title="2 - Fotoğraflara Kaydet">
                                     <color key="titleColor" red="0.92143100499999997" green="0.92145264149999995" blue="0.92144101860000005" alpha="1" colorSpace="deviceRGB"/>
@@ -428,21 +427,19 @@
                                     <action selector="saveToPhotoButtonPressed:" destination="Bwo-BN-4Up" eventType="touchUpInside" id="Fmg-j6-SHT"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="3Hc-nh-WQQ">
-                                <rect key="frame" x="0.0" y="613" width="46" height="30"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <state key="normal" title="Button"/>
-                            </button>
                         </subviews>
                         <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
-                            <constraint firstItem="H0C-qB-HTS" firstAttribute="bottom" secondItem="eij-f9-vkA" secondAttribute="bottom" constant="77" id="1ZX-Jk-KG4"/>
-                            <constraint firstItem="8z1-fi-aZA" firstAttribute="leading" secondItem="eij-f9-vkA" secondAttribute="leading" id="Nij-Y2-wSl"/>
-                            <constraint firstItem="eij-f9-vkA" firstAttribute="top" secondItem="8z1-fi-aZA" secondAttribute="bottom" constant="48" id="a8P-zI-qqT"/>
-                            <constraint firstItem="8z1-fi-aZA" firstAttribute="leading" secondItem="FBe-Hk-gdd" secondAttribute="leading" id="pGO-gK-nc9"/>
-                            <constraint firstAttribute="trailing" secondItem="8z1-fi-aZA" secondAttribute="trailing" id="qeX-xw-cYI"/>
-                            <constraint firstItem="8z1-fi-aZA" firstAttribute="top" secondItem="H0C-qB-HTS" secondAttribute="top" id="wc0-Bo-F11"/>
-                            <constraint firstItem="8z1-fi-aZA" firstAttribute="trailing" secondItem="eij-f9-vkA" secondAttribute="trailing" id="y97-ef-6O1"/>
+                            <constraint firstItem="eij-f9-vkA" firstAttribute="trailing" secondItem="DUx-Bw-KB5" secondAttribute="trailing" id="9qo-W1-9Ac"/>
+                            <constraint firstItem="eij-f9-vkA" firstAttribute="top" secondItem="H0C-qB-HTS" secondAttribute="top" constant="443" id="EP7-OP-RL2"/>
+                            <constraint firstItem="8z1-fi-aZA" firstAttribute="top" secondItem="H0C-qB-HTS" secondAttribute="top" id="Im7-z5-Zzi"/>
+                            <constraint firstItem="8z1-fi-aZA" firstAttribute="trailing" secondItem="eij-f9-vkA" secondAttribute="trailing" id="RbQ-O8-C3M"/>
+                            <constraint firstItem="eij-f9-vkA" firstAttribute="leading" secondItem="DUx-Bw-KB5" secondAttribute="leading" id="VfM-sb-GrY"/>
+                            <constraint firstItem="8z1-fi-aZA" firstAttribute="leading" secondItem="FBe-Hk-gdd" secondAttribute="leading" id="bjD-Jr-Qyj"/>
+                            <constraint firstItem="H0C-qB-HTS" firstAttribute="bottom" secondItem="DUx-Bw-KB5" secondAttribute="bottom" constant="72" id="dao-W6-0Ag"/>
+                            <constraint firstItem="DUx-Bw-KB5" firstAttribute="top" secondItem="8z1-fi-aZA" secondAttribute="bottom" constant="50" id="jby-hS-KWX"/>
+                            <constraint firstItem="8z1-fi-aZA" firstAttribute="leading" secondItem="eij-f9-vkA" secondAttribute="leading" id="tFd-od-ggV"/>
+                            <constraint firstAttribute="trailing" secondItem="8z1-fi-aZA" secondAttribute="trailing" id="zqc-ee-Krm"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="H0C-qB-HTS"/>
                     </view>
