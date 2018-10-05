@@ -9,6 +9,7 @@
 import UIKit
 import Parse
 import UIKit
+import Photos
 
 class CreateQR: UIViewController{
 
@@ -25,6 +26,7 @@ class CreateQR: UIViewController{
     @IBAction func createButtonClicked(_ sender: Any) {
         creatQRCode()
         uploadQRInformation()
+        
     }
     
     func creatQRCode(){
@@ -36,7 +38,7 @@ class CreateQR: UIViewController{
             
             let ciImage = filter?.outputImage
             
-            let transform = CGAffineTransform(scaleX: 10, y: 10)
+            let transform = CGAffineTransform(scaleX: 35, y: 35)
             let transformImage = ciImage?.transformed(by: transform)
             
             let image = UIImage(ciImage: transformImage!)
@@ -44,17 +46,16 @@ class CreateQR: UIViewController{
             
             self.createButton.isHidden = true
             
-            
+          
         }
     }
     func uploadQRInformation(){
         let qrObject = PFObject(className: "QRInformation")
         qrObject["QROwner"] = PFUser.current()!.username!
-        
-        
-        if let imageData = UIImagePNGRepresentation(self.imageView.image!){
-            print("LALA")
+    
+        if let imageData = UIImageJPEGRepresentation(imageView.image!, 0.5){
             qrObject["QRImage"] = PFFile(name: "image.jpg", data: imageData)
+           
         }
         
 
@@ -76,22 +77,39 @@ class CreateQR: UIViewController{
     }
     
     func saveToPhotoLibrary(){
+        
+        do {
+            let imageUrl = URL(string: PFUser.current()!.username!)
+            let imageData = try Data(contentsOf: imageUrl!)
+            let image = UIImage(data: imageData)
+            
+            let imagePngData = UIImagePNGRepresentation(image!)
+            let savedImage = UIImage(data: imagePngData!)
+            UIImageWriteToSavedPhotosAlbum(savedImage!, nil, nil, nil)
+        }
+        catch{
+            print(error)
+        }
 
-        let imageData = UIImagePNGRepresentation(imageView.image!)
-        let compresedImage = UIImage(data: imageData!)
-        UIImageWriteToSavedPhotosAlbum(compresedImage!, nil, nil, nil )
-
-        let alert = UIAlertController(title: "QR KOD Fotoğraflara Kaydedildi", message: "", preferredStyle: .alert)
-        let okAction = UIAlertAction(title: "Tamam", style: .default, handler: nil)
-        alert.addAction(okAction)
-        self.present(alert, animated: true, completion: nil)
     }
     
     
    
     @IBAction func saveToPhotoButtonPressed(_ sender: Any) {
         
-     saveToPhotoLibrary()
+        UIGraphicsBeginImageContext(imageView.frame.size)
+        imageView.layer.render(in: UIGraphicsGetCurrentContext()!)
+        let output = UIGraphicsGetImageFromCurrentImageContext()
+        UIGraphicsEndImageContext()
+        
+        UIImageWriteToSavedPhotosAlbum(output!, nil, nil, nil)
+        
+        let alert = UIAlertController(title: "QR Fotoğraflara Kaydedildi", message: "", preferredStyle: .alert)
+        let okayAction = UIAlertAction(title: "Okay", style: .default, handler: nil)
+        alert.addAction(okayAction)
+        self.present(alert, animated: true, completion: nil)
+
+     
     }
   
     

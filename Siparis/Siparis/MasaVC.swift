@@ -90,7 +90,6 @@ class MasaVC: UIViewController {
                     
                 }
                 while self.tableNumber < self.deneme {
-                    print("LALA")
                     self.createBtn()
                     self.tableNumber = self.tableNumber + 1
                     
@@ -105,9 +104,6 @@ class MasaVC: UIViewController {
                 }
             }
         }
-        print(self.deneme)
-       
-        
     }
     func getTableNumberData(){
     
@@ -126,7 +122,7 @@ class MasaVC: UIViewController {
                  self.tableNumberArray.append(object.object(forKey: "NumberOfTable") as! String)
                 self.tableNumberLabel.text = "\(self.tableNumberArray.last!)"
                     
-                       self.textField.text! = self.tableNumberLabel.text!
+                    
                 }
             }
         }
@@ -242,22 +238,24 @@ class MasaVC: UIViewController {
                 self.tableNumberArray.removeAll(keepingCapacity: false)
                 for object in objects!{
                     object.deleteInBackground()
-                  
+                    
                     print("Masa Silindi")
                     
+                    self.xLocation = 10
+                    self.yLocation = 100
+                    
                 }
-//                ilerde yeni button vb eklerken buradan düzelt
-                var i = Int(self.tableNumberLabel.text!)! + 3
+//                 yeni button vb eklerken buradan düzelt
+                var viewItemNumber = Int(self.tableNumberLabel.text!)! + 3
                 while self.view.subviews.count > 4 {
-                    self.view.subviews[i].removeFromSuperview()
-                    i -= 1
+                    self.view.subviews[viewItemNumber].removeFromSuperview()
+                    viewItemNumber -= 1
                 }
-                
+                 self.tableNumberLabel.text = ""
 
             }
         }
-        xLocation = 10
-        yLocation = 100
+      
     }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {

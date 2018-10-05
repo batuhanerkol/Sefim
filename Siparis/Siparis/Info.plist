@@ -28,7 +28,9 @@
 		<true/>
 	</dict>
 	<key>NSPhotoLibraryAddUsageDescription</key>
-	<string>QR Kod Kaydetmek İçin</string>
+	<string>QR kaydedebilmek için</string>
+	<key>CFBundleGetInfoString</key>
+	<string></string>
 	<key>CFBundleDisplayName</key>
 	<string></string>
 	<key>UIMainStoryboardFile</key>
