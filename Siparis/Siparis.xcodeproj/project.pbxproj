@@ -10,6 +10,7 @@
 		013495FCE6E95FF809EAFECA /* Pods_Siparis.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9134C9FA788C8B1E178C22F6 /* Pods_Siparis.framework */; };
 		B90CD86B2152BEE90001A0B8 /* AddLocationVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = B90CD86A2152BEE90001A0B8 /* AddLocationVC.swift */; };
 		B91B248B21553045005C3DED /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B91B248A21553045005C3DED /* CoreLocation.framework */; };
+		B9475F0B2167AF8100DB308D /* QRIcınDokun.png in Resources */ = {isa = PBXBuildFile; fileRef = B9475F0A2167AF8100DB308D /* QRIcınDokun.png */; };
 		B9706EB0214FB52100234067 /* Model.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = B9706EAE214FB52100234067 /* Model.xcdatamodeld */; };
 		B97D40DF2153932E00A28D1B /* BusinessInformationVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = B97D40DE2153932E00A28D1B /* BusinessInformationVC.swift */; };
 		B9828012215D2B4700CBE76B /* CreateQR.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9828011215D2B4700CBE76B /* CreateQR.swift */; };
@@ -37,6 +38,7 @@
 		9134C9FA788C8B1E178C22F6 /* Pods_Siparis.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Siparis.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		B90CD86A2152BEE90001A0B8 /* AddLocationVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddLocationVC.swift; sourceTree = "<group>"; };
 		B91B248A21553045005C3DED /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
+		B9475F0A2167AF8100DB308D /* QRIcınDokun.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "QRIcınDokun.png"; path = "../../../QRIcınDokun.png"; sourceTree = "<group>"; };
 		B9706EAF214FB52100234067 /* Model.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Model.xcdatamodel; sourceTree = "<group>"; };
 		B97D40DE2153932E00A28D1B /* BusinessInformationVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BusinessInformationVC.swift; sourceTree = "<group>"; };
 		B9828011215D2B4700CBE76B /* CreateQR.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateQR.swift; sourceTree = "<group>"; };
@@ -122,6 +124,7 @@
 				B9FCE528213D90F5006BCB6C /* IsletmeProfilVC.swift */,
 				B97D40DE2153932E00A28D1B /* BusinessInformationVC.swift */,
 				B9D1F03C2148270000C52EAC /* fotosecin.jpg */,
+				B9475F0A2167AF8100DB308D /* QRIcınDokun.png */,
 				B9FCE510213D8486006BCB6C /* Main.storyboard */,
 				B9FCE513213D8488006BCB6C /* Assets.xcassets */,
 				B9FCE515213D8488006BCB6C /* LaunchScreen.storyboard */,
@@ -203,6 +206,7 @@
 				B9FCE517213D8488006BCB6C /* LaunchScreen.storyboard in Resources */,
 				B9D1F03D2148270100C52EAC /* fotosecin.jpg in Resources */,
 				B9FCE514213D8488006BCB6C /* Assets.xcassets in Resources */,
+				B9475F0B2167AF8100DB308D /* QRIcınDokun.png in Resources */,
 				B9FCE512213D8486006BCB6C /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

@@ -68,29 +68,4 @@ class CreateQR: UIViewController, UINavigationControllerDelegate, UIImagePickerC
         self.imageView.image = UIImage(named: "fotosecin.jpg")
      
     }
-   
-    @IBAction func saveToParseButtonClicked(_ sender: Any) {
-        
-        let image = UIImagePickerController()
-        image.delegate = self
-        image.sourceType = UIImagePickerControllerSourceType.photoLibrary
-        image.allowsEditing = false
-        self.present(image, animated: true)
-        
-        saveToParseButton.isHidden = true
-        
-       
-       
-    }
-    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
-        if let image = info[UIImagePickerControllerOriginalImage] as? UIImage{
-            imageView.image = image
-        }else{
-            let alert = UIAlertController(title: "Lütfen Tekrar Deneyin", message: "", preferredStyle: UIAlertControllerStyle.alert)
-            let okButton = UIAlertAction(title: "TAMAM", style: UIAlertActionStyle.cancel, handler: nil)
-            alert.addAction(okButton)
-            self.present(alert, animated: true, completion: nil)
-        }
-        self.dismiss(animated: true, completion: nil)
-    }
 }
