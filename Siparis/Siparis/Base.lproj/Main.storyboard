@@ -342,7 +342,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="VY0-sy-Htq">
-                                <rect key="frame" x="0.0" y="567" width="375" height="50"/>
+                                <rect key="frame" x="0.0" y="518" width="375" height="50"/>
                                 <color key="backgroundColor" red="1" green="0.14913141730000001" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="50" id="bdZ-VW-2n3"/>
@@ -356,7 +356,7 @@
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ruF-45-8V8">
-                                <rect key="frame" x="0.0" y="517" width="375" height="50"/>
+                                <rect key="frame" x="0.0" y="468" width="375" height="50"/>
                                 <color key="backgroundColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="50" id="kQp-xl-l6C"/>
@@ -370,7 +370,7 @@
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="xB1-BB-P1n">
-                                <rect key="frame" x="0.0" y="616" width="375" height="50"/>
+                                <rect key="frame" x="0.0" y="567" width="375" height="50"/>
                                 <color key="backgroundColor" red="1" green="0.57810515169999999" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="24"/>
                                 <state key="normal" title="3 - Veri Tabanına Kaydet">
@@ -380,16 +380,15 @@
                                     <action selector="savetoParseButtonClicked:" destination="J62-qa-2pb" eventType="touchUpInside" id="l2e-bD-N9L"/>
                                 </connections>
                             </button>
-                            <textField opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="e-mail giriniz" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="fFy-RY-gva">
-                                <rect key="frame" x="0.0" y="479" width="375" height="30"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="ut3-Rw-KcC">
+                                <rect key="frame" x="12" y="64" width="350" height="306"/>
+                            </imageView>
+                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="e-mail giriniz" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="fFy-RY-gva">
+                                <rect key="frame" x="0.0" y="415" width="375" height="30"/>
                                 <nil key="textColor"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits" returnKeyType="done"/>
                             </textField>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="ut3-Rw-KcC">
-                                <rect key="frame" x="12" y="87" width="350" height="350"/>
-                            </imageView>
                         </subviews>
                         <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
@@ -400,14 +399,17 @@
                             <constraint firstItem="VY0-sy-Htq" firstAttribute="top" secondItem="ruF-45-8V8" secondAttribute="bottom" id="7Sc-0A-1yz"/>
                             <constraint firstItem="xB1-BB-P1n" firstAttribute="leading" secondItem="OIo-Nu-tcJ" secondAttribute="leading" id="DBe-Ol-xLl"/>
                             <constraint firstItem="xB1-BB-P1n" firstAttribute="trailing" secondItem="OIo-Nu-tcJ" secondAttribute="trailing" id="Eay-8u-Z4Q"/>
+                            <constraint firstItem="fFy-RY-gva" firstAttribute="trailing" secondItem="ruF-45-8V8" secondAttribute="trailing" id="Ero-EQ-H9Z"/>
                             <constraint firstItem="ruF-45-8V8" firstAttribute="trailing" secondItem="OIo-Nu-tcJ" secondAttribute="trailing" id="HGG-Ra-lvH"/>
                             <constraint firstItem="VY0-sy-Htq" firstAttribute="leading" secondItem="xB1-BB-P1n" secondAttribute="leading" id="LA5-sO-XXa"/>
                             <constraint firstItem="VY0-sy-Htq" firstAttribute="trailing" secondItem="xB1-BB-P1n" secondAttribute="trailing" id="Pdo-fT-RET"/>
                             <constraint firstItem="OIo-Nu-tcJ" firstAttribute="bottom" secondItem="xB1-BB-P1n" secondAttribute="bottom" constant="1" id="RCt-0g-HUS"/>
-                            <constraint firstItem="ut3-Rw-KcC" firstAttribute="top" secondItem="OIo-Nu-tcJ" secondAttribute="top" constant="67" id="T02-mm-Vrq"/>
+                            <constraint firstItem="ut3-Rw-KcC" firstAttribute="top" secondItem="OIo-Nu-tcJ" secondAttribute="top" id="T02-mm-Vrq"/>
                             <constraint firstItem="ut3-Rw-KcC" firstAttribute="leading" secondItem="OIo-Nu-tcJ" secondAttribute="leading" constant="12" id="fTU-CZ-Erx"/>
                             <constraint firstItem="OIo-Nu-tcJ" firstAttribute="bottom" secondItem="VY0-sy-Htq" secondAttribute="bottom" constant="50" id="oKa-kE-KjS"/>
-                            <constraint firstAttribute="bottom" secondItem="ut3-Rw-KcC" secondAttribute="bottom" constant="230" id="qcd-3w-g7I"/>
+                            <constraint firstAttribute="bottom" secondItem="ut3-Rw-KcC" secondAttribute="bottom" constant="297" id="qcd-3w-g7I"/>
+                            <constraint firstItem="fFy-RY-gva" firstAttribute="leading" secondItem="ruF-45-8V8" secondAttribute="leading" id="r0L-S0-Ep9"/>
+                            <constraint firstItem="ruF-45-8V8" firstAttribute="top" secondItem="fFy-RY-gva" secondAttribute="bottom" constant="23" id="rZd-8n-znT"/>
                             <constraint firstItem="ruF-45-8V8" firstAttribute="leading" secondItem="OIo-Nu-tcJ" secondAttribute="leading" id="zXH-m1-88G"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="OIo-Nu-tcJ"/>
@@ -1128,7 +1130,7 @@
     <inferredMetricsTieBreakers>
         <segue reference="5EF-zS-xQm"/>
         <segue reference="w0M-8p-9bV"/>
-        <segue reference="phh-ai-P4w"/>
+        <segue reference="0Xj-E9-vqK"/>
         <segue reference="lbU-UB-LdC"/>
     </inferredMetricsTieBreakers>
 </document>
