@@ -10,10 +10,8 @@ import UIKit
 import Parse
 
 class IsletmeProfilVC: UIViewController {
+    @IBOutlet weak var bussinessInfoButton: UIButton!
 
-    @IBOutlet weak var businessInformation: UIButton!
-    
-    
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -30,11 +28,14 @@ class IsletmeProfilVC: UIViewController {
             else {
                 UserDefaults.standard.removeObject(forKey: "userName")
                 UserDefaults.standard.synchronize()
-               self.performSegue(withIdentifier: "isletmeProfilToSignInVC", sender: nil)
+            
             }
         }
         
         }
+    @IBAction func businessInfoButtonPressed(_ sender: Any) {
+       
+    }
     
     }
     

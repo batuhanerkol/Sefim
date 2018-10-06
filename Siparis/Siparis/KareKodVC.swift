@@ -34,6 +34,7 @@ class KareKodVC: UIViewController , UITextFieldDelegate,UIImagePickerControllerD
         
         if QRImageView.image == nil{
             self.QRImageView.image = UIImage(named: "QRIcınDokun.png")
+            saveToParseButton.isHidden = false
             createButton.isHidden = false
             deleteButton.isHidden = true
             textField.isHidden = true
