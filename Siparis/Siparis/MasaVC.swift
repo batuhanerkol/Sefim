@@ -43,13 +43,14 @@ class MasaVC: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+         
         buttonSizes()
         getTableNumberData()
         getButtonWhenAppOpen()
+        
+        let value = UIInterfaceOrientation.landscapeRight.rawValue
+        UIDevice.current.setValue(value, forKey: "orientation")
     }
-  
- 
     func buttonSizes(){
         if screenWidth > 1000{
             buttonWidth = 100
@@ -258,9 +259,7 @@ class MasaVC: UIViewController {
       
     }
     
-    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
-        self.view.endEditing(true)
-    }
+  
     @IBAction func deleteButtonPressed(_ sender: Any) {
     
        deleteTableData()
@@ -273,4 +272,8 @@ class MasaVC: UIViewController {
     func dismissKeyboard() {
     view.endEditing(true)
     }
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        self.view.endEditing(true)
+    }
+   
 }

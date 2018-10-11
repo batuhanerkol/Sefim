@@ -11,7 +11,8 @@ import Parse
 
 class BilgilerimVC: UIViewController {
     
-    @IBOutlet weak var usernameTextField: UITextField!
+    @IBOutlet weak var usernameLabel: UILabel!
+    @IBOutlet weak var emailTextField: UITextField!
     @IBOutlet weak var nameTextField: UITextField!
     @IBOutlet weak var lastnameTextField: UITextField!
     @IBOutlet weak var phoneNumberTextField: UITextField!
@@ -22,13 +23,14 @@ class BilgilerimVC: UIViewController {
     var surnameArray = [String]()
     var userNameArray = [String]()
     var phoneNumberArray = [String]()
+    var emailArray = [String]()
 
     override func viewDidLoad() {
         super.viewDidLoad()
         
     saveChangesButton.isHidden = true
 
-        if usernameTextField.text == "" || nameTextField.text == "" || lastnameTextField.text == "" || phoneNumberTextField.text == ""{
+        if emailTextField.text == "" || nameTextField.text == "" || lastnameTextField.text == "" || phoneNumberTextField.text == ""{
 
         }
         whenTextFiledsChange()
@@ -37,7 +39,7 @@ class BilgilerimVC: UIViewController {
     }
     
     func whenTextFiledsChange(){
-        usernameTextField.addTarget(self, action: #selector(BilgilerimVC.textFieldDidChange(_:)), for: UIControlEvents.editingChanged)
+        emailTextField.addTarget(self, action: #selector(BilgilerimVC.textFieldDidChange(_:)), for: UIControlEvents.editingChanged)
         nameTextField.addTarget(self, action: #selector(BilgilerimVC.textFieldDidChange(_:)), for: UIControlEvents.editingChanged)
         lastnameTextField.addTarget(self, action: #selector(BilgilerimVC.textFieldDidChange(_:)), for: UIControlEvents.editingChanged)
         phoneNumberTextField.addTarget(self, action: #selector(BilgilerimVC.textFieldDidChange(_:)), for: UIControlEvents.editingChanged)
@@ -63,17 +65,21 @@ class BilgilerimVC: UIViewController {
                 self.surnameArray.removeAll(keepingCapacity: false)
                 self.userNameArray.removeAll(keepingCapacity: false)
                 self.phoneNumberArray.removeAll(keepingCapacity: false)
+                self.emailArray.removeAll(keepingCapacity: false)
 
                 for object in objects!{
                     self.nameArray.append(object.object(forKey: "name") as! String)
                     self.surnameArray.append(object.object(forKey: "lastname") as! String)
                     self.userNameArray.append(object.object(forKey: "username") as! String)
-                     self.phoneNumberArray.append(object.object(forKey: "PhoneNumber") as! String)
+                    self.phoneNumberArray.append(object.object(forKey: "PhoneNumber") as! String)
+                    self.emailArray.append(object.object(forKey: "email") as! String)
 
                     self.nameTextField.text = "\(self.nameArray.last!)"
                     self.lastnameTextField.text = "\(self.surnameArray.last!)"
-                    self.usernameTextField.text = "\(self.userNameArray.last!)"
+                    self.usernameLabel.text = "\(self.userNameArray.last!)"
                     self.phoneNumberTextField.text = "\(self.phoneNumberArray.last!)"
+                    self.emailTextField.text = "\(self.emailArray.last!)"
+                    
                 }
         }
         }
@@ -92,6 +98,9 @@ class BilgilerimVC: UIViewController {
             }
             else{
                 object!["name"] = self.nameTextField.text!
+                object!["lastname"] = self.lastnameTextField.text!
+                object!["PhoneNumber"] = self.phoneNumberTextField.text!
+                object!["email"] = self.emailTextField.text!
                 object?.saveInBackground()
                 self.saveChangesButton.isHidden = true
             }
@@ -100,6 +109,12 @@ class BilgilerimVC: UIViewController {
        
     }
     @IBAction func changePassworButtonPressed(_ sender: Any) {
+    }
+    func dismissKeyboard() {
+        view.endEditing(true)
+    }
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        self.view.endEditing(true)
     }
     
 }
