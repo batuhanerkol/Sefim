@@ -55,6 +55,7 @@ class SignedUpVC: UIViewController, UITextFieldDelegate {
             userSignUp.email = userName.text!
             userSignUp["name"] = nameTextField.text!
             userSignUp["lastname"] = lastNameTextField.text!
+            userSignUp["UyelikTipi"] = ("İsyeriSahibi")
     
             
             userSignUp.signUpInBackground { (success, error) in

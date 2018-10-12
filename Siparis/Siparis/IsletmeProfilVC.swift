@@ -28,7 +28,7 @@ class IsletmeProfilVC: UIViewController {
             else {
                 UserDefaults.standard.removeObject(forKey: "userName")
                 UserDefaults.standard.synchronize()
-            
+            self.performSegue(withIdentifier: "CikisToSignInVC", sender: nil)
             }
         }
         
