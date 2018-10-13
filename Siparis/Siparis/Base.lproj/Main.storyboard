@@ -95,7 +95,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1695.2" y="118.29085457271366"/>
+            <point key="canvasLocation" x="1694" y="98"/>
         </scene>
         <!--Signed UpVC-->
         <scene sceneID="FVe-kO-hvx">
@@ -665,7 +665,6 @@
                     </navigationItem>
                     <connections>
                         <outlet property="bussinessInfoButton" destination="fGu-aN-V0e" id="xx1-UC-Ace"/>
-                        <segue destination="BYZ-38-t0r" kind="show" identifier="CikisToSignInVC" id="qVy-fH-ATI"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="oJg-a3-4Eg" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -1166,7 +1165,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Dyq-vN-OFg" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="8238" y="1021"/>
+            <point key="canvasLocation" x="7556" y="1213"/>
         </scene>
         <!--Menu-->
         <scene sceneID="YXw-zZ-lTd">
@@ -1231,9 +1230,8 @@
     </resources>
     <inferredMetricsTieBreakers>
         <segue reference="5EF-zS-xQm"/>
-        <segue reference="Kqe-M7-6sh"/>
+        <segue reference="w0M-8p-9bV"/>
         <segue reference="0Xj-E9-vqK"/>
         <segue reference="9Lt-ew-kxa"/>
-        <segue reference="qVy-fH-ATI"/>
     </inferredMetricsTieBreakers>
 </document>

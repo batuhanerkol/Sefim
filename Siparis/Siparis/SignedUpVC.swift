@@ -23,6 +23,7 @@ class SignedUpVC: UIViewController, UITextFieldDelegate {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
         self.userName.delegate = self
         self.password1.delegate = self
         self.password2.delegate = self

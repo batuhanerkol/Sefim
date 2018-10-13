@@ -28,7 +28,11 @@ class IsletmeProfilVC: UIViewController {
             else {
                 UserDefaults.standard.removeObject(forKey: "userName")
                 UserDefaults.standard.synchronize()
-            self.performSegue(withIdentifier: "CikisToSignInVC", sender: nil)
+                
+                let signedInVC = self.storyboard?.instantiateViewController(withIdentifier: "signIn") as! SingInVC
+                let delegata : AppDelegate = UIApplication.shared.delegate as! AppDelegate
+                delegata.window?.rootViewController = signedInVC
+                delegata.rememberUser()
             }
         }
         
