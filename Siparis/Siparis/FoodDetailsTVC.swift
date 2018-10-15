@@ -49,6 +49,7 @@ class FoodDetailsTVC: UITableViewController {
         
         performSegue(withIdentifier: "FoodDetailsTVCToFoodDetailsVC", sender: nil)
     }
+    
     func getData(){
     
         let query = PFQuery(className: "FoodInformation")

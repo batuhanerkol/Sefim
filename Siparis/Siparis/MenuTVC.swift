@@ -25,6 +25,8 @@ class MenuTVC: UITableViewController {
         
        tableView.delegate = self
         tableView.dataSource = self
+        
+        
         if PFUser.current()?.username != nil{
         getData()
         }
