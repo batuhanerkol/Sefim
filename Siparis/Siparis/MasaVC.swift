@@ -138,13 +138,15 @@ class MasaVC: UIViewController {
         button.setTitle("\(tableNumber + 1) ", for: .normal)
         button.addTarget(self, action: #selector(buttonAction), for: .touchUpInside)
         
-        
         self.view.addSubview(button)
         print("button created")
-        
+       
     }
     @objc func buttonAction(sender: UIButton!) {
-        print("Button tapped ")
+        if let buttonTitle = sender.title(for: .normal) {
+            print(buttonTitle)
+        }
+        self.performSegue(withIdentifier: "tableVCToPopUpVC", sender: nil)
     }
     
     @IBAction func createButtonClicked(_ sender: Any) {

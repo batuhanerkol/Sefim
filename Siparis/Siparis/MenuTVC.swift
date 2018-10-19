@@ -103,14 +103,6 @@ class MenuTVC: UITableViewController {
             }
     }
     
-    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        self.chosenFood = foodTitleArray[indexPath.row]
-        
-        selectecTitle = (titleTableView.cellForRow(at: indexPath)?.textLabel?.text)!
-        
-        self.performSegue(withIdentifier: "MenuToFoodDetailsTVC", sender: nil)
-
-    }
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return foodTitleArray.count
     }
@@ -120,6 +112,15 @@ class MenuTVC: UITableViewController {
         cell.textLabel?.text = foodTitleArray[indexPath.row]
         return cell
     }
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        self.chosenFood = foodTitleArray[indexPath.row]
+        
+        selectecTitle = (titleTableView.cellForRow(at: indexPath)?.textLabel?.text)!
+        
+        self.performSegue(withIdentifier: "MenuToFoodDetailsTVC", sender: nil)
+
+    }
+   
     override func tableView(_ tableView: UITableView, canMoveRowAt indexPath: IndexPath) -> Bool {
         return true
     }

@@ -10,6 +10,7 @@
 		013495FCE6E95FF809EAFECA /* Pods_Siparis.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9134C9FA788C8B1E178C22F6 /* Pods_Siparis.framework */; };
 		B90CD86B2152BEE90001A0B8 /* AddLocationVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = B90CD86A2152BEE90001A0B8 /* AddLocationVC.swift */; };
 		B91B248B21553045005C3DED /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B91B248A21553045005C3DED /* CoreLocation.framework */; };
+		B9325849217A156C00E04CFF /* popUpVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9325848217A156C00E04CFF /* popUpVC.swift */; };
 		B93953812168C6AE005A5099 /* BilgilerimVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = B93953802168C6AE005A5099 /* BilgilerimVC.swift */; };
 		B9706EB0214FB52100234067 /* Model.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = B9706EAE214FB52100234067 /* Model.xcdatamodeld */; };
 		B9828012215D2B4700CBE76B /* CreateQR.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9828011215D2B4700CBE76B /* CreateQR.swift */; };
@@ -39,6 +40,7 @@
 		9134C9FA788C8B1E178C22F6 /* Pods_Siparis.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Siparis.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		B90CD86A2152BEE90001A0B8 /* AddLocationVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddLocationVC.swift; sourceTree = "<group>"; };
 		B91B248A21553045005C3DED /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
+		B9325848217A156C00E04CFF /* popUpVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = popUpVC.swift; sourceTree = "<group>"; };
 		B93953802168C6AE005A5099 /* BilgilerimVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BilgilerimVC.swift; sourceTree = "<group>"; };
 		B9706EAF214FB52100234067 /* Model.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Model.xcdatamodel; sourceTree = "<group>"; };
 		B9828011215D2B4700CBE76B /* CreateQR.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateQR.swift; sourceTree = "<group>"; };
@@ -123,6 +125,7 @@
 				B9FCE524213D90CE006BCB6C /* KareKodVC.swift */,
 				B9828011215D2B4700CBE76B /* CreateQR.swift */,
 				B9FCE526213D90E0006BCB6C /* MasaVC.swift */,
+				B9325848217A156C00E04CFF /* popUpVC.swift */,
 				B9FCE528213D90F5006BCB6C /* IsletmeProfilVC.swift */,
 				B93953802168C6AE005A5099 /* BilgilerimVC.swift */,
 				B9E6866F216E63F400EF4C65 /* ChangePasswordVC.swift */,
@@ -280,6 +283,7 @@
 				B9FCE527213D90E0006BCB6C /* MasaVC.swift in Sources */,
 				B9FCE50D213D8486006BCB6C /* AppDelegate.swift in Sources */,
 				B9E68670216E63F400EF4C65 /* ChangePasswordVC.swift in Sources */,
+				B9325849217A156C00E04CFF /* popUpVC.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
