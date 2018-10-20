@@ -1,5 +1,5 @@
 //
-//  PopUpCellTableViewCell.swift
+//  PopUpTVC.swift
 //  Siparis
 //
 //  Created by Batuhan Erkol on 20.10.2018.
@@ -8,13 +8,10 @@
 
 import UIKit
 
-class PopUpCellTableViewCell: UITableViewCell {
+class PopUpTVC: UITableViewCell {
 
-    
-    @IBOutlet weak var fooNameLabel: UILabel!
-    @IBOutlet weak var priceLabel: UILabel!
-    
-    
+    @IBOutlet weak var foodPriceLabel: UILabel!
+    @IBOutlet weak var foodNameLabel: UILabel!
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code

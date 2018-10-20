@@ -53,6 +53,9 @@ class MasaVC: UIViewController {
         let value = UIInterfaceOrientation.landscapeRight.rawValue
         UIDevice.current.setValue(value, forKey: "orientation")
     }
+    override func viewWillAppear(_ animated: Bool) {
+        
+    }
     func buttonSizes(){
         if screenWidth > 1000{
             buttonWidth = 100
@@ -149,7 +152,7 @@ class MasaVC: UIViewController {
             print(buttonTitle)
             globalChosenTableNumber = buttonTitle
         }
-        self.performSegue(withIdentifier: "tableVCToPopUpVC", sender: nil)
+        self.performSegue(withIdentifier: "tableToPopUp", sender: nil)
     }
     
     @IBAction func createButtonClicked(_ sender: Any) {
