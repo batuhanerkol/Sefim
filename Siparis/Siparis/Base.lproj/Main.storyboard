@@ -636,23 +636,49 @@
                         <rect key="frame" x="0.0" y="0.0" width="667" height="375"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" misplaced="YES" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="TdJ-De-epT">
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="TdJ-De-epT">
                                 <rect key="frame" x="169" y="26" width="329" height="269"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <prototypes>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" rowHeight="26" id="764-9E-o6V">
-                                        <rect key="frame" x="0.0" y="28" width="329" height="26"/>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="cell" id="NTD-Ci-x6e" customClass="PopUpCellTableViewCell" customModule="Siparis" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="28" width="329" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
-                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="764-9E-o6V" id="FVk-95-f4l">
-                                            <rect key="frame" x="0.0" y="0.0" width="329" height="25.5"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="NTD-Ci-x6e" id="oH6-P4-hWl">
+                                            <rect key="frame" x="0.0" y="0.0" width="329" height="43.5"/>
                                             <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="FoodName" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="z2X-L4-l9M">
+                                                    <rect key="frame" x="0.0" y="0.0" width="150" height="44"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <nil key="textColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="price" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="9Kf-IB-kgR">
+                                                    <rect key="frame" x="223" y="11" width="79" height="33"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <nil key="textColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="₺" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="W2B-hz-ylV">
+                                                    <rect key="frame" x="278" y="11" width="42" height="33"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <nil key="textColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                            </subviews>
                                         </tableViewCellContentView>
+                                        <connections>
+                                            <outlet property="fooNameLabel" destination="z2X-L4-l9M" id="H6Z-Uh-8Fh"/>
+                                            <outlet property="priceLabel" destination="9Kf-IB-kgR" id="PWN-Gk-ehR"/>
+                                        </connections>
                                     </tableViewCell>
                                 </prototypes>
                             </tableView>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="j2e-sm-tof">
-                                <rect key="frame" x="329" y="292" width="109" height="32"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="j2e-sm-tof">
+                                <rect key="frame" x="327" y="303" width="109" height="32"/>
                                 <color key="backgroundColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="19"/>
                                 <state key="normal" title="yemek hazır">
@@ -662,9 +688,8 @@
                                     <action selector="foodIsReadyButtonClicked:" destination="nzp-zr-xDO" eventType="touchUpInside" id="iUU-ap-Gah"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Vcm-YG-EyL">
-                                <rect key="frame" x="437" y="292" width="61" height="32"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Vcm-YG-EyL">
+                                <rect key="frame" x="437" y="303" width="61" height="32"/>
                                 <color key="backgroundColor" red="1" green="0.14913141730000001" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <state key="normal" title="Kapat">
                                     <color key="titleColor" red="0.99999600649999998" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -676,13 +701,24 @@
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="0.34273149923312884" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
+                            <constraint firstItem="j2e-sm-tof" firstAttribute="leading" secondItem="281-sN-Eee" secondAttribute="leading" constant="327" id="0fr-N6-VYx"/>
                             <constraint firstItem="TdJ-De-epT" firstAttribute="centerX" secondItem="0Mt-qq-RQG" secondAttribute="centerX" id="BYO-sq-Fur"/>
                             <constraint firstItem="TdJ-De-epT" firstAttribute="leading" secondItem="281-sN-Eee" secondAttribute="leading" constant="169" id="JnI-Tk-EKJ"/>
-                            <constraint firstItem="TdJ-De-epT" firstAttribute="centerY" secondItem="0Mt-qq-RQG" secondAttribute="centerY" id="qgu-P5-17E"/>
+                            <constraint firstItem="j2e-sm-tof" firstAttribute="top" secondItem="Vcm-YG-EyL" secondAttribute="top" id="Mb2-4N-k8R"/>
+                            <constraint firstItem="281-sN-Eee" firstAttribute="bottom" secondItem="j2e-sm-tof" secondAttribute="bottom" constant="40" id="ajH-dt-mCX"/>
+                            <constraint firstItem="j2e-sm-tof" firstAttribute="bottom" secondItem="Vcm-YG-EyL" secondAttribute="bottom" id="b63-2i-t8V"/>
+                            <constraint firstItem="281-sN-Eee" firstAttribute="trailing" secondItem="j2e-sm-tof" secondAttribute="trailing" constant="231" id="cPK-z1-vBs"/>
+                            <constraint firstItem="Vcm-YG-EyL" firstAttribute="leading" secondItem="281-sN-Eee" secondAttribute="leading" constant="437" id="fp5-EL-dYC"/>
+                            <constraint firstItem="j2e-sm-tof" firstAttribute="top" secondItem="281-sN-Eee" secondAttribute="top" constant="303" id="fwW-dJ-ai2"/>
+                            <constraint firstItem="Vcm-YG-EyL" firstAttribute="trailing" secondItem="TdJ-De-epT" secondAttribute="trailing" id="gFS-Wy-xSj"/>
+                            <constraint firstItem="TdJ-De-epT" firstAttribute="centerY" secondItem="0Mt-qq-RQG" secondAttribute="centerY" constant="-27" id="qgu-P5-17E"/>
                             <constraint firstItem="TdJ-De-epT" firstAttribute="top" secondItem="281-sN-Eee" secondAttribute="top" constant="26" id="wtU-SL-yDU"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="281-sN-Eee"/>
                     </view>
+                    <connections>
+                        <outlet property="ordersTableView" destination="TdJ-De-epT" id="zMs-Yb-txx"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="yrF-Bx-3Kb" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -692,7 +728,7 @@
         <scene sceneID="DqB-ZN-BPf">
             <objects>
                 <viewController id="QbJ-uL-QqQ" customClass="IsletmeProfilVC" customModule="Siparis" customModuleProvider="target" sceneMemberID="viewController">
-                    <view key="view" contentMode="scaleToFill" ambiguous="YES" id="IM4-yk-LNo">
+                    <view key="view" contentMode="scaleToFill" id="IM4-yk-LNo">
                         <rect key="frame" x="0.0" y="0.0" width="667" height="375"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>

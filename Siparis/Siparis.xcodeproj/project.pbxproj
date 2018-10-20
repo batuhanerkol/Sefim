@@ -14,6 +14,7 @@
 		B93953812168C6AE005A5099 /* BilgilerimVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = B93953802168C6AE005A5099 /* BilgilerimVC.swift */; };
 		B9706EB0214FB52100234067 /* Model.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = B9706EAE214FB52100234067 /* Model.xcdatamodeld */; };
 		B9828012215D2B4700CBE76B /* CreateQR.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9828011215D2B4700CBE76B /* CreateQR.swift */; };
+		B98EE457217B1BEB00FA1E09 /* PopUpCellTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B98EE456217B1BEB00FA1E09 /* PopUpCellTableViewCell.swift */; };
 		B992869F216B8B2800AF9469 /* QRIcınDokun.png in Resources */ = {isa = PBXBuildFile; fileRef = B992869E216B8B2800AF9469 /* QRIcınDokun.png */; };
 		B99B3F68213E8678002D017A /* SignedUpVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = B99B3F67213E8678002D017A /* SignedUpVC.swift */; };
 		B9D1F03D2148270100C52EAC /* fotosecin.jpg in Resources */ = {isa = PBXBuildFile; fileRef = B9D1F03C2148270000C52EAC /* fotosecin.jpg */; };
@@ -44,6 +45,7 @@
 		B93953802168C6AE005A5099 /* BilgilerimVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BilgilerimVC.swift; sourceTree = "<group>"; };
 		B9706EAF214FB52100234067 /* Model.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Model.xcdatamodel; sourceTree = "<group>"; };
 		B9828011215D2B4700CBE76B /* CreateQR.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateQR.swift; sourceTree = "<group>"; };
+		B98EE456217B1BEB00FA1E09 /* PopUpCellTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopUpCellTableViewCell.swift; sourceTree = "<group>"; };
 		B992869E216B8B2800AF9469 /* QRIcınDokun.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "QRIcınDokun.png"; path = "../../../QRIcınDokun.png"; sourceTree = "<group>"; };
 		B99B3F67213E8678002D017A /* SignedUpVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignedUpVC.swift; sourceTree = "<group>"; };
 		B9D1F03C2148270000C52EAC /* fotosecin.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = fotosecin.jpg; sourceTree = "<group>"; };
@@ -126,6 +128,7 @@
 				B9828011215D2B4700CBE76B /* CreateQR.swift */,
 				B9FCE526213D90E0006BCB6C /* MasaVC.swift */,
 				B9325848217A156C00E04CFF /* popUpVC.swift */,
+				B98EE456217B1BEB00FA1E09 /* PopUpCellTableViewCell.swift */,
 				B9FCE528213D90F5006BCB6C /* IsletmeProfilVC.swift */,
 				B93953802168C6AE005A5099 /* BilgilerimVC.swift */,
 				B9E6866F216E63F400EF4C65 /* ChangePasswordVC.swift */,
@@ -267,6 +270,7 @@
 			files = (
 				B9FCE529213D90F5006BCB6C /* IsletmeProfilVC.swift in Sources */,
 				B9FCE525213D90CE006BCB6C /* KareKodVC.swift in Sources */,
+				B98EE457217B1BEB00FA1E09 /* PopUpCellTableViewCell.swift in Sources */,
 				B9FCE50F213D8486006BCB6C /* ViewController.swift in Sources */,
 				B90CD86B2152BEE90001A0B8 /* AddLocationVC.swift in Sources */,
 				B9706EB0214FB52100234067 /* Model.xcdatamodeld in Sources */,

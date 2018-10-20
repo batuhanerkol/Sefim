@@ -9,6 +9,8 @@
 import UIKit
 import Parse
 
+var globalChosenTableNumber = ""
+
 class MasaVC: UIViewController {
 
     var xLocation = 10
@@ -139,12 +141,13 @@ class MasaVC: UIViewController {
         button.addTarget(self, action: #selector(buttonAction), for: .touchUpInside)
         
         self.view.addSubview(button)
-        print("button created")
-       
     }
+    
     @objc func buttonAction(sender: UIButton!) {
+        
         if let buttonTitle = sender.title(for: .normal) {
             print(buttonTitle)
+            globalChosenTableNumber = buttonTitle
         }
         self.performSegue(withIdentifier: "tableVCToPopUpVC", sender: nil)
     }
