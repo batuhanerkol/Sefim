@@ -117,5 +117,6 @@ class BilgilerimVC: UIViewController {
         self.view.endEditing(true)
     }
     
+    
 }
 
