@@ -457,7 +457,7 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Food Name" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="U3r-0W-B7u">
-                                                    <rect key="frame" x="15" y="0.0" width="263" height="44"/>
+                                                    <rect key="frame" x="15" y="0.0" width="263" height="43.5"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
@@ -542,7 +542,7 @@
                                 <nil key="highlightedColor"/>
                             </label>
                         </subviews>
-                        <color key="backgroundColor" white="1" alpha="0.10097536426380369" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <color key="backgroundColor" white="1" alpha="0.31049894555214724" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
                             <constraint firstItem="WDp-ob-la6" firstAttribute="trailing" secondItem="jaD-qq-J0b" secondAttribute="trailing" id="B7X-MU-3lI"/>
                             <constraint firstItem="hW8-Iv-xUC" firstAttribute="leading" secondItem="WDp-ob-la6" secondAttribute="leading" id="BrG-UZ-qea"/>

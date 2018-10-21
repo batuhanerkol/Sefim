@@ -25,11 +25,12 @@ class PopUpVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
         orderTableView.delegate = self
         orderTableView.dataSource = self
         
-        getOrderData()
+
     }
     override func viewWillAppear(_ animated: Bool) {
-        getOrderData()
-       tableNumberLabel.text = globalChosenTableNumber
+          tableNumberLabel.text = globalChosenTableNumber
+              getOrderData()
+     
     }
     @IBAction func foodIsReadyButtonClicked(_ sender: Any) {
 
@@ -39,10 +40,10 @@ class PopUpVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
     }
     
     func getOrderData(){
-        
-        let query = PFQuery(className: "Siparisler")
+    
+        let query = PFQuery(className: "VerilenSiparisler")
         query.whereKey("IsletmeSahibi", equalTo: (PFUser.current()?.username)!)
-//        query.whereKey("MasaNumarasi", equalTo: tableNumberLabel.text! )
+        query.whereKey("MasaNumarasi", equalTo: globalChosenTableNumber)
 
         query.findObjectsInBackground { (objects, error) in
 
@@ -56,37 +57,15 @@ class PopUpVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
                 self.foodNameArray.removeAll(keepingCapacity: false)
                 self.priceArray.removeAll(keepingCapacity: false)
                 for object in objects! {
-                    self.foodNameArray.append(object.object(forKey: "SiparisAdi") as! String)
-                    self.priceArray.append(object.object(forKey: "SiparisFiyati") as! String)
+                    self.foodNameArray = object["SiparisAdi"] as! [String]
+                     self.priceArray = object["SiparisFiyati"] as! [String]
+//                    self.foodNameArray.append(object.object(forKey: "SiparisAdi") as! String)
+//                    self.priceArray.append(object.object(forKey: "SiparisFiyati") as! String)
 
                 }
             }
             self.orderTableView.reloadData()
-           
         }
-        
-//        let query = PFQuery(className: "VerilenSiparisler")
-//        query.whereKey("IsletmeSahibi", equalTo: (PFUser.current()?.username)!)
-//
-//        query.findObjectsInBackground { (objects, error) in
-//
-//            if error != nil{
-//                let alert = UIAlertController(title: "HATA", message: error?.localizedDescription, preferredStyle: UIAlertController.Style.alert)
-//                let okButton = UIAlertAction(title: "TAMAM", style: UIAlertAction.Style.cancel, handler: nil)
-//                alert.addAction(okButton)
-//                self.present(alert, animated: true, completion: nil)
-//            }
-//            else{
-//                self.foodNameArray.removeAll(keepingCapacity: false)
-//                self.priceArray.removeAll(keepingCapacity: false)
-//                for object in objects! {
-//                    self.foodNameArray.append(object.object(forKey: "SiparisAdi") as! String)
-//                    self.priceArray.append(object.object(forKey: "SiparisFiyati") as! String)
-//
-//                }
-//            }
-//            self.orderTableView.reloadData()
-//        }
     }
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
        dismiss(animated: true, completion: nil)

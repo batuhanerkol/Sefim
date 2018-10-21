@@ -143,7 +143,7 @@ class KareKodVC: UIViewController , UITextFieldDelegate,UIImagePickerControllerD
    
     func getQRDataFromParse(){
         let query = PFQuery(className: "QRInformation")
-        query.whereKey("QROwner", equalTo: PFUser.current()?.username!)
+        query.whereKey("QROwner", equalTo: (PFUser.current()?.username)!)
         query.findObjectsInBackground { (objects, error) in
             
             if error != nil{
