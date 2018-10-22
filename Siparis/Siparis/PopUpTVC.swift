@@ -10,6 +10,9 @@ import UIKit
 
 class PopUpTVC: UITableViewCell {
 
+    @IBOutlet weak var timeLabel: UILabel!
+    @IBOutlet weak var dateLabel: UILabel!
+    @IBOutlet weak var foodNoteLabel: UILabel!
     @IBOutlet weak var foodPriceLabel: UILabel!
     @IBOutlet weak var foodNameLabel: UILabel!
     override func awakeFromNib() {

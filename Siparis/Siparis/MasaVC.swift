@@ -149,7 +149,6 @@ class MasaVC: UIViewController {
     @objc func buttonAction(sender: UIButton!) {
         
         if let buttonTitle = sender.title(for: .normal) {
-            print(buttonTitle)
             globalChosenTableNumber = buttonTitle
         }
         self.performSegue(withIdentifier: "tableToPopUp", sender: nil)
