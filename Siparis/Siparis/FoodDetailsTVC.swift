@@ -51,11 +51,12 @@ class FoodDetailsTVC: UITableViewController {
     }
     
     func getData(){
-    
+        
+        
         let query = PFQuery(className: "FoodInformation")
-         query.whereKey("foodNameOwner", equalTo: "\(PFUser.current()!.username!)")
-         query.whereKey("foodTitle", equalTo: selectecTitle)
-           query.findObjectsInBackground { (objects, error) in
+        query.whereKey("foodNameOwner", equalTo: "\(PFUser.current()!.username!)")
+        query.whereKey("foodTitle", equalTo: selectecTitle)
+        query.findObjectsInBackground { (objects, error) in
             
             if error != nil{
                 let alert = UIAlertController(title: "HATA", message: error?.localizedDescription, preferredStyle: UIAlertControllerStyle.alert)
@@ -68,10 +69,10 @@ class FoodDetailsTVC: UITableViewController {
                 for object in objects! {
                     self.foodNameArray.append(object.object(forKey: "foodName") as! String)
                 }
-               
+                
             }
-             self.nameTableView.reloadData()
-
+            self.nameTableView.reloadData()
+            
         }
         
     }
@@ -100,6 +101,8 @@ class FoodDetailsTVC: UITableViewController {
         }
         
     }
+   
+    
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "FoodDetaisTVCToFoodInformationShowVC"{
             let destinationVC = segue.destination as! FoodInformationShowVC

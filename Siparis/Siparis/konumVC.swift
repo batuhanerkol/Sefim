@@ -31,8 +31,7 @@ class konumVC: UIViewController, MKMapViewDelegate, CLLocationManagerDelegate {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-
+    
         mapView.delegate = self
         manager.delegate = self
         manager.desiredAccuracy = kCLLocationAccuracyBest
