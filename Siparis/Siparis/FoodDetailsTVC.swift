@@ -19,6 +19,7 @@ class FoodDetailsTVC: UITableViewController {
 
     var chosenFood = ""
     var foodNameArray = [String]()
+    var foodTitleArray = [String]()
 
       
     override func viewDidLoad() {
@@ -49,7 +50,7 @@ class FoodDetailsTVC: UITableViewController {
         
         performSegue(withIdentifier: "FoodDetailsTVCToFoodDetailsVC", sender: nil)
     }
-    
+   
     func getData(){
         
         

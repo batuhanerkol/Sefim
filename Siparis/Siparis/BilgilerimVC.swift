@@ -9,8 +9,10 @@
 import UIKit
 import Parse
 
-class BilgilerimVC: UIViewController {
+class BilgilerimVC: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     
+    @IBOutlet weak var saceLogoButton: UIButton!
+    @IBOutlet weak var logoImageView: UIImageView!
     @IBOutlet weak var usernameLabel: UILabel!
     @IBOutlet weak var emailTextField: UITextField!
     @IBOutlet weak var nameTextField: UITextField!
@@ -27,6 +29,10 @@ class BilgilerimVC: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        logoImageView.isUserInteractionEnabled = true
+        let gestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(AddFoodInformationVC.selectImage))
+        logoImageView.addGestureRecognizer(gestureRecognizer)
         
     saveChangesButton.isHidden = true
 
@@ -107,6 +113,74 @@ class BilgilerimVC: UIViewController {
         }
     
        
+    }
+    @IBAction func saveLogoButtonPressed(_ sender: Any) {
+          self.deleteData()
+        let logo = PFObject(className: "BusinessLOGO")
+        
+        logo["BusinessOwner"] = "\(PFUser.current()!.username!)"
+        
+        if let imageData = UIImageJPEGRepresentation(logoImageView.image!, 0.5){
+            logo["image"] = PFFile(name: "image.jpg", data: imageData)
+        }
+        
+        logo.saveInBackground { (success, error) in
+            
+            if error != nil{
+                let alert = UIAlertController(title: "HATA", message: error?.localizedDescription, preferredStyle: UIAlertControllerStyle.alert)
+                let okButton = UIAlertAction(title: "TAMAM", style: UIAlertActionStyle.cancel, handler: nil)
+                alert.addAction(okButton)
+                self.present(alert, animated: true, completion: nil)
+            }
+            else{
+              
+                
+                let alert = UIAlertController(title: "Logo Kaydedildi", message: "", preferredStyle: UIAlertControllerStyle.alert)
+                let okButton = UIAlertAction(title: "TAMAM", style: UIAlertActionStyle.cancel, handler: nil)
+                alert.addAction(okButton)
+                self.present(alert, animated: true, completion: nil)
+                
+            }
+        }
+    }
+    
+    @objc func selectImage() {
+        
+        
+        let picker = UIImagePickerController()
+        picker.delegate = self
+        picker.sourceType = .photoLibrary
+        picker.allowsEditing = true
+        self.present(picker, animated: true, completion: nil)
+    }
+    
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
+        logoImageView.image = info[UIImagePickerControllerEditedImage] as? UIImage
+        self.dismiss(animated: true, completion: nil)
+    }
+
+    func deleteData(){
+        let query = PFQuery(className: "BusinessLOGO")
+        query.whereKey("BusinessOwner", equalTo: "\(PFUser.current()!.username!)")
+        
+        query.findObjectsInBackground { (objects, error) in
+            if error != nil{
+                let alert = UIAlertController(title: "HATA", message: error?.localizedDescription, preferredStyle: UIAlertControllerStyle.alert)
+                let okButton = UIAlertAction(title: "TAMAM", style: UIAlertActionStyle.cancel, handler: nil)
+                alert.addAction(okButton)
+                self.present(alert, animated: true, completion: nil)
+            }
+            else{
+              
+                for object in objects! {
+                    object.deleteInBackground()
+                 
+                  
+                }
+            }
+            
+        }
+        
     }
     @IBAction func changePassworButtonPressed(_ sender: Any) {
     }

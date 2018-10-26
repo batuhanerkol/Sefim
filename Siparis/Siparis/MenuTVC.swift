@@ -53,7 +53,7 @@ class MenuTVC: UITableViewController {
     
    
     func getData(){
-        let query = PFQuery(className: "FoodInformation")
+        let query = PFQuery(className: "FoodTitle")
         query.whereKey("foodTitleOwner", equalTo: "\(PFUser.current()!.username!)")
         query.findObjectsInBackground { (objects, error) in
 
@@ -74,7 +74,7 @@ class MenuTVC: UITableViewController {
     }
 
     func deleteData(foodIndexTitle : String){
-        let query = PFQuery(className: "FoodInformation")
+        let query = PFQuery(className: "FoodTitle")
         query.whereKey("foodTitleOwner", equalTo: "\(PFUser.current()!.username!)")
        query.whereKey("foodTitle", equalTo: foodIndexTitle)
         query.findObjectsInBackground { (objects, error) in
