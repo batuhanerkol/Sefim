@@ -33,8 +33,6 @@ class PopUpVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
     }
     override func viewWillAppear(_ animated: Bool) {
         getTableNumberData()
-        
-        
          getOrderData()
         
     }
@@ -63,25 +61,23 @@ class PopUpVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
                 
                 self.tableNumberArray.removeAll(keepingCapacity: false)
                 for object in objects! {
-                    print("AAAAAAA3")
                     self.tableNumberArray.append(object.object(forKey: "MasaNo") as! String)
                 }
             }
             
             self.tableNumber = self.tableNumberArray.last!
-            print( self.tableNumber )
         }
     }
     
     
     func getOrderData(){
+    getTableNumberData()
      tableNumberLabel.text! =  globalChosenTableNumber
-        getTableNumberData()
-      //  print(tableNumberLabel.text!)
-    
+        
         let query = PFQuery(className: "VerilenSiparisler")
         query.whereKey("IsletmeSahibi", equalTo: (PFUser.current()?.username)!)
-       // query.whereKey("MasaNo", equalTo:tableNumber )
+        query.whereKey("MasaNo", equalTo: globalChosenTableNumber.substring(toIndex: globalChosenTableNumber.length - 1))
+        
 
         query.findObjectsInBackground { (objects, error) in
 
@@ -100,7 +96,7 @@ class PopUpVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
                 self.timeArray.removeAll(keepingCapacity: false)
                 print("AAAAAAA2")
                 for object in objects! {
-                        print("AAAAAAA3")
+                        print("AAAAA3")
                     self.foodNameArray = object["SiparisAdi"] as! [String]
                     self.priceArray = object["SiparisFiyati"] as! [String]
                     self.orderNoteArray = object["YemekNotu"] as! [String]
@@ -130,5 +126,35 @@ class PopUpVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
         return cell
     }
 }
+
+
+extension String {
+    
+    var length: Int {
+        return count
+    }
+    
+    subscript (i: Int) -> String {
+        return self[i ..< i + 1]
+    }
+    
+    func substring(fromIndex: Int) -> String {
+        return self[min(fromIndex, length) ..< length]
+    }
+    
+    func substring(toIndex: Int) -> String {
+        return self[0 ..< max(0, toIndex)]
+    }
+    
+    subscript (r: Range<Int>) -> String {
+        let range = Range(uncheckedBounds: (lower: max(0, min(length, r.lowerBound)),
+                                            upper: min(length, max(0, r.upperBound))))
+        let start = index(startIndex, offsetBy: range.lowerBound)
+        let end = index(start, offsetBy: range.upperBound - range.lowerBound)
+        return String(self[start ..< end])
+    }
+    
+}
+
     
 
