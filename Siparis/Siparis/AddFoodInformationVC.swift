@@ -10,6 +10,9 @@ import UIKit
 import Parse
 class AddFoodInformationVC: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate,UITextFieldDelegate {
 
+    var businessName = ""
+    var nameArray = [String]()
+    
     @IBOutlet weak var longTextField: UITextView!
     @IBOutlet weak var confirmButton: UIButton!
     @IBOutlet weak var priceTextField: UITextField!
@@ -28,7 +31,9 @@ class AddFoodInformationVC: UIViewController, UIImagePickerControllerDelegate, U
         let gestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(AddFoodInformationVC.selectImage))
             selectedImage.addGestureRecognizer(gestureRecognizer)
     }
-    
+    override func viewWillAppear(_ animated: Bool) {
+     getBussinessNameData()
+    }
     @objc func selectImage() {
         
         
@@ -45,7 +50,12 @@ class AddFoodInformationVC: UIViewController, UIImagePickerControllerDelegate, U
     }
 
     @IBAction func confirmButtonPressed(_ sender: Any) {
-      
+        
+            addFoodInfo()
+     
+    }
+    
+    func addFoodInfo(){
         if textField.text != "" && longTextField.text != "" && priceTextField.text != ""  {
             self.confirmButton.isHidden = true
             
@@ -57,6 +67,7 @@ class AddFoodInformationVC: UIViewController, UIImagePickerControllerDelegate, U
             foodInformation["foodTitle"] = selectecTitle
             let uuid = UUID().uuidString
             foodInformation["fooduuid"] = "\(uuid) \(PFUser.current()!.username!)"
+            foodInformation["BusinessName"] = businessName
             
             if let imageData = UIImageJPEGRepresentation(selectedImage.image!, 0.5){
                 foodInformation["image"] = PFFile(name: "image.jpg", data: imageData)
@@ -104,8 +115,27 @@ class AddFoodInformationVC: UIViewController, UIImagePickerControllerDelegate, U
         
     }
     
-   
-    
+    func getBussinessNameData(){
+        let query = PFQuery(className: "Locations")
+        query.whereKey("businessLocationOwner", equalTo: "\(PFUser.current()!.username!)")
+        
+        query.findObjectsInBackground { (objects, error) in
+            if error != nil{
+                let alert = UIAlertController(title: "HATA", message: error?.localizedDescription, preferredStyle: UIAlertController.Style.alert)
+                let okButton = UIAlertAction(title: "TAMAM", style: UIAlertAction.Style.cancel, handler: nil)
+                alert.addAction(okButton)
+                self.present(alert, animated: true, completion: nil)
+            }
+            else{
+                self.nameArray.removeAll(keepingCapacity: false)
+                for object in objects!{
+                    self.nameArray.append(object.object(forKey: "businessName") as! String)
+                    
+                    self.businessName = "\(self.nameArray.last!)"
+                }
+            }
+        }
+    }
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         self.view.endEditing(true)
         
