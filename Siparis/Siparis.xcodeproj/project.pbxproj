@@ -92,6 +92,57 @@
 			name = Pods;
 			sourceTree = "<group>";
 		};
+		B9E0936621958130007E6B2E /* Menu */ = {
+			isa = PBXGroup;
+			children = (
+				B9F529C92143DDD200BD45A6 /* MenuTVC.swift */,
+				B9F529CD2144239E00BD45A6 /* AddFoodTitleVC.swift */,
+				B9F529CF2144364F00BD45A6 /* FoodDetailsTVC.swift */,
+				B9F529D521443C2000BD45A6 /* AddFoodInformationVC.swift */,
+				B9F529D92144449600BD45A6 /* FoodInformationShowVC.swift */,
+			);
+			name = Menu;
+			path = ..;
+			sourceTree = "<group>";
+		};
+		B9E0936721958158007E6B2E /* Location */ = {
+			isa = PBXGroup;
+			children = (
+				B9FCE522213D90B8006BCB6C /* konumVC.swift */,
+				B90CD86A2152BEE90001A0B8 /* AddLocationVC.swift */,
+			);
+			path = Location;
+			sourceTree = "<group>";
+		};
+		B9E093682195816D007E6B2E /* QR Code */ = {
+			isa = PBXGroup;
+			children = (
+				B9FCE524213D90CE006BCB6C /* KareKodVC.swift */,
+				B9828011215D2B4700CBE76B /* CreateQR.swift */,
+			);
+			path = "QR Code";
+			sourceTree = "<group>";
+		};
+		B9E093692195817E007E6B2E /* Table */ = {
+			isa = PBXGroup;
+			children = (
+				B9FCE526213D90E0006BCB6C /* MasaVC.swift */,
+				B98EE458217B2E9400FA1E09 /* PopUpVC.swift */,
+				B98EE45A217B2F2900FA1E09 /* PopUpTVC.swift */,
+			);
+			path = Table;
+			sourceTree = "<group>";
+		};
+		B9E0936A21958192007E6B2E /* Profil */ = {
+			isa = PBXGroup;
+			children = (
+				B9FCE528213D90F5006BCB6C /* IsletmeProfilVC.swift */,
+				B93953802168C6AE005A5099 /* BilgilerimVC.swift */,
+				B9E6866F216E63F400EF4C65 /* ChangePasswordVC.swift */,
+			);
+			path = Profil;
+			sourceTree = "<group>";
+		};
 		B9FCE500213D8486006BCB6C = {
 			isa = PBXGroup;
 			children = (
@@ -117,21 +168,11 @@
 				B9FCE50E213D8486006BCB6C /* ViewController.swift */,
 				B99B3F67213E8678002D017A /* SignedUpVC.swift */,
 				B9FCE51E213D8E49006BCB6C /* SingInVC.swift */,
-				B9F529C92143DDD200BD45A6 /* MenuTVC.swift */,
-				B9F529CD2144239E00BD45A6 /* AddFoodTitleVC.swift */,
-				B9F529CF2144364F00BD45A6 /* FoodDetailsTVC.swift */,
-				B9F529D521443C2000BD45A6 /* AddFoodInformationVC.swift */,
-				B9F529D92144449600BD45A6 /* FoodInformationShowVC.swift */,
-				B9FCE522213D90B8006BCB6C /* konumVC.swift */,
-				B90CD86A2152BEE90001A0B8 /* AddLocationVC.swift */,
-				B9FCE524213D90CE006BCB6C /* KareKodVC.swift */,
-				B9828011215D2B4700CBE76B /* CreateQR.swift */,
-				B9FCE526213D90E0006BCB6C /* MasaVC.swift */,
-				B98EE458217B2E9400FA1E09 /* PopUpVC.swift */,
-				B98EE45A217B2F2900FA1E09 /* PopUpTVC.swift */,
-				B9FCE528213D90F5006BCB6C /* IsletmeProfilVC.swift */,
-				B93953802168C6AE005A5099 /* BilgilerimVC.swift */,
-				B9E6866F216E63F400EF4C65 /* ChangePasswordVC.swift */,
+				B9E0936621958130007E6B2E /* Menu */,
+				B9E0936721958158007E6B2E /* Location */,
+				B9E093682195816D007E6B2E /* QR Code */,
+				B9E093692195817E007E6B2E /* Table */,
+				B9E0936A21958192007E6B2E /* Profil */,
 				B9D1F03C2148270000C52EAC /* fotosecin.jpg */,
 				B992869E216B8B2800AF9469 /* QRIcınDokun.png */,
 				B9FCE510213D8486006BCB6C /* Main.storyboard */,
