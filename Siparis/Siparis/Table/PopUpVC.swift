@@ -11,15 +11,25 @@ import Parse
 
 class PopUpVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
     
+    var businessNameArray = [String]()
     var foodNameArray = [String]()
     var priceArray = [String]()
     var orderNoteArray = [String]()
     var dateArray = [String]()
     var timeArray =  [String]()
-     var tableNumberArray = [String]()
+    var tableNumberArray = [String]()
+    var totalPriceArray = [String]()
+    var objectIdArray = [String]()
+    var hesapOdendiArray = [String]()
     
      var tableNumber = ""
+     var objectId = ""
+     var chosenBusiness = ""
+     var chosenDate = ""
+     var chosenTime = ""
+     var hesapOdendi = ""
     
+    @IBOutlet weak var totalPriceLabel: UILabel!
     @IBOutlet weak var tableNumberLabel: UILabel!
     @IBOutlet weak var orderTableView: UITableView!
     
@@ -33,16 +43,9 @@ class PopUpVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
     }
     override func viewWillAppear(_ animated: Bool) {
         getTableNumberData()
-         getOrderData()
-        
+           checkHesap()
     }
-    @IBAction func foodIsReadyButtonClicked(_ sender: Any) {
-
-    }
-    @IBAction func closeButtonClicked(_ sender: Any) {
-    dismiss(animated: true, completion: nil)
-    }
-    
+   
    
     func getTableNumberData(){
         
@@ -68,7 +71,42 @@ class PopUpVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
             self.tableNumber = self.tableNumberArray.last!
         }
     }
-    
+    func checkHesap(){
+        getTableNumberData()
+        tableNumberLabel.text! =  globalChosenTableNumber
+        
+        let query = PFQuery(className: "VerilenSiparisler")
+        query.whereKey("IsletmeSahibi", equalTo: (PFUser.current()?.username)!)
+        query.whereKey("MasaNo", equalTo: globalChosenTableNumber.substring(toIndex: globalChosenTableNumber.length - 1))
+        query.whereKeyExists("HesapOdendi")
+        
+        query.findObjectsInBackground { (objects, error) in
+            
+            if error != nil{
+                let alert = UIAlertController(title: "HATA", message: error?.localizedDescription, preferredStyle: UIAlertController.Style.alert)
+                let okButton = UIAlertAction(title: "TAMAM", style: UIAlertAction.Style.cancel, handler: nil)
+                alert.addAction(okButton)
+                self.present(alert, animated: true, completion: nil)
+            }
+            else{
+                
+                self.hesapOdendiArray.removeAll(keepingCapacity: false)
+                
+                
+                for object in objects! {
+                    
+                  
+                    self.hesapOdendiArray.append(object.object(forKey: "HesapOdendi") as! String)
+                    
+                    self.hesapOdendi = "\(self.hesapOdendiArray.last!)"
+                }
+                print(self.hesapOdendi)
+                if self.hesapOdendi != "Evet"{
+                    self.getOrderData()
+                }
+            }
+        }
+    }
     
     func getOrderData(){
     getTableNumberData()
@@ -77,7 +115,6 @@ class PopUpVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
         let query = PFQuery(className: "VerilenSiparisler")
         query.whereKey("IsletmeSahibi", equalTo: (PFUser.current()?.username)!)
         query.whereKey("MasaNo", equalTo: globalChosenTableNumber.substring(toIndex: globalChosenTableNumber.length - 1))
-        
 
         query.findObjectsInBackground { (objects, error) in
 
@@ -88,29 +125,41 @@ class PopUpVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
                 self.present(alert, animated: true, completion: nil)
             }
             else{
-                 print("AAAAAAA1")
+               
+                self.businessNameArray.removeAll(keepingCapacity: false)
                 self.foodNameArray.removeAll(keepingCapacity: false)
                 self.priceArray.removeAll(keepingCapacity: false)
                 self.orderNoteArray.removeAll(keepingCapacity: false)
                 self.dateArray.removeAll(keepingCapacity: false)
                 self.timeArray.removeAll(keepingCapacity: false)
-                print("AAAAAAA2")
+                self.totalPriceArray.removeAll(keepingCapacity: false)
+                self.objectIdArray.removeAll(keepingCapacity: false)
+              
+            
                 for object in objects! {
-                        print("AAAAA3")
+                 
                     self.foodNameArray = object["SiparisAdi"] as! [String]
                     self.priceArray = object["SiparisFiyati"] as! [String]
                     self.orderNoteArray = object["YemekNotu"] as! [String]
-                     print("AAAAAAA4")
-                    self.dateArray.append(object.object(forKey: "Date") as! String)
-                     self.timeArray.append(object.object(forKey: "Time") as! String)
                    
+                    self.businessNameArray.append(object.object(forKey: "IsletmeAdi") as! String)
+                    self.totalPriceArray.append(object.object(forKey: "ToplamFiyat") as! String)
+                    self.dateArray.append(object.object(forKey: "Date") as! String)
+                    self.timeArray.append(object.object(forKey: "Time") as! String)
+                    
+                    self.objectIdArray.append(object.objectId! as! String)
+                    
+                    self.totalPriceLabel.text = "\(self.totalPriceArray.last!)"
+                    self.chosenDate = "\(self.dateArray.last!)"
+                    self.chosenTime = "\(self.timeArray.last!)"
+                    self.chosenBusiness = "\(self.businessNameArray.last!)"
+                   self.objectId = "\(self.objectIdArray.last!)"
                 }
             }
+            
             self.orderTableView.reloadData()
         }
     }
-    
-    
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
        dismiss(animated: true, completion: nil)
     }
@@ -126,6 +175,50 @@ class PopUpVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
          cell.dateLabel.text = dateArray.last
          cell.timeLabel.text = timeArray.last
         return cell
+    }
+    @IBAction func foodIsReadyButtonClicked(_ sender: Any) {
+        
+    }
+    @IBAction func closeButtonClicked(_ sender: Any) {
+        dismiss(animated: true, completion: nil)
+    }
+    @IBAction func orderHasGivenButtonClicked(_ sender: Any) {
+    }
+    
+    @IBAction func chechkHasPaidButtonClicked(_ sender: Any) {
+        let query = PFQuery(className: "VerilenSiparisler")
+        query.whereKeyExists("HesapOdendi")
+        query.getObjectInBackground(withId: objectId) { (objects, error) in
+            if error != nil{
+                let alert = UIAlertController(title: "HATA", message: error?.localizedDescription, preferredStyle: UIAlertController.Style.alert)
+                let okButton = UIAlertAction(title: "TAMAM", style: UIAlertAction.Style.cancel, handler: nil)
+                alert.addAction(okButton)
+                self.present(alert, animated: true, completion: nil)
+            }else {
+                let alertController = UIAlertController(title: "Hesabın Ödendiğinden Emin Misiniz ?", message: "", preferredStyle: .alert)
+                
+                // Create the actions
+                let okAction = UIAlertAction(title: "Evet", style: UIAlertActionStyle.default) {
+                    UIAlertAction in
+                    NSLog("OK Pressed")
+                    objects!["HesapOdendi"] = "Evet"
+                    objects!.saveInBackground()
+                }
+                let cancelAction = UIAlertAction(title: "Hayır", style: UIAlertActionStyle.cancel) {
+                    UIAlertAction in
+                    NSLog("Cancel Pressed")
+                }
+                
+                // Add the actions
+                alertController.addAction(okAction)
+                alertController.addAction(cancelAction)
+                
+                // Present the controller
+                self.present(alertController, animated: true, completion: nil)
+               
+            }
+        }
+    
     }
 }
 

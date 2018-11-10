@@ -130,6 +130,8 @@ class MasaVC: UIViewController {
                     
                     
                 }
+                self.createButton.isHidden = true
+                self.textField.text = ""
             }
         }
         
@@ -215,7 +217,7 @@ class MasaVC: UIViewController {
                 self.present(alert, animated: true, completion: nil)
             }
             tableNumberLabel.text!=textField.text!
-            textField.text! = ""
+            self.textField.text = ""
             createButton.isHidden = true
             deleteButton.isHidden = false
             
