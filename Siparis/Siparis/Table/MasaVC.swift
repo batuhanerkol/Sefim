@@ -54,6 +54,7 @@ class MasaVC: UIViewController {
         UIDevice.current.setValue(value, forKey: "orientation")
     }
     override func viewWillAppear(_ animated: Bool) {
+
         
     }
     func buttonSizes(){
@@ -69,6 +70,7 @@ class MasaVC: UIViewController {
             buttonWidth = 45
             buttonHeight = 45
         }
+     
     }
     
     
@@ -148,6 +150,7 @@ class MasaVC: UIViewController {
         self.view.addSubview(button)
     }
     
+    
     @objc func buttonAction(sender: UIButton!) {
         
         if let buttonTitle = sender.title(for: .normal) {
@@ -155,6 +158,8 @@ class MasaVC: UIViewController {
         }
         self.performSegue(withIdentifier: "tableToPopUp", sender: nil)
     }
+    
+    
     
     @IBAction func createButtonClicked(_ sender: Any) {
         

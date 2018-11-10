@@ -9,6 +9,8 @@
 import UIKit
 import Parse
 
+var globalChosenTableNumberColor = 0
+
 class PopUpVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
     
     var businessNameArray = [String]()
@@ -100,7 +102,7 @@ class PopUpVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
                     
                     self.hesapOdendi = "\(self.hesapOdendiArray.last!)"
                 }
-                print(self.hesapOdendi)
+
                 if self.hesapOdendi != "Evet"{
                     self.getOrderData()
                 }
@@ -147,7 +149,7 @@ class PopUpVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
                     self.dateArray.append(object.object(forKey: "Date") as! String)
                     self.timeArray.append(object.object(forKey: "Time") as! String)
                     
-                    self.objectIdArray.append(object.objectId! as! String)
+                    self.objectIdArray.append(object.objectId! as String)
                     
                     self.totalPriceLabel.text = "\(self.totalPriceArray.last!)"
                     self.chosenDate = "\(self.dateArray.last!)"
@@ -177,7 +179,26 @@ class PopUpVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
         return cell
     }
     @IBAction func foodIsReadyButtonClicked(_ sender: Any) {
+        let alertController = UIAlertController(title: "Yemeğin Hazır Olduğuna Emin Misiniz ?", message: "", preferredStyle: .alert)
         
+        // Create the actions
+        let okAction = UIAlertAction(title: "Evet", style: UIAlertActionStyle.default) {
+            UIAlertAction in
+     
+             globalChosenTableNumberColor = 1
+            
+        }
+        let cancelAction = UIAlertAction(title: "Hayır", style: UIAlertActionStyle.cancel) {
+            UIAlertAction in
+        }
+        
+        // Add the actions
+        alertController.addAction(okAction)
+        alertController.addAction(cancelAction)
+        
+        // Present the controller
+        self.present(alertController, animated: true, completion: nil)
+       
     }
     @IBAction func closeButtonClicked(_ sender: Any) {
         dismiss(animated: true, completion: nil)
