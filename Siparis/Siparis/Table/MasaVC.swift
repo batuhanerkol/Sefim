@@ -307,10 +307,19 @@ class MasaVC: UIViewController {
 }
 
 extension MasaVC : SetTableButtonColor {
-    func setTableButtonColor() {
+    func setFoodIsReadyButtonColor() {
         
         let tableButtonIndex = Int(globalChosenTableNumber)! - 1
         tableButtonBackgroundColorAray[tableButtonIndex].backgroundColor = UIColor.blue
+    }
+    
+    func setFoodIsGivenButtonColor(){
+        let tableButtonIndex = Int(globalChosenTableNumber)! - 1
+        tableButtonBackgroundColorAray[tableButtonIndex].backgroundColor = UIColor.green
+    }
+    func checkHasPaidButtonColor(){
+        let tableButtonIndex = Int(globalChosenTableNumber)! - 1
+        tableButtonBackgroundColorAray[tableButtonIndex].backgroundColor = UIColor.gray
     }
     
 }
