@@ -9,9 +9,15 @@
 import UIKit
 import Parse
 
+protocol SetTableButtonColor {
+    func setTableButtonColor()
+}
+
 var globalChosenTableNumberColor = 0
 
 class PopUpVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
+    
+    var delegate : SetTableButtonColor?
     
     var businessNameArray = [String]()
     var foodNameArray = [String]()
@@ -116,7 +122,7 @@ class PopUpVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
         
         let query = PFQuery(className: "VerilenSiparisler")
         query.whereKey("IsletmeSahibi", equalTo: (PFUser.current()?.username)!)
-        query.whereKey("MasaNo", equalTo: globalChosenTableNumber.substring(toIndex: globalChosenTableNumber.length - 1))
+        query.whereKey("MasaNo", equalTo: globalChosenTableNumber.substring(toIndex: globalChosenTableNumber.length))
 
         query.findObjectsInBackground { (objects, error) in
 
@@ -185,7 +191,7 @@ class PopUpVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
         let okAction = UIAlertAction(title: "Evet", style: UIAlertActionStyle.default) {
             UIAlertAction in
      
-             globalChosenTableNumberColor = 1
+            self.delegate?.setTableButtonColor()
             
         }
         let cancelAction = UIAlertAction(title: "Hayır", style: UIAlertActionStyle.cancel) {

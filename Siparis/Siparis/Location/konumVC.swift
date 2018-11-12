@@ -55,8 +55,28 @@ class konumVC: UIViewController, MKMapViewDelegate, CLLocationManagerDelegate {
             performSegue(withIdentifier: "konumVCToAddLocationVC", sender: nil)
     }
     @IBAction func cleanButtonPressed(_ sender: Any) {
-        self.addButton.isHidden = false
-        deleteData()
+        let alertController = UIAlertController(title: "EMİN MİSİNİZ ?", message: "Eğer Bilgilerinizi Sıfırlarsanız Bütün Bilgilerinizi En Baştan Girmeniz Gerekir (Menü, Logo vb.)", preferredStyle: .alert)
+        
+        // Create the actions
+        let okAction = UIAlertAction(title: "Evet", style: UIAlertActionStyle.default) {
+            UIAlertAction in
+            
+            self.addButton.isHidden = false
+            self.deleteData()
+            
+        }
+        let cancelAction = UIAlertAction(title: "Hayır", style: UIAlertActionStyle.cancel) {
+            UIAlertAction in
+        }
+        
+        // Add the actions
+        alertController.addAction(okAction)
+        alertController.addAction(cancelAction)
+        
+        // Present the controller
+        self.present(alertController, animated: true, completion: nil)
+        
+       
     }
         
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {

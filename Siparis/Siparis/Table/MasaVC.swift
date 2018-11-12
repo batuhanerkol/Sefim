@@ -9,6 +9,8 @@
 import UIKit
 import Parse
 
+
+
 var globalChosenTableNumber = ""
 
 class MasaVC: UIViewController {
@@ -27,6 +29,9 @@ class MasaVC: UIViewController {
     var tableNumberText = ""
     
     var deneme = 0
+    
+    var tableBottomBackgroundColor = UIColor.gray
+    var tableButtonBackgroundColorAray = [UIButton]()
     
     
     
@@ -132,7 +137,7 @@ class MasaVC: UIViewController {
                     
                     
                 }
-                self.createButton.isHidden = true
+                self.createButton.isHidden = false
                 self.textField.text = ""
             }
         }
@@ -143,9 +148,11 @@ class MasaVC: UIViewController {
         button = UIButton()
 
         button.frame = CGRect(x:   xLocation, y:   yLocation, width: buttonWidth, height: buttonHeight)
-        button.backgroundColor = UIColor.gray
-        button.setTitle("\(tableNumber + 1) ", for: .normal)
+        button.backgroundColor = tableBottomBackgroundColor
+        button.setTitle("\(tableNumber + 1)", for: .normal)
         button.addTarget(self, action: #selector(buttonAction), for: .touchUpInside)
+        
+        tableButtonBackgroundColorAray.append(button)
         
         self.view.addSubview(button)
     }
@@ -223,7 +230,7 @@ class MasaVC: UIViewController {
             }
             tableNumberLabel.text!=textField.text!
             self.textField.text = ""
-            createButton.isHidden = true
+            createButton.isHidden = false
             deleteButton.isHidden = false
             
         }
@@ -289,5 +296,21 @@ class MasaVC: UIViewController {
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         self.view.endEditing(true)
     }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "tableToPopUp" {
+            let destination = segue.destination as! PopUpVC
+            destination.delegate = self
+        }
+    }
    
+}
+
+extension MasaVC : SetTableButtonColor {
+    func setTableButtonColor() {
+        
+        let tableButtonIndex = Int(globalChosenTableNumber)! - 1
+        tableButtonBackgroundColorAray[tableButtonIndex].backgroundColor = UIColor.blue
+    }
+    
 }
