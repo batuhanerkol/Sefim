@@ -352,25 +352,11 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="VY0-sy-Htq">
-                                <rect key="frame" x="0.0" y="528" width="375" height="41"/>
-                                <color key="backgroundColor" red="1" green="0.14913141730000001" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="41" id="KFL-5a-CSp"/>
-                                </constraints>
-                                <fontDescription key="fontDescription" type="system" pointSize="23"/>
-                                <state key="normal" title="Kare Kod SIFIRLA">
-                                    <color key="titleColor" red="0.92143100499999997" green="0.92145264149999995" blue="0.92144101860000005" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                </state>
-                                <connections>
-                                    <action selector="deleteQRButton:" destination="J62-qa-2pb" eventType="touchUpInside" id="iIh-Jr-h0Z"/>
-                                </connections>
-                            </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ruF-45-8V8">
-                                <rect key="frame" x="0.0" y="487" width="375" height="40"/>
+                                <rect key="frame" x="0.0" y="521" width="375" height="40"/>
                                 <color key="backgroundColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="40" id="BF6-Lu-LZX"/>
+                                    <constraint firstAttribute="height" constant="40" id="2i7-o2-GQl"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" type="system" pointSize="22"/>
                                 <state key="normal" title="1 - Kod Oluştur">
@@ -381,14 +367,8 @@
                                 </connections>
                             </button>
                             <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="ut3-Rw-KcC">
-                                <rect key="frame" x="0.0" y="64" width="375" height="312"/>
+                                <rect key="frame" x="0.0" y="64" width="375" height="316"/>
                             </imageView>
-                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="e-mail giriniz" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="fFy-RY-gva">
-                                <rect key="frame" x="0.0" y="433" width="375" height="30"/>
-                                <nil key="textColor"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                <textInputTraits key="textInputTraits" returnKeyType="done"/>
-                            </textField>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="xB1-BB-P1n">
                                 <rect key="frame" x="0.0" y="569" width="375" height="41"/>
                                 <color key="backgroundColor" red="1" green="0.57810515169999999" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -400,25 +380,31 @@
                                     <action selector="savetoParseButtonClicked:" destination="J62-qa-2pb" eventType="touchUpInside" id="l2e-bD-N9L"/>
                                 </connections>
                             </button>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="QR Kod Mail Adresinize Özel 1 Kere Üretilir ve Değiştirilemez." textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ReV-Ws-4kc">
+                                <rect key="frame" x="0.0" y="388" width="375" height="47"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="47" id="0xg-Sa-jqG"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="18"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
-                            <constraint firstItem="ut3-Rw-KcC" firstAttribute="top" secondItem="OIo-Nu-tcJ" secondAttribute="top" id="2fY-xV-T5f"/>
-                            <constraint firstItem="VY0-sy-Htq" firstAttribute="trailing" secondItem="xB1-BB-P1n" secondAttribute="trailing" id="7qN-iX-4gT"/>
-                            <constraint firstItem="OIo-Nu-tcJ" firstAttribute="bottom" secondItem="xB1-BB-P1n" secondAttribute="bottom" constant="8" id="9Lv-kv-e8U"/>
-                            <constraint firstAttribute="trailing" secondItem="ut3-Rw-KcC" secondAttribute="trailing" id="EDB-MT-2Eu"/>
-                            <constraint firstItem="ut3-Rw-KcC" firstAttribute="trailing" secondItem="fFy-RY-gva" secondAttribute="trailing" id="K6d-6V-mUe"/>
-                            <constraint firstItem="fFy-RY-gva" firstAttribute="leading" secondItem="ruF-45-8V8" secondAttribute="leading" id="MC2-d4-m8l"/>
-                            <constraint firstItem="ruF-45-8V8" firstAttribute="leading" secondItem="VY0-sy-Htq" secondAttribute="leading" id="Mpy-wn-e4q"/>
-                            <constraint firstItem="VY0-sy-Htq" firstAttribute="leading" secondItem="xB1-BB-P1n" secondAttribute="leading" id="NIi-19-eEc"/>
-                            <constraint firstItem="fFy-RY-gva" firstAttribute="trailing" secondItem="ruF-45-8V8" secondAttribute="trailing" id="OxY-MP-52o"/>
-                            <constraint firstItem="xB1-BB-P1n" firstAttribute="top" secondItem="VY0-sy-Htq" secondAttribute="bottom" id="bgh-K1-ITT"/>
-                            <constraint firstItem="ruF-45-8V8" firstAttribute="top" secondItem="fFy-RY-gva" secondAttribute="bottom" constant="24" id="kXB-fu-eNr"/>
-                            <constraint firstItem="fFy-RY-gva" firstAttribute="top" secondItem="ut3-Rw-KcC" secondAttribute="bottom" constant="57" id="oBk-vg-dxK"/>
-                            <constraint firstItem="VY0-sy-Htq" firstAttribute="top" secondItem="ruF-45-8V8" secondAttribute="bottom" constant="1" id="qWP-AZ-d24"/>
-                            <constraint firstItem="ut3-Rw-KcC" firstAttribute="leading" secondItem="fFy-RY-gva" secondAttribute="leading" id="viS-U3-1x4"/>
-                            <constraint firstItem="ut3-Rw-KcC" firstAttribute="leading" secondItem="t38-Tc-eBI" secondAttribute="leading" id="yLo-wp-V5J"/>
-                            <constraint firstItem="ruF-45-8V8" firstAttribute="trailing" secondItem="VY0-sy-Htq" secondAttribute="trailing" id="ycA-eE-gep"/>
+                            <constraint firstItem="ReV-Ws-4kc" firstAttribute="leading" secondItem="ruF-45-8V8" secondAttribute="leading" id="6FL-ys-NKB"/>
+                            <constraint firstAttribute="trailing" secondItem="ut3-Rw-KcC" secondAttribute="trailing" id="ChA-eA-MFp"/>
+                            <constraint firstItem="ut3-Rw-KcC" firstAttribute="leading" secondItem="t38-Tc-eBI" secondAttribute="leading" id="E7n-62-2Yf"/>
+                            <constraint firstItem="ut3-Rw-KcC" firstAttribute="leading" secondItem="ReV-Ws-4kc" secondAttribute="leading" id="RXa-lG-pcG"/>
+                            <constraint firstItem="ut3-Rw-KcC" firstAttribute="trailing" secondItem="ReV-Ws-4kc" secondAttribute="trailing" id="bS1-IG-J7J"/>
+                            <constraint firstItem="ut3-Rw-KcC" firstAttribute="top" secondItem="OIo-Nu-tcJ" secondAttribute="top" id="c0b-vl-aTL"/>
+                            <constraint firstItem="OIo-Nu-tcJ" firstAttribute="bottom" secondItem="xB1-BB-P1n" secondAttribute="bottom" constant="8" id="cT5-jx-8an"/>
+                            <constraint firstItem="ruF-45-8V8" firstAttribute="trailing" secondItem="xB1-BB-P1n" secondAttribute="trailing" id="eKe-L8-Lcb"/>
+                            <constraint firstItem="xB1-BB-P1n" firstAttribute="top" secondItem="ruF-45-8V8" secondAttribute="bottom" constant="8" symbolic="YES" id="eRj-sD-kPM"/>
+                            <constraint firstItem="ReV-Ws-4kc" firstAttribute="trailing" secondItem="ruF-45-8V8" secondAttribute="trailing" id="hcb-gJ-LHJ"/>
+                            <constraint firstItem="ruF-45-8V8" firstAttribute="top" secondItem="ReV-Ws-4kc" secondAttribute="bottom" constant="86" id="j4e-bJ-PJj"/>
+                            <constraint firstItem="ReV-Ws-4kc" firstAttribute="top" secondItem="ut3-Rw-KcC" secondAttribute="bottom" constant="8" symbolic="YES" id="nGs-jU-BOJ"/>
+                            <constraint firstItem="ruF-45-8V8" firstAttribute="leading" secondItem="xB1-BB-P1n" secondAttribute="leading" id="wUo-dw-Mug"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="OIo-Nu-tcJ"/>
                     </view>
@@ -426,9 +412,7 @@
                     <connections>
                         <outlet property="QRImageView" destination="ut3-Rw-KcC" id="gzj-iF-SMj"/>
                         <outlet property="createButton" destination="ruF-45-8V8" id="xaD-YM-WUo"/>
-                        <outlet property="deleteButton" destination="VY0-sy-Htq" id="HTv-Fp-aWy"/>
                         <outlet property="saveToParseButton" destination="xB1-BB-P1n" id="KDW-CM-JNX"/>
-                        <outlet property="textField" destination="fFy-RY-gva" id="MJ0-RR-RIr"/>
                         <segue destination="Bwo-BN-4Up" kind="show" identifier="KareKodToCreateQR" id="kmm-LG-M2n"/>
                     </connections>
                 </viewController>
@@ -1036,6 +1020,7 @@
                                 </connections>
                             </button>
                         </subviews>
+                        <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
                             <constraint firstItem="8nv-uK-CPa" firstAttribute="top" secondItem="IvD-H5-XC5" secondAttribute="bottom" constant="8" symbolic="YES" id="0hA-2Z-eSi"/>
                             <constraint firstItem="XAo-zh-1nr" firstAttribute="trailing" secondItem="v3V-dY-vHT" secondAttribute="trailing" id="0kM-AR-N1k"/>

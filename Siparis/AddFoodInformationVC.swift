@@ -116,8 +116,8 @@ class AddFoodInformationVC: UIViewController, UIImagePickerControllerDelegate, U
     }
     
     func getBussinessNameData(){
-        let query = PFQuery(className: "Locations")
-        query.whereKey("businessLocationOwner", equalTo: "\(PFUser.current()!.username!)")
+        let query = PFQuery(className: "BusinessInformation")
+        query.whereKey("businessUserName", equalTo: "\(PFUser.current()!.username!)")
         
         query.findObjectsInBackground { (objects, error) in
             if error != nil{

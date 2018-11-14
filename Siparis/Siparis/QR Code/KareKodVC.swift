@@ -9,7 +9,7 @@
 import UIKit
 import Parse
 
-class KareKodVC: UIViewController , UITextFieldDelegate,UIImagePickerControllerDelegate, UINavigationControllerDelegate{
+class KareKodVC: UIViewController , UIImagePickerControllerDelegate, UINavigationControllerDelegate{
     
     var imageArray = [PFFile]()
     
@@ -24,10 +24,10 @@ class KareKodVC: UIViewController , UITextFieldDelegate,UIImagePickerControllerD
     
     override func viewDidLoad() {
         super.viewDidLoad()
-    self.textField.delegate = self
+ 
         
         getObjectId()
-        getQRDataFromParse()
+       
         
         QRImageView.isUserInteractionEnabled = true
         let gestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(KareKodVC.selectImage))
@@ -35,18 +35,20 @@ class KareKodVC: UIViewController , UITextFieldDelegate,UIImagePickerControllerD
         
     
         createButton.isHidden = true
-        saveToParseButton.isHidden = true
+//        saveToParseButton.isHidden = true
         
         
         if QRImageView.image == nil{
             self.QRImageView.image = UIImage(named: "QRIcınDokun.png")
-            saveToParseButton.isHidden = false
-            createButton.isHidden = false
-            deleteButton.isHidden = true
-            textField.isHidden = true
+//            saveToParseButton.isHidden = false
+//            createButton.isHidden = false
+//            deleteButton.isHidden = true
+//            textField.isHidden = true
         }
-        
 
+    }
+    override func viewWillAppear(_ animated: Bool) {
+         getQRDataFromParse()
     }
     @objc func selectImage() {
         
@@ -66,8 +68,8 @@ class KareKodVC: UIViewController , UITextFieldDelegate,UIImagePickerControllerD
 
     @IBAction func buttonClicked(_ sender: Any) {
         self.createButton.isHidden = true
-        self.deleteButton.isHidden = false
-          textField.isHidden = false
+   
+      
         
         performSegue(withIdentifier: "KareKodToCreateQR", sender: nil)
        
@@ -80,76 +82,76 @@ class KareKodVC: UIViewController , UITextFieldDelegate,UIImagePickerControllerD
     
     @IBAction func deleteQRButton(_ sender: Any) {
         
-        let email = isValidEmail(testStr: textField.text!)
-        if email == true {
-            if textField.text == PFUser.current()!.username!{
-        let query = PFQuery(className: "BusinessInformation")
-        query.whereKey("businessUserName", equalTo: "\(PFUser.current()!.username!)")
-        query.whereKeyExists("QRCode")
-        
-        query.findObjectsInBackground { (objects, error) in
-            
-            if error != nil{
-                let alert = UIAlertController(title: "HATA", message: "Lütfen Kullanıcı Adı Mail Adresini Giriniz", preferredStyle: UIAlertControllerStyle.alert)
-                let okButton = UIAlertAction(title: "TAMAM", style: UIAlertActionStyle.cancel, handler: nil)
-                alert.addAction(okButton)
-                self.present(alert, animated: true, completion: nil)
-            }
-                
-                
-            else{
-                
-                if self.textField.text != ""{
-                    self.QRImageView.image = UIImage(named: "QRIcınDokun.png")
-                    self.textField.text = ""
-                    self.textField.isHidden = true
-                    
-                    
-                    self.deleteButton.isHidden = true
-                    self.createButton.isHidden = false
-                    for object in objects! {
-                        object.deleteInBackground()
-                        
-                        self.textField.isHidden = true
-                        
-                    }
-                }
-                
-                else{
-                    let alert = UIAlertController(title: "SİlMEK İÇİN E-MAİL ADRESİ GİRİNİZ", message: "", preferredStyle: UIAlertControllerStyle.alert)
-                    let okButton = UIAlertAction(title: "TAMAM", style: UIAlertActionStyle.cancel, handler: nil)
-                    alert.addAction(okButton)
-                    self.present(alert, animated: true, completion: nil)
-                }
-                
-               
-            }
-            
-        }
-        
-        }
-            else{
-                let alert = UIAlertController(title: "Kullanıcı adı mailinizi giriniz", message: "", preferredStyle: UIAlertControllerStyle.alert)
-                let okButton = UIAlertAction(title: "TAMAM", style: UIAlertActionStyle.cancel, handler: nil)
-                alert.addAction(okButton)
-                self.present(alert, animated: true, completion: nil)
-            }
-            }
-        
-        
-        else{
-            let alert = UIAlertController(title: "BİR E-MAİL ADRESİ GİRİNİZ", message: "", preferredStyle: UIAlertControllerStyle.alert)
-            let okButton = UIAlertAction(title: "TAMAM", style: UIAlertActionStyle.cancel, handler: nil)
-            alert.addAction(okButton)
-            self.present(alert, animated: true, completion: nil)
-        }
+//        let email = isValidEmail(testStr: textField.text!)
+//        if email == true {
+//            if textField.text == PFUser.current()!.username!{
+//        let query = PFQuery(className: "BusinessInformation")
+//        query.whereKey("businessUserName", equalTo: "\(PFUser.current()!.username!)")
+//        query.whereKeyExists("QRCode")
+//
+//        query.findObjectsInBackground { (objects, error) in
+//
+//            if error != nil{
+//                let alert = UIAlertController(title: "HATA", message: "Lütfen Kullanıcı Adı Mail Adresini Giriniz", preferredStyle: UIAlertControllerStyle.alert)
+//                let okButton = UIAlertAction(title: "TAMAM", style: UIAlertActionStyle.cancel, handler: nil)
+//                alert.addAction(okButton)
+//                self.present(alert, animated: true, completion: nil)
+//            }
+//
+//
+//            else{
+//
+//                if self.textField.text != ""{
+//                    self.QRImageView.image = UIImage(named: "QRIcınDokun.png")
+//                    self.textField.text = ""
+//                    self.textField.isHidden = true
+//
+//
+//                    self.deleteButton.isHidden = true
+//                    self.createButton.isHidden = false
+//                    for object in objects! {
+//                        object.deleteInBackground()
+//
+//                        self.textField.isHidden = true
+//
+//                    }
+//                }
+//
+//                else{
+//                    let alert = UIAlertController(title: "SİlMEK İÇİN E-MAİL ADRESİ GİRİNİZ", message: "", preferredStyle: UIAlertControllerStyle.alert)
+//                    let okButton = UIAlertAction(title: "TAMAM", style: UIAlertActionStyle.cancel, handler: nil)
+//                    alert.addAction(okButton)
+//                    self.present(alert, animated: true, completion: nil)
+//                }
+//
+//
+//            }
+//
+//        }
+//
+//        }
+//            else{
+//                let alert = UIAlertController(title: "Kullanıcı adı mailinizi giriniz", message: "", preferredStyle: UIAlertControllerStyle.alert)
+//                let okButton = UIAlertAction(title: "TAMAM", style: UIAlertActionStyle.cancel, handler: nil)
+//                alert.addAction(okButton)
+//                self.present(alert, animated: true, completion: nil)
+//            }
+//            }
+//
+//
+//        else{
+//            let alert = UIAlertController(title: "BİR E-MAİL ADRESİ GİRİNİZ", message: "", preferredStyle: UIAlertControllerStyle.alert)
+//            let okButton = UIAlertAction(title: "TAMAM", style: UIAlertActionStyle.cancel, handler: nil)
+//            alert.addAction(okButton)
+//            self.present(alert, animated: true, completion: nil)
+//        }
         }
 
    
     func getQRDataFromParse(){
         let query = PFQuery(className: "BusinessInformation")
-        query.whereKey("busineesUserName", equalTo: (PFUser.current()?.username)!)
-        query.whereKeyExists("QRCode")
+        query.whereKey("businessUserName", equalTo: (PFUser.current()?.username)!)
+        query.whereKeyExists("QRKod")
         query.findObjectsInBackground { (objects, error) in
             
             if error != nil{
@@ -160,9 +162,11 @@ class KareKodVC: UIViewController , UITextFieldDelegate,UIImagePickerControllerD
             }
             else{
                  self.imageArray.removeAll(keepingCapacity: false)
-                
+              
                 for object in objects!{
-                    self.imageArray.append(object.object(forKey: "qrimage") as! PFFile)
+                       print("AAAAAA")
+                    self.imageArray.append(object.object(forKey: "QRKod") as! PFFile)
+                   
                     self.imageArray.last?.getDataInBackground(block: { (data, error) in
                         if error != nil{
                             let alert = UIAlertController(title: "HATA", message: error?.localizedDescription, preferredStyle: UIAlertControllerStyle.alert)
@@ -175,9 +179,9 @@ class KareKodVC: UIViewController , UITextFieldDelegate,UIImagePickerControllerD
                             self.QRImageView.image = UIImage(data: (data)!)
                             
                             self.createButton.isHidden = true
-                            self.saveToParseButton.isHidden = true
-                            self.textField.isHidden = false
-                            self.deleteButton.isHidden = false
+//                            self.saveToParseButton.isHidden = true
+                           self.saveToParseButton.isHidden = true
+                        
                         }
                     })
                 }
@@ -208,37 +212,7 @@ class KareKodVC: UIViewController , UITextFieldDelegate,UIImagePickerControllerD
             }
         }
     }
-//    @IBAction func ssavetoParseButtonClicked(_ sender: Any) {
-//
-//         let QRObject = PFObject(className: "QRInformation")
-//         QRObject["QROwner"] = PFUser.current()!.username!
-//
-//        if let imageData = UIImageJPEGRepresentation(QRImageView.image!, 0.5){
-//        QRObject["qrimage"] = PFFile(name: "qrimage.jpg", data: imageData)
-//
-//        }
-//        QRObject.saveInBackground { (objects, error) in
-//            if error != nil{
-//                let alert = UIAlertController(title: "HATA", message: error?.localizedDescription, preferredStyle: UIAlertControllerStyle.alert)
-//                let okButton = UIAlertAction(title: "TAMAM", style: UIAlertActionStyle.cancel, handler: nil)
-//                alert.addAction(okButton)
-//                self.present(alert, animated: true, completion: nil)
-//            }
-//            else{
-//                let alert = UIAlertController(title: "QR Veri Tabanına Kaydedildi", message: "", preferredStyle: UIAlertControllerStyle.alert)
-//                let okButton = UIAlertAction(title: "TAMAM", style: UIAlertActionStyle.cancel, handler: nil)
-//                alert.addAction(okButton)
-//                self.present(alert, animated: true, completion: nil)
-//
-//                self.saveToParseButton.isHidden = true
-//                self.deleteButton.isHidden = false
-//                self.textField.isHidden = false
-//
-//            }
-//        }
-//
-//        }
-//
+    
     @IBAction func savetoParseButtonClicked(_ sender: Any) {
         
         let query = PFQuery(className: "BusinessInformation")
@@ -255,7 +229,7 @@ class KareKodVC: UIViewController , UITextFieldDelegate,UIImagePickerControllerD
                 print(self.objectId)
                 
                 if let imageData = UIImageJPEGRepresentation(self.QRImageView.image!, 0.5){
-                    objects!["QRCode"] = PFFile(name: "qrimage.jpg", data: imageData)
+                    objects!["QRKod"] = PFFile(name: "qrimage.jpg", data: imageData)
                     objects!.saveInBackground()
                     
                     let alert = UIAlertController(title: "QR Kaydedildi", message: "", preferredStyle: UIAlertControllerStyle.alert)
@@ -263,43 +237,14 @@ class KareKodVC: UIViewController , UITextFieldDelegate,UIImagePickerControllerD
                     alert.addAction(okButton)
                     self.present(alert, animated: true, completion: nil)
                     
-                    self.saveToParseButton.isHidden = true
-                    self.deleteButton.isHidden = false
-                    self.textField.isHidden = false
+//                    self.saveToParseButton.isHidden = true
+                 
+
                 }
             }
         }
     }
     
-    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
-        self.view.endEditing(true)
-    }
    
-    func textFieldDidBeginEditing(_ textField: UITextField) {
-        moveTextField(textField, moveDistance: -250, up: true)
-    }
-    
-    // Finish Editing The Text Field
-    func textFieldDidEndEditing(_ textField: UITextField) {
-        moveTextField(textField, moveDistance: -250, up: false)
-    }
-    
-    // Hide the keyboard when the return key pressed
-    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-        textField.resignFirstResponder()
-        return true
-    }
-    
-    // Move the text field in a pretty animation!
-    func moveTextField(_ textField: UITextField, moveDistance: Int, up: Bool) {
-        let moveDuration = 0.3
-        let movement: CGFloat = CGFloat(up ? moveDistance : -moveDistance)
-        
-        UIView.beginAnimations("animateTextField", context: nil)
-        UIView.setAnimationBeginsFromCurrentState(true)
-        UIView.setAnimationDuration(moveDuration)
-        self.view.frame = self.view.frame.offsetBy(dx: 0, dy: movement)
-        UIView.commitAnimations()
-    }
     }
 

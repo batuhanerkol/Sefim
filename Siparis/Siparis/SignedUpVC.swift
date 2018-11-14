@@ -33,6 +33,7 @@ class SignedUpVC: UIViewController, UITextFieldDelegate {
         
         self.phoneNo.keyboardType = UIKeyboardType.decimalPad
        
+        
     }
     
     

@@ -30,6 +30,7 @@ class MenuTVC: UITableViewController {
         if PFUser.current()?.username != nil{
         getData()
         }
+        self.navigationItem.hidesBackButton = true
     }
 
     

@@ -59,8 +59,9 @@ class PopUpVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
    
     func getTableNumberData(){
         
-        let query = PFQuery(className: "VerilenSiparisler")
-        query.whereKey("IsletmeSahibi", equalTo: (PFUser.current()?.username)!)
+        let query = PFQuery(className: "BusinessInformation")
+        query.whereKey("businessUserName", equalTo: (PFUser.current()?.username)!)
+        query.whereKeyExists("MasaSayisi")
         
         query.findObjectsInBackground { (objects, error) in
             
@@ -74,7 +75,7 @@ class PopUpVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
                 
                 self.tableNumberArray.removeAll(keepingCapacity: false)
                 for object in objects! {
-                    self.tableNumberArray.append(object.object(forKey: "MasaNo") as! String)
+                    self.tableNumberArray.append(object.object(forKey: "MasaSayisi") as! String)
                 }
             }
             
@@ -111,10 +112,6 @@ class PopUpVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
                   self.getOrderData()
                 }
         }
-          
-           
-          
-            
         }
        
     }

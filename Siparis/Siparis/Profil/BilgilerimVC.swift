@@ -26,9 +26,9 @@ class BilgilerimVC: UIViewController, UIImagePickerControllerDelegate, UINavigat
     var userNameArray = [String]()
     var phoneNumberArray = [String]()
     var emailArray = [String]()
-
-    var BusinessLogoNameArray = [String]()
+    var BusinessLogoNameArray = [PFFile]()
     var objectIdArray = [String]()
+    
     var businessName = ""
     var objectId = ""
     
@@ -47,6 +47,7 @@ class BilgilerimVC: UIViewController, UIImagePickerControllerDelegate, UINavigat
         getObjectId()
         whenTextFiledsChange()
         getUserInfoFromParse()
+        getLogoFromParse()
     }
     
     func whenTextFiledsChange(){
@@ -199,7 +200,44 @@ class BilgilerimVC: UIViewController, UIImagePickerControllerDelegate, UINavigat
         }
     }
     
+    func getLogoFromParse(){
+        let query = PFQuery(className: "BusinessInformation")
+        query.whereKey("businessUserName", equalTo: (PFUser.current()?.username)!)
+        query.whereKeyExists("image")
+        query.findObjectsInBackground { (objects, error) in
+            
+            if error != nil{
+                let alert = UIAlertController(title: "HATA", message: error?.localizedDescription, preferredStyle: UIAlertControllerStyle.alert)
+                let okButton = UIAlertAction(title: "TAMAM", style: UIAlertActionStyle.cancel, handler: nil)
+                alert.addAction(okButton)
+                self.present(alert, animated: true, completion: nil)
+            }
+            else{
+                self.BusinessLogoNameArray.removeAll(keepingCapacity: false)
+                
+                for object in objects!{
+                    print("AAAAAA")
+                    self.BusinessLogoNameArray.append(object.object(forKey: "image") as! PFFile)
+                    
+                    self.BusinessLogoNameArray.last?.getDataInBackground(block: { (data, error) in
+                        if error != nil{
+                            let alert = UIAlertController(title: "HATA", message: error?.localizedDescription, preferredStyle: UIAlertControllerStyle.alert)
+                            let okButton = UIAlertAction(title: "TAMAM", style: UIAlertActionStyle.cancel, handler: nil)
+                            alert.addAction(okButton)
+                            self.present(alert, animated: true, completion: nil)
+                            self.logoImageView.image = UIImage(named: "QRIcınDokun.png")
+                        }
+                        else{
+                            self.logoImageView.image = UIImage(data: (data)!)
     
+                            
+                        }
+                    })
+                }
+            }
+        }
+        
+    }
 //    func getBussinessNameData(){
 //        let query = PFQuery(className: "BusinessInformation")
 //        query.whereKey("businessUserName", equalTo: "\(PFUser.current()!.username!)")
