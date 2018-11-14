@@ -28,7 +28,9 @@ class BilgilerimVC: UIViewController, UIImagePickerControllerDelegate, UINavigat
     var emailArray = [String]()
 
     var BusinessLogoNameArray = [String]()
+    var objectIdArray = [String]()
     var businessName = ""
+    var objectId = ""
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -42,9 +44,9 @@ class BilgilerimVC: UIViewController, UIImagePickerControllerDelegate, UINavigat
         if emailTextField.text == "" || nameTextField.text == "" || lastnameTextField.text == "" || phoneNumberTextField.text == ""{
 
         }
+        getObjectId()
         whenTextFiledsChange()
         getUserInfoFromParse()
-        getBussinessNameData()
     }
     
     func whenTextFiledsChange(){
@@ -55,6 +57,29 @@ class BilgilerimVC: UIViewController, UIImagePickerControllerDelegate, UINavigat
     }
     @objc func textFieldDidChange(_ textField: UITextField) {
         saveChangesButton.isHidden = false
+    }
+    func getObjectId(){
+        let query = PFQuery(className: "BusinessInformation")
+        query.whereKey("businessUserName", equalTo: (PFUser.current()?.username)!)
+        query.whereKeyExists("businessName")
+        
+        query.findObjectsInBackground { (objects, error) in
+            if error != nil{
+                let alert = UIAlertController(title: "HATA", message: error?.localizedDescription, preferredStyle: UIAlertController.Style.alert)
+                let okButton = UIAlertAction(title: "TAMAM", style: UIAlertAction.Style.cancel, handler: nil)
+                alert.addAction(okButton)
+                self.present(alert, animated: true, completion: nil)
+            }
+            else{
+                self.objectIdArray.removeAll(keepingCapacity: false)
+                
+                for object in objects! {
+                    self.objectIdArray.append(object.objectId as! String)
+                    
+                    self.objectId = "\(self.objectIdArray.last!)"
+                }
+            }
+        }
     }
     
     func getUserInfoFromParse(){
@@ -117,57 +142,85 @@ class BilgilerimVC: UIViewController, UIImagePickerControllerDelegate, UINavigat
     
        
     }
+//    @IBAction func ssaveLogoButtonPressed(_ sender: Any) {
+//          self.deleteData()
+//        let logo = PFObject(className: "BusinessInformation")
+//
+//        logo["businessUserName"] = "\(PFUser.current()!.username!)"
+//
+//        if let imageData = UIImageJPEGRepresentation(logoImageView.image!, 0.5){
+//            logo["image"] = PFFile(name: "image.jpg", data: imageData)
+//        }
+//
+//        logo.saveInBackground { (success, error) in
+//
+//            if error != nil{
+//                let alert = UIAlertController(title: "HATA", message: error?.localizedDescription, preferredStyle: UIAlertControllerStyle.alert)
+//                let okButton = UIAlertAction(title: "TAMAM", style: UIAlertActionStyle.cancel, handler: nil)
+//                alert.addAction(okButton)
+//                self.present(alert, animated: true, completion: nil)
+//            }
+//            else{
+//
+//
+//                let alert = UIAlertController(title: "Logo Kaydedildi", message: "", preferredStyle: UIAlertControllerStyle.alert)
+//                let okButton = UIAlertAction(title: "TAMAM", style: UIAlertActionStyle.cancel, handler: nil)
+//                alert.addAction(okButton)
+//                self.present(alert, animated: true, completion: nil)
+//
+//            }
+//        }
+//    }
+    
     @IBAction func saveLogoButtonPressed(_ sender: Any) {
-          self.deleteData()
-        let logo = PFObject(className: "BusinessLOGO")
         
-        logo["BusinessOwner"] = "\(PFUser.current()!.username!)"
-        logo["BusinessName"] = businessName
+        let query = PFQuery(className: "BusinessInformation")
+        query.whereKey("businessUserName", equalTo: "\(PFUser.current()!.username!)")
+        query.whereKeyExists("businessName")
         
-        if let imageData = UIImageJPEGRepresentation(logoImageView.image!, 0.5){
-            logo["image"] = PFFile(name: "image.jpg", data: imageData)
-        }
-        
-        logo.saveInBackground { (success, error) in
-            
-            if error != nil{
-                let alert = UIAlertController(title: "HATA", message: error?.localizedDescription, preferredStyle: UIAlertControllerStyle.alert)
-                let okButton = UIAlertAction(title: "TAMAM", style: UIAlertActionStyle.cancel, handler: nil)
-                alert.addAction(okButton)
-                self.present(alert, animated: true, completion: nil)
-            }
-            else{
-              
-                
-                let alert = UIAlertController(title: "Logo Kaydedildi", message: "", preferredStyle: UIAlertControllerStyle.alert)
-                let okButton = UIAlertAction(title: "TAMAM", style: UIAlertActionStyle.cancel, handler: nil)
-                alert.addAction(okButton)
-                self.present(alert, animated: true, completion: nil)
-                
-            }
-        }
-    }
-    func getBussinessNameData(){
-        let query = PFQuery(className: "Locations")
-        query.whereKey("businessLocationOwner", equalTo: "\(PFUser.current()!.username!)")
-        
-        query.findObjectsInBackground { (objects, error) in
+        query.getObjectInBackground(withId: objectId) { (objects, error) in
             if error != nil{
                 let alert = UIAlertController(title: "HATA", message: error?.localizedDescription, preferredStyle: UIAlertController.Style.alert)
                 let okButton = UIAlertAction(title: "TAMAM", style: UIAlertAction.Style.cancel, handler: nil)
                 alert.addAction(okButton)
                 self.present(alert, animated: true, completion: nil)
-            }
-            else{
-                self.BusinessLogoNameArray.removeAll(keepingCapacity: false)
-                for object in objects!{
-                    self.BusinessLogoNameArray.append(object.object(forKey: "businessName") as! String)
+            }else {
+                print(self.objectId)
+                if let imageData = UIImageJPEGRepresentation(self.logoImageView.image!, 0.5){
+                    objects!["image"] = PFFile(name: "image.jpg", data: imageData)
+                     objects!.saveInBackground()
                     
-                    self.businessName = "\(self.BusinessLogoNameArray.last!)"
+                    let alert = UIAlertController(title: "Logo Kaydedildi", message: "", preferredStyle: UIAlertControllerStyle.alert)
+                    let okButton = UIAlertAction(title: "TAMAM", style: UIAlertActionStyle.cancel, handler: nil)
+                    alert.addAction(okButton)
+                    self.present(alert, animated: true, completion: nil)
                 }
             }
         }
     }
+    
+    
+//    func getBussinessNameData(){
+//        let query = PFQuery(className: "BusinessInformation")
+//        query.whereKey("businessUserName", equalTo: "\(PFUser.current()!.username!)")
+//
+//        query.findObjectsInBackground { (objects, error) in
+//            if error != nil{
+//                let alert = UIAlertController(title: "HATA", message: error?.localizedDescription, preferredStyle: UIAlertController.Style.alert)
+//                let okButton = UIAlertAction(title: "TAMAM", style: UIAlertAction.Style.cancel, handler: nil)
+//                alert.addAction(okButton)
+//                self.present(alert, animated: true, completion: nil)
+//            }
+//            else{
+//                self.BusinessLogoNameArray.removeAll(keepingCapacity: false)
+//                for object in objects!{
+//                    self.BusinessLogoNameArray.append(object.object(forKey: "businessName") as! String)
+//
+//                    self.businessName = "\(self.BusinessLogoNameArray.last!)"
+//                }
+//            }
+//        }
+//    }
     @objc func selectImage() {
         
         

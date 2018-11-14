@@ -96,9 +96,9 @@ class AddLocationVC: UIViewController, MKMapViewDelegate, CLLocationManagerDeleg
     
     func saveLocation(){
         
-        let object = PFObject(className: "Locations")
+        let object = PFObject(className: "BusinessInformation")
         
-        object["businessLocationOwner"] = PFUser.current()!.username!
+        object["businessUserName"] = PFUser.current()!.username!
         object["latitude"] = self.chosenLatitude
         object["longitude"] = self.chosenLongitude
         object["businessName"] = businessNameTextField.text!

@@ -15,6 +15,9 @@ var globalChosenTableNumber = ""
 
 class MasaVC: UIViewController {
 
+    var objectIdArray = [String]()
+    var objectId = ""
+    
     var xLocation = 10
     var yLocation = 100
     
@@ -54,6 +57,7 @@ class MasaVC: UIViewController {
         buttonSizes()
         getTableNumberData()
         getButtonWhenAppOpen()
+        getObjectId()
         
         let value = UIInterfaceOrientation.landscapeRight.rawValue
         UIDevice.current.setValue(value, forKey: "orientation")
@@ -78,11 +82,34 @@ class MasaVC: UIViewController {
      
     }
     
-    
+    func getObjectId(){
+        let query = PFQuery(className: "BusinessInformation")
+        query.whereKey("businessUserName", equalTo: (PFUser.current()?.username)!)
+        query.whereKeyExists("businessName")
+        
+        query.findObjectsInBackground { (objects, error) in
+            if error != nil{
+                let alert = UIAlertController(title: "HATA", message: error?.localizedDescription, preferredStyle: UIAlertController.Style.alert)
+                let okButton = UIAlertAction(title: "TAMAM", style: UIAlertAction.Style.cancel, handler: nil)
+                alert.addAction(okButton)
+                self.present(alert, animated: true, completion: nil)
+            }
+            else{
+                self.objectIdArray.removeAll(keepingCapacity: false)
+                
+                for object in objects! {
+                    self.objectIdArray.append(object.objectId! as! String)
+                    
+                    self.objectId = "\(self.objectIdArray.last!)"
+                }
+            }
+        }
+    }
     func getButtonWhenAppOpen(){
 
-        let query = PFQuery(className: "TableNumbers")
-        query.whereKey("TableOwner", equalTo: "\(PFUser.current()!.username!)")
+        let query = PFQuery(className: "BusinessInformation")
+        query.whereKey("businessUserName", equalTo: "\(PFUser.current()!.username!)")
+        query.whereKeyExists("MasaSayisi")
         
         query.findObjectsInBackground { (objects, error) in
             if error != nil{
@@ -93,7 +120,7 @@ class MasaVC: UIViewController {
             }
             else{
                 for object in objects!{
-                    self.tableNumberArray.append(object.object(forKey: "NumberOfTable") as! String)
+                    self.tableNumberArray.append(object.object(forKey: "MasaSayisi") as! String)
                     self.tableNumberLabel.text = "\(self.tableNumberArray.last!)"
                     
                     self.textField.text! = self.tableNumberLabel.text!
@@ -120,8 +147,9 @@ class MasaVC: UIViewController {
     }
     func getTableNumberData(){
     
-        let query = PFQuery(className: "TableNumbers")
-        query.whereKey("TableOwner", equalTo: "\(PFUser.current()!.username!)")
+        let query = PFQuery(className: "BusinessInformation")
+        query.whereKey("businessUserName", equalTo: "\(PFUser.current()!.username!)")
+        query.whereKeyExists("MasaSayisi")
        
         query.findObjectsInBackground { (objects, error) in
             if error != nil{
@@ -132,7 +160,7 @@ class MasaVC: UIViewController {
             }
             else{
                 for object in objects!{
-                 self.tableNumberArray.append(object.object(forKey: "NumberOfTable") as! String)
+                 self.tableNumberArray.append(object.object(forKey: "MasaSayisi") as! String)
                 self.tableNumberLabel.text = "\(self.tableNumberArray.last!)"
                     
                     
@@ -165,9 +193,7 @@ class MasaVC: UIViewController {
         }
         self.performSegue(withIdentifier: "tableToPopUp", sender: nil)
     }
-    
-    
-    
+   
     @IBAction func createButtonClicked(_ sender: Any) {
         
         if tableNumberLabel == nil {
@@ -182,10 +208,12 @@ class MasaVC: UIViewController {
         
             dismissKeyboard()
 
-            let numberOfTables = PFObject(className: "TableNumbers")
-            numberOfTables["TableOwner"] = PFUser.current()!.username!
-            numberOfTables["NumberOfTable"] = textField.text!
-            
+//            let numberOfTables = PFObject(className: "TableNumbers")
+//            numberOfTables["TableOwner"] = PFUser.current()!.username!
+//            numberOfTables["NumberOfTable"] = textField.text!
+            let query = PFQuery(className: "BusinessInformation")
+            query.whereKey("businessUserName", equalTo: "\(PFUser.current()!.username!)")
+            query.whereKeyExists("businessName")
             
             let textfieldInt: Int? = Int(textField.text!)
             
@@ -205,7 +233,7 @@ class MasaVC: UIViewController {
                 }
               
             }
-                numberOfTables.saveInBackground { (success, error) in
+                query.getObjectInBackground(withId: objectId) { (objects, error) in
                         if error != nil{
                             let alert = UIAlertController(title: "HATA", message: error?.localizedDescription, preferredStyle: UIAlertControllerStyle.alert)
                             let okButton = UIAlertAction(title: "TAMAM", style: UIAlertActionStyle.cancel, handler: nil)
@@ -213,6 +241,10 @@ class MasaVC: UIViewController {
                             self.present(alert, animated: true, completion: nil)
                         }
                         else{
+                            
+                            objects!["MasaSayisi"] = String(self.tableNumber)
+                             objects!.saveInBackground()
+                            
                             let alert = UIAlertController(title: "Masa Oluşturuldu", message: error?.localizedDescription, preferredStyle: UIAlertControllerStyle.alert)
                             let okButton = UIAlertAction(title: "TAMAM", style: UIAlertActionStyle.cancel, handler: nil)
                             alert.addAction(okButton)
@@ -246,10 +278,11 @@ class MasaVC: UIViewController {
     }
     
     func deleteTableData(){
-        let query = PFQuery(className: "TableNumbers")
-        query.whereKey("TableOwner", equalTo: "\(PFUser.current()!.username!)")
+        let query = PFQuery(className: "BusinessInformation")
+        query.whereKey("businessUserName", equalTo: "\(PFUser.current()!.username!)")
+        query.whereKeyExists("MasaSayisi")
         
-        query.findObjectsInBackground { (objects, error) in
+        query.getObjectInBackground(withId: objectId) { (objects, error) in
             if error != nil{
                 let alert = UIAlertController(title: "HATA", message: error?.localizedDescription, preferredStyle: UIAlertControllerStyle.alert)
                 let okButton = UIAlertAction(title: "TAMAM", style: UIAlertActionStyle.cancel, handler: nil)
@@ -257,16 +290,16 @@ class MasaVC: UIViewController {
                 self.present(alert, animated: true, completion: nil)
             }
             else{
-                self.tableNumberArray.removeAll(keepingCapacity: false)
-                for object in objects!{
-                    object.deleteInBackground()
+              
+                    objects!["MasaSayisi"] = ""
+                    objects!.saveInBackground()
                     
                     print("Masa Silindi")
                     
                     self.xLocation = 10
                     self.yLocation = 100
                     
-                }
+                
 //                 yeni button vb eklerken buradan düzelt
                 var viewItemNumber = Int(self.tableNumberLabel.text!)! + 3
                 while self.view.subviews.count > 4 {
