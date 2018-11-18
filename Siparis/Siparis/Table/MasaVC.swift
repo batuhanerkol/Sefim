@@ -14,6 +14,12 @@ import Parse
 var globalChosenTableNumber = ""
 
 class MasaVC: UIViewController {
+    
+    var hesapIstendi = ""
+    var hesapIstendiArray = [String]()
+    
+    var hesapMasaSayisi = ""
+    var hesapMasaSAyisiArray = [String]()
 
     var objectIdArray = [String]()
     var objectId = ""
@@ -64,16 +70,16 @@ class MasaVC: UIViewController {
     }
     override func viewWillAppear(_ animated: Bool) {
 
-        
+        kontrolCheckWanted()
     }
     func buttonSizes(){
         if screenWidth > 1000{
-            buttonWidth = 100
-            buttonHeight = 100
+            buttonWidth = 200
+            buttonHeight = 200
         }
         else if screenWidth > 1200{
-            buttonWidth = 130
-            buttonHeight = 130
+            buttonWidth = 230
+            buttonHeight = 230
         }
         else if screenWidth < 1000{
             buttonWidth = 45
@@ -98,15 +104,57 @@ class MasaVC: UIViewController {
                 self.objectIdArray.removeAll(keepingCapacity: false)
                 
                 for object in objects! {
-                    self.objectIdArray.append(object.objectId! as! String)
+                    self.objectIdArray.append(object.objectId! )
                     
                     self.objectId = "\(self.objectIdArray.last!)"
                 }
             }
         }
     }
-    func getButtonWhenAppOpen(){
+   
+    func kontrolCheckWanted(){
+        let query = PFQuery(className: "VerilenSiparisler")
+        query.whereKey("IsletmeSahibi", equalTo: (PFUser.current()?.username)!)
+        query.whereKeyExists("HesapIstendi")
+        query.whereKey("HesapOdendi", equalTo: "")
+        
+        query.findObjectsInBackground { (objects, error) in
+            
+            if error != nil{
+                let alert = UIAlertController(title: "HATA", message: error?.localizedDescription, preferredStyle: UIAlertController.Style.alert)
+                let okButton = UIAlertAction(title: "TAMAM", style: UIAlertAction.Style.cancel, handler: nil)
+                alert.addAction(okButton)
+                self.present(alert, animated: true, completion: nil)
+            }
+            else{
+            
+                self.hesapIstendiArray.removeAll(keepingCapacity: false)
+                self.hesapMasaSAyisiArray.removeAll(keepingCapacity: false)
+                
+                for object in objects! {
+                
+                    self.hesapIstendiArray.append(object.object(forKey: "HesapIstendi") as! String)
+                    self.hesapMasaSAyisiArray.append(object.object(forKey: "MasaNo") as! String)
+                    
 
+                    self.hesapIstendi = "\(self.hesapIstendiArray.last!)"
+                    self.hesapMasaSayisi = "\(self.hesapMasaSAyisiArray.last!)"
+                    
+                }
+                print(self.hesapIstendi)
+                if self.hesapIstendi != ""{
+                    
+                    let tableButtonIndex = Int(self.hesapMasaSayisi)! - 1
+                    self.tableButtonBackgroundColorAray[tableButtonIndex].backgroundColor = UIColor.red
+                }
+                
+            }
+            
+        }
+    }
+    func getButtonWhenAppOpen(){
+ 
+    
         let query = PFQuery(className: "BusinessInformation")
         query.whereKey("businessUserName", equalTo: "\(PFUser.current()!.username!)")
         query.whereKeyExists("MasaSayisi")
@@ -144,6 +192,7 @@ class MasaVC: UIViewController {
                 }
             }
         }
+       
     }
     func getTableNumberData(){
     
@@ -183,6 +232,17 @@ class MasaVC: UIViewController {
         tableButtonBackgroundColorAray.append(button)
         
         self.view.addSubview(button)
+    }
+    var buttonWarning = UIButton()
+    func createCheckWarningButton(){
+        buttonWarning = UIButton()
+        
+        buttonWarning.frame = CGRect(x:   xLocation, y:   yLocation, width: buttonWidth / 4, height: buttonHeight / 4)
+        buttonWarning.backgroundColor = .red
+//       buttonWarning.setTitle("\(tableNumber + 1)", for: .normal)
+        buttonWarning.addTarget(self, action: #selector(buttonAction), for: .touchUpInside)
+        
+        self.view.addSubview(buttonWarning)
     }
     
     
