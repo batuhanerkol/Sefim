@@ -29,6 +29,7 @@ class PopUpVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
     var totalPriceArray = [String]()
     var objectIdArray = [String]()
     var hesapOdendiArray = [String]()
+    var hesapIstendiArray = [String]()
     
      var tableNumber = ""
      var objectId = ""
@@ -36,7 +37,9 @@ class PopUpVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
      var chosenDate = ""
      var chosenTime = ""
      var hesapOdendi = ""
+     var hesapIStendi = ""
     
+    @IBOutlet weak var hesapDurumuLabel: UILabel!
     @IBOutlet weak var totalPriceLabel: UILabel!
     @IBOutlet weak var tableNumberLabel: UILabel!
     @IBOutlet weak var orderTableView: UITableView!
@@ -87,6 +90,7 @@ class PopUpVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
         query.whereKey("IsletmeSahibi", equalTo: (PFUser.current()?.username)!)
         query.whereKey("MasaNo", equalTo: globalChosenTableNumber)
         query.whereKeyExists("HesapOdendi")
+        query.whereKeyExists("HesapIstendi")
         
         query.findObjectsInBackground { (objects, error) in
             
@@ -99,17 +103,25 @@ class PopUpVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
             else{
                 
                 self.hesapOdendiArray.removeAll(keepingCapacity: false)
+                 self.hesapIstendiArray.removeAll(keepingCapacity: false)
                 
                 
                 for object in objects! {
                 
                     self.hesapOdendiArray.append(object.object(forKey: "HesapOdendi") as! String)
+                    self.hesapIstendiArray.append(object.object(forKey: "HesapIstendi") as! String)
                     
                      self.hesapOdendi = self.hesapOdendiArray.last!
+                     self.hesapIStendi = self.hesapIstendiArray.last!
                     
                 }
                 if self.hesapOdendi != "Evet"{
                   self.getOrderData()
+                    if self.hesapIStendi == ""{
+                        
+                    }else{
+                        self.hesapDurumuLabel.text = self.hesapIStendi
+                    }
                 }
         }
         }

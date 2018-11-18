@@ -20,9 +20,13 @@ class MasaVC: UIViewController {
     
     var hesapMasaSayisi = ""
     var hesapMasaSAyisiArray = [String]()
+    
+    var siparisVerildi = ""
+    var siparisVerildiArray = [String]()
 
     var objectIdArray = [String]()
     var objectId = ""
+    
     
     var xLocation = 10
     var yLocation = 100
@@ -74,12 +78,12 @@ class MasaVC: UIViewController {
     }
     func buttonSizes(){
         if screenWidth > 1000{
-            buttonWidth = 200
-            buttonHeight = 200
+            buttonWidth = 150
+            buttonHeight = 150
         }
         else if screenWidth > 1200{
-            buttonWidth = 230
-            buttonHeight = 230
+            buttonWidth = 180
+            buttonHeight = 180
         }
         else if screenWidth < 1000{
             buttonWidth = 45
@@ -130,24 +134,31 @@ class MasaVC: UIViewController {
             
                 self.hesapIstendiArray.removeAll(keepingCapacity: false)
                 self.hesapMasaSAyisiArray.removeAll(keepingCapacity: false)
+                self.siparisVerildiArray.removeAll(keepingCapacity: false)
                 
                 for object in objects! {
                 
                     self.hesapIstendiArray.append(object.object(forKey: "HesapIstendi") as! String)
                     self.hesapMasaSAyisiArray.append(object.object(forKey: "MasaNo") as! String)
+                    self.siparisVerildiArray.append(object.object(forKey: "SiparisVerildi") as! String)
                     
 
                     self.hesapIstendi = "\(self.hesapIstendiArray.last!)"
                     self.hesapMasaSayisi = "\(self.hesapMasaSAyisiArray.last!)"
+                    self.siparisVerildi = "\(self.siparisVerildiArray.last!)"
                     
                 }
-                print(self.hesapIstendi)
-                if self.hesapIstendi != ""{
+                if self.siparisVerildi == "Evet"{
+                    let tableButtonIndex = Int(self.hesapMasaSayisi)! - 1
+                    self.tableButtonBackgroundColorAray[tableButtonIndex].backgroundColor = UIColor.orange
+                    
+             
+            }
+                while self.hesapIstendi != ""{
                     
                     let tableButtonIndex = Int(self.hesapMasaSayisi)! - 1
                     self.tableButtonBackgroundColorAray[tableButtonIndex].backgroundColor = UIColor.red
                 }
-                
             }
             
         }
@@ -233,18 +244,7 @@ class MasaVC: UIViewController {
         
         self.view.addSubview(button)
     }
-    var buttonWarning = UIButton()
-    func createCheckWarningButton(){
-        buttonWarning = UIButton()
-        
-        buttonWarning.frame = CGRect(x:   xLocation, y:   yLocation, width: buttonWidth / 4, height: buttonHeight / 4)
-        buttonWarning.backgroundColor = .red
-//       buttonWarning.setTitle("\(tableNumber + 1)", for: .normal)
-        buttonWarning.addTarget(self, action: #selector(buttonAction), for: .touchUpInside)
-        
-        self.view.addSubview(buttonWarning)
-    }
-    
+
     
     @objc func buttonAction(sender: UIButton!) {
         
