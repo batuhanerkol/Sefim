@@ -77,13 +77,13 @@ class MasaVC: UIViewController {
         kontrolCheckWanted()
     }
     func buttonSizes(){
-        if screenWidth > 1000{
-            buttonWidth = 150
-            buttonHeight = 150
+        if screenWidth > 1000 && screenWidth < 1200 {
+            buttonWidth = 100
+            buttonHeight = 100
         }
         else if screenWidth > 1200{
-            buttonWidth = 180
-            buttonHeight = 180
+            buttonWidth = 150
+            buttonHeight = 150
         }
         else if screenWidth < 1000{
             buttonWidth = 45
@@ -117,6 +117,7 @@ class MasaVC: UIViewController {
     }
    
     func kontrolCheckWanted(){
+    
         let query = PFQuery(className: "VerilenSiparisler")
         query.whereKey("IsletmeSahibi", equalTo: (PFUser.current()?.username)!)
         query.whereKeyExists("HesapIstendi")
@@ -148,16 +149,18 @@ class MasaVC: UIViewController {
                     self.siparisVerildi = "\(self.siparisVerildiArray.last!)"
                     
                 }
+                if self.hesapMasaSAyisiArray.isEmpty == false && self.hesapMasaSAyisiArray.isEmpty == false && self.siparisVerildiArray.isEmpty == false{
+                    
                 if self.siparisVerildi == "Evet"{
                     let tableButtonIndex = Int(self.hesapMasaSayisi)! - 1
                     self.tableButtonBackgroundColorAray[tableButtonIndex].backgroundColor = UIColor.orange
                     
-             
+                    if self.hesapIstendi != "" {
+                        self.tableButtonBackgroundColorAray[tableButtonIndex].backgroundColor = UIColor.red
+                    }
             }
-                while self.hesapIstendi != ""{
-                    
-                    let tableButtonIndex = Int(self.hesapMasaSayisi)! - 1
-                    self.tableButtonBackgroundColorAray[tableButtonIndex].backgroundColor = UIColor.red
+                }else{
+                    print("sorun burada")
                 }
             }
             

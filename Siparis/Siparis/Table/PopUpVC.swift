@@ -219,7 +219,7 @@ class PopUpVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
         dismiss(animated: true, completion: nil)
     }
     @IBAction func orderHasGivenButtonClicked(_ sender: Any) {
-        let alertController = UIAlertController(title: "Yemeğin Hazır Olduğuna Emin Misiniz ?", message: "", preferredStyle: .alert)
+        let alertController = UIAlertController(title: "Yemeğin Teslim Edildiğine Emin Misiniz ?", message: "", preferredStyle: .alert)
         
         // Create the actions
         let okAction = UIAlertAction(title: "Evet", style: UIAlertActionStyle.default) {
