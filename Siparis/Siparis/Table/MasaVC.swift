@@ -120,8 +120,8 @@ class MasaVC: UIViewController {
     
         let query = PFQuery(className: "VerilenSiparisler")
         query.whereKey("IsletmeSahibi", equalTo: (PFUser.current()?.username)!)
-        query.whereKeyExists("HesapIstendi")
         query.whereKey("HesapOdendi", equalTo: "")
+
         
         query.findObjectsInBackground { (objects, error) in
             
@@ -149,7 +149,12 @@ class MasaVC: UIViewController {
                     self.siparisVerildi = "\(self.siparisVerildiArray.last!)"
                     
                 }
-                if self.hesapMasaSAyisiArray.isEmpty == false && self.hesapMasaSAyisiArray.isEmpty == false && self.siparisVerildiArray.isEmpty == false{
+                print(self.hesapMasaSAyisiArray)
+                print(self.hesapMasaSAyisiArray)
+                print(self.siparisVerildiArray)
+                print(self.siparisVerildi)
+                
+                if  self.siparisVerildiArray.isEmpty == false{
                     
                 if self.siparisVerildi == "Evet"{
                     let tableButtonIndex = Int(self.hesapMasaSayisi)! - 1
@@ -356,8 +361,7 @@ class MasaVC: UIViewController {
               
                     objects!["MasaSayisi"] = ""
                     objects!.saveInBackground()
-                    
-                    print("Masa Silindi")
+                
                     
                     self.xLocation = 10
                     self.yLocation = 100
