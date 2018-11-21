@@ -34,7 +34,7 @@ class KareKodVC: UIViewController , UIImagePickerControllerDelegate, UINavigatio
         QRImageView.addGestureRecognizer(gestureRecognizer)
         
     
-        createButton.isHidden = true
+        createButton.isHidden = false
 //        saveToParseButton.isHidden = true
         
         
@@ -59,7 +59,7 @@ class KareKodVC: UIViewController , UIImagePickerControllerDelegate, UINavigatio
         self.present(picker, animated: true, completion: nil)
         
         self.saveToParseButton.isHidden = false
-        self.createButton.isHidden = true
+        self.createButton.isHidden = false
     }
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
         QRImageView.image = info[UIImagePickerControllerEditedImage] as? UIImage
@@ -67,7 +67,7 @@ class KareKodVC: UIViewController , UIImagePickerControllerDelegate, UINavigatio
     }
 
     @IBAction func buttonClicked(_ sender: Any) {
-        self.createButton.isHidden = true
+        self.createButton.isHidden = false
    
       
         

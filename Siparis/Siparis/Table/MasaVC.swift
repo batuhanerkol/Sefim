@@ -154,7 +154,7 @@ class MasaVC: UIViewController {
                 
                 if  self.siparisVerildiArray.isEmpty == false{
                     
-                if self.siparisVerildi == "Evet"{
+                if self.siparisVerildi == "Evet" {
                     let tableButtonIndex = (Int(self.hesapMasaSayisi)! - 1)
                     self.tableButtonBackgroundColorAray[tableButtonIndex].backgroundColor = UIColor.orange
                     
