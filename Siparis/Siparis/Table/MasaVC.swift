@@ -9,8 +9,6 @@
 import UIKit
 import Parse
 
-
-
 var globalChosenTableNumber = ""
 
 class MasaVC: UIViewController {
@@ -157,7 +155,7 @@ class MasaVC: UIViewController {
                 if  self.siparisVerildiArray.isEmpty == false{
                     
                 if self.siparisVerildi == "Evet"{
-                    let tableButtonIndex = Int(self.hesapMasaSayisi)! - 1
+                    let tableButtonIndex = (Int(self.hesapMasaSayisi)! - 1)
                     self.tableButtonBackgroundColorAray[tableButtonIndex].backgroundColor = UIColor.orange
                     
                     if self.hesapIstendi != "" {

@@ -262,6 +262,7 @@ class PopUpVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
                     objects!["HesapOdendi"] = "Evet"
                     objects!.saveInBackground()
                      self.delegate?.checkHasPaidButtonColor()
+                    self.deleteGivenOrderDataFromOwersParse()
                 }
                 let cancelAction = UIAlertAction(title: "Hayır", style: UIAlertActionStyle.cancel) {
                     UIAlertAction in
@@ -279,6 +280,33 @@ class PopUpVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
         }
     
     }
+    func deleteGivenOrderDataFromOwersParse(){
+    
+    let query = PFQuery(className: "Siparisler")
+    query.whereKey("IsletmeSahibi", equalTo: "\(PFUser.current()!.username!)")
+    query.whereKey("MasaNumarasi", equalTo: globalChosenTableNumber)
+    query.whereKey("SiparisDurumu", equalTo: "Verildi")
+    
+    query.findObjectsInBackground { (objects, error) in
+    if error != nil{
+    let alert = UIAlertController(title: "HATA", message: error?.localizedDescription, preferredStyle: UIAlertController.Style.alert)
+    let okButton = UIAlertAction(title: "TAMAM", style: UIAlertAction.Style.cancel, handler: nil)
+    alert.addAction(okButton)
+    self.present(alert, animated: true, completion: nil)
+    }
+    else {
+
+    for object in objects! {
+    object.deleteInBackground()
+
+    self.orderTableView.reloadData()
+    }
+    
+    }
+    }
+        
+    }
 }
+
 
 
