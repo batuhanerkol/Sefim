@@ -17,13 +17,15 @@ class AddLocationVC: UIViewController, MKMapViewDelegate, CLLocationManagerDeleg
     var chosenLatitude = ""
     var chosenLongitude = ""
     
+    var chosenLatitudeDouble:Double = 0
+    var chosenLongitudeDouble:Double = 0
+    
     var chosenLatitudeArray = [String]()
     var chosenLongitudeArray = [String]()
     
     var manager = CLLocationManager()
     var requestCLLocation = CLLocation()
 
-  
     @IBOutlet weak var businessNameTextField: UITextField!
     @IBOutlet weak var mapView: MKMapView!
     @IBOutlet weak var addButton: UIButton!
@@ -31,7 +33,7 @@ class AddLocationVC: UIViewController, MKMapViewDelegate, CLLocationManagerDeleg
     override func viewDidLoad() {
         super.viewDidLoad()
         
-         self.businessNameTextField.delegate = self
+        self.businessNameTextField.delegate = self
 
         mapView.delegate = self
         self.manager.delegate = self
@@ -60,11 +62,14 @@ class AddLocationVC: UIViewController, MKMapViewDelegate, CLLocationManagerDeleg
             annotation.coordinate = coordinates
             annotation.title = businessNameTextField.text!
             
+            self.chosenLongitudeDouble = coordinates.longitude
+            self.chosenLatitudeDouble = coordinates.latitude
+            
             self.mapView.addAnnotation(annotation)
             self.chosenLatitude = String(coordinates.latitude)
             self.chosenLongitude = String(coordinates.longitude)
             
-            print("lokasyon seçildi")
+
         }
     }
     
@@ -95,12 +100,13 @@ class AddLocationVC: UIViewController, MKMapViewDelegate, CLLocationManagerDeleg
     }
     
     func saveLocation(){
-        
+        let actualLocation = PFGeoPoint(latitude:self.chosenLatitudeDouble,longitude:self.chosenLongitudeDouble)
         let object = PFObject(className: "BusinessInformation")
         
         object["businessUserName"] = PFUser.current()!.username!
         object["latitude"] = self.chosenLatitude
         object["longitude"] = self.chosenLongitude
+        object["Lokasyon"] = actualLocation
         object["businessName"] = businessNameTextField.text!
         
         object.saveInBackground { (success, error) in
@@ -111,7 +117,7 @@ class AddLocationVC: UIViewController, MKMapViewDelegate, CLLocationManagerDeleg
                 self.present(alert, animated: true, completion: nil)
             }
             else{
-                print("Lokasyon parse kayıt edildi")
+             
             }
         }
         

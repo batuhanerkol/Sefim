@@ -170,7 +170,6 @@ class konumVC: UIViewController, MKMapViewDelegate, CLLocationManagerDelegate {
                     
                      self.manager.startUpdatingLocation()
                     
-                    print("lokasyon datası alındı")
                     
                 }
                 
@@ -203,7 +202,6 @@ class konumVC: UIViewController, MKMapViewDelegate, CLLocationManagerDelegate {
                     
                     let annotation = MKPointAnnotation()
                      self.mapView.removeAnnotation(annotation)
-                    print("lokasyon silindi")
                 }
                 
             }
