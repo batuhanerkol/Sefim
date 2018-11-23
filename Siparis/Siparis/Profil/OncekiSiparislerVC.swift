@@ -26,7 +26,7 @@ class OncekiSiparislerVC: UIViewController, UITableViewDelegate, UITableViewData
 
         previousOrderInfoTable.dataSource = self
         previousOrderInfoTable.delegate = self
-        getPreviousFoodData()
+//        getPreviousFoodData()
     }
     
     func getPreviousFoodData(){
@@ -67,7 +67,7 @@ class OncekiSiparislerVC: UIViewController, UITableViewDelegate, UITableViewData
     }
    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return masaSayisiArray.count
+        return 5
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -77,6 +77,10 @@ class OncekiSiparislerVC: UIViewController, UITableViewDelegate, UITableViewData
          cell.totalPriceLabel.text = totalPrice
         
         return cell
+    }
+    
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return 500
     }
     
 }
