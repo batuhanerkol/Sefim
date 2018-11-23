@@ -20,6 +20,8 @@ class DateTimeCell: UITableViewCell, UITableViewDelegate, UITableViewDataSource 
     @IBOutlet weak var timeLabel: UILabel!
     @IBOutlet weak var dateLabel: UILabel!
     
+    var number = 0
+    
     override func awakeFromNib() {
         super.awakeFromNib()
         foodNamesTable.delegate  = self
@@ -57,7 +59,10 @@ class DateTimeCell: UITableViewCell, UITableViewDelegate, UITableViewDataSource 
                 for object in objects! {
                     
                   self.foodNameArray = object["SiparisAdi"] as! [String]
-                   self.priceArray = object["SiparisFiyati"] as! [String]
+                  self.foodNameArray = object["SiparisAdi"] as! [String]
+                  self.priceArray = object["SiparisFiyati"] as! [String]
+                    
+                    print( object["SiparisAdi"])
                     
                 }
                 print("foodname:", self.foodNameArray)
@@ -74,8 +79,10 @@ class DateTimeCell: UITableViewCell, UITableViewDelegate, UITableViewDataSource 
         
         if indexPath.row < foodNameArray.count && indexPath.row < priceArray.count {
             
-            cell.foodNameLabel.text = foodNameArray[indexPath.row]
+            cell.foodNameLabel.text = foodNameArray[indexPath.row] // OncekiSiparislerVC
             cell.priceLabel.text = priceArray[indexPath.row]
+            
+           
  
         }
         return cell

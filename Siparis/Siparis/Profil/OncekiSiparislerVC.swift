@@ -50,8 +50,8 @@ class OncekiSiparislerVC: UIViewController, UITableViewDelegate, UITableViewData
 
                 for object in objects! {
                     
-                    self.timeArray.append(object.object(forKey: "Date") as! String)
-                    self.dateArray.append(object.object(forKey: "Time") as! String)
+                    self.dateArray.append(object.object(forKey: "Date") as! String)
+                    self.timeArray.append(object.object(forKey: "Time") as! String)
                     self.totalPriceArray.append(object.object(forKey: "ToplamFiyat") as! String)
                     
                 }
