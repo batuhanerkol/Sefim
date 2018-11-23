@@ -11,12 +11,9 @@ import Parse
 
 class OncekiSiparislerVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
     
-    var foodName = ""
-    var totalPrice = ""
-    var masaSayisi = ""
-    var foodNameArray = [String]()
+    var dateArray = [String]()
+    var timeArray = [String]()
     var totalPriceArray = [String]()
-    var masaSayisiArray = [String]()
     
 
     @IBOutlet weak var previousOrderInfoTable: UITableView!
@@ -26,14 +23,15 @@ class OncekiSiparislerVC: UIViewController, UITableViewDelegate, UITableViewData
 
         previousOrderInfoTable.dataSource = self
         previousOrderInfoTable.delegate = self
-//        getPreviousFoodData()
+       getFoodDateTimeData()
     }
     
-    func getPreviousFoodData(){
+    func getFoodDateTimeData(){
         
         let query = PFQuery(className: "VerilenSiparisler")
         query.whereKey("IsletmeSahibi", equalTo: (PFUser.current()?.username)!)
         query.whereKey("HesapOdendi", equalTo: "Evet")
+        query.addDescendingOrder("createdAt")
 
         
         query.findObjectsInBackground { (objects, error) in
@@ -46,41 +44,42 @@ class OncekiSiparislerVC: UIViewController, UITableViewDelegate, UITableViewData
             }
             else{
 
-                self.foodNameArray.removeAll(keepingCapacity: false)
+                self.dateArray.removeAll(keepingCapacity: false)
+                self.timeArray.removeAll(keepingCapacity: false)
                 self.totalPriceArray.removeAll(keepingCapacity: false)
-                self.masaSayisiArray.removeAll(keepingCapacity: false)
 
                 for object in objects! {
                     
-                    self.foodNameArray = object["SiparisAdi"] as! [String]
+                    self.timeArray.append(object.object(forKey: "Date") as! String)
+                    self.dateArray.append(object.object(forKey: "Time") as! String)
                     self.totalPriceArray.append(object.object(forKey: "ToplamFiyat") as! String)
-                     self.masaSayisiArray.append(object.object(forKey: "MasaNo") as! String)
                     
                 }
-                
-                self.foodName = self.foodNameArray.joined(separator: ",")
-                self.totalPrice = "\(self.totalPriceArray.last!)"
-                
                 self.previousOrderInfoTable.reloadData()
             }
         }
     }
    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 5
+        return dateArray.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
-        let cell = tableView.dequeueReusableCell(withIdentifier: "OncekiSiparisler", for: indexPath) as! OncekiSiparislerTVC
-        cell.foodNameLabel.text = foodName
-         cell.totalPriceLabel.text = totalPrice
+        let cell = tableView.dequeueReusableCell(withIdentifier: "DateTimeCell", for: indexPath) as! DateTimeCell
         
-        return cell
+   if indexPath.row < dateArray.count && indexPath.row < timeArray.count {
+    
+            cell.dateLabel.text = dateArray[indexPath.row]
+            cell.timeLabel.text = timeArray[indexPath.row]
+            cell.sumPriceLabel.text = totalPriceArray[indexPath.row]
+ 
+        }
+          return cell
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 500
+        return 200
     }
     
 }

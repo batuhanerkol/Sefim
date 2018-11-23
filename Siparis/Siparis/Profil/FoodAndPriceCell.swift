@@ -1,5 +1,5 @@
 //
-//  FoodNameCell.swift
+//  FoodAndPriceCell.swift
 //  Siparis
 //
 //  Created by Batuhan Erkol on 23.11.2018.
@@ -8,9 +8,11 @@
 
 import UIKit
 
-class FoodNameCell: UITableViewCell {
+class FoodAndPriceCell: UITableViewCell {
 
+    @IBOutlet weak var priceLabel: UILabel!
     @IBOutlet weak var foodNameLabel: UILabel!
+    
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
