@@ -15,6 +15,8 @@ class DateTimeCell: UITableViewCell, UITableViewDelegate, UITableViewDataSource 
     var priceArray = [String]()
     var foodNameArray = [String]()
     
+    var foodNameAppandArray = [String]()
+    
     @IBOutlet weak var foodNamesTable: UITableView!
     @IBOutlet weak var sumPriceLabel: UILabel!
     @IBOutlet weak var timeLabel: UILabel!
@@ -27,7 +29,7 @@ class DateTimeCell: UITableViewCell, UITableViewDelegate, UITableViewDataSource 
         foodNamesTable.delegate  = self
         foodNamesTable.dataSource = self
         
-        getFoodDateTimeData()
+//        getFoodDateTimeData()
     }
 
     override func setSelected(_ selected: Bool, animated: Bool) {
@@ -50,22 +52,26 @@ class DateTimeCell: UITableViewCell, UITableViewDelegate, UITableViewDataSource 
                 alert.addAction(okButton)
 //                self.present(alert, animated: true, completion: nil)
             }
-            else{
+            else if let objects = objects{
                 
                
                 self.foodNameArray.removeAll(keepingCapacity: false)
                 self.priceArray.removeAll(keepingCapacity: false)
                 
-                for object in objects! {
+                for object in objects {
                     
-                  self.foodNameArray = object["SiparisAdi"] as! [String]
                   self.foodNameArray = object["SiparisAdi"] as! [String]
                   self.priceArray = object["SiparisFiyati"] as! [String]
                     
-                    print( object["SiparisAdi"])
+                    self.foodNameAppandArray.append(contentsOf: self.foodNameArray)
+                    
+                    print("FoodName:", self.foodNameArray)
+                    print("SiparisFiyatı:", self.priceArray)
+                    
+                    print("foodnameAppend:", self.foodNameAppandArray)
                     
                 }
-                print("foodname:", self.foodNameArray)
+                
                 self.foodNamesTable.reloadData()
             }
         }
@@ -79,7 +85,7 @@ class DateTimeCell: UITableViewCell, UITableViewDelegate, UITableViewDataSource 
         
         if indexPath.row < foodNameArray.count && indexPath.row < priceArray.count {
             
-            cell.foodNameLabel.text = foodNameArray[indexPath.row] // OncekiSiparislerVC
+            cell.foodNameLabel.text = foodNameAppandArray[indexPath.row]
             cell.priceLabel.text = priceArray[indexPath.row]
             
            
