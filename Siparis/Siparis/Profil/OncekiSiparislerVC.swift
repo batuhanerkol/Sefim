@@ -8,12 +8,15 @@
 
 import UIKit
 import Parse
+var globalDateOncekiSparisler = ""
+var globalTimeOncekiSiparisler = ""
 
 class OncekiSiparislerVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
     
     var dateArray = [String]()
     var timeArray = [String]()
     var totalPriceArray = [String]()
+    var paymentArray = [String]()
     
 
     @IBOutlet weak var previousOrderInfoTable: UITableView!
@@ -47,12 +50,14 @@ class OncekiSiparislerVC: UIViewController, UITableViewDelegate, UITableViewData
                 self.dateArray.removeAll(keepingCapacity: false)
                 self.timeArray.removeAll(keepingCapacity: false)
                 self.totalPriceArray.removeAll(keepingCapacity: false)
+                self.paymentArray.removeAll(keepingCapacity: false)
 
                 for object in objects! {
                     
                     self.dateArray.append(object.object(forKey: "Date") as! String)
                     self.timeArray.append(object.object(forKey: "Time") as! String)
                     self.totalPriceArray.append(object.object(forKey: "ToplamFiyat") as! String)
+                    self.paymentArray.append(object.object(forKey: "HesapIstendi") as! String)
                     
                 }
                 self.previousOrderInfoTable.reloadData()
@@ -60,6 +65,13 @@ class OncekiSiparislerVC: UIViewController, UITableViewDelegate, UITableViewData
         }
     }
    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+      
+        globalDateOncekiSparisler = dateArray[indexPath.row]
+        globalTimeOncekiSiparisler = timeArray[indexPath.row]
+        
+        performSegue(withIdentifier: "foodDetails", sender: nil)
+    }
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return dateArray.count
     }
@@ -73,13 +85,14 @@ class OncekiSiparislerVC: UIViewController, UITableViewDelegate, UITableViewData
             cell.dateLabel.text = dateArray[indexPath.row]
             cell.timeLabel.text = timeArray[indexPath.row]
             cell.sumPriceLabel.text = totalPriceArray[indexPath.row]
+            cell.paymentLabel.text = paymentArray[indexPath.row]
  
         }
           return cell
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 200
+        return 100
     }
     
 }

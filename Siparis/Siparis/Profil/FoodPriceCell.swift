@@ -1,16 +1,16 @@
 //
-//  FoodAndPriceCell.swift
+//  FoodPriceCell.swift
 //  Siparis
 //
-//  Created by Batuhan Erkol on 23.11.2018.
+//  Created by Batuhan Erkol on 26.11.2018.
 //  Copyright © 2018 Batuhan Erkol. All rights reserved.
 //
 
 import UIKit
 
-class FoodAndPriceCell: UITableViewCell {
+class FoodPriceCell: UITableViewCell {
 
-    @IBOutlet weak var priceLabel: UILabel!
+    @IBOutlet weak var foodPriceLabel: UILabel!
     @IBOutlet weak var foodNameLabel: UILabel!
     
     override func awakeFromNib() {
