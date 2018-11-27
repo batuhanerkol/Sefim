@@ -18,7 +18,15 @@ class OncekiSiparislerVC: UIViewController, UITableViewDelegate, UITableViewData
     var totalPriceArray = [String]()
     var paymentArray = [String]()
     
-
+    var serviceArray = [String]()
+    var testeArray = [String]()
+    
+    var liikedServiceArray = [String]()
+    var likedTesteArray = [String]()
+    
+    var disLiikedServiceArray = [String]()
+    var disLikedTesteArray = [String]()
+    
     @IBOutlet weak var previousOrderInfoTable: UITableView!
     
     override func viewDidLoad() {
@@ -26,7 +34,11 @@ class OncekiSiparislerVC: UIViewController, UITableViewDelegate, UITableViewData
 
         previousOrderInfoTable.dataSource = self
         previousOrderInfoTable.delegate = self
+        
        getFoodDateTimeData()
+        
+        calculateBusinessLikedPoint()
+   
     }
     
     func getFoodDateTimeData(){
@@ -61,6 +73,90 @@ class OncekiSiparislerVC: UIViewController, UITableViewDelegate, UITableViewData
                     
                 }
                 self.previousOrderInfoTable.reloadData()
+            }
+        }
+    }
+    func calculateBusinessLikedPoint(){
+        let query = PFQuery(className: "VerilenSiparisler")
+        query.whereKey("IsletmeSahibi", equalTo: (PFUser.current()?.username)!)
+        query.whereKey("HesapOdendi", equalTo: "Evet")
+        query.whereKey("LezzetBegeniDurumu", notEqualTo: "")
+        query.whereKey("HizmetBegenilmeDurumu", notEqualTo: "")
+
+        query.addDescendingOrder("createdAt")
+        
+        query.findObjectsInBackground { (objects, error) in
+            
+            if error != nil{
+                let alert = UIAlertController(title: "HATA", message: error?.localizedDescription, preferredStyle: UIAlertController.Style.alert)
+                let okButton = UIAlertAction(title: "TAMAM", style: UIAlertAction.Style.cancel, handler: nil)
+                alert.addAction(okButton)
+                self.present(alert, animated: true, completion: nil)
+            }
+            else{
+                
+               
+                self.serviceArray.removeAll(keepingCapacity: false)
+                self.testeArray.removeAll(keepingCapacity: false)
+           
+                
+                for object in objects! {
+                    
+                    self.serviceArray.append(object.object(forKey: "HizmetBegenilmeDurumu") as! String)
+                    self.testeArray.append(object.object(forKey: "LezzetBegeniDurumu") as! String)
+                   
+                }
+                print("Service:", self.serviceArray)
+                print("teste:", self.testeArray)
+                
+                self.liikedServiceArray = self.serviceArray.filter { $0 == "Evet" }
+                self.disLiikedServiceArray = self.serviceArray.filter { $0 == "Hayır" }
+
+                
+                self.likedTesteArray = self.testeArray.filter { $0 == "Evet" }
+                self.disLikedTesteArray = self.testeArray.filter { $0 == "Hayır" }
+
+                
+            }
+        }
+    }
+    func calculateBusinessDisLikedPoint(){
+        let query = PFQuery(className: "VerilenSiparisler")
+        query.whereKey("IsletmeSahibi", equalTo: (PFUser.current()?.username)!)
+        query.whereKey("HesapOdendi", equalTo: "Evet")
+        query.whereKey("LezzetBegeniDurumu", equalTo: "Hayır")
+        query.whereKey("HizmetBegenilmeDurumu", equalTo: "Hayır")
+        
+        query.addDescendingOrder("createdAt")
+        
+        query.findObjectsInBackground { (objects, error) in
+            
+            if error != nil{
+                let alert = UIAlertController(title: "HATA", message: error?.localizedDescription, preferredStyle: UIAlertController.Style.alert)
+                let okButton = UIAlertAction(title: "TAMAM", style: UIAlertAction.Style.cancel, handler: nil)
+                alert.addAction(okButton)
+                self.present(alert, animated: true, completion: nil)
+            }
+            else{
+                
+                
+                self.disLiikedServiceArray.removeAll(keepingCapacity: false)
+                  self.disLikedTesteArray.removeAll(keepingCapacity: false)
+                
+                
+                for object in objects! {
+                    
+                    self.disLiikedServiceArray.append(object.object(forKey: "HizmetBegenilmeDurumu") as! String)
+                     self.disLikedTesteArray.append(object.object(forKey: "LezzetBegeniDurumu") as! String)
+                    
+                    
+                    print("ServiceDİS:", self.disLiikedServiceArray)
+                    print("TesteDİS:", self.disLikedTesteArray)
+                    
+                    
+                }
+                
+                
             }
         }
     }
