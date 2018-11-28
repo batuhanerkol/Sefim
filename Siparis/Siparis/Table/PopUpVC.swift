@@ -180,9 +180,13 @@ class PopUpVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
        dismiss(animated: true, completion: nil)
     }
+    
+    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return foodNameArray.count
     }
+    
+    
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
           let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath) as! PopUpTVC
         cell.foodNameLabel.text = foodNameArray[indexPath.row]
@@ -193,58 +197,152 @@ class PopUpVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
          cell.timeLabel.text = timeArray.last
         return cell
     }
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return 50
+        
+    }
     
     
     @IBAction func foodIsReadyButtonClicked(_ sender: Any) {
-        let alertController = UIAlertController(title: "Yemeğin Hazır Olduğuna Emin Misiniz ?", message: "", preferredStyle: .alert)
+//        if self.foodNameArray.isEmpty == false{
+//        let alertController = UIAlertController(title: "Yemeğin Hazır Olduğuna Emin Misiniz ?", message: "", preferredStyle: .alert)
+//
+//        // Create the actions
+//        let okAction = UIAlertAction(title: "Evet", style: UIAlertActionStyle.default) {
+//            UIAlertAction in
+//
+//            self.delegate?.setFoodIsReadyButtonColor()
+//
+//        }
+//        let cancelAction = UIAlertAction(title: "Hayır", style: UIAlertActionStyle.cancel) {
+//            UIAlertAction in
+//        }
+//
+//        // Add the actions
+//        alertController.addAction(okAction)
+//        alertController.addAction(cancelAction)
+//
+//        // Present the controller
+//        self.present(alertController, animated: true, completion: nil)
+//        }
         
-        // Create the actions
-        let okAction = UIAlertAction(title: "Evet", style: UIAlertActionStyle.default) {
-            UIAlertAction in
-     
-            self.delegate?.setFoodIsReadyButtonColor()
+        
+        if self.foodNameArray.isEmpty == false{
+            let query = PFQuery(className: "VerilenSiparisler")
+            query.whereKey("IsletmeSahibi", equalTo: (PFUser.current()?.username)!)
+            query.whereKeyExists("HesapOdendi")
             
+            query.getObjectInBackground(withId: objectId) { (objects, error) in
+                if error != nil{
+                    let alert = UIAlertController(title: "HATA", message: error?.localizedDescription, preferredStyle: UIAlertController.Style.alert)
+                    let okButton = UIAlertAction(title: "TAMAM", style: UIAlertAction.Style.cancel, handler: nil)
+                    alert.addAction(okButton)
+                    self.present(alert, animated: true, completion: nil)
+                }else {
+                    let alertController = UIAlertController(title: "Hesabın Ödendiğinden Emin Misiniz ?", message: "", preferredStyle: .alert)
+                    
+                    // Create the actions
+                    let okAction = UIAlertAction(title: "Evet", style: UIAlertActionStyle.default) {
+                        UIAlertAction in
+                        NSLog("OK Pressed")
+                        objects!["YemekHazir"] = "Evet"
+                        objects!.saveInBackground()
+                        self.delegate?.checkHasPaidButtonColor()
+                        self.deleteGivenOrderDataFromOwersParse()
+                        
+                         self.delegate?.setFoodIsReadyButtonColor()
+                    }
+                    let cancelAction = UIAlertAction(title: "Hayır", style: UIAlertActionStyle.cancel) {
+                        UIAlertAction in
+                        NSLog("Cancel Pressed")
+                    }
+                    
+                    // Add the actions
+                    alertController.addAction(okAction)
+                    alertController.addAction(cancelAction)
+                    
+                    // Present the controller
+                    self.present(alertController, animated: true, completion: nil)
+                    
+                }
+            }
         }
-        let cancelAction = UIAlertAction(title: "Hayır", style: UIAlertActionStyle.cancel) {
-            UIAlertAction in
-        }
-        
-        // Add the actions
-        alertController.addAction(okAction)
-        alertController.addAction(cancelAction)
-        
-        // Present the controller
-        self.present(alertController, animated: true, completion: nil)
-       
     }
+    
     @IBAction func closeButtonClicked(_ sender: Any) {
         dismiss(animated: true, completion: nil)
     }
+    
     @IBAction func orderHasGivenButtonClicked(_ sender: Any) {
-        let alertController = UIAlertController(title: "Yemeğin Teslim Edildiğine Emin Misiniz ?", message: "", preferredStyle: .alert)
+//        if self.foodNameArray.isEmpty == false{
+//        let alertController = UIAlertController(title: "Yemeğin Teslim Edildiğine Emin Misiniz ?", message: "", preferredStyle: .alert)
+//
+//        // Create the actions
+//        let okAction = UIAlertAction(title: "Evet", style: UIAlertActionStyle.default) {
+//            UIAlertAction in
+//
+//            self.delegate?.setFoodIsGivenButtonColor()
+//
+//        }
+//        let cancelAction = UIAlertAction(title: "Hayır", style: UIAlertActionStyle.cancel) {
+//            UIAlertAction in
+//        }
+//
+//        // Add the actions
+//        alertController.addAction(okAction)
+//        alertController.addAction(cancelAction)
+//
+//        // Present the controller
+//        self.present(alertController, animated: true, completion: nil)
+//    }
         
-        // Create the actions
-        let okAction = UIAlertAction(title: "Evet", style: UIAlertActionStyle.default) {
-            UIAlertAction in
+        if self.foodNameArray.isEmpty == false{
+            let query = PFQuery(className: "VerilenSiparisler")
+            query.whereKey("IsletmeSahibi", equalTo: (PFUser.current()?.username)!)
+            query.whereKeyExists("HesapOdendi")
             
-            self.delegate?.setFoodIsGivenButtonColor()
-            
+            query.getObjectInBackground(withId: objectId) { (objects, error) in
+                if error != nil{
+                    let alert = UIAlertController(title: "HATA", message: error?.localizedDescription, preferredStyle: UIAlertController.Style.alert)
+                    let okButton = UIAlertAction(title: "TAMAM", style: UIAlertAction.Style.cancel, handler: nil)
+                    alert.addAction(okButton)
+                    self.present(alert, animated: true, completion: nil)
+                }else {
+                    let alertController = UIAlertController(title: "Hesabın Ödendiğinden Emin Misiniz ?", message: "", preferredStyle: .alert)
+                    
+                    // Create the actions
+                    let okAction = UIAlertAction(title: "Evet", style: UIAlertActionStyle.default) {
+                        UIAlertAction in
+                        NSLog("OK Pressed")
+                        objects!["YemekTeslimEdildi"] = "Evet"
+                        objects!.saveInBackground()
+                        self.delegate?.checkHasPaidButtonColor()
+                        self.deleteGivenOrderDataFromOwersParse()
+                        
+                         self.delegate?.setFoodIsGivenButtonColor()
+                    }
+                    let cancelAction = UIAlertAction(title: "Hayır", style: UIAlertActionStyle.cancel) {
+                        UIAlertAction in
+                        NSLog("Cancel Pressed")
+                    }
+                    
+                    // Add the actions
+                    alertController.addAction(okAction)
+                    alertController.addAction(cancelAction)
+                    
+                    // Present the controller
+                    self.present(alertController, animated: true, completion: nil)
+                    
+                }
+            }
         }
-        let cancelAction = UIAlertAction(title: "Hayır", style: UIAlertActionStyle.cancel) {
-            UIAlertAction in
-        }
-        
-        // Add the actions
-        alertController.addAction(okAction)
-        alertController.addAction(cancelAction)
-        
-        // Present the controller
-        self.present(alertController, animated: true, completion: nil)
-        
     }
     
     @IBAction func chechkHasPaidButtonClicked(_ sender: Any) {
+        
+        if self.foodNameArray.isEmpty == false{
         let query = PFQuery(className: "VerilenSiparisler")
+            query.whereKey("IsletmeSahibi", equalTo: (PFUser.current()?.username)!)
         query.whereKeyExists("HesapOdendi")
         query.getObjectInBackground(withId: objectId) { (objects, error) in
             if error != nil{
@@ -278,7 +376,7 @@ class PopUpVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
                
             }
         }
-    
+        }
     }
     func deleteGivenOrderDataFromOwersParse(){
     

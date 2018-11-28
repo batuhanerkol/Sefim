@@ -148,7 +148,6 @@ class MasaVC: UIViewController {
                     
                 }
                 print(self.hesapMasaSAyisiArray)
-                print(self.hesapMasaSAyisiArray)
                 print(self.siparisVerildiArray)
                 print(self.siparisVerildi)
                 
@@ -274,9 +273,6 @@ class MasaVC: UIViewController {
         
             dismissKeyboard()
 
-//            let numberOfTables = PFObject(className: "TableNumbers")
-//            numberOfTables["TableOwner"] = PFUser.current()!.username!
-//            numberOfTables["NumberOfTable"] = textField.text!
             let query = PFQuery(className: "BusinessInformation")
             query.whereKey("businessUserName", equalTo: "\(PFUser.current()!.username!)")
             query.whereKeyExists("businessName")
