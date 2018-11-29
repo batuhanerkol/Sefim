@@ -11,6 +11,8 @@ import Parse
 var globalDateOncekiSparisler = ""
 var globalTimeOncekiSiparisler = ""
 
+
+
 class OncekiSiparislerVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
     
     var dateArray = [String]()
@@ -27,6 +29,12 @@ class OncekiSiparislerVC: UIViewController, UITableViewDelegate, UITableViewData
     var disLiikedServiceArray = [String]()
     var disLikedTesteArray = [String]()
     
+    var objectIdArray = [String]()
+    var objectId = ""
+    
+    var testePoint = 0
+    var servicePoint = 0
+    
     @IBOutlet weak var previousOrderInfoTable: UITableView!
     
     override func viewDidLoad() {
@@ -35,9 +43,11 @@ class OncekiSiparislerVC: UIViewController, UITableViewDelegate, UITableViewData
         previousOrderInfoTable.dataSource = self
         previousOrderInfoTable.delegate = self
         
+      
        getFoodDateTimeData()
-        
-        calculateBusinessLikedPoint()
+       calculateBusinessLikedPoint()
+        getObjectId()
+  
    
     }
     
@@ -116,7 +126,11 @@ class OncekiSiparislerVC: UIViewController, UITableViewDelegate, UITableViewData
                 self.likedTesteArray = self.testeArray.filter { $0 == "Evet" }
                 self.disLikedTesteArray = self.testeArray.filter { $0 == "Hayır" }
 
+                self.servicePoint = (self.liikedServiceArray.count * 5) / self.serviceArray.count
+                print("ServicePoint:", self.servicePoint)
                 
+                self.testePoint = (self.likedTesteArray.count * 5) / self.testeArray.count
+                print("TestePoint:", self.testePoint)
             }
         }
     }
@@ -153,13 +167,58 @@ class OncekiSiparislerVC: UIViewController, UITableViewDelegate, UITableViewData
                     print("ServiceDİS:", self.disLiikedServiceArray)
                     print("TesteDİS:", self.disLikedTesteArray)
                     
-                    
                 }
-                
-                
             }
         }
     }
+    func getObjectId(){
+        let query = PFQuery(className: "BusinessInformation")
+        query.whereKey("businessUserName", equalTo: (PFUser.current()?.username)!)
+        
+        query.findObjectsInBackground { (objects, error) in
+            if error != nil{
+                let alert = UIAlertController(title: "HATA", message: error?.localizedDescription, preferredStyle: UIAlertController.Style.alert)
+                let okButton = UIAlertAction(title: "TAMAM", style: UIAlertAction.Style.cancel, handler: nil)
+                alert.addAction(okButton)
+                self.present(alert, animated: true, completion: nil)
+            }
+            else{
+                self.objectIdArray.removeAll(keepingCapacity: false)
+                
+                for object in objects! {
+                    self.objectIdArray.append(object.objectId!)
+                    
+                    self.objectId = "\(self.objectIdArray.last!)"
+                }
+               self.savePoints()
+            }
+        }
+    }
+    
+    func savePoints(){
+        print("ID:", self.objectId)
+        if self.serviceArray.isEmpty == false && self.testeArray.isEmpty == false{
+            
+        let query = PFQuery(className: "BusinessInformation")
+            query.whereKey("businessUserName", equalTo: "\(PFUser.current()!.username!)")
+        
+         query.getObjectInBackground(withId: objectId) { (object, error) in
+            if error != nil{
+                let alert = UIAlertController(title: "HATA", message: error?.localizedDescription, preferredStyle: UIAlertControllerStyle.alert)
+                let okButton = UIAlertAction(title: "TAMAM", style: UIAlertActionStyle.cancel, handler: nil)
+                alert.addAction(okButton)
+                self.present(alert, animated: true, completion: nil)
+            }
+            else{
+                object!["LezzetPuan"] = String(self.testePoint)
+                object!["HizmetPuan"] = String(self.servicePoint)
+              
+                object?.saveInBackground()
+            }
+        }
+        }
+    }
+    
    
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
       

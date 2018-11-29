@@ -108,6 +108,8 @@ class AddLocationVC: UIViewController, MKMapViewDelegate, CLLocationManagerDeleg
         object["longitude"] = self.chosenLongitude
         object["Lokasyon"] = actualLocation
         object["businessName"] = businessNameTextField.text!
+        object["LezzetPuan"] = ""
+        object["HizmetPuan"] = ""
         
         object.saveInBackground { (success, error) in
             if error != nil{

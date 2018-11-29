@@ -11,6 +11,8 @@ import Parse
 
 class BilgilerimVC: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     
+    @IBOutlet weak var lezzetPuanLabel: UILabel!
+    @IBOutlet weak var hizmetPuanLabel: UILabel!
     @IBOutlet weak var saceLogoButton: UIButton!
     @IBOutlet weak var logoImageView: UIImageView!
     @IBOutlet weak var usernameLabel: UILabel!
@@ -28,6 +30,8 @@ class BilgilerimVC: UIViewController, UIImagePickerControllerDelegate, UINavigat
     var emailArray = [String]()
     var BusinessLogoNameArray = [PFFile]()
     var objectIdArray = [String]()
+    var testePointArray = [String]()
+    var servicePointArray = [String]()
     
     var businessName = ""
     var objectId = ""
@@ -48,6 +52,7 @@ class BilgilerimVC: UIViewController, UIImagePickerControllerDelegate, UINavigat
         whenTextFiledsChange()
         getUserInfoFromParse()
         getLogoFromParse()
+        getBusnessPoints()
     }
     
     func whenTextFiledsChange(){
@@ -75,7 +80,7 @@ class BilgilerimVC: UIViewController, UIImagePickerControllerDelegate, UINavigat
                 self.objectIdArray.removeAll(keepingCapacity: false)
                 
                 for object in objects! {
-                    self.objectIdArray.append(object.objectId as! String)
+                    self.objectIdArray.append(object.objectId!)
                     
                     self.objectId = "\(self.objectIdArray.last!)"
                 }
@@ -142,6 +147,35 @@ class BilgilerimVC: UIViewController, UIImagePickerControllerDelegate, UINavigat
         }
     
        
+    }
+    
+    func getBusnessPoints(){
+        let query = PFQuery(className: "BusinessInformation")
+        query.whereKey("businessUserName", equalTo: (PFUser.current()?.username)!)
+        
+        query.findObjectsInBackground { (objects, error) in
+            if error != nil{
+                let alert = UIAlertController(title: "HATA", message: error?.localizedDescription, preferredStyle: UIAlertController.Style.alert)
+                let okButton = UIAlertAction(title: "TAMAM", style: UIAlertAction.Style.cancel, handler: nil)
+                alert.addAction(okButton)
+                self.present(alert, animated: true, completion: nil)
+            }
+            else{
+                self.testePointArray.removeAll(keepingCapacity: false)
+                self.servicePointArray.removeAll(keepingCapacity: false)
+                
+                for object in objects! {
+                    self.testePointArray.append(object.object(forKey: "LezzetPuan") as! String)
+                     self.servicePointArray.append(object.object(forKey: "HizmetPuan") as! String)
+                    
+                    
+                }
+                self.hizmetPuanLabel.text = self.servicePointArray.last!
+                self.lezzetPuanLabel.text = self.testePointArray.last!
+            
+          
+            }
+        }
     }
 //    @IBAction func ssaveLogoButtonPressed(_ sender: Any) {
 //          self.deleteData()
