@@ -54,6 +54,9 @@ class konumVC: UIViewController, MKMapViewDelegate, CLLocationManagerDelegate {
 
             performSegue(withIdentifier: "konumVCToAddLocationVC", sender: nil)
     }
+    
+    
+    
     @IBAction func cleanButtonPressed(_ sender: Any) {
         let alertController = UIAlertController(title: "EMİN MİSİNİZ ?", message: "Eğer Bilgilerinizi Sıfırlarsanız Bütün Bilgilerinizi En Baştan Girmeniz Gerekir (Menü, Logo vb.)", preferredStyle: .alert)
         
@@ -62,7 +65,9 @@ class konumVC: UIViewController, MKMapViewDelegate, CLLocationManagerDelegate {
             UIAlertAction in
             
             self.addButton.isHidden = false
-            self.deleteData()
+            self.deleteBusinessInfo()
+            self.deleteFoodInfo()
+            self.deleteFoodTitle()
             
         }
         let cancelAction = UIAlertAction(title: "Hayır", style: UIAlertActionStyle.cancel) {
@@ -178,7 +183,7 @@ class konumVC: UIViewController, MKMapViewDelegate, CLLocationManagerDelegate {
         
     }
     
-    func deleteData(){
+    func deleteBusinessInfo(){
         let query = PFQuery(className: "BusinessInformation")
         query.whereKey("businessUserName", equalTo: "\(PFUser.current()!.username!)")
         query.findObjectsInBackground { (objects, error) in
@@ -207,6 +212,50 @@ class konumVC: UIViewController, MKMapViewDelegate, CLLocationManagerDelegate {
             }
         }
     }
+    func deleteFoodInfo(){
+        let query = PFQuery(className: "FoodInformation")
+        query.whereKey("foodNameOwner", equalTo: "\(PFUser.current()!.username!)")
+        query.findObjectsInBackground { (objects, error) in
+            
+            if error != nil{
+                let alert = UIAlertController(title: "HATA", message: error?.localizedDescription, preferredStyle: UIAlertControllerStyle.alert)
+                let okButton = UIAlertAction(title: "TAMAM", style: UIAlertActionStyle.cancel, handler: nil)
+                alert.addAction(okButton)
+                self.present(alert, animated: true, completion: nil)
+            }
+            else {
+              
+                for object in objects! {
+                    object.deleteInBackground()
+                    
+                }
+                
+            }
+        }
+    }
+    
+    func deleteFoodTitle(){
+        let query = PFQuery(className: "FoodTitle")
+        query.whereKey("foodTitleOwner", equalTo: "\(PFUser.current()!.username!)")
+        query.findObjectsInBackground { (objects, error) in
+            
+            if error != nil{
+                let alert = UIAlertController(title: "HATA", message: error?.localizedDescription, preferredStyle: UIAlertControllerStyle.alert)
+                let okButton = UIAlertAction(title: "TAMAM", style: UIAlertActionStyle.cancel, handler: nil)
+                alert.addAction(okButton)
+                self.present(alert, animated: true, completion: nil)
+            }
+            else {
+                
+                for object in objects! {
+                    object.deleteInBackground()
+                    
+                }
+                
+            }
+        }
+    }
+    
     
   
     
