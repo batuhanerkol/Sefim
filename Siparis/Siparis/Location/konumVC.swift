@@ -68,6 +68,7 @@ class konumVC: UIViewController, MKMapViewDelegate, CLLocationManagerDelegate {
             self.deleteBusinessInfo()
             self.deleteFoodInfo()
             self.deleteFoodTitle()
+            self.deleteFromFavorites()
             
         }
         let cancelAction = UIAlertAction(title: "Hayır", style: UIAlertActionStyle.cancel) {
@@ -256,6 +257,27 @@ class konumVC: UIViewController, MKMapViewDelegate, CLLocationManagerDelegate {
         }
     }
     
+    func deleteFromFavorites(){
+        let query = PFQuery(className: "FavorilerListesi")
+        query.whereKey("IsletmeSahibi", equalTo: "\(PFUser.current()!.username!)")
+        query.findObjectsInBackground { (objects, error) in
+            
+            if error != nil{
+                let alert = UIAlertController(title: "HATA", message: error?.localizedDescription, preferredStyle: UIAlertControllerStyle.alert)
+                let okButton = UIAlertAction(title: "TAMAM", style: UIAlertActionStyle.cancel, handler: nil)
+                alert.addAction(okButton)
+                self.present(alert, animated: true, completion: nil)
+            }
+            else {
+                
+                for object in objects! {
+                    object.deleteInBackground()
+                    
+                }
+                
+            }
+        }
+    }
     
   
     

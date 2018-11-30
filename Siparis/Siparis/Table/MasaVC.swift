@@ -21,6 +21,12 @@ class MasaVC: UIViewController {
     
     var siparisVerildi = ""
     var siparisVerildiArray = [String]()
+    
+    var yemekHazir = ""
+    var yemekHazirArray = [String]()
+    
+    var yemekTeslim = ""
+    var yemekTeslimArray = [String]()
 
     var objectIdArray = [String]()
     var objectId = ""
@@ -73,7 +79,10 @@ class MasaVC: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
 
         kontrolCheckWanted()
+        kontrolFoodIsReady()
+        kontrolFoodServed()
     }
+    
     func buttonSizes(){
         if screenWidth > 1000 && screenWidth < 1200 {
             buttonWidth = 100
@@ -161,6 +170,116 @@ class MasaVC: UIViewController {
                         self.tableButtonBackgroundColorAray[tableButtonIndex].backgroundColor = UIColor.red
                     }
             }
+                }else{
+                    print("sorun burada")
+                }
+            }
+            
+        }
+    }
+    
+    func kontrolFoodIsReady(){
+        
+        let query = PFQuery(className: "VerilenSiparisler")
+        query.whereKey("IsletmeSahibi", equalTo: (PFUser.current()?.username)!)
+        query.whereKey("HesapOdendi", equalTo: "")
+        
+        
+        query.findObjectsInBackground { (objects, error) in
+            
+            if error != nil{
+                let alert = UIAlertController(title: "HATA", message: error?.localizedDescription, preferredStyle: UIAlertController.Style.alert)
+                let okButton = UIAlertAction(title: "TAMAM", style: UIAlertAction.Style.cancel, handler: nil)
+                alert.addAction(okButton)
+                self.present(alert, animated: true, completion: nil)
+            }
+            else{
+                
+                self.yemekHazirArray.removeAll(keepingCapacity: false)
+                self.hesapMasaSAyisiArray.removeAll(keepingCapacity: false)
+                self.siparisVerildiArray.removeAll(keepingCapacity: false)
+                
+                for object in objects! {
+                    
+                    self.yemekHazirArray.append(object.object(forKey: "YemekHazir") as! String)
+                    self.hesapMasaSAyisiArray.append(object.object(forKey: "MasaNo") as! String)
+                    self.siparisVerildiArray.append(object.object(forKey: "SiparisVerildi") as! String)
+                    
+                    
+                    self.yemekHazir = "\(self.yemekHazirArray.last!)"
+                    self.hesapMasaSayisi = "\(self.hesapMasaSAyisiArray.last!)"
+                    self.siparisVerildi = "\(self.siparisVerildiArray.last!)"
+                    
+                }
+                print("Yemek Haiz:", self.yemekHazir)
+                print(self.siparisVerildiArray)
+                print(self.siparisVerildi)
+                
+                if  self.siparisVerildiArray.isEmpty == false{
+                    
+                    if self.siparisVerildi == "Evet" {
+                        let tableButtonIndex = (Int(self.hesapMasaSayisi)! - 1)
+                        self.tableButtonBackgroundColorAray[tableButtonIndex].backgroundColor = UIColor.orange
+                        
+                        if self.yemekHazir != "" {
+                            self.tableButtonBackgroundColorAray[tableButtonIndex].backgroundColor = UIColor.blue
+                        }
+                    }
+                }else{
+                    print("sorun burada")
+                }
+            }
+            
+        }
+    }
+    
+    func kontrolFoodServed(){
+        
+        let query = PFQuery(className: "VerilenSiparisler")
+        query.whereKey("IsletmeSahibi", equalTo: (PFUser.current()?.username)!)
+        query.whereKey("HesapOdendi", equalTo: "")
+        
+        
+        query.findObjectsInBackground { (objects, error) in
+            
+            if error != nil{
+                let alert = UIAlertController(title: "HATA", message: error?.localizedDescription, preferredStyle: UIAlertController.Style.alert)
+                let okButton = UIAlertAction(title: "TAMAM", style: UIAlertAction.Style.cancel, handler: nil)
+                alert.addAction(okButton)
+                self.present(alert, animated: true, completion: nil)
+            }
+            else{
+                
+                self.yemekTeslimArray.removeAll(keepingCapacity: false)
+                self.hesapMasaSAyisiArray.removeAll(keepingCapacity: false)
+                self.siparisVerildiArray.removeAll(keepingCapacity: false)
+                
+                for object in objects! {
+                    
+                    self.yemekTeslimArray.append(object.object(forKey: "YemekTeslimEdildi") as! String)
+                    self.hesapMasaSAyisiArray.append(object.object(forKey: "MasaNo") as! String)
+                    self.siparisVerildiArray.append(object.object(forKey: "SiparisVerildi") as! String)
+                    
+                    
+                    self.yemekTeslim = "\(self.yemekTeslimArray.last!)"
+                    self.hesapMasaSayisi = "\(self.hesapMasaSAyisiArray.last!)"
+                    self.siparisVerildi = "\(self.siparisVerildiArray.last!)"
+                    
+                }
+                print("Yemek Teslim:", self.yemekTeslim)
+                print(self.siparisVerildiArray)
+                print(self.siparisVerildi)
+                
+                if  self.siparisVerildiArray.isEmpty == false{
+                    
+                    if self.siparisVerildi == "Evet" {
+                        let tableButtonIndex = (Int(self.hesapMasaSayisi)! - 1)
+                        self.tableButtonBackgroundColorAray[tableButtonIndex].backgroundColor = UIColor.orange
+                        
+                        if self.yemekTeslim != "" {
+                            self.tableButtonBackgroundColorAray[tableButtonIndex].backgroundColor = UIColor.green
+                        }
+                    }
                 }else{
                     print("sorun burada")
                 }
@@ -383,7 +502,11 @@ class MasaVC: UIViewController {
         deleteButton.isHidden = true
 
     }
-
+    @IBAction func updateButtonPressed(_ sender: Any) {
+        
+       viewWillAppear(false)
+    }
+    
     func dismissKeyboard() {
     view.endEditing(true)
     }
@@ -391,29 +514,29 @@ class MasaVC: UIViewController {
         self.view.endEditing(true)
     }
     
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if segue.identifier == "tableToPopUp" {
-            let destination = segue.destination as! PopUpVC
-            destination.delegate = self
-        }
-    }
-   
+//    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+//        if segue.identifier == "tableToPopUp" {
+//            let destination = segue.destination as! PopUpVC
+//            destination.delegate = self
+//        }
+//    }
+//
 }
 
-extension MasaVC : SetTableButtonColor {
-    func setFoodIsReadyButtonColor() {
-        
-        let tableButtonIndex = Int(globalChosenTableNumber)! - 1
-        tableButtonBackgroundColorAray[tableButtonIndex].backgroundColor = UIColor.blue
-    }
-    
-    func setFoodIsGivenButtonColor(){
-        let tableButtonIndex = Int(globalChosenTableNumber)! - 1
-        tableButtonBackgroundColorAray[tableButtonIndex].backgroundColor = UIColor.green
-    }
-    func checkHasPaidButtonColor(){
-        let tableButtonIndex = Int(globalChosenTableNumber)! - 1
-        tableButtonBackgroundColorAray[tableButtonIndex].backgroundColor = UIColor.gray
-    }
-    
-}
+//extension MasaVC : SetTableButtonColor {
+//    func setFoodIsReadyButtonColor() {
+//
+//        let tableButtonIndex = Int(globalChosenTableNumber)! - 1
+//        tableButtonBackgroundColorAray[tableButtonIndex].backgroundColor = UIColor.blue
+//    }
+//
+//    func setFoodIsGivenButtonColor(){
+//        let tableButtonIndex = Int(globalChosenTableNumber)! - 1
+//        tableButtonBackgroundColorAray[tableButtonIndex].backgroundColor = UIColor.green
+//    }
+//    func checkHasPaidButtonColor(){
+//        let tableButtonIndex = Int(globalChosenTableNumber)! - 1
+//        tableButtonBackgroundColorAray[tableButtonIndex].backgroundColor = UIColor.gray
+//    }
+//
+//}
