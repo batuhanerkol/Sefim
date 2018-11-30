@@ -56,7 +56,7 @@ class PopUpVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
     }
     override func viewWillAppear(_ animated: Bool) {
         getTableNumberData()
-        checkHesap()
+        checkHesapToGetOrder()
     }
    
    
@@ -85,7 +85,7 @@ class PopUpVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
             self.tableNumber = self.tableNumberArray.last!
         }
     }
-    func checkHesap(){
+    func checkHesapToGetOrder(){
         let query = PFQuery(className: "VerilenSiparisler")
         query.whereKey("IsletmeSahibi", equalTo: (PFUser.current()?.username)!)
         query.whereKey("MasaNo", equalTo: globalChosenTableNumber)
@@ -239,7 +239,7 @@ class PopUpVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
                     alert.addAction(okButton)
                     self.present(alert, animated: true, completion: nil)
                 }else {
-                    let alertController = UIAlertController(title: "Hesabın Ödendiğinden Emin Misiniz ?", message: "", preferredStyle: .alert)
+                    let alertController = UIAlertController(title: "Yemeğin Hazır Olduğuna Emin Misiniz ?", message: "", preferredStyle: .alert)
                     
                     // Create the actions
                     let okAction = UIAlertAction(title: "Evet", style: UIAlertActionStyle.default) {
@@ -308,7 +308,7 @@ class PopUpVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
                     alert.addAction(okButton)
                     self.present(alert, animated: true, completion: nil)
                 }else {
-                    let alertController = UIAlertController(title: "Hesabın Ödendiğinden Emin Misiniz ?", message: "", preferredStyle: .alert)
+                    let alertController = UIAlertController(title: "Yemeğin Teslim Edildiğine Emin Misiniz ?", message: "", preferredStyle: .alert)
                     
                     // Create the actions
                     let okAction = UIAlertAction(title: "Evet", style: UIAlertActionStyle.default) {
