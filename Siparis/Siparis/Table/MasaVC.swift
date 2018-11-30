@@ -203,10 +203,9 @@ class MasaVC: UIViewController {
     }
     
     func controlOfCheck(){
-        
         let query = PFQuery(className: "VerilenSiparisler")
         query.whereKey("IsletmeSahibi", equalTo: (PFUser.current()?.username)!)
-        query.whereKey("HesapOdendi", equalTo:"Evet")
+        query.whereKey("HesapOdendi", equalTo: "Evet")
         
         
         query.findObjectsInBackground { (objects, error) in
@@ -218,31 +217,51 @@ class MasaVC: UIViewController {
                 self.present(alert, animated: true, completion: nil)
             }
             else{
-               
                 self.hesapOdendiArray.removeAll(keepingCapacity: false)
+                self.yemekTeslimArray.removeAll(keepingCapacity: false)
+                self.yemekHazirArray.removeAll(keepingCapacity: false)
+                self.hesapIstendiArray.removeAll(keepingCapacity: false)
                 self.hesapMasaSAyisiArray.removeAll(keepingCapacity: false)
+                self.siparisVerildiArray.removeAll(keepingCapacity: false)
+                
                 for object in objects! {
-                    
                     self.hesapOdendiArray.append(object.object(forKey: "HesapOdendi") as! String)
+                    self.yemekTeslimArray.append(object.object(forKey: "YemekTeslimEdildi") as! String)
+                    self.yemekHazirArray.append(object.object(forKey: "YemekHazir") as! String)
+                    self.hesapIstendiArray.append(object.object(forKey: "HesapIstendi") as! String)
                     self.hesapMasaSAyisiArray.append(object.object(forKey: "MasaNo") as! String)
-                   
+                    self.siparisVerildiArray.append(object.object(forKey: "SiparisVerildi") as! String)
+                    
                     self.hesapOdendi = "\(self.hesapOdendiArray.last!)"
-                     self.hesapMasaSayisi = "\(self.hesapMasaSAyisiArray.last!)"
+                    self.yemekTeslim = "\(self.yemekTeslimArray.last!)"
+                    self.yemekHazir = "\(self.yemekHazirArray.last!)"
+                    self.hesapIstendi = "\(self.hesapIstendiArray.last!)"
+                    self.hesapMasaSayisi = "\(self.hesapMasaSAyisiArray.last!)"
+                    self.siparisVerildi = "\(self.siparisVerildiArray.last!)"
+                    
                 }
                 print("---------------------------")
-               
-                print("hesapOdendi", self.hesapOdendi)
                 print("hesapMasaSayisi",self.hesapMasaSayisi)
+                print("siparisVerildi",self.siparisVerildi )
+                print("yemekHazir", self.yemekHazir)
+                print("YemekTeslim:",  self.yemekTeslim)
+                print("hesapIstendi", self.hesapIstendi)
                 
-                if  self.hesapOdendiArray.isEmpty == false && self.hesapMasaSAyisiArray.isEmpty == false{
+                
+                
+                if  self.siparisVerildiArray.isEmpty == false{
                     
                     let tableButtonIndex = (Int(self.hesapMasaSayisi)! - 1)
                     
-                    if self.hesapOdendi == "Evet"{
+                    
+                    if self.siparisVerildi == "Evet" && self.yemekHazir == "Evet" && self.yemekTeslim == "Evet"  && self.hesapIstendi != "" && self.hesapOdendi == "Evet"{
+                        
                         self.tableButtonBackgroundColorAray[tableButtonIndex].backgroundColor = UIColor.gray
                     }
-                }else{
-                    print("SORUN BURADA: control Of Chechk()")
+                }
+            
+                else{
+                    print("sorun burada: control of buttons()")
                 }
             }
             
