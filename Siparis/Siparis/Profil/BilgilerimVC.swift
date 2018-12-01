@@ -137,12 +137,26 @@ class BilgilerimVC: UIViewController, UIImagePickerControllerDelegate, UINavigat
                 self.present(alert, animated: true, completion: nil)
             }
             else{
+                if self.nameTextField.text! != "" && self.lastnameTextField.text! != "" && self.phoneNumberTextField.text! != "" && self.emailTextField.text! != ""{
                 object!["name"] = self.nameTextField.text!
                 object!["lastname"] = self.lastnameTextField.text!
                 object!["PhoneNumber"] = self.phoneNumberTextField.text!
                 object!["email"] = self.emailTextField.text!
                 object?.saveInBackground()
+                    
+                    let alert = UIAlertController(title: "Değişiklikler Kayıt Edildi", message: "", preferredStyle: UIAlertController.Style.alert)
+                    let okButton = UIAlertAction(title: "TAMAM", style: UIAlertAction.Style.cancel, handler: nil)
+                    alert.addAction(okButton)
+                    self.present(alert, animated: true, completion: nil)
+
                 self.saveChangesButton.isHidden = true
+            }
+                else{
+                    let alert = UIAlertController(title: "Lütfen Boş Kalmış Bilgilerinizi Giriniz", message: "", preferredStyle: UIAlertController.Style.alert)
+                    let okButton = UIAlertAction(title: "TAMAM", style: UIAlertAction.Style.cancel, handler: nil)
+                    alert.addAction(okButton)
+                    self.present(alert, animated: true, completion: nil)
+                }
             }
         }
     
