@@ -53,15 +53,12 @@ class MasaVC: UIViewController {
     var tableBottomBackgroundColor = UIColor.gray
     var tableButtonBackgroundColorAray = [UIButton]()
     
-    
-    
   public var screenWidth: CGFloat {
         return UIScreen.main.bounds.width
     }
      public var screenHeight: CGFloat {
         return UIScreen.main.bounds.height
     }
-    
     
     @IBOutlet weak var tableNumberLabel: UILabel!
     @IBOutlet weak var createButton: UIButton!
@@ -78,6 +75,8 @@ class MasaVC: UIViewController {
         
         let value = UIInterfaceOrientation.landscapeRight.rawValue
         UIDevice.current.setValue(value, forKey: "orientation")
+        
+        _ = Timer.scheduledTimer(timeInterval: 10, target: self, selector: #selector(viewWillAppear(_:)), userInfo: nil, repeats: true)
     }
     override func viewWillAppear(_ animated: Bool) {
         
