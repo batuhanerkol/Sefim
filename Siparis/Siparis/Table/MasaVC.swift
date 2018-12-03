@@ -253,7 +253,7 @@ class MasaVC: UIViewController {
                     let tableButtonIndex = (Int(self.hesapMasaSayisi)! - 1)
                     
                     
-                    if self.siparisVerildi == "Evet" && self.yemekHazir == "Evet" && self.yemekTeslim == "Evet"  && self.hesapIstendi != "" && self.hesapOdendi == "Evet"{
+                    if self.siparisVerildi == "Evet" && self.yemekHazir == "Evet" && self.yemekTeslim == "Evet"  && self.hesapIstendi != "" && self.hesapOdendi == "Evet" && self.tableButtonBackgroundColorAray.count > 0{
                         
                         self.tableButtonBackgroundColorAray[tableButtonIndex].backgroundColor = UIColor.gray
                     }

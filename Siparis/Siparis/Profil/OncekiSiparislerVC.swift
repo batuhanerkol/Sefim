@@ -126,11 +126,13 @@ class OncekiSiparislerVC: UIViewController, UITableViewDelegate, UITableViewData
                 self.likedTesteArray = self.testeArray.filter { $0 == "Evet" }
                 self.disLikedTesteArray = self.testeArray.filter { $0 == "Hayır" }
 
+                if self.liikedServiceArray.isEmpty == false && self.likedTesteArray.isEmpty == false{
                 self.servicePoint = (self.liikedServiceArray.count * 5) / self.serviceArray.count
                 print("ServicePoint:", self.servicePoint)
                 
                 self.testePoint = (self.likedTesteArray.count * 5) / self.testeArray.count
                 print("TestePoint:", self.testePoint)
+                }
             }
         }
     }
