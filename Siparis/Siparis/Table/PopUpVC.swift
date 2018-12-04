@@ -248,7 +248,6 @@ class PopUpVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
                         objects!["YemekHazir"] = "Evet"
                         objects!.saveInBackground()
                         self.delegate?.checkHasPaidButtonColor()
-                        self.deleteGivenOrderDataFromOwersParse()
                         
                          self.delegate?.setFoodIsReadyButtonColor()
                     }
@@ -317,7 +316,6 @@ class PopUpVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
                         objects!["YemekTeslimEdildi"] = "Evet"
                         objects!.saveInBackground()
                         self.delegate?.checkHasPaidButtonColor()
-                        self.deleteGivenOrderDataFromOwersParse()
                         
                          self.delegate?.setFoodIsGivenButtonColor()
                     }

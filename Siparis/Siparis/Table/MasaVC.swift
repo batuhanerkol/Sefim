@@ -170,7 +170,7 @@ class MasaVC: UIViewController {
                 
                 
                 
-                if  self.siparisVerildiArray.isEmpty == false{
+                if  self.siparisVerildiArray.isEmpty == false && self.tableButtonBackgroundColorAray.count > 0{
                     
                     let tableButtonIndex = (Int(self.hesapMasaSayisi)! - 1)
                     
