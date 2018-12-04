@@ -9,15 +9,7 @@
 import UIKit
 import Parse
 
-protocol SetTableButtonColor {
-    func setFoodIsReadyButtonColor()
-    func setFoodIsGivenButtonColor()
-    func checkHasPaidButtonColor()
-}
-
 class PopUpVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
-    
-    var delegate : SetTableButtonColor?
     
     var businessNameArray = [String]()
     var foodNameArray = [String]()
@@ -31,6 +23,12 @@ class PopUpVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
     var hesapOdendiArray = [String]()
     var hesapIstendiArray = [String]()
     
+    var allFoodsNamesArray = [String]()
+    var allPricesArray = [String]()
+    var allNoteArray = [String]()
+    var allDateArray = [String]()
+    var allTimeArray = [String]()
+    
      var tableNumber = ""
      var objectId = ""
      var chosenBusiness = ""
@@ -38,7 +36,11 @@ class PopUpVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
      var chosenTime = ""
      var hesapOdendi = ""
      var hesapIStendi = ""
+     var orderNumber = 0
     
+    @IBOutlet weak var checkPaidButton: UIButton!
+    @IBOutlet weak var orderHasGivenButton: UIButton!
+    @IBOutlet weak var foodIsReadyButton: UIButton!
     @IBOutlet weak var hesapDurumuLabel: UILabel!
     @IBOutlet weak var totalPriceLabel: UILabel!
     @IBOutlet weak var tableNumberLabel: UILabel!
@@ -51,8 +53,7 @@ class PopUpVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
         orderTableView.delegate = self
         orderTableView.dataSource = self
         
-        tableNumberLabel.text = globalChosenTableNumber
-        
+        tableNumberLabel.text = globalChosenTableNumberMasaVC
     }
     override func viewWillAppear(_ animated: Bool) {
         getTableNumberData()
@@ -88,7 +89,7 @@ class PopUpVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
     func checkHesapToGetOrder(){
         let query = PFQuery(className: "VerilenSiparisler")
         query.whereKey("IsletmeSahibi", equalTo: (PFUser.current()?.username)!)
-        query.whereKey("MasaNo", equalTo: globalChosenTableNumber)
+        query.whereKey("MasaNo", equalTo: globalChosenTableNumberMasaVC)
         query.whereKeyExists("HesapOdendi")
         query.whereKeyExists("HesapIstendi")
         
@@ -120,7 +121,8 @@ class PopUpVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
                     if self.hesapIStendi == ""{
                         
                     }else{
-                        self.hesapDurumuLabel.text = self.hesapIStendi
+                      
+                        self.hesapDurumuLabel.text = self.hesapIstendiArray.joined(separator: ",")
                     }
                 }
         }
@@ -131,7 +133,8 @@ class PopUpVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
     func getOrderData(){
         let query = PFQuery(className: "VerilenSiparisler")
         query.whereKey("IsletmeSahibi", equalTo: (PFUser.current()?.username)!)
-        query.whereKey("MasaNo", equalTo: globalChosenTableNumber)
+        query.whereKey("MasaNo", equalTo: globalChosenTableNumberMasaVC)
+        query.addDescendingOrder("createdAt")
 
         query.findObjectsInBackground { (objects, error) in
 
@@ -151,6 +154,13 @@ class PopUpVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
                 self.timeArray.removeAll(keepingCapacity: false)
                 self.totalPriceArray.removeAll(keepingCapacity: false)
                 self.objectIdArray.removeAll(keepingCapacity: false)
+                
+                 self.allFoodsNamesArray.removeAll(keepingCapacity: false)
+                 self.allPricesArray.removeAll(keepingCapacity: false)
+                 self.allNoteArray.removeAll(keepingCapacity: false)
+                 self.allDateArray.removeAll(keepingCapacity: false)
+                 self.allTimeArray.removeAll(keepingCapacity: false)
+                
               
             
                 for object in objects! {
@@ -170,101 +180,91 @@ class PopUpVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
                     self.chosenDate = "\(self.dateArray.last!)"
                     self.chosenTime = "\(self.timeArray.last!)"
                     self.chosenBusiness = "\(self.businessNameArray.last!)"
-                   self.objectId = "\(self.objectIdArray.last!)"
+                    self.objectId = "\(self.objectIdArray.last!)"
+                    
+                    self.allFoodsNamesArray.append(contentsOf: self.foodNameArray)
+                    self.allPricesArray.append(contentsOf: self.priceArray)
+                    self.allNoteArray.append(contentsOf: self.orderNoteArray)
+                    self.allDateArray.append(contentsOf: self.dateArray)
+                    self.allTimeArray.append(contentsOf: self.timeArray)
                 }
+                print("allFOODNAME:", self.allFoodsNamesArray)
+                 print("allPrice:", self.allPricesArray)
+                 print("allnorte:", self.allNoteArray)
+                 print("alldate:", self.allDateArray)
+                print("objectID:", self.objectIdArray)
+                
             }
             
             self.orderTableView.reloadData()
         }
     }
-    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
-       dismiss(animated: true, completion: nil)
-    }
-    
-    
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return foodNameArray.count
-    }
-    
-    
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-          let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath) as! PopUpTVC
-        cell.foodNameLabel.text = foodNameArray[indexPath.row]
-        cell.foodPriceLabel.text = priceArray[indexPath.row]
-        cell.foodNoteLabel.text = orderNoteArray[indexPath.row]
-        
-         cell.dateLabel.text = dateArray.last
-         cell.timeLabel.text = timeArray.last
-        return cell
-    }
-    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 50
-        
-    }
+  
     
     
     @IBAction func foodIsReadyButtonClicked(_ sender: Any) {
-//        if self.foodNameArray.isEmpty == false{
-//        let alertController = UIAlertController(title: "Yemeğin Hazır Olduğuna Emin Misiniz ?", message: "", preferredStyle: .alert)
-//
-//        // Create the actions
-//        let okAction = UIAlertAction(title: "Evet", style: UIAlertActionStyle.default) {
-//            UIAlertAction in
-//
-//            self.delegate?.setFoodIsReadyButtonColor()
-//
-//        }
-//        let cancelAction = UIAlertAction(title: "Hayır", style: UIAlertActionStyle.cancel) {
-//            UIAlertAction in
-//        }
-//
-//        // Add the actions
-//        alertController.addAction(okAction)
-//        alertController.addAction(cancelAction)
-//
-//        // Present the controller
-//        self.present(alertController, animated: true, completion: nil)
-//        }
         
-        
+        orderNumber = 0
         if self.foodNameArray.isEmpty == false{
+            while self.orderNumber < self.objectIdArray.count{
+                
             let query = PFQuery(className: "VerilenSiparisler")
             query.whereKey("IsletmeSahibi", equalTo: (PFUser.current()?.username)!)
-            query.whereKeyExists("HesapOdendi")
+            query.whereKey("MasaNo", equalTo: globalChosenTableNumberMasaVC)
+            query.addDescendingOrder("createdAt")
             
-            query.getObjectInBackground(withId: objectId) { (objects, error) in
+            query.getObjectInBackground(withId: self.objectIdArray[self.orderNumber]) { (objects, error) in
                 if error != nil{
                     let alert = UIAlertController(title: "HATA", message: error?.localizedDescription, preferredStyle: UIAlertController.Style.alert)
                     let okButton = UIAlertAction(title: "TAMAM", style: UIAlertAction.Style.cancel, handler: nil)
                     alert.addAction(okButton)
                     self.present(alert, animated: true, completion: nil)
+                    
                 }else {
-                    let alertController = UIAlertController(title: "Yemeğin Hazır Olduğuna Emin Misiniz ?", message: "", preferredStyle: .alert)
                     
-                    // Create the actions
-                    let okAction = UIAlertAction(title: "Evet", style: UIAlertActionStyle.default) {
-                        UIAlertAction in
-                        NSLog("OK Pressed")
-                        objects!["YemekHazir"] = "Evet"
-                        objects!.saveInBackground()
-                        self.delegate?.checkHasPaidButtonColor()
-                        
-                         self.delegate?.setFoodIsReadyButtonColor()
-                    }
-                    let cancelAction = UIAlertAction(title: "Hayır", style: UIAlertActionStyle.cancel) {
-                        UIAlertAction in
-                        NSLog("Cancel Pressed")
-                    }
-                    
-                    // Add the actions
-                    alertController.addAction(okAction)
-                    alertController.addAction(cancelAction)
-                    
-                    // Present the controller
-                    self.present(alertController, animated: true, completion: nil)
-                    
+                    objects!["YemekHazir"] = "Evet"
+                    objects!.saveInBackground(block: { (success, error) in
+                        if error != nil{
+                            let alert = UIAlertController(title: "Lütfen Tekrar Deneyin", message: "", preferredStyle: UIAlertController.Style.alert)
+                            let okButton = UIAlertAction(title: "TAMAM", style: UIAlertAction.Style.cancel, handler: nil)
+                            alert.addAction(okButton)
+                            self.present(alert, animated: true, completion: nil)
+                            
+                        }
+                    })
+//                    let alertController = UIAlertController(title: "Yemeğin Hazır Olduğuna Emin Misiniz ?", message: "", preferredStyle: .alert)
+//
+//                    // Create the actions
+//                    let okAction = UIAlertAction(title: "Evet", style: UIAlertActionStyle.default) {
+//                        UIAlertAction in
+//                        NSLog("OK Pressed")
+//
+//                    }
+//                    let cancelAction = UIAlertAction(title: "Hayır", style: UIAlertActionStyle.cancel) {
+//                        UIAlertAction in
+//                        NSLog("Cancel Pressed")
+//                    }
+//
+//                    // Add the actions
+//                    alertController.addAction(okAction)
+//                    alertController.addAction(cancelAction)
+//
+//                    // Present the controller
+//                    self.present(alertController, animated: true, completion: nil)
+//
                 }
+                
             }
+                print("AAAAAAAAA", self.orderNumber)
+               self.orderNumber += 1
+        }
+                self.performSegue(withIdentifier: "ToMasaVC", sender: nil)
+        }
+        else{
+            let alert = UIAlertController(title: "Yemek Listesi Boş", message: "", preferredStyle: UIAlertController.Style.alert)
+            let okButton = UIAlertAction(title: "TAMAM", style: UIAlertAction.Style.cancel, handler: nil)
+            alert.addAction(okButton)
+            self.present(alert, animated: true, completion: nil)
         }
     }
     
@@ -273,114 +273,104 @@ class PopUpVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
     }
     
     @IBAction func orderHasGivenButtonClicked(_ sender: Any) {
-//        if self.foodNameArray.isEmpty == false{
-//        let alertController = UIAlertController(title: "Yemeğin Teslim Edildiğine Emin Misiniz ?", message: "", preferredStyle: .alert)
-//
-//        // Create the actions
-//        let okAction = UIAlertAction(title: "Evet", style: UIAlertActionStyle.default) {
-//            UIAlertAction in
-//
-//            self.delegate?.setFoodIsGivenButtonColor()
-//
-//        }
-//        let cancelAction = UIAlertAction(title: "Hayır", style: UIAlertActionStyle.cancel) {
-//            UIAlertAction in
-//        }
-//
-//        // Add the actions
-//        alertController.addAction(okAction)
-//        alertController.addAction(cancelAction)
-//
-//        // Present the controller
-//        self.present(alertController, animated: true, completion: nil)
-//    }
-        
+
+        orderNumber = 0
         if self.foodNameArray.isEmpty == false{
-            let query = PFQuery(className: "VerilenSiparisler")
-            query.whereKey("IsletmeSahibi", equalTo: (PFUser.current()?.username)!)
-            query.whereKeyExists("HesapOdendi")
-            
-            query.getObjectInBackground(withId: objectId) { (objects, error) in
-                if error != nil{
-                    let alert = UIAlertController(title: "HATA", message: error?.localizedDescription, preferredStyle: UIAlertController.Style.alert)
-                    let okButton = UIAlertAction(title: "TAMAM", style: UIAlertAction.Style.cancel, handler: nil)
-                    alert.addAction(okButton)
-                    self.present(alert, animated: true, completion: nil)
-                }else {
-                    let alertController = UIAlertController(title: "Yemeğin Teslim Edildiğine Emin Misiniz ?", message: "", preferredStyle: .alert)
-                    
-                    // Create the actions
-                    let okAction = UIAlertAction(title: "Evet", style: UIAlertActionStyle.default) {
-                        UIAlertAction in
-                        NSLog("OK Pressed")
-                        objects!["YemekTeslimEdildi"] = "Evet"
-                        objects!.saveInBackground()
-                        self.delegate?.checkHasPaidButtonColor()
+            while self.orderNumber < self.objectIdArray.count{
+                
+                let query = PFQuery(className: "VerilenSiparisler")
+                query.whereKey("IsletmeSahibi", equalTo: (PFUser.current()?.username)!)
+                query.whereKey("MasaNo", equalTo: globalChosenTableNumberMasaVC)
+                query.addDescendingOrder("createdAt")
+                
+                query.getObjectInBackground(withId: self.objectIdArray[self.orderNumber]) { (objects, error) in
+                    if error != nil{
+                        let alert = UIAlertController(title: "HATA", message: error?.localizedDescription, preferredStyle: UIAlertController.Style.alert)
+                        let okButton = UIAlertAction(title: "TAMAM", style: UIAlertAction.Style.cancel, handler: nil)
+                        alert.addAction(okButton)
+                        self.present(alert, animated: true, completion: nil)
                         
-                         self.delegate?.setFoodIsGivenButtonColor()
+                    }else {
+                        objects!["YemekTeslimEdildi"] = "Evet"
+                        objects!.saveInBackground(block: { (success, error) in
+                            if error != nil{
+                                let alert = UIAlertController(title: "Lütfen Tekrar Deneyin", message: "", preferredStyle: UIAlertController.Style.alert)
+                                let okButton = UIAlertAction(title: "TAMAM", style: UIAlertAction.Style.cancel, handler: nil)
+                                alert.addAction(okButton)
+                                self.present(alert, animated: true, completion: nil)
+                                
+                            }
+                        })
+        
                     }
-                    let cancelAction = UIAlertAction(title: "Hayır", style: UIAlertActionStyle.cancel) {
-                        UIAlertAction in
-                        NSLog("Cancel Pressed")
-                    }
-                    
-                    // Add the actions
-                    alertController.addAction(okAction)
-                    alertController.addAction(cancelAction)
-                    
-                    // Present the controller
-                    self.present(alertController, animated: true, completion: nil)
                     
                 }
+                print("AAAAAAAAA", self.orderNumber)
+                self.orderNumber += 1
             }
+            self.performSegue(withIdentifier: "ToMasaVC", sender: nil)
+        }
+        else{
+            let alert = UIAlertController(title: "Yemek Listesi Boş", message: "", preferredStyle: UIAlertController.Style.alert)
+            let okButton = UIAlertAction(title: "TAMAM", style: UIAlertAction.Style.cancel, handler: nil)
+            alert.addAction(okButton)
+            self.present(alert, animated: true, completion: nil)
         }
     }
     
     @IBAction func chechkHasPaidButtonClicked(_ sender: Any) {
         
+        orderNumber = 0
         if self.foodNameArray.isEmpty == false{
-        let query = PFQuery(className: "VerilenSiparisler")
-            query.whereKey("IsletmeSahibi", equalTo: (PFUser.current()?.username)!)
-        query.whereKeyExists("HesapOdendi")
-        query.getObjectInBackground(withId: objectId) { (objects, error) in
-            if error != nil{
-                let alert = UIAlertController(title: "HATA", message: error?.localizedDescription, preferredStyle: UIAlertController.Style.alert)
-                let okButton = UIAlertAction(title: "TAMAM", style: UIAlertAction.Style.cancel, handler: nil)
-                alert.addAction(okButton)
-                self.present(alert, animated: true, completion: nil)
-            }else {
-                let alertController = UIAlertController(title: "Hesabın Ödendiğinden Emin Misiniz ?", message: "", preferredStyle: .alert)
+            while self.orderNumber < self.objectIdArray.count{
                 
-                // Create the actions
-                let okAction = UIAlertAction(title: "Evet", style: UIAlertActionStyle.default) {
-                    UIAlertAction in
-                    NSLog("OK Pressed")
-                    objects!["HesapOdendi"] = "Evet"
-                    objects!.saveInBackground()
-                     self.delegate?.checkHasPaidButtonColor()
-                    self.deleteGivenOrderDataFromOwersParse()
+                let query = PFQuery(className: "VerilenSiparisler")
+                query.whereKey("IsletmeSahibi", equalTo: (PFUser.current()?.username)!)
+                query.whereKey("MasaNo", equalTo: globalChosenTableNumberMasaVC)
+                query.addDescendingOrder("createdAt")
+                
+                query.getObjectInBackground(withId: self.objectIdArray[self.orderNumber]) { (objects, error) in
+                    if error != nil{
+                        let alert = UIAlertController(title: "HATA", message: error?.localizedDescription, preferredStyle: UIAlertController.Style.alert)
+                        let okButton = UIAlertAction(title: "TAMAM", style: UIAlertAction.Style.cancel, handler: nil)
+                        alert.addAction(okButton)
+                        self.present(alert, animated: true, completion: nil)
+                        
+                    }else {
+                        objects!["HesapOdendi"] = "Evet"
+                        objects!.saveInBackground(block: { (success, error) in
+                            if error != nil{
+                                let alert = UIAlertController(title: "Lütfen Tekrar Deneyin", message: "", preferredStyle: UIAlertController.Style.alert)
+                                let okButton = UIAlertAction(title: "TAMAM", style: UIAlertAction.Style.cancel, handler: nil)
+                                alert.addAction(okButton)
+                                self.present(alert, animated: true, completion: nil)
+                                
+                            }else{
+                                 self.deleteGivenOrderDataFromOwersParse()
+                            }
+                        })
+                        
+                    }
+                    
                 }
-                let cancelAction = UIAlertAction(title: "Hayır", style: UIAlertActionStyle.cancel) {
-                    UIAlertAction in
-                    NSLog("Cancel Pressed")
-                }
-                
-                // Add the actions
-                alertController.addAction(okAction)
-                alertController.addAction(cancelAction)
-                
-                // Present the controller
-                self.present(alertController, animated: true, completion: nil)
-               
+                print("AAAAAAAAA", self.orderNumber)
+                self.orderNumber += 1
             }
+            self.performSegue(withIdentifier: "ToMasaVC", sender: nil)
         }
+        else{
+            let alert = UIAlertController(title: "Yemek Listesi Boş", message: "", preferredStyle: UIAlertController.Style.alert)
+            let okButton = UIAlertAction(title: "TAMAM", style: UIAlertAction.Style.cancel, handler: nil)
+            alert.addAction(okButton)
+            self.present(alert, animated: true, completion: nil)
         }
     }
+    
     func deleteGivenOrderDataFromOwersParse(){
     
     let query = PFQuery(className: "Siparisler")
     query.whereKey("IsletmeSahibi", equalTo: "\(PFUser.current()!.username!)")
-    query.whereKey("MasaNumarasi", equalTo: globalChosenTableNumber)
+    query.whereKey("MasaNumarasi", equalTo: globalChosenTableNumberMasaVC)
     query.whereKey("SiparisDurumu", equalTo: "Verildi")
     
     query.findObjectsInBackground { (objects, error) in
@@ -400,6 +390,34 @@ class PopUpVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
     
     }
     }
+        
+    }
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        dismiss(animated: true, completion: nil)
+    }
+    
+    
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return allFoodsNamesArray.count
+    }
+    
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        
+        let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath) as! PopUpTVC
+        
+        //        if allFoodsNamesArray.count > indexPath.row && priceArray.count > indexPath.row && orderNoteArray.count > indexPath.row{
+        cell.foodNameLabel.text = allFoodsNamesArray[indexPath.row]
+        cell.foodPriceLabel.text = allPricesArray[indexPath.row]
+        cell.foodNoteLabel.text = allNoteArray[indexPath.row]
+        
+        cell.dateLabel.text = allDateArray.last
+        cell.timeLabel.text = allTimeArray.last
+        
+        return cell
+    }
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return 50
         
     }
 }

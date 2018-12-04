@@ -9,7 +9,7 @@
 import UIKit
 import Parse
 
-var globalChosenTableNumber = ""
+var globalChosenTableNumberMasaVC = ""
 
 class MasaVC: UIViewController {
     
@@ -354,7 +354,7 @@ class MasaVC: UIViewController {
     @objc func buttonAction(sender: UIButton!) {
         
         if let buttonTitle = sender.title(for: .normal) {
-            globalChosenTableNumber = buttonTitle
+            globalChosenTableNumberMasaVC = buttonTitle
         }
         self.performSegue(withIdentifier: "tableToPopUp", sender: nil)
     }
