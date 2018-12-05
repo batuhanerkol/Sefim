@@ -110,6 +110,7 @@ class AddLocationVC: UIViewController, MKMapViewDelegate, CLLocationManagerDeleg
         object["businessName"] = businessNameTextField.text!
         object["LezzetPuan"] = ""
         object["HizmetPuan"] = ""
+        object["MasaSayisi"] = 0
         
         object.saveInBackground { (success, error) in
             if error != nil{

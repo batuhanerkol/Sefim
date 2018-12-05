@@ -23,19 +23,21 @@ class PopUpTVC: UITableViewCell {
     
     override func awakeFromNib() {
         super.awakeFromNib()
-        // Initialization code
+ 
+         checkOrderHasGiven()
     }
 
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
 
-      checkOrderHasGiven()
+     
        
     }
     func checkOrderHasGiven(){
         let query = PFQuery(className: "VerilenSiparisler")
         query.whereKey("IsletmeSahibi", equalTo: (PFUser.current()?.username)!)
         query.whereKey("MasaNo", equalTo: globalChosenTableNumberMasaVC)
+        query.whereKey("HesapOdendi", equalTo: "")
         query.addDescendingOrder("createdAt")
         
         query.findObjectsInBackground { (objects, error) in

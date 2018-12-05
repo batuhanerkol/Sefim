@@ -222,7 +222,7 @@ class PopUpVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
                     self.present(alert, animated: true, completion: nil)
                     
                 }else {
-                    
+
                     objects!["YemekHazir"] = "Evet"
                     objects!.saveInBackground(block: { (success, error) in
                         if error != nil{
@@ -357,7 +357,7 @@ class PopUpVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
                     }
                     
                 }
-                print("AAAAAAAAA", self.orderNumber)
+
                 self.orderNumber += 1
             }
             self.performSegue(withIdentifier: "ToMasaVC", sender: nil)
@@ -397,7 +397,7 @@ class PopUpVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
         
     }
     
-    func checkOrderHasGiven(){
+    func checkOrderHasGiven(){ // KULLANILMIYOR
         let query = PFQuery(className: "VerilenSiparisler")
         query.whereKey("IsletmeSahibi", equalTo: (PFUser.current()?.username)!)
         query.whereKey("MasaNo", equalTo: globalChosenTableNumberMasaVC)
@@ -446,7 +446,6 @@ class PopUpVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
         
         cell.dateLabel.text = allDateArray.last
         cell.timeLabel.text = allTimeArray.last
-      
         
         return cell
     }
