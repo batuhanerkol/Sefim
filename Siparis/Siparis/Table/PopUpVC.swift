@@ -38,8 +38,6 @@ class PopUpVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
      var hesapIStendi = ""
      var orderNumber = 0
     
-    var doneLabel = false
-    
     @IBOutlet weak var checkPaidButton: UIButton!
     @IBOutlet weak var orderHasGivenButton: UIButton!
     @IBOutlet weak var foodIsReadyButton: UIButton!
@@ -277,7 +275,7 @@ class PopUpVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
     
     
     @IBAction func orderHasGivenButtonClicked(_ sender: Any) {
-
+        
         orderNumber = 0
         if self.foodNameArray.isEmpty == false{
             while self.orderNumber < self.objectIdArray.count{
@@ -295,6 +293,7 @@ class PopUpVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
                         self.present(alert, animated: true, completion: nil)
                         
                     }else {
+                      
                         objects!["YemekTeslimEdildi"] = "Evet"
                         objects!.saveInBackground(block: { (success, error) in
                             if error != nil{
@@ -303,8 +302,6 @@ class PopUpVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
                                 alert.addAction(okButton)
                                 self.present(alert, animated: true, completion: nil)
                                 
-                            }else{
-                                self.doneLabel = true
                             }
                         })
         
@@ -411,7 +408,7 @@ class PopUpVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
         let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath) as! PopUpTVC
-        cell.doneLabel.isHidden = true
+       
         
         //        if allFoodsNamesArray.count > indexPath.row && priceArray.count > indexPath.row && orderNoteArray.count > indexPath.row{
         cell.foodNameLabel.text = allFoodsNamesArray[indexPath.row]
@@ -420,10 +417,6 @@ class PopUpVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
         
         cell.dateLabel.text = allDateArray.last
         cell.timeLabel.text = allTimeArray.last
-        print("Donelabel:" , doneLabel)
-        if doneLabel == true{
-            cell.doneLabel.isHidden = false
-        }
         
         return cell
     }
