@@ -10,6 +10,7 @@ import UIKit
 
 class PopUpTVC: UITableViewCell {
 
+    @IBOutlet weak var doneLabel: UILabel!
     @IBOutlet weak var timeLabel: UILabel!
     @IBOutlet weak var dateLabel: UILabel!
     @IBOutlet weak var foodNoteLabel: UILabel!
@@ -24,6 +25,7 @@ class PopUpTVC: UITableViewCell {
         super.setSelected(selected, animated: animated)
 
         // Configure the view for the selected state
+    
     }
 
 }
