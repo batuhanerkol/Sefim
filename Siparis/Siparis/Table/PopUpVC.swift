@@ -28,6 +28,7 @@ class PopUpVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
     var allNoteArray = [String]()
     var allDateArray = [String]()
     var allTimeArray = [String]()
+    var orderHasGivenControlArray = [String]()
     
      var tableNumber = ""
      var objectId = ""
@@ -395,6 +396,34 @@ class PopUpVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
     }
         
     }
+    
+    func checkOrderHasGiven(){
+        let query = PFQuery(className: "VerilenSiparisler")
+        query.whereKey("IsletmeSahibi", equalTo: (PFUser.current()?.username)!)
+        query.whereKey("MasaNo", equalTo: globalChosenTableNumberMasaVC)
+         query.addDescendingOrder("createdAt")
+        
+        query.findObjectsInBackground { (objects, error) in
+            
+            if error != nil{
+                let alert = UIAlertController(title: "HATA", message: error?.localizedDescription, preferredStyle: UIAlertController.Style.alert)
+                let okButton = UIAlertAction(title: "TAMAM", style: UIAlertAction.Style.cancel, handler: nil)
+                alert.addAction(okButton)
+                self.present(alert, animated: true, completion: nil)
+            }
+            else{
+                
+                self.orderHasGivenControlArray.removeAll(keepingCapacity: false)
+                
+                for object in objects! {
+                    
+                    self.orderHasGivenControlArray.append(object.object(forKey: "YemekTeslimEdildi") as! String)
+                    
+                }
+            }
+        }
+        
+    }
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         dismiss(animated: true, completion: nil)
     }
@@ -408,7 +437,7 @@ class PopUpVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
         let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath) as! PopUpTVC
-       
+   
         
         //        if allFoodsNamesArray.count > indexPath.row && priceArray.count > indexPath.row && orderNoteArray.count > indexPath.row{
         cell.foodNameLabel.text = allFoodsNamesArray[indexPath.row]
@@ -417,6 +446,7 @@ class PopUpVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
         
         cell.dateLabel.text = allDateArray.last
         cell.timeLabel.text = allTimeArray.last
+      
         
         return cell
     }

@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Parse
 
 class PopUpTVC: UITableViewCell {
 
@@ -16,6 +17,10 @@ class PopUpTVC: UITableViewCell {
     @IBOutlet weak var foodNoteLabel: UILabel!
     @IBOutlet weak var foodPriceLabel: UILabel!
     @IBOutlet weak var foodNameLabel: UILabel!
+    
+    var orderHasGivenControlArray = [String]()
+    
+    
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
@@ -24,8 +29,40 @@ class PopUpTVC: UITableViewCell {
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
 
-        // Configure the view for the selected state
-    
+      checkOrderHasGiven()
+       
     }
-
+    func checkOrderHasGiven(){
+        let query = PFQuery(className: "VerilenSiparisler")
+        query.whereKey("IsletmeSahibi", equalTo: (PFUser.current()?.username)!)
+        query.whereKey("MasaNo", equalTo: globalChosenTableNumberMasaVC)
+        query.addDescendingOrder("createdAt")
+        
+        query.findObjectsInBackground { (objects, error) in
+            
+            if error != nil{
+                let alert = UIAlertController(title: "HATA", message: error?.localizedDescription, preferredStyle: UIAlertController.Style.alert)
+                let okButton = UIAlertAction(title: "TAMAM", style: UIAlertAction.Style.cancel, handler: nil)
+                alert.addAction(okButton)
+            }
+            else{
+                
+                self.orderHasGivenControlArray.removeAll(keepingCapacity: false)
+                
+                for object in objects! {
+                    
+                    self.orderHasGivenControlArray.append(object.object(forKey: "YemekTeslimEdildi") as! String)
+                    
+                }
+                print("orderHasGivenControlArray:", self.orderHasGivenControlArray)
+                
+                if self.orderHasGivenControlArray.last == "Evet"{
+                    self.doneLabel.isHidden = false
+                }else{
+                    self.doneLabel.isHidden = true
+                }
+            }
+        }
+        
+    }
 }
