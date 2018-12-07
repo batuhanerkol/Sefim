@@ -40,6 +40,7 @@ class PopUpVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
      var hesapOdendi = ""
      var hesapIstendi = ""
      var orderNumber = 0
+     var yemekHazir = ""
     
     @IBOutlet weak var checkPaidButton: UIButton!
     @IBOutlet weak var orderHasGivenButton: UIButton!
@@ -59,6 +60,8 @@ class PopUpVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
         tableNumberLabel.text = globalChosenTableNumberMasaVC
         
          checkHesapToGetOrder()
+    
+        
     }
     override func viewWillAppear(_ animated: Bool) {
         getTableNumberData()
@@ -96,8 +99,6 @@ class PopUpVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
         let query = PFQuery(className: "VerilenSiparisler")
         query.whereKey("IsletmeSahibi", equalTo: (PFUser.current()?.username)!)
         query.whereKey("MasaNo", equalTo: globalChosenTableNumberMasaVC)
-        query.whereKeyExists("HesapOdendi")
-        query.whereKeyExists("HesapIstendi")
         
         query.findObjectsInBackground { (objects, error) in
             
@@ -111,15 +112,15 @@ class PopUpVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
                 
                 self.hesapOdendiArray.removeAll(keepingCapacity: false)
                  self.hesapIstendiArray.removeAll(keepingCapacity: false)
-                self.yemekTeslimEdildiArray.removeAll(keepingCapacity: false)
+                self.yemekHazir = ""
                 
                 
                 for object in objects! {
                 
                     self.hesapOdendiArray.append(object.object(forKey: "HesapOdendi") as! String)
                     self.hesapIstendiArray.append(object.object(forKey: "HesapIstendi") as! String)
-                    self.yemekTeslimEdildiArray.append(object.object(forKey: "YemekTeslimEdildi") as! String)
-                    
+                    self.yemekHazir = (object.object(forKey: "YemekHazir") as! String)
+            
                     self.hesapOdendi = String(self.hesapOdendiArray.last!)
                     self.hesapIstendi = String(self.hesapIstendiArray.last!)
                
@@ -133,7 +134,9 @@ class PopUpVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
                         self.hesapDurumuLabel.text = self.hesapIstendiArray.joined(separator: ",") // aynı masada farklı kişiler hesap istediğinde
                     }
                 }
+                
         }
+            
         }
        
     }
@@ -202,6 +205,7 @@ class PopUpVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
                 }
                  print("numberOfDeliveredOrder!", self.numberOfDeliveredOrder)
                 
+                
                 if self.numberOfDeliveredOrder == "" {
                  
                    
@@ -212,10 +216,11 @@ class PopUpVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
 //                 print("allnorte:", self.allNoteArray)
 //                 print("alldate:", self.allDateArray)
 //                 print("objectID:", self.objectIdArray)
-//
+                
+                 self.orderTableView.reloadData()
             }
             
-            self.orderTableView.reloadData()
+          
         }
     }
   
@@ -249,6 +254,8 @@ class PopUpVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
                             alert.addAction(okButton)
                             self.present(alert, animated: true, completion: nil)
                             
+                        }else{
+                            self.performSegue(withIdentifier: "ToMasaVC", sender: nil)
                         }
                     })
 //                    let alertController = UIAlertController(title: "Yemeğin Hazır Olduğuna Emin Misiniz ?", message: "", preferredStyle: .alert)
@@ -276,7 +283,7 @@ class PopUpVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
             }
                self.orderNumber += 1
         }
-                self.performSegue(withIdentifier: "ToMasaVC", sender: nil)
+            
         }
         else{
             let alert = UIAlertController(title: "Yemek Listesi Boş", message: "", preferredStyle: UIAlertController.Style.alert)
@@ -293,7 +300,7 @@ class PopUpVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
     
     
     @IBAction func orderHasGivenButtonClicked(_ sender: Any) {
-       
+        if self.yemekHazir != ""{
         orderTableView.reloadData()
         orderNumber = 0
         if self.foodNameArray.isEmpty == false{
@@ -323,6 +330,9 @@ class PopUpVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
                                 self.present(alert, animated: true, completion: nil)
                                 
                             }
+                            else{
+                                  self.performSegue(withIdentifier: "ToMasaVC", sender: nil)
+                            }
                         })
         
                     }
@@ -330,7 +340,7 @@ class PopUpVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
                 }
                 self.orderNumber += 1
             }
-            self.performSegue(withIdentifier: "ToMasaVC", sender: nil)
+          
         }
         else{
             let alert = UIAlertController(title: "Yemek Listesi Boş", message: "", preferredStyle: UIAlertController.Style.alert)
@@ -338,10 +348,16 @@ class PopUpVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
             alert.addAction(okButton)
             self.present(alert, animated: true, completion: nil)
         }
+        }else{
+            let alert = UIAlertController(title: "Yemek Henüz Hazırlanmadı", message: "", preferredStyle: UIAlertController.Style.alert)
+            let okButton = UIAlertAction(title: "TAMAM", style: UIAlertAction.Style.cancel, handler: nil)
+            alert.addAction(okButton)
+            self.present(alert, animated: true, completion: nil)
+        }
     }
-    
     @IBAction func chechkHasPaidButtonClicked(_ sender: Any) {
-        
+        if self.hesapIstendi != ""{
+            
         orderNumber = 0
         if self.foodNameArray.isEmpty == false{
             while self.orderNumber < self.objectIdArray.count{
@@ -369,6 +385,7 @@ class PopUpVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
                                 
                             }else{
                                  self.deleteGivenOrderDataFromOwersParse()
+                                 self.performSegue(withIdentifier: "ToMasaVC", sender: nil)
                             }
                         })
                         
@@ -378,7 +395,7 @@ class PopUpVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
 
                 self.orderNumber += 1
             }
-            self.performSegue(withIdentifier: "ToMasaVC", sender: nil)
+           
         }
         else{
             let alert = UIAlertController(title: "Yemek Listesi Boş", message: "", preferredStyle: UIAlertController.Style.alert)
@@ -386,8 +403,13 @@ class PopUpVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
             alert.addAction(okButton)
             self.present(alert, animated: true, completion: nil)
         }
+        }else{
+            let alert = UIAlertController(title: "Hesap Henüz İstenmedi", message: "", preferredStyle: UIAlertController.Style.alert)
+            let okButton = UIAlertAction(title: "TAMAM", style: UIAlertAction.Style.cancel, handler: nil)
+            alert.addAction(okButton)
+            self.present(alert, animated: true, completion: nil)
+        }
     }
-    
     func deleteGivenOrderDataFromOwersParse(){ // kullanıcı siparişine ekleme yaptığında eski aray i silmek için
     
     let query = PFQuery(className: "Siparisler")

@@ -63,7 +63,6 @@ class MasaVC: UIViewController {
     
     @IBOutlet weak var tableNumberLabel: UILabel!
     @IBOutlet weak var createButton: UIButton!
-    @IBOutlet weak var deleteButton: UIButton!
     @IBOutlet weak var textField: UITextField!
     
     override func viewDidLoad() {
@@ -431,7 +430,6 @@ class MasaVC: UIViewController {
             tableNumberLabel.text!=textField.text!
             self.textField.text = ""
             createButton.isHidden = false
-            deleteButton.isHidden = false
             
         }
     
@@ -481,14 +479,7 @@ class MasaVC: UIViewController {
     }
     
   
-    @IBAction func deleteButtonPressed(_ sender: Any) {
-    
-       deleteTableData()
-        tableNumber = 0
-        createButton.isHidden = false
-        deleteButton.isHidden = true
-
-    }
+   
     @IBAction func updateButtonPressed(_ sender: Any) {
         
        viewDidLoad()
