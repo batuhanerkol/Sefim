@@ -49,6 +49,7 @@ class MasaVC: UIViewController {
     var tableNumberText = ""
     
     var deneme = 0
+    var number = 0
     
     var tableBottomBackgroundColor = UIColor.gray
     var tableButtonBackgroundColorAray = [UIButton]()
@@ -73,6 +74,9 @@ class MasaVC: UIViewController {
         getButtonWhenAppOpen()
         getObjectId()
         
+        controlOfCheck()
+        controlOfButtons()
+        
         let value = UIInterfaceOrientation.landscapeRight.rawValue
         UIDevice.current.setValue(value, forKey: "orientation")
         
@@ -82,7 +86,7 @@ class MasaVC: UIViewController {
         
         controlOfCheck()
         controlOfButtons()
-        
+
     }
     
     func buttonSizes(){
@@ -154,29 +158,31 @@ class MasaVC: UIViewController {
                     self.hesapMasaSAyisiArray.append(object.object(forKey: "MasaNo") as! String)
                     self.siparisVerildiArray.append(object.object(forKey: "SiparisVerildi") as! String)
                     
-                    self.yemekTeslim = "\(self.yemekTeslimArray.last!)"
                     self.yemekHazir = "\(self.yemekHazirArray.last!)"
+                    self.yemekTeslim = "\(self.yemekTeslimArray.last!)"
                     self.hesapIstendi = "\(self.hesapIstendiArray.last!)"
                     self.hesapMasaSayisi = "\(self.hesapMasaSAyisiArray.last!)"
                     self.siparisVerildi = "\(self.siparisVerildiArray.last!)"
                     
                 }
-                print("---------------------------")
-                print("hesapMasaSayisi",self.hesapMasaSayisi)
-                print("siparisVerildi",self.siparisVerildi )
-                print("yemekHazir", self.yemekHazir)
-                print("YemekTeslim:",  self.yemekTeslim)
-                print("hesapIstendi", self.hesapIstendi)
+
+//                print("---------------------------")
+//                print("hesapMasaSayisi",self.hesapMasaSayisi)
+//                print("siparisVerildi",self.siparisVerildi )
+//                print("yemekHazir", self.yemekHazir)
+//                print("YemekTeslim:",  self.yemekTeslim)
+//                print("hesapIstendi", self.hesapIstendi)
                 
-                
-                
+
                 if  self.siparisVerildiArray.isEmpty == false && self.tableButtonBackgroundColorAray.count > 0{
                     
                     let tableButtonIndex = (Int(self.hesapMasaSayisi)! - 1)
                     
                 if self.siparisVerildi == "Evet" && self.yemekHazir == "" && self.yemekTeslim == "" && self.hesapIstendi == "" {
-                    
+                    while self.number < 14{
                     self.tableButtonBackgroundColorAray[tableButtonIndex].backgroundColor = UIColor.orange
+                     self.number += 1
+                    }
                 }
                 else  if self.siparisVerildi == "Evet" && self.yemekHazir == "Evet" && self.yemekTeslim == ""  && self.hesapIstendi == ""{
                     
@@ -192,9 +198,9 @@ class MasaVC: UIViewController {
                     }
                 }
                 
-                
                 else{
                     print("sorun burada: control of buttons()")
+                
                 }
             }
             
@@ -239,12 +245,12 @@ class MasaVC: UIViewController {
                     self.siparisVerildi = "\(self.siparisVerildiArray.last!)"
                     
                 }
-                print("---------------------------")
-                print("hesapMasaSayisi",self.hesapMasaSayisi)
-                print("siparisVerildi",self.siparisVerildi )
-                print("yemekHazir", self.yemekHazir)
-                print("YemekTeslim:",  self.yemekTeslim)
-                print("hesapIstendi", self.hesapIstendi)
+//                print("---------------------------")
+//                print("hesapMasaSayisi",self.hesapMasaSayisi)
+//                print("siparisVerildi",self.siparisVerildi )
+//                print("yemekHazir", self.yemekHazir)
+//                print("YemekTeslim:",  self.yemekTeslim)
+//                print("hesapIstendi", self.hesapIstendi)
                 
                 
                 
@@ -260,7 +266,7 @@ class MasaVC: UIViewController {
                 }
             
                 else{
-                    print("sorun burada: control of buttons()")
+                    print("hesap Henuz Odenmedi")
                 }
             }
             

@@ -22,13 +22,15 @@ class PopUpVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
     var objectIdArray = [String]()
     var hesapOdendiArray = [String]()
     var hesapIstendiArray = [String]()
+    var yemekTeslimEdildiArray = [String]()
     
     var allFoodsNamesArray = [String]()
     var allPricesArray = [String]()
     var allNoteArray = [String]()
     var allDateArray = [String]()
     var allTimeArray = [String]()
-    var orderHasGivenControlArray = [String]()
+    
+    var numberOfDeliveredOrder = ""
     
      var tableNumber = ""
      var objectId = ""
@@ -36,7 +38,7 @@ class PopUpVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
      var chosenDate = ""
      var chosenTime = ""
      var hesapOdendi = ""
-     var hesapIStendi = ""
+     var hesapIstendi = ""
      var orderNumber = 0
     
     @IBOutlet weak var checkPaidButton: UIButton!
@@ -55,6 +57,8 @@ class PopUpVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
         orderTableView.dataSource = self
         
         tableNumberLabel.text = globalChosenTableNumberMasaVC
+        
+         checkHesapToGetOrder()
     }
     override func viewWillAppear(_ animated: Bool) {
         getTableNumberData()
@@ -62,7 +66,7 @@ class PopUpVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
     }
    
    
-    func getTableNumberData(){
+    func getTableNumberData(){ // app açıuldığında eski girilmiş olan masa sayısını almak için
         
         let query = PFQuery(className: "BusinessInformation")
         query.whereKey("businessUserName", equalTo: (PFUser.current()?.username)!)
@@ -83,11 +87,12 @@ class PopUpVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
                     self.tableNumberArray.append(object.object(forKey: "MasaSayisi") as! String)
                 }
             }
-            
+            if self.tableNumberArray.isEmpty == false{
             self.tableNumber = self.tableNumberArray.last!
+            }
         }
     }
-    func checkHesapToGetOrder(){
+    func checkHesapToGetOrder(){ // istenen hesabın nakit-kredi kartı olduğunu görebilmek için
         let query = PFQuery(className: "VerilenSiparisler")
         query.whereKey("IsletmeSahibi", equalTo: (PFUser.current()?.username)!)
         query.whereKey("MasaNo", equalTo: globalChosenTableNumberMasaVC)
@@ -106,24 +111,26 @@ class PopUpVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
                 
                 self.hesapOdendiArray.removeAll(keepingCapacity: false)
                  self.hesapIstendiArray.removeAll(keepingCapacity: false)
+                self.yemekTeslimEdildiArray.removeAll(keepingCapacity: false)
                 
                 
                 for object in objects! {
                 
                     self.hesapOdendiArray.append(object.object(forKey: "HesapOdendi") as! String)
                     self.hesapIstendiArray.append(object.object(forKey: "HesapIstendi") as! String)
+                    self.yemekTeslimEdildiArray.append(object.object(forKey: "YemekTeslimEdildi") as! String)
                     
-                     self.hesapOdendi = self.hesapOdendiArray.last!
-                     self.hesapIStendi = self.hesapIstendiArray.last!
-                    
+                    self.hesapOdendi = String(self.hesapOdendiArray.last!)
+                    self.hesapIstendi = String(self.hesapIstendiArray.last!)
+               
                 }
                 if self.hesapOdendi != "Evet"{
                   self.getOrderData()
-                    if self.hesapIStendi == ""{
+                    if self.hesapIstendi == ""{
                         
                     }else{
                       
-                        self.hesapDurumuLabel.text = self.hesapIstendiArray.joined(separator: ",")
+                        self.hesapDurumuLabel.text = self.hesapIstendiArray.joined(separator: ",") // aynı masada farklı kişiler hesap istediğinde
                     }
                 }
         }
@@ -131,7 +138,8 @@ class PopUpVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
        
     }
     
-    func getOrderData(){
+    func getOrderData(){ // verilen sipariş datalarını çekmek için
+        
         let query = PFQuery(className: "VerilenSiparisler")
         query.whereKey("IsletmeSahibi", equalTo: (PFUser.current()?.username)!)
         query.whereKey("MasaNo", equalTo: globalChosenTableNumberMasaVC)
@@ -162,7 +170,7 @@ class PopUpVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
                  self.allDateArray.removeAll(keepingCapacity: false)
                  self.allTimeArray.removeAll(keepingCapacity: false)
                 
-              
+                self.numberOfDeliveredOrder = ""
             
                 for object in objects! {
                  
@@ -188,13 +196,23 @@ class PopUpVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
                     self.allNoteArray.append(contentsOf: self.orderNoteArray)
                     self.allDateArray.append(contentsOf: self.dateArray)
                     self.allTimeArray.append(contentsOf: self.timeArray)
+                    
+                    self.numberOfDeliveredOrder = (object.object(forKey: "TeslimEdilenSiparisSayisi") as! String)
+
                 }
-                print("allFOODNAME:", self.allFoodsNamesArray)
-                 print("allPrice:", self.allPricesArray)
-                 print("allnorte:", self.allNoteArray)
-                 print("alldate:", self.allDateArray)
-                print("objectID:", self.objectIdArray)
+                 print("numberOfDeliveredOrder!", self.numberOfDeliveredOrder)
                 
+                if self.numberOfDeliveredOrder == "" {
+                 
+                   
+                }
+//                print("--------------------------------------------")
+//                 print("allFOODNAME:", self.allFoodsNamesArray)
+//                 print("allPrice:", self.allPricesArray)
+//                 print("allnorte:", self.allNoteArray)
+//                 print("alldate:", self.allDateArray)
+//                 print("objectID:", self.objectIdArray)
+//
             }
             
             self.orderTableView.reloadData()
@@ -256,7 +274,6 @@ class PopUpVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
                 }
                 
             }
-                print("AAAAAAAAA", self.orderNumber)
                self.orderNumber += 1
         }
                 self.performSegue(withIdentifier: "ToMasaVC", sender: nil)
@@ -276,7 +293,8 @@ class PopUpVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
     
     
     @IBAction func orderHasGivenButtonClicked(_ sender: Any) {
-        
+       
+        orderTableView.reloadData()
         orderNumber = 0
         if self.foodNameArray.isEmpty == false{
             while self.orderNumber < self.objectIdArray.count{
@@ -296,6 +314,7 @@ class PopUpVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
                     }else {
                       
                         objects!["YemekTeslimEdildi"] = "Evet"
+                        objects!["TeslimEdilenSiparisSayisi"] = String(self.allFoodsNamesArray.count)
                         objects!.saveInBackground(block: { (success, error) in
                             if error != nil{
                                 let alert = UIAlertController(title: "Lütfen Tekrar Deneyin", message: "", preferredStyle: UIAlertController.Style.alert)
@@ -309,7 +328,6 @@ class PopUpVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
                     }
                     
                 }
-                print("AAAAAAAAA", self.orderNumber)
                 self.orderNumber += 1
             }
             self.performSegue(withIdentifier: "ToMasaVC", sender: nil)
@@ -370,7 +388,7 @@ class PopUpVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
         }
     }
     
-    func deleteGivenOrderDataFromOwersParse(){
+    func deleteGivenOrderDataFromOwersParse(){ // kullanıcı siparişine ekleme yaptığında eski aray i silmek için
     
     let query = PFQuery(className: "Siparisler")
     query.whereKey("IsletmeSahibi", equalTo: "\(PFUser.current()!.username!)")
@@ -397,33 +415,7 @@ class PopUpVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
         
     }
     
-    func checkOrderHasGiven(){ // KULLANILMIYOR
-        let query = PFQuery(className: "VerilenSiparisler")
-        query.whereKey("IsletmeSahibi", equalTo: (PFUser.current()?.username)!)
-        query.whereKey("MasaNo", equalTo: globalChosenTableNumberMasaVC)
-         query.addDescendingOrder("createdAt")
-        
-        query.findObjectsInBackground { (objects, error) in
-            
-            if error != nil{
-                let alert = UIAlertController(title: "HATA", message: error?.localizedDescription, preferredStyle: UIAlertController.Style.alert)
-                let okButton = UIAlertAction(title: "TAMAM", style: UIAlertAction.Style.cancel, handler: nil)
-                alert.addAction(okButton)
-                self.present(alert, animated: true, completion: nil)
-            }
-            else{
-                
-                self.orderHasGivenControlArray.removeAll(keepingCapacity: false)
-                
-                for object in objects! {
-                    
-                    self.orderHasGivenControlArray.append(object.object(forKey: "YemekTeslimEdildi") as! String)
-                    
-                }
-            }
-        }
-        
-    }
+  
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         dismiss(animated: true, completion: nil)
     }
@@ -439,14 +431,22 @@ class PopUpVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
         let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath) as! PopUpTVC
    
         
-        //        if allFoodsNamesArray.count > indexPath.row && priceArray.count > indexPath.row && orderNoteArray.count > indexPath.row{
+                if allFoodsNamesArray.count > indexPath.row && allPricesArray.count > indexPath.row && allNoteArray.count > indexPath.row{
+                    
+        if indexPath.row < Int(numberOfDeliveredOrder)!  {
+        
+                cell.doneLabel.isHidden = false
+            }
+                    
         cell.foodNameLabel.text = allFoodsNamesArray[indexPath.row]
         cell.foodPriceLabel.text = allPricesArray[indexPath.row]
         cell.foodNoteLabel.text = allNoteArray[indexPath.row]
+    
         
         cell.dateLabel.text = allDateArray.last
         cell.timeLabel.text = allTimeArray.last
-        
+                    
+        }
         return cell
     }
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
