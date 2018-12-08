@@ -34,6 +34,7 @@ class AddFoodInformationVC: UIViewController, UIImagePickerControllerDelegate, U
     override func viewWillAppear(_ animated: Bool) {
      getBussinessNameData()
     }
+    
     @objc func selectImage() {
         
         
@@ -90,7 +91,7 @@ class AddFoodInformationVC: UIViewController, UIImagePickerControllerDelegate, U
                         self.priceTextField.text = ""
                         self.textField.text = ""
                         self.longTextField.text = ""
-                        self.selectedImage.image = UIImage(named: "fotosecin.jpg")
+                        self.selectedImage.image = UIImage(named: "fotosecin.png")
                         
                         
                         

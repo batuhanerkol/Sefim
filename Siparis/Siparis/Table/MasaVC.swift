@@ -36,7 +36,7 @@ class MasaVC: UIViewController {
     
     
     var xLocation = 10
-    var yLocation = 100
+    var yLocation = 150
     
     var buttonWidth = 80
     var buttonHeight = 80
@@ -49,10 +49,10 @@ class MasaVC: UIViewController {
     var tableNumberText = ""
     
     var deneme = 0
-    var number = 0
+
     
     var tableBottomBackgroundColor = UIColor.gray
-    var tableButtonBackgroundColorAray = [UIButton]()
+    var tableButtonBackgroundColorChange = [UIButton]()
     
   public var screenWidth: CGFloat {
         return UIScreen.main.bounds.width
@@ -90,12 +90,12 @@ class MasaVC: UIViewController {
     
     func buttonSizes(){
         if screenWidth > 1000 && screenWidth < 1200 {
-            buttonWidth = 100
-            buttonHeight = 100
+            buttonWidth = 90
+            buttonHeight = 90
         }
         else if screenWidth > 1200{
-            buttonWidth = 150
-            buttonHeight = 150
+            buttonWidth = 140
+            buttonHeight = 140
         }
         else if screenWidth < 1000{
             buttonWidth = 45
@@ -132,7 +132,7 @@ class MasaVC: UIViewController {
     
         let query = PFQuery(className: "VerilenSiparisler")
         query.whereKey("IsletmeSahibi", equalTo: (PFUser.current()?.username)!)
-        query.whereKey("HesapOdendi", equalTo: "")
+        query.whereKey("HesapOdendi", notEqualTo: "Evet")
 
         
         query.findObjectsInBackground { (objects, error) in
@@ -151,49 +151,48 @@ class MasaVC: UIViewController {
                 self.siparisVerildiArray.removeAll(keepingCapacity: false)
                 
                 for object in objects! {
-                    self.yemekTeslimArray.append(object.object(forKey: "YemekTeslimEdildi") as! String)
-                    self.yemekHazirArray.append(object.object(forKey: "YemekHazir") as! String)
-                    self.hesapIstendiArray.append(object.object(forKey: "HesapIstendi") as! String)
-                    self.hesapMasaSAyisiArray.append(object.object(forKey: "MasaNo") as! String)
-                    self.siparisVerildiArray.append(object.object(forKey: "SiparisVerildi") as! String)
                     
-                    self.yemekHazir = "\(self.yemekHazirArray.last!)"
-                    self.yemekTeslim = "\(self.yemekTeslimArray.last!)"
-                    self.hesapIstendi = "\(self.hesapIstendiArray.last!)"
-                    self.hesapMasaSayisi = "\(self.hesapMasaSAyisiArray.last!)"
-                    self.siparisVerildi = "\(self.siparisVerildiArray.last!)"
+                     self.yemekTeslim = (object.object(forKey: "YemekTeslimEdildi") as! String)
+                    self.yemekHazir = (object.object(forKey: "YemekHazir") as! String)
+                    self.hesapIstendi = (object.object(forKey: "HesapIstendi") as! String)
+                    self.hesapMasaSayisi = (object.object(forKey: "MasaNo") as! String)
+                   self.siparisVerildi = (object.object(forKey: "SiparisVerildi") as! String)
+                    
+//                    self.yemekHazir = "\(self.yemekHazirArray.last!)"
+//                    self.yemekTeslim = "\(self.yemekTeslimArray.last!)"
+//                    self.hesapIstendi = "\(self.hesapIstendiArray.last!)"
+//                    self.hesapMasaSayisi = "\(self.hesapMasaSAyisiArray.last!)"
+//                    self.siparisVerildi = "\(self.siparisVerildiArray.last!)"
                     
                 }
 
-//                print("---------------------------")
-//                print("hesapMasaSayisi",self.hesapMasaSayisi)
-//                print("siparisVerildi",self.siparisVerildi )
-//                print("yemekHazir", self.yemekHazir)
-//                print("YemekTeslim:",  self.yemekTeslim)
-//                print("hesapIstendi", self.hesapIstendi)
-                
+                print("---------------------------")
+                print("hesapMasaSayisi",self.hesapMasaSayisi)
+                print("siparisVerildi",self.siparisVerildi )
+                print("yemekHazir", self.yemekHazir)
+                print("YemekTeslim:",  self.yemekTeslim)
+                print("hesapIstendi", self.hesapIstendi)
 
-                if  self.siparisVerildiArray.isEmpty == false && self.tableButtonBackgroundColorAray.count > 0{
+                if  self.tableButtonBackgroundColorChange.count > 0 && self.hesapMasaSayisi != ""{
                     
                     let tableButtonIndex = (Int(self.hesapMasaSayisi)! - 1)
                     
                 if self.siparisVerildi == "Evet" && self.yemekHazir == "" && self.yemekTeslim == "" && self.hesapIstendi == "" {
-                    while self.number < 14{
-                    self.tableButtonBackgroundColorAray[tableButtonIndex].backgroundColor = UIColor.orange
-                     self.number += 1
-                    }
+                    
+                    self.tableButtonBackgroundColorChange[tableButtonIndex].backgroundColor = UIColor.orange
+                 
                 }
                 else  if self.siparisVerildi == "Evet" && self.yemekHazir == "Evet" && self.yemekTeslim == ""  && self.hesapIstendi == ""{
                     
-                    self.tableButtonBackgroundColorAray[tableButtonIndex].backgroundColor = UIColor.blue
+                    self.tableButtonBackgroundColorChange[tableButtonIndex].backgroundColor = UIColor.blue
                     }
                 else  if self.siparisVerildi == "Evet" && self.yemekHazir == "Evet" && self.yemekTeslim == "Evet"  && self.hesapIstendi == ""{
                     
-                    self.tableButtonBackgroundColorAray[tableButtonIndex].backgroundColor = UIColor.green
+                    self.tableButtonBackgroundColorChange[tableButtonIndex].backgroundColor = UIColor.green
                     }
                 else  if self.siparisVerildi == "Evet" && self.yemekHazir == "Evet" && self.yemekTeslim == "Evet"  && self.hesapIstendi != ""{
                     
-                    self.tableButtonBackgroundColorAray[tableButtonIndex].backgroundColor = UIColor.red
+                    self.tableButtonBackgroundColorChange[tableButtonIndex].backgroundColor = UIColor.red
                     }
                 }
                 
@@ -201,6 +200,7 @@ class MasaVC: UIViewController {
                     print("sorun burada: control of buttons()")
                 
                 }
+                  
             }
             
         }
@@ -209,7 +209,7 @@ class MasaVC: UIViewController {
     func controlOfCheck(){
         let query = PFQuery(className: "VerilenSiparisler")
         query.whereKey("IsletmeSahibi", equalTo: (PFUser.current()?.username)!)
-        query.whereKey("HesapOdendi", equalTo: "Evet")
+        query.whereKey("HesapOdendi", notEqualTo: "Evet")
         
         
         query.findObjectsInBackground { (objects, error) in
@@ -258,9 +258,9 @@ class MasaVC: UIViewController {
                     let tableButtonIndex = (Int(self.hesapMasaSayisi)! - 1)
                     
                     
-                    if self.siparisVerildi == "Evet" && self.yemekHazir == "Evet" && self.yemekTeslim == "Evet"  && self.hesapIstendi != "" && self.hesapOdendi == "Evet" && self.tableButtonBackgroundColorAray.count > 0{
+                    if self.siparisVerildi == "Evet" && self.yemekHazir == "Evet" && self.yemekTeslim == "Evet"  && self.hesapIstendi != "" && self.hesapOdendi == "Evet" && self.tableButtonBackgroundColorChange.count > 0{
                         
-                        self.tableButtonBackgroundColorAray[tableButtonIndex].backgroundColor = UIColor.gray
+                        self.tableButtonBackgroundColorChange[tableButtonIndex].backgroundColor = UIColor.gray
                     }
                 }
             
@@ -350,7 +350,7 @@ class MasaVC: UIViewController {
         button.setTitle("\(tableNumber + 1)", for: .normal)
         button.addTarget(self, action: #selector(buttonAction), for: .touchUpInside)
         
-        tableButtonBackgroundColorAray.append(button)
+        tableButtonBackgroundColorChange.append(button)
         
         self.view.addSubview(button)
     }
@@ -443,7 +443,7 @@ class MasaVC: UIViewController {
         
     }
     
-    func deleteTableData(){
+    func deleteTableData(){ // silme işlemi artık yapılmıyor
         let query = PFQuery(className: "BusinessInformation")
         query.whereKey("businessUserName", equalTo: "\(PFUser.current()!.username!)")
         query.whereKeyExists("MasaSayisi")
@@ -466,6 +466,7 @@ class MasaVC: UIViewController {
                     
                 
 //                 yeni button vb eklerken buradan düzelt
+                // silme işlemi yapılmıyor artık
                 var viewItemNumber = Int(self.tableNumberLabel.text!)! + 3
                 while self.view.subviews.count > 4 {
                     self.view.subviews[viewItemNumber].removeFromSuperview()

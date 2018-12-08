@@ -61,6 +61,7 @@ class PopUpVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
         
          checkHesapToGetOrder()
     
+  
         
     }
     override func viewWillAppear(_ animated: Bool) {
@@ -255,8 +256,8 @@ class PopUpVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
                             self.present(alert, animated: true, completion: nil)
                             
                         }else{
-                            self.performSegue(withIdentifier: "ToMasaVC", sender: nil)
-                        }
+//                            self.performSegue(withIdentifier: "ToMasaVC", sender: nil)
+                            self.touchesBegan(Set<UITouch>(), with: nil)                        }
                     })
 //                    let alertController = UIAlertController(title: "Yemeğin Hazır Olduğuna Emin Misiniz ?", message: "", preferredStyle: .alert)
 //
@@ -292,9 +293,10 @@ class PopUpVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
             self.present(alert, animated: true, completion: nil)
         }
     }
+
     
     @IBAction func closeButtonClicked(_ sender: Any) {
-        dismiss(animated: true, completion: nil)
+       performSegue(withIdentifier: "toMasaVC", sender: nil)
     }
     
     
@@ -331,7 +333,8 @@ class PopUpVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
                                 
                             }
                             else{
-                                  self.performSegue(withIdentifier: "ToMasaVC", sender: nil)
+//                                  self.performSegue(withIdentifier: "ToMasaVC", sender: nil)
+                                  self.touchesBegan(Set<UITouch>(), with: nil)
                             }
                         })
         
@@ -385,7 +388,8 @@ class PopUpVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
                                 
                             }else{
                                  self.deleteGivenOrderDataFromOwersParse()
-                                 self.performSegue(withIdentifier: "ToMasaVC", sender: nil)
+//                                 self.performSegue(withIdentifier: "ToMasaVC", sender: nil)
+                                  self.touchesBegan(Set<UITouch>(), with: nil)
                             }
                         })
                         
