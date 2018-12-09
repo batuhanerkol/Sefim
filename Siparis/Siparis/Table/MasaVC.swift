@@ -49,6 +49,9 @@ class MasaVC: UIViewController {
     var tableNumberText = ""
     
     var deneme = 0
+    
+   
+    
 
     
     var tableBottomBackgroundColor = UIColor.gray
@@ -73,7 +76,6 @@ class MasaVC: UIViewController {
         getButtonWhenAppOpen()
         getObjectId()
         
-        controlOfCheck()
         controlOfButtons()
         
         let value = UIInterfaceOrientation.landscapeRight.rawValue
@@ -83,7 +85,6 @@ class MasaVC: UIViewController {
     }
     override func viewWillAppear(_ animated: Bool) {
         
-        controlOfCheck()
         controlOfButtons()
 
     }
@@ -129,6 +130,7 @@ class MasaVC: UIViewController {
     }
    
     func controlOfButtons(){
+         var hesapMasaSayisiIndex = 0
     
         let query = PFQuery(className: "VerilenSiparisler")
         query.whereKey("IsletmeSahibi", equalTo: (PFUser.current()?.username)!)
@@ -152,11 +154,11 @@ class MasaVC: UIViewController {
                 
                 for object in objects! {
                     
-                     self.yemekTeslim = (object.object(forKey: "YemekTeslimEdildi") as! String)
-                    self.yemekHazir = (object.object(forKey: "YemekHazir") as! String)
-                    self.hesapIstendi = (object.object(forKey: "HesapIstendi") as! String)
-                    self.hesapMasaSayisi = (object.object(forKey: "MasaNo") as! String)
-                   self.siparisVerildi = (object.object(forKey: "SiparisVerildi") as! String)
+                     self.yemekTeslimArray.append(object.object(forKey: "YemekTeslimEdildi") as! String)
+                    self.yemekHazirArray.append(object.object(forKey: "YemekHazir") as! String)
+                    self.hesapIstendiArray.append(object.object(forKey: "HesapIstendi") as! String)
+                    self.hesapMasaSAyisiArray.append(object.object(forKey: "MasaNo") as! String)
+                   self.siparisVerildiArray.append(object.object(forKey: "SiparisVerildi") as! String)
                     
 //                    self.yemekHazir = "\(self.yemekHazirArray.last!)"
 //                    self.yemekTeslim = "\(self.yemekTeslimArray.last!)"
@@ -166,36 +168,44 @@ class MasaVC: UIViewController {
                     
                 }
 
-                print("---------------------------")
-                print("hesapMasaSayisi",self.hesapMasaSayisi)
-                print("siparisVerildi",self.siparisVerildi )
-                print("yemekHazir", self.yemekHazir)
-                print("YemekTeslim:",  self.yemekTeslim)
-                print("hesapIstendi", self.hesapIstendi)
+                print("-----------control of buttons----------------")
+                print("hesapMasaSayisi",self.hesapMasaSAyisiArray)
+                print("siparisVerildi",self.siparisVerildiArray )
+                print("yemekHazir", self.yemekHazirArray)
+                print("YemekTeslim:",  self.yemekTeslimArray)
+                print("hesapIstendi", self.hesapIstendiArray)
+                print("hesapmasaArray,", self.hesapMasaSAyisiArray)
 
-                if  self.tableButtonBackgroundColorChange.count > 0 && self.hesapMasaSayisi != ""{
-                    
-                    let tableButtonIndex = (Int(self.hesapMasaSayisi)! - 1)
-                    
-                if self.siparisVerildi == "Evet" && self.yemekHazir == "" && self.yemekTeslim == "" && self.hesapIstendi == "" {
+                if  self.tableButtonBackgroundColorChange.count > 0  && self.hesapMasaSAyisiArray.isEmpty == false{
+                     print("AAA")
+                    while hesapMasaSayisiIndex < self.hesapMasaSAyisiArray.count {
+                    let tableButtonIndex = Int(self.hesapMasaSAyisiArray[hesapMasaSayisiIndex])! - 1  // işlem yapılan bütün masaların renk değişimleri gerçekleşsin
+                    print("AAA0")
+                if self.siparisVerildiArray[hesapMasaSayisiIndex] == "Evet" && self.yemekHazirArray[hesapMasaSayisiIndex] == "" && self.yemekTeslimArray[hesapMasaSayisiIndex] == "" && self.hesapIstendiArray[hesapMasaSayisiIndex] == "" {
                     
                     self.tableButtonBackgroundColorChange[tableButtonIndex].backgroundColor = UIColor.orange
-                 
+                    print("AAA1")
                 }
-                else  if self.siparisVerildi == "Evet" && self.yemekHazir == "Evet" && self.yemekTeslim == ""  && self.hesapIstendi == ""{
+                else  if self.siparisVerildiArray[hesapMasaSayisiIndex] == "Evet" && self.yemekHazirArray[hesapMasaSayisiIndex] == "Evet" && self.yemekTeslimArray[hesapMasaSayisiIndex] == ""  && self.hesapIstendiArray[hesapMasaSayisiIndex] == ""{
                     
                     self.tableButtonBackgroundColorChange[tableButtonIndex].backgroundColor = UIColor.blue
+                       print("AAA2")
                     }
-                else  if self.siparisVerildi == "Evet" && self.yemekHazir == "Evet" && self.yemekTeslim == "Evet"  && self.hesapIstendi == ""{
+                else  if self.siparisVerildiArray[hesapMasaSayisiIndex] == "Evet" && self.yemekHazirArray[hesapMasaSayisiIndex] == "Evet" && self.yemekTeslimArray[hesapMasaSayisiIndex] == "Evet"  && self.hesapIstendiArray[hesapMasaSayisiIndex] == ""{
                     
                     self.tableButtonBackgroundColorChange[tableButtonIndex].backgroundColor = UIColor.green
+                       print("AAA3")
                     }
-                else  if self.siparisVerildi == "Evet" && self.yemekHazir == "Evet" && self.yemekTeslim == "Evet"  && self.hesapIstendi != ""{
+                else  if self.siparisVerildiArray[hesapMasaSayisiIndex] == "Evet" && self.yemekHazirArray[hesapMasaSayisiIndex] == "Evet" && self.yemekTeslimArray[hesapMasaSayisiIndex] == "Evet"  && self.hesapIstendiArray[hesapMasaSayisiIndex] != ""{
                     
                     self.tableButtonBackgroundColorChange[tableButtonIndex].backgroundColor = UIColor.red
+                       print("AAA4")
                     }
+                    self.controlOfCheck()
+                        hesapMasaSayisiIndex += 1
                 }
-                
+                    
+                }
                 else{
                     print("sorun burada: control of buttons()")
                 
@@ -209,7 +219,7 @@ class MasaVC: UIViewController {
     func controlOfCheck(){
         let query = PFQuery(className: "VerilenSiparisler")
         query.whereKey("IsletmeSahibi", equalTo: (PFUser.current()?.username)!)
-        query.whereKey("HesapOdendi", notEqualTo: "Evet")
+        query.whereKey("HesapOdendi", equalTo: "Evet")
         
         
         query.findObjectsInBackground { (objects, error) in
@@ -222,26 +232,15 @@ class MasaVC: UIViewController {
             }
             else{
                 self.hesapOdendiArray.removeAll(keepingCapacity: false)
-                self.yemekTeslimArray.removeAll(keepingCapacity: false)
-                self.yemekHazirArray.removeAll(keepingCapacity: false)
-                self.hesapIstendiArray.removeAll(keepingCapacity: false)
-                self.hesapMasaSAyisiArray.removeAll(keepingCapacity: false)
-                self.siparisVerildiArray.removeAll(keepingCapacity: false)
-                
+              
                 for object in objects! {
-                    self.hesapOdendiArray.append(object.object(forKey: "HesapOdendi") as! String)
-                    self.yemekTeslimArray.append(object.object(forKey: "YemekTeslimEdildi") as! String)
-                    self.yemekHazirArray.append(object.object(forKey: "YemekHazir") as! String)
-                    self.hesapIstendiArray.append(object.object(forKey: "HesapIstendi") as! String)
-                    self.hesapMasaSAyisiArray.append(object.object(forKey: "MasaNo") as! String)
-                    self.siparisVerildiArray.append(object.object(forKey: "SiparisVerildi") as! String)
                     
-                    self.hesapOdendi = "\(self.hesapOdendiArray.last!)"
-                    self.yemekTeslim = "\(self.yemekTeslimArray.last!)"
-                    self.yemekHazir = "\(self.yemekHazirArray.last!)"
-                    self.hesapIstendi = "\(self.hesapIstendiArray.last!)"
-                    self.hesapMasaSayisi = "\(self.hesapMasaSAyisiArray.last!)"
-                    self.siparisVerildi = "\(self.siparisVerildiArray.last!)"
+                    self.hesapOdendi = (object.object(forKey: "HesapOdendi") as! String)
+                    self.yemekTeslim = (object.object(forKey: "YemekTeslimEdildi") as! String)
+                    self.yemekHazir = (object.object(forKey: "YemekHazir") as! String)
+                    self.hesapIstendi = (object.object(forKey: "HesapIstendi") as! String)
+                    self.hesapMasaSayisi = (object.object(forKey: "MasaNo") as! String)
+                    self.siparisVerildi = (object.object(forKey: "SiparisVerildi") as! String)
                     
                 }
 //                print("---------------------------")
@@ -253,12 +252,12 @@ class MasaVC: UIViewController {
                 
                 
                 
-                if  self.siparisVerildiArray.isEmpty == false{
+                if  self.hesapOdendi != "" && self.tableButtonBackgroundColorChange.count > 0{
                     
                     let tableButtonIndex = (Int(self.hesapMasaSayisi)! - 1)
                     
                     
-                    if self.siparisVerildi == "Evet" && self.yemekHazir == "Evet" && self.yemekTeslim == "Evet"  && self.hesapIstendi != "" && self.hesapOdendi == "Evet" && self.tableButtonBackgroundColorChange.count > 0{
+                    if self.siparisVerildi == "Evet" && self.yemekHazir == "Evet" && self.yemekTeslim == "Evet"  && self.hesapIstendi != "" && self.hesapOdendi == "Evet" {
                         
                         self.tableButtonBackgroundColorChange[tableButtonIndex].backgroundColor = UIColor.gray
                     }
@@ -484,7 +483,7 @@ class MasaVC: UIViewController {
     @IBAction func updateButtonPressed(_ sender: Any) {
         
        viewDidLoad()
-        viewWillAppear(false)
+       
     }
     
     func dismissKeyboard() {
