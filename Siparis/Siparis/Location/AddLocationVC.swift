@@ -62,11 +62,16 @@ class AddLocationVC: UIViewController, MKMapViewDelegate, CLLocationManagerDeleg
             let okButton = UIAlertAction(title: "TAMAM", style: UIAlertAction.Style.cancel, handler: nil)
             alert.addAction(okButton)
             self.present(alert, animated: true, completion: nil)
+            self.addButton.isEnabled = false
+            
             
         case .wifi:
          print("wifiConnection")
+             self.addButton.isEnabled = true
+            
         case .wwan:
           print("wwanConnection")
+             self.addButton.isEnabled = true
         }
     }
     @objc func statusManager(_ notification: Notification) {

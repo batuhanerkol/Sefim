@@ -70,13 +70,11 @@ class MasaVC: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-         
-        buttonSizes()
-        getTableNumberData()
-        getButtonWhenAppOpen()
-        getObjectId()
         
-        controlOfButtons()
+        NotificationCenter.default.addObserver(self, selector: #selector(statusManager), name: .flagsChanged, object: Network.reachability)
+        updateUserInterface()
+         
+       
         
         let value = UIInterfaceOrientation.landscapeRight.rawValue
         UIDevice.current.setValue(value, forKey: "orientation")
@@ -85,10 +83,39 @@ class MasaVC: UIViewController {
     }
     override func viewWillAppear(_ animated: Bool) {
         
-        controlOfButtons()
+         updateUserInterface()
 
     }
-    
+    func updateUserInterface() {
+        guard let status = Network.reachability?.status else { return }
+        switch status {
+        case .unreachable:
+            let alert = UIAlertController(title: "İnternet Bağlantınız Bulunmuyor.", message: "Lütfen Kontrol Edin", preferredStyle: UIAlertController.Style.alert)
+            let okButton = UIAlertAction(title: "TAMAM", style: UIAlertAction.Style.cancel, handler: nil)
+            alert.addAction(okButton)
+            self.present(alert, animated: true, completion: nil)
+            self.createButton.isEnabled = false
+            
+            
+        case .wifi:
+           controlOfButtons()
+           buttonSizes()
+           getTableNumberData()
+           getButtonWhenAppOpen()
+           getObjectId()
+              self.createButton.isEnabled = true
+        case .wwan:
+         controlOfButtons()
+         buttonSizes()
+         getTableNumberData()
+         getButtonWhenAppOpen()
+         getObjectId()
+              self.createButton.isEnabled = true
+        }
+    }
+    @objc func statusManager(_ notification: Notification) {
+        updateUserInterface()
+    }
     func buttonSizes(){
         if screenWidth > 1000 && screenWidth < 1200 {
             buttonWidth = 90

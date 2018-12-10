@@ -53,20 +53,50 @@ class PopUpVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(statusManager), name: .flagsChanged, object: Network.reachability)
+        updateUserInterface()
 
         orderTableView.delegate = self
         orderTableView.dataSource = self
         
         tableNumberLabel.text = globalChosenTableNumberMasaVC
         
-         checkHesapToGetOrder()
-    
-  
-        
     }
     override func viewWillAppear(_ animated: Bool) {
-        getTableNumberData()
-        checkHesapToGetOrder()
+              updateUserInterface()
+    }
+    
+    func updateUserInterface() {
+        guard let status = Network.reachability?.status else { return }
+        switch status {
+        case .unreachable:
+            let alert = UIAlertController(title: "İnternet Bağlantınız Bulunmuyor.", message: "Lütfen Kontrol Edin", preferredStyle: UIAlertController.Style.alert)
+            let okButton = UIAlertAction(title: "TAMAM", style: UIAlertAction.Style.cancel, handler: nil)
+            alert.addAction(okButton)
+            self.present(alert, animated: true, completion: nil)
+            self.checkPaidButton.isEnabled = false
+            self.orderHasGivenButton.isEnabled = false
+            self.foodIsReadyButton.isEnabled = false
+            
+            
+            
+        case .wifi:
+            getTableNumberData()
+            checkHesapToGetOrder()
+            self.checkPaidButton.isEnabled = true
+            self.orderHasGivenButton.isEnabled = true
+            self.foodIsReadyButton.isEnabled = true
+        case .wwan:
+            getTableNumberData()
+            checkHesapToGetOrder()
+            self.checkPaidButton.isEnabled = true
+            self.orderHasGivenButton.isEnabled = true
+            self.foodIsReadyButton.isEnabled = true
+        }
+    }
+    @objc func statusManager(_ notification: Notification) {
+        updateUserInterface()
     }
    
    

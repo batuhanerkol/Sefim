@@ -11,6 +11,7 @@ import Parse
 
 class BilgilerimVC: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     
+
     @IBOutlet weak var lezzetPuanLabel: UILabel!
     @IBOutlet weak var hizmetPuanLabel: UILabel!
     @IBOutlet weak var saceLogoButton: UIButton!
@@ -39,6 +40,10 @@ class BilgilerimVC: UIViewController, UIImagePickerControllerDelegate, UINavigat
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        NotificationCenter.default.addObserver(self, selector: #selector(statusManager), name: .flagsChanged, object: Network.reachability)
+        updateUserInterface()
+
+        
         logoImageView.isUserInteractionEnabled = true
         let gestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(AddFoodInformationVC.selectImage))
         logoImageView.addGestureRecognizer(gestureRecognizer)
@@ -48,11 +53,46 @@ class BilgilerimVC: UIViewController, UIImagePickerControllerDelegate, UINavigat
         if emailTextField.text == "" || nameTextField.text == "" || lastnameTextField.text == "" || phoneNumberTextField.text == ""{
 
         }
-        getObjectId()
-        whenTextFiledsChange()
-        getUserInfoFromParse()
-        getLogoFromParse()
-        getBusnessPoints()
+       
+    }
+    
+    func updateUserInterface() {
+        guard let status = Network.reachability?.status else { return }
+        switch status {
+        case .unreachable:
+            let alert = UIAlertController(title: "İnternet Bağlantınız Bulunmuyor.", message: "Lütfen Kontrol Edin", preferredStyle: UIAlertController.Style.alert)
+            let okButton = UIAlertAction(title: "TAMAM", style: UIAlertAction.Style.cancel, handler: nil)
+            alert.addAction(okButton)
+            self.present(alert, animated: true, completion: nil)
+            self.saceLogoButton.isEnabled = false
+            self.saveChangesButton.isEnabled = false
+            self.saveChangesButton.isEnabled = false
+            self.changePasswordButton.isEnabled = false
+            
+        case .wifi:
+            getObjectId()
+            whenTextFiledsChange()
+            getUserInfoFromParse()
+            getLogoFromParse()
+            getBusnessPoints()
+            self.saceLogoButton.isEnabled = true
+            self.saveChangesButton.isEnabled = true
+            self.saveChangesButton.isEnabled = true
+            self.changePasswordButton.isEnabled = true
+        case .wwan:
+            getObjectId()
+            whenTextFiledsChange()
+            getUserInfoFromParse()
+            getLogoFromParse()
+            getBusnessPoints()
+            self.saceLogoButton.isEnabled = true
+            self.saveChangesButton.isEnabled = true
+            self.saveChangesButton.isEnabled = true
+            self.changePasswordButton.isEnabled = true
+        }
+    }
+    @objc func statusManager(_ notification: Notification) {
+        updateUserInterface()
     }
     
     func whenTextFiledsChange(){

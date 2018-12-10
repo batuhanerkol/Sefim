@@ -941,15 +941,17 @@
                         <barButtonItem key="rightBarButtonItem" title="ÇIKIŞ" id="StL-GP-kga">
                             <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             <connections>
-                                <action selector="logoutClicked:" destination="QbJ-uL-QqQ" id="VKo-Ru-vlo"/>
+                                <action selector="logOutButton:" destination="fUZ-gT-t5g" id="OnM-Fu-18E"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
                     <connections>
                         <outlet property="bussinessInfoButton" destination="fGu-aN-V0e" id="xx1-UC-Ace"/>
+                        <outlet property="logOutButton" destination="StL-GP-kga" id="s41-c8-huK"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="oJg-a3-4Eg" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <exit id="fUZ-gT-t5g" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
             <point key="canvasLocation" x="8924.6376811594218" y="723.09782608695662"/>
         </scene>
