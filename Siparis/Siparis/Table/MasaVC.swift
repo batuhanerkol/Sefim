@@ -204,29 +204,29 @@ class MasaVC: UIViewController {
                 print("hesapmasaArray,", self.hesapMasaSAyisiArray)
 
                 if  self.tableButtonBackgroundColorChange.count > 0  && self.hesapMasaSAyisiArray.isEmpty == false{
-                     print("AAA")
+         
                     while hesapMasaSayisiIndex < self.hesapMasaSAyisiArray.count {
                     let tableButtonIndex = Int(self.hesapMasaSAyisiArray[hesapMasaSayisiIndex])! - 1  // işlem yapılan bütün masaların renk değişimleri gerçekleşsin
-                    print("AAA0")
+    
                 if self.siparisVerildiArray[hesapMasaSayisiIndex] == "Evet" && self.yemekHazirArray[hesapMasaSayisiIndex] == "" && self.yemekTeslimArray[hesapMasaSayisiIndex] == "" && self.hesapIstendiArray[hesapMasaSayisiIndex] == "" {
                     
                     self.tableButtonBackgroundColorChange[tableButtonIndex].backgroundColor = UIColor.orange
-                    print("AAA1")
+         
                 }
                 else  if self.siparisVerildiArray[hesapMasaSayisiIndex] == "Evet" && self.yemekHazirArray[hesapMasaSayisiIndex] == "Evet" && self.yemekTeslimArray[hesapMasaSayisiIndex] == ""  && self.hesapIstendiArray[hesapMasaSayisiIndex] == ""{
                     
                     self.tableButtonBackgroundColorChange[tableButtonIndex].backgroundColor = UIColor.blue
-                       print("AAA2")
+                
                     }
                 else  if self.siparisVerildiArray[hesapMasaSayisiIndex] == "Evet" && self.yemekHazirArray[hesapMasaSayisiIndex] == "Evet" && self.yemekTeslimArray[hesapMasaSayisiIndex] == "Evet"  && self.hesapIstendiArray[hesapMasaSayisiIndex] == ""{
                     
                     self.tableButtonBackgroundColorChange[tableButtonIndex].backgroundColor = UIColor.green
-                       print("AAA3")
+                 
                     }
                 else  if self.siparisVerildiArray[hesapMasaSayisiIndex] == "Evet" && self.yemekHazirArray[hesapMasaSayisiIndex] == "Evet" && self.yemekTeslimArray[hesapMasaSayisiIndex] == "Evet"  && self.hesapIstendiArray[hesapMasaSayisiIndex] != ""{
                     
                     self.tableButtonBackgroundColorChange[tableButtonIndex].backgroundColor = UIColor.red
-                       print("AAA4")
+              
                     }
                     self.controlOfCheck()
                         hesapMasaSayisiIndex += 1
@@ -277,11 +277,11 @@ class MasaVC: UIViewController {
 //                print("YemekTeslim:",  self.yemekTeslim)
 //                print("hesapIstendi", self.hesapIstendi)
                 
-                
+                 let tableButtonIndex = (Int(self.hesapMasaSayisi)! - 1)
                 
                 if  self.hesapOdendi != "" && self.tableButtonBackgroundColorChange.count > 0{
                     
-                    let tableButtonIndex = (Int(self.hesapMasaSayisi)! - 1)
+                   
                     
                     
                     if self.siparisVerildi == "Evet" && self.yemekHazir == "Evet" && self.yemekTeslim == "Evet"  && self.hesapIstendi != "" && self.hesapOdendi == "Evet" {
@@ -291,6 +291,7 @@ class MasaVC: UIViewController {
                 }
             
                 else{
+                   
                     print("hesap Henuz Odenmedi")
                 }
             }
