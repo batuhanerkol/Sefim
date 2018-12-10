@@ -33,6 +33,9 @@ class AddLocationVC: UIViewController, MKMapViewDelegate, CLLocationManagerDeleg
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        NotificationCenter.default.addObserver(self, selector: #selector(statusManager), name: .flagsChanged, object: Network.reachability)
+       updateUserInterface()
+        
         self.businessNameTextField.delegate = self
 
         mapView.delegate = self
@@ -49,6 +52,25 @@ class AddLocationVC: UIViewController, MKMapViewDelegate, CLLocationManagerDeleg
     override func viewWillAppear(_ animated: Bool) {
         self.chosenLatitude = ""
         self.chosenLongitude = ""
+    }
+    
+    func updateUserInterface() {
+        guard let status = Network.reachability?.status else { return }
+        switch status {
+        case .unreachable:
+            let alert = UIAlertController(title: "İnternet Bağlantınız Bulunmuyor.", message: "Lütfen Kontrol Edin", preferredStyle: UIAlertController.Style.alert)
+            let okButton = UIAlertAction(title: "TAMAM", style: UIAlertAction.Style.cancel, handler: nil)
+            alert.addAction(okButton)
+            self.present(alert, animated: true, completion: nil)
+            
+        case .wifi:
+         print("wifiConnection")
+        case .wwan:
+          print("wwanConnection")
+        }
+    }
+    @objc func statusManager(_ notification: Notification) {
+        updateUserInterface()
     }
     
     @objc func chooseLocation(gestureRecognizer: UIGestureRecognizer){

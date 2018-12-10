@@ -16,6 +16,7 @@ class konumVC: UIViewController, MKMapViewDelegate, CLLocationManagerDelegate {
     var chosenLatitude = ""
     var chosenLongitude = ""
     
+    @IBOutlet weak var deleteLocationButton: UIButton!
     @IBOutlet weak var businessNameLabel: UILabel!
     @IBOutlet weak var addButton: UIButton!
     @IBOutlet weak var longitudeLabel: UILabel!
@@ -31,7 +32,10 @@ class konumVC: UIViewController, MKMapViewDelegate, CLLocationManagerDelegate {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-    
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(statusManager), name: .flagsChanged, object: Network.reachability)
+        updateUserInterface()
+      
         mapView.delegate = self
         manager.delegate = self
         manager.desiredAccuracy = kCLLocationAccuracyBest
@@ -43,12 +47,35 @@ class konumVC: UIViewController, MKMapViewDelegate, CLLocationManagerDelegate {
     override func viewWillAppear(_ animated: Bool) {
              self.addButton.isHidden = true
         
-        
+        updateUserInterface()
     }
     
-    override func viewDidAppear(_ animated: Bool) {
-        getLocationData()
+  
+    func updateUserInterface() {
+        guard let status = Network.reachability?.status else { return }
+        switch status {
+        case .unreachable:
+            let alert = UIAlertController(title: "İnternet Bağlantınız Bulunmuyor.", message: "Lütfen Kontrol Edin", preferredStyle: UIAlertController.Style.alert)
+            let okButton = UIAlertAction(title: "TAMAM", style: UIAlertAction.Style.cancel, handler: nil)
+            alert.addAction(okButton)
+            self.present(alert, animated: true, completion: nil)
+            self.addButton.isEnabled = false
+            self.deleteLocationButton.isEnabled = false
+    
+        case .wifi:
+          getLocationData()
+              self.addButton.isEnabled = true
+            self.deleteLocationButton.isEnabled = true
+        case .wwan:
+            getLocationData()
+              self.addButton.isEnabled = true
+            self.deleteLocationButton.isEnabled = true
+        }
     }
+    @objc func statusManager(_ notification: Notification) {
+        updateUserInterface()
+    }
+    
     
     @IBAction func AddLocationPressed(_ sender: Any) {
 

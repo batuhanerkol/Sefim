@@ -325,6 +325,7 @@
                     <connections>
                         <outlet property="addButton" destination="g5d-am-wCv" id="asD-t5-j8t"/>
                         <outlet property="businessNameLabel" destination="Pmg-Jk-NvM" id="QDY-C8-4AM"/>
+                        <outlet property="deleteLocationButton" destination="0Dl-DV-cfP" id="oG4-3l-7r4"/>
                         <outlet property="latitudeLabel" destination="VbX-he-INu" id="fcw-ey-8je"/>
                         <outlet property="longitudeLabel" destination="wxZ-89-pcb" id="rbu-ag-gDC"/>
                         <outlet property="mapView" destination="FXK-P5-OZe" id="BVr-Am-bUR"/>
