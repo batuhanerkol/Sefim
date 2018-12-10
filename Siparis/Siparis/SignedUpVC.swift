@@ -14,6 +14,7 @@ class SignedUpVC: UIViewController, UITextFieldDelegate {
     
 
     
+    @IBOutlet weak var createAcount: UIButton!
     @IBOutlet weak var userName: UITextField!
     @IBOutlet weak var password1: UITextField!
     @IBOutlet weak var password2: UITextField!
@@ -23,6 +24,9 @@ class SignedUpVC: UIViewController, UITextFieldDelegate {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(statusManager), name: .flagsChanged, object: Network.reachability)
+        updateUserInterface()
         
         self.userName.delegate = self
         self.password1.delegate = self
@@ -34,6 +38,26 @@ class SignedUpVC: UIViewController, UITextFieldDelegate {
         self.phoneNo.keyboardType = UIKeyboardType.decimalPad
        
         
+    }
+    
+    
+    func updateUserInterface() {
+        guard let status = Network.reachability?.status else { return }
+        switch status {
+        case .unreachable:
+            let alert = UIAlertController(title: "İnternet Bağlantınız Bulunmuyor.", message: "Lütfen Kontrol Edin", preferredStyle: UIAlertController.Style.alert)
+            let okButton = UIAlertAction(title: "TAMAM", style: UIAlertAction.Style.cancel, handler: nil)
+            alert.addAction(okButton)
+            self.present(alert, animated: true, completion: nil)
+             self.createAcount.isEnabled = false
+        case .wifi:
+   self.createAcount.isEnabled = true
+        case .wwan:
+        self.createAcount.isEnabled = true
+        }
+    }
+    @objc func statusManager(_ notification: Notification) {
+        updateUserInterface()
     }
     
     

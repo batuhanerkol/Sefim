@@ -11,17 +11,48 @@ import Parse
 
 class SingInVC: UIViewController,UITextFieldDelegate {
 
+    @IBOutlet weak var signUpButton: UIButton!
+    @IBOutlet weak var signInButton: UIButton!
     @IBOutlet weak var passwordText: UITextField!
     @IBOutlet weak var userNameText: UITextField!
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(statusManager), name: .flagsChanged, object: Network.reachability)
+        updateUserInterface()
+        
         self.userNameText.delegate = self
         self.passwordText.delegate = self
         
         self.navigationItem.setHidesBackButton(true, animated:true)
         
     }
+    func updateUserInterface() {
+        guard let status = Network.reachability?.status else { return }
+        switch status {
+        case .unreachable:
+            let alert = UIAlertController(title: "İnternet Bağlantınız Bulunmuyor.", message: "Lütfen Kontrol Edin", preferredStyle: UIAlertController.Style.alert)
+            let okButton = UIAlertAction(title: "TAMAM", style: UIAlertAction.Style.cancel, handler: nil)
+            alert.addAction(okButton)
+            self.present(alert, animated: true, completion: nil)
+            self.signInButton.isEnabled = false
+            self.signUpButton.isEnabled = false
+
+        case .wifi:
+            self.signInButton.isEnabled = true
+            self.signUpButton.isEnabled = true
+        case .wwan:
+            self.signInButton.isEnabled = true
+            self.signUpButton.isEnabled = true
+        }
+    }
+    @objc func statusManager(_ notification: Notification) {
+        updateUserInterface()
+    }
+    
+    
+    
     func dismissKeyboard() {
         view.endEditing(true)
     }
