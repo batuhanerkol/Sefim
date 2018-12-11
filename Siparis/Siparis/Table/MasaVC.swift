@@ -51,7 +51,7 @@ class MasaVC: UIViewController {
     var deneme = 0
     
    
-    
+      var activityIndicator:UIActivityIndicatorView = UIActivityIndicatorView()
 
     
     var tableBottomBackgroundColor = UIColor.gray
@@ -80,6 +80,18 @@ class MasaVC: UIViewController {
         UIDevice.current.setValue(value, forKey: "orientation")
         
         _ = Timer.scheduledTimer(timeInterval: 10, target: self, selector: #selector(viewWillAppear(_:)), userInfo: nil, repeats: true)
+        
+     
+        // loading sembolu
+        activityIndicator.center = self.view.center
+        activityIndicator.hidesWhenStopped = true
+        activityIndicator.activityIndicatorViewStyle = UIActivityIndicatorView.Style.gray
+        view.addSubview(activityIndicator)
+        
+        activityIndicator.startAnimating()
+        UIApplication.shared.beginIgnoringInteractionEvents()
+        
+
     }
     override func viewWillAppear(_ animated: Bool) {
         
@@ -237,7 +249,8 @@ class MasaVC: UIViewController {
                     print("sorun burada: control of buttons()")
                 
                 }
-                  
+                self.activityIndicator.stopAnimating()
+                UIApplication.shared.endIgnoringInteractionEvents()
             }
             
         }

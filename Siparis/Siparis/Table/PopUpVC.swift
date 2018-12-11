@@ -50,6 +50,8 @@ class PopUpVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
     @IBOutlet weak var tableNumberLabel: UILabel!
     @IBOutlet weak var orderTableView: UITableView!
     
+     var activityIndicator:UIActivityIndicatorView = UIActivityIndicatorView()
+    
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -62,6 +64,17 @@ class PopUpVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
         
         tableNumberLabel.text = globalChosenTableNumberMasaVC
         
+        
+       
+        // loading sembolu
+        activityIndicator.center = self.view.center
+        activityIndicator.hidesWhenStopped = true
+        activityIndicator.activityIndicatorViewStyle = UIActivityIndicatorView.Style.gray
+        view.addSubview(activityIndicator)
+        
+        activityIndicator.startAnimating()
+        UIApplication.shared.beginIgnoringInteractionEvents()
+
     }
     override func viewWillAppear(_ animated: Bool) {
               updateUserInterface()
@@ -165,7 +178,8 @@ class PopUpVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
                         self.hesapDurumuLabel.text = self.hesapIstendiArray.joined(separator: ",") // aynı masada farklı kişiler hesap istediğinde
                     }
                 }
-                
+                self.activityIndicator.stopAnimating()
+                UIApplication.shared.endIgnoringInteractionEvents()
         }
             
         }
@@ -248,6 +262,8 @@ class PopUpVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
 //                 print("alldate:", self.allDateArray)
 //                 print("objectID:", self.objectIdArray)
                 
+                self.activityIndicator.stopAnimating()
+                UIApplication.shared.endIgnoringInteractionEvents()
                  self.orderTableView.reloadData()
             }
             

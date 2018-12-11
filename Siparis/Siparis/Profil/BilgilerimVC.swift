@@ -37,6 +37,8 @@ class BilgilerimVC: UIViewController, UIImagePickerControllerDelegate, UINavigat
     var businessName = ""
     var objectId = ""
     
+     var activityIndicator:UIActivityIndicatorView = UIActivityIndicatorView()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -53,6 +55,19 @@ class BilgilerimVC: UIViewController, UIImagePickerControllerDelegate, UINavigat
         if emailTextField.text == "" || nameTextField.text == "" || lastnameTextField.text == "" || phoneNumberTextField.text == ""{
 
         }
+        
+        
+       
+        // loading sembolu
+        activityIndicator.center = self.view.center
+        activityIndicator.hidesWhenStopped = true
+        activityIndicator.activityIndicatorViewStyle = UIActivityIndicatorView.Style.gray
+        view.addSubview(activityIndicator)
+        
+        activityIndicator.startAnimating()
+        UIApplication.shared.beginIgnoringInteractionEvents()
+        
+
        
     }
     
@@ -161,6 +176,8 @@ class BilgilerimVC: UIViewController, UIImagePickerControllerDelegate, UINavigat
                     self.emailTextField.text = "\(self.emailArray.last!)"
                     
                 }
+                self.activityIndicator.stopAnimating()
+                UIApplication.shared.endIgnoringInteractionEvents()
         }
         }
     }

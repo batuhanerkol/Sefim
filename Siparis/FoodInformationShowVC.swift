@@ -23,12 +23,25 @@ class FoodInformationShowVC: UIViewController {
     var fooduuid = [String]()
     var imageArray = [PFFile]()
     
+      var activityIndicator:UIActivityIndicatorView = UIActivityIndicatorView()
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
         NotificationCenter.default.addObserver(self, selector: #selector(statusManager), name: .flagsChanged, object: Network.reachability)
         updateUserInterface()
+        
+     
+        // loading sembolu
+        activityIndicator.center = self.view.center
+        activityIndicator.hidesWhenStopped = true
+        activityIndicator.activityIndicatorViewStyle = UIActivityIndicatorView.Style.gray
+        view.addSubview(activityIndicator)
+        
+        activityIndicator.startAnimating()
+        UIApplication.shared.beginIgnoringInteractionEvents()
+
     }
     override func viewWillAppear(_ animated: Bool) {
           updateUserInterface()
@@ -93,6 +106,8 @@ class FoodInformationShowVC: UIViewController {
                 })
                 
                 }
+                self.activityIndicator.stopAnimating()
+                UIApplication.shared.endIgnoringInteractionEvents()
 }
 }
 }

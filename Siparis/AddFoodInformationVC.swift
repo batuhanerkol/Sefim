@@ -19,6 +19,8 @@ class AddFoodInformationVC: UIViewController, UIImagePickerControllerDelegate, U
     @IBOutlet weak var textField: UITextField!
     @IBOutlet weak var selectedImage: UIImageView!
     
+        var activityIndicator:UIActivityIndicatorView = UIActivityIndicatorView()
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -31,9 +33,20 @@ class AddFoodInformationVC: UIViewController, UIImagePickerControllerDelegate, U
           selectedImage.isUserInteractionEnabled = true
         let gestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(AddFoodInformationVC.selectImage))
             selectedImage.addGestureRecognizer(gestureRecognizer)
+        
+     
+        // loading sembolu
+        activityIndicator.center = self.view.center
+        activityIndicator.hidesWhenStopped = true
+        activityIndicator.activityIndicatorViewStyle = UIActivityIndicatorView.Style.gray
+        view.addSubview(activityIndicator)
+        
+        activityIndicator.startAnimating()
+        UIApplication.shared.beginIgnoringInteractionEvents()
+        
     }
     override func viewWillAppear(_ animated: Bool) {
-  
+        updateUserInterface()
     }
     
     func updateUserInterface() {
@@ -157,6 +170,8 @@ class AddFoodInformationVC: UIViewController, UIImagePickerControllerDelegate, U
                     
                     self.businessName = "\(self.nameArray.last!)"
                 }
+                self.activityIndicator.stopAnimating()
+                UIApplication.shared.endIgnoringInteractionEvents()
             }
         }
     }

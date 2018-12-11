@@ -19,6 +19,8 @@ class AddFoodTitleVC: UIViewController,UITextFieldDelegate {
     @IBOutlet weak var addButton: UIButton!
     @IBOutlet weak var textField: UITextField!
     
+      var activityIndicator:UIActivityIndicatorView = UIActivityIndicatorView()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -27,6 +29,8 @@ class AddFoodTitleVC: UIViewController,UITextFieldDelegate {
         
         self.textField.delegate = self
       self.addButton.isHidden = false
+        
+     
     }
 
     
@@ -73,6 +77,12 @@ class AddFoodTitleVC: UIViewController,UITextFieldDelegate {
     func addFoodTitle(){
         if textField.text != "" {
             
+            // loading sembolu
+            activityIndicator.center = self.view.center
+            activityIndicator.hidesWhenStopped = true
+            activityIndicator.activityIndicatorViewStyle = UIActivityIndicatorView.Style.gray
+            view.addSubview(activityIndicator)
+            
             let foodTitle = PFObject(className: "FoodTitle")
             foodTitle["foodTitle"] = textField.text!
             foodTitle["foodTitleOwner"] = PFUser.current()!.username!
@@ -87,6 +97,8 @@ class AddFoodTitleVC: UIViewController,UITextFieldDelegate {
                     self.present(alert, animated: true, completion: nil)
                 }
                 else{
+                    self.activityIndicator.stopAnimating()
+                    UIApplication.shared.endIgnoringInteractionEvents()
                     print("success")
                     self.performSegue(withIdentifier: "AddFoodTitleVCToMenuTVC", sender: nil)
                 }

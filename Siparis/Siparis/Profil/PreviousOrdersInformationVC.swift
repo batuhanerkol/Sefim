@@ -22,6 +22,8 @@ class PreviousOrdersInformationVC: UIViewController, UITableViewDelegate, UITabl
     @IBOutlet weak var serviceLabel: UILabel!
     @IBOutlet weak var foodNameTable: UITableView!
     
+       var activityIndicator:UIActivityIndicatorView = UIActivityIndicatorView()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -32,7 +34,16 @@ class PreviousOrdersInformationVC: UIViewController, UITableViewDelegate, UITabl
         foodNameTable.delegate = self
         
     
+     
+        // loading sembolu
+        activityIndicator.center = self.view.center
+        activityIndicator.hidesWhenStopped = true
+        activityIndicator.activityIndicatorViewStyle = UIActivityIndicatorView.Style.gray
+        view.addSubview(activityIndicator)
         
+        activityIndicator.startAnimating()
+        UIApplication.shared.beginIgnoringInteractionEvents()
+ 
        
     }
     
@@ -94,6 +105,8 @@ class PreviousOrdersInformationVC: UIViewController, UITableViewDelegate, UITabl
                     self.serviceLabel.text = self.hizmetArray.last!
                     
                 }
+                self.activityIndicator.stopAnimating()
+                UIApplication.shared.endIgnoringInteractionEvents()
                 self.foodNameTable.reloadData()
                 
             }

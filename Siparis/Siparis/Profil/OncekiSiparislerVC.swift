@@ -35,6 +35,8 @@ class OncekiSiparislerVC: UIViewController, UITableViewDelegate, UITableViewData
     var testePoint = 0
     var servicePoint = 0
     
+     var activityIndicator:UIActivityIndicatorView = UIActivityIndicatorView()
+    
     @IBOutlet weak var previousOrderInfoTable: UITableView!
     
     override func viewDidLoad() {
@@ -47,6 +49,16 @@ class OncekiSiparislerVC: UIViewController, UITableViewDelegate, UITableViewData
         previousOrderInfoTable.dataSource = self
         previousOrderInfoTable.delegate = self
         
+   
+        // loading sembolu
+        activityIndicator.center = self.view.center
+        activityIndicator.hidesWhenStopped = true
+        activityIndicator.activityIndicatorViewStyle = UIActivityIndicatorView.Style.gray
+        view.addSubview(activityIndicator)
+        
+        activityIndicator.startAnimating()
+        UIApplication.shared.beginIgnoringInteractionEvents()
+
     }
     
     func updateUserInterface() {
@@ -104,6 +116,8 @@ class OncekiSiparislerVC: UIViewController, UITableViewDelegate, UITableViewData
                     self.paymentArray.append(object.object(forKey: "HesapIstendi") as! String)
                     
                 }
+                self.activityIndicator.stopAnimating()
+                UIApplication.shared.endIgnoringInteractionEvents()
                 self.previousOrderInfoTable.reloadData()
             }
         }

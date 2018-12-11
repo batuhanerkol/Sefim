@@ -20,6 +20,8 @@ class MenuTVC: UITableViewController {
 
     var chosenFood = ""
     
+       var activityIndicator:UIActivityIndicatorView = UIActivityIndicatorView()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -30,6 +32,18 @@ class MenuTVC: UITableViewController {
         tableView.dataSource = self
 
         self.navigationItem.hidesBackButton = true
+        
+        
+   
+        // loading sembolu
+        activityIndicator.center = self.view.center
+        activityIndicator.hidesWhenStopped = true
+        activityIndicator.activityIndicatorViewStyle = UIActivityIndicatorView.Style.gray
+        view.addSubview(activityIndicator)
+        
+        activityIndicator.startAnimating()
+        UIApplication.shared.beginIgnoringInteractionEvents()
+        
     }
     override func viewWillAppear(_ animated: Bool) {
          updateUserInterface()
@@ -96,6 +110,8 @@ class MenuTVC: UITableViewController {
                     for object in objects! {
                         self.foodTitleArray.append(object.object(forKey: "foodTitle") as! String)
                     }
+                    self.activityIndicator.stopAnimating()
+                    UIApplication.shared.endIgnoringInteractionEvents()
                     self.tableView.reloadData()
             }
         }

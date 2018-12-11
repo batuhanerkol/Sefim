@@ -30,6 +30,8 @@ class konumVC: UIViewController, MKMapViewDelegate, CLLocationManagerDelegate {
     var manager = CLLocationManager()
     var requestCLLocation = CLLocation()
     
+     var activityIndicator:UIActivityIndicatorView = UIActivityIndicatorView()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -42,6 +44,18 @@ class konumVC: UIViewController, MKMapViewDelegate, CLLocationManagerDelegate {
         manager.requestWhenInUseAuthorization()
         
         self.navigationItem.hidesBackButton = true
+        
+        
+     
+        // loading sembolu
+        activityIndicator.center = self.view.center
+        activityIndicator.hidesWhenStopped = true
+        activityIndicator.activityIndicatorViewStyle = UIActivityIndicatorView.Style.gray
+        view.addSubview(activityIndicator)
+        
+        activityIndicator.startAnimating()
+        UIApplication.shared.beginIgnoringInteractionEvents()
+
         
             }
     override func viewWillAppear(_ animated: Bool) {
@@ -205,7 +219,8 @@ class konumVC: UIViewController, MKMapViewDelegate, CLLocationManagerDelegate {
                     
                     
                 }
-                
+                self.activityIndicator.stopAnimating()
+                UIApplication.shared.endIgnoringInteractionEvents()
             }
         }
         

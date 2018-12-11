@@ -20,6 +20,8 @@ class FoodDetailsTVC: UITableViewController {
     var chosenFood = ""
     var foodNameArray = [String]()
     var foodTitleArray = [String]()
+    
+      var activityIndicator:UIActivityIndicatorView = UIActivityIndicatorView()
 
       
     override func viewDidLoad() {
@@ -30,6 +32,20 @@ class FoodDetailsTVC: UITableViewController {
         
         tableView.delegate = self
         tableView.dataSource = self
+        
+        var activityIndicator:UIActivityIndicatorView = UIActivityIndicatorView()
+        // loading sembolu
+        activityIndicator.center = self.view.center
+        activityIndicator.hidesWhenStopped = true
+        activityIndicator.activityIndicatorViewStyle = UIActivityIndicatorView.Style.gray
+        view.addSubview(activityIndicator)
+        
+        activityIndicator.startAnimating()
+        UIApplication.shared.beginIgnoringInteractionEvents()
+        
+        //-------------------
+        self.activityIndicator.stopAnimating()
+        UIApplication.shared.endIgnoringInteractionEvents()
     
     }
     
@@ -96,6 +112,8 @@ class FoodDetailsTVC: UITableViewController {
                 }
                 
             }
+            self.activityIndicator.stopAnimating()
+            UIApplication.shared.endIgnoringInteractionEvents()
             self.nameTableView.reloadData()
             
         }

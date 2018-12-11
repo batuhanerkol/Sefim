@@ -16,12 +16,16 @@ class ChangePasswordVC: UIViewController {
     @IBOutlet weak var saveButton: UIButton!
     @IBOutlet weak var oldPasswordTextField: UITextField!
     
+       var activityIndicator:UIActivityIndicatorView = UIActivityIndicatorView()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
  
         NotificationCenter.default.addObserver(self, selector: #selector(statusManager), name: .flagsChanged, object: Network.reachability)
         updateUserInterface()
 
+        
+     
     
     }
     
@@ -46,6 +50,14 @@ class ChangePasswordVC: UIViewController {
     }
 
     @IBAction func saveButtonClicked(_ sender: Any) {
+        // loading sembolu
+        activityIndicator.center = self.view.center
+        activityIndicator.hidesWhenStopped = true
+        activityIndicator.activityIndicatorViewStyle = UIActivityIndicatorView.Style.gray
+        view.addSubview(activityIndicator)
+        
+        activityIndicator.startAnimating()
+        UIApplication.shared.beginIgnoringInteractionEvents()
         
         let currentId = PFUser.current()?.objectId!
         let query = PFQuery(className: "_User")
@@ -80,6 +92,8 @@ class ChangePasswordVC: UIViewController {
                     alert.addAction(okButton)
                     self.present(alert, animated: true, completion: nil)
                 }
+                self.activityIndicator.stopAnimating()
+                UIApplication.shared.endIgnoringInteractionEvents()
             }
         }
        

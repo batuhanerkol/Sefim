@@ -22,6 +22,8 @@ class KareKodVC: UIViewController , UIImagePickerControllerDelegate, UINavigatio
     @IBOutlet weak var textField: UITextField!
     @IBOutlet weak var QRImageView: UIImageView!
     
+      var activityIndicator:UIActivityIndicatorView = UIActivityIndicatorView()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
  
@@ -42,6 +44,17 @@ class KareKodVC: UIViewController , UIImagePickerControllerDelegate, UINavigatio
 //            deleteButton.isHidden = true
 //            textField.isHidden = true
         }
+        
+      
+        // loading sembolu
+        activityIndicator.center = self.view.center
+        activityIndicator.hidesWhenStopped = true
+        activityIndicator.activityIndicatorViewStyle = UIActivityIndicatorView.Style.gray
+        view.addSubview(activityIndicator)
+        
+        activityIndicator.startAnimating()
+        UIApplication.shared.beginIgnoringInteractionEvents()
+        
 
     }
     override func viewWillAppear(_ animated: Bool) {
@@ -142,6 +155,8 @@ class KareKodVC: UIViewController , UIImagePickerControllerDelegate, UINavigatio
                         }
                     })
                 }
+                self.activityIndicator.stopAnimating()
+                UIApplication.shared.endIgnoringInteractionEvents()
             }
         }
         
