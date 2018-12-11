@@ -292,12 +292,14 @@ class MasaVC: UIViewController {
                 
               
                 
-                if  self.hesapOdendi != "" && self.tableButtonBackgroundColorChange.count > 0{
+                if  self.hesapOdendi == "Evet" && self.tableButtonBackgroundColorChange.count > 0{
                     
-                      let tableButtonIndex = (Int(self.hesapMasaSayisi)! - 1)
+                    
                     
                     
                     if self.siparisVerildi == "Evet" && self.yemekHazir == "Evet" && self.yemekTeslim == "Evet"  && self.hesapIstendi != "" && self.hesapOdendi == "Evet" {
+                        
+                         let tableButtonIndex = (Int(self.hesapMasaSayisi)! - 1)
                         
                         self.tableButtonBackgroundColorChange[tableButtonIndex].backgroundColor = UIColor.gray
                     }

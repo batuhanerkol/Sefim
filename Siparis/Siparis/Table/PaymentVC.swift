@@ -165,7 +165,7 @@ class PaymentVC: UIViewController {
                     objects!["HesapIstendi"] = "Nakit"
                     objects!.saveInBackground()
                     
-                    let alert = UIAlertController(title: "Hesap Birazdan Size Ulaştırılacaktır", message: "", preferredStyle: UIAlertController.Style.alert)
+                    let alert = UIAlertController(title: "Hesap Ödendiye Tıklayabilirsiniz", message: "", preferredStyle: UIAlertController.Style.alert)
                     let okButton = UIAlertAction(title: "TAMAM", style: UIAlertAction.Style.cancel, handler: nil)
                     alert.addAction(okButton)
                     self.present(alert, animated: true, completion: nil)
@@ -189,7 +189,7 @@ class PaymentVC: UIViewController {
                     objects!["HesapIstendi"] = "KrediKarti"
                     objects!.saveInBackground()
                     
-                    let alert = UIAlertController(title: "Hesap Birazdan Size Ulaştırılacaktır", message: "", preferredStyle: UIAlertController.Style.alert)
+                    let alert = UIAlertController(title: "Hesap Ödendiye Tıklayabilirsiniz", message: "", preferredStyle: UIAlertController.Style.alert)
                     let okButton = UIAlertAction(title: "TAMAM", style: UIAlertAction.Style.cancel, handler: nil)
                     alert.addAction(okButton)
                     self.present(alert, animated: true, completion: nil)

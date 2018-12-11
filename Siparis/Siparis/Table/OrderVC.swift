@@ -146,6 +146,7 @@ class OrderVC: UIViewController,UITableViewDelegate, UITableViewDataSource {
         query.whereKey("SiparisSahibi", equalTo: (PFUser.current()?.username)!)
         query.whereKey("MasaNumarasi", equalTo: globalChosenTableNumberMasaVC)
         query.whereKey("IsletmeSahibi", equalTo:(PFUser.current()?.username)!)
+        query.whereKey("HesapOdendi", notEqualTo: "Evet")
         
         query.findObjectsInBackground { (objects, error) in
             
