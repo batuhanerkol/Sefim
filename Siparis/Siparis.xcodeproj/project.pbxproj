@@ -14,6 +14,9 @@
 		B93953812168C6AE005A5099 /* BilgilerimVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = B93953802168C6AE005A5099 /* BilgilerimVC.swift */; };
 		B93CBAA321A85B46000FEC3F /* DateTimeCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B93CBAA221A85B46000FEC3F /* DateTimeCell.swift */; };
 		B941CFFE21BFBA9300CF7246 /* ManuelEkleVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = B941CFFD21BFBA9300CF7246 /* ManuelEkleVC.swift */; };
+		B941D00021BFF10E00CF7246 /* ManuelEkleCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B941CFFF21BFF10E00CF7246 /* ManuelEkleCell.swift */; };
+		B941D00221C00A9500CF7246 /* OrderVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = B941D00121C00A9500CF7246 /* OrderVC.swift */; };
+		B941D00421C00DA400CF7246 /* OrderCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B941D00321C00DA300CF7246 /* OrderCell.swift */; };
 		B95E2D7F21A47B75009CCD72 /* OncekiSiparislerVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = B95E2D7E21A47B75009CCD72 /* OncekiSiparislerVC.swift */; };
 		B9706EB0214FB52100234067 /* Model.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = B9706EAE214FB52100234067 /* Model.xcdatamodeld */; };
 		B9828012215D2B4700CBE76B /* CreateQR.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9828011215D2B4700CBE76B /* CreateQR.swift */; };
@@ -53,6 +56,9 @@
 		B93953802168C6AE005A5099 /* BilgilerimVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BilgilerimVC.swift; sourceTree = "<group>"; };
 		B93CBAA221A85B46000FEC3F /* DateTimeCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateTimeCell.swift; sourceTree = "<group>"; };
 		B941CFFD21BFBA9300CF7246 /* ManuelEkleVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ManuelEkleVC.swift; sourceTree = "<group>"; };
+		B941CFFF21BFF10E00CF7246 /* ManuelEkleCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ManuelEkleCell.swift; sourceTree = "<group>"; };
+		B941D00121C00A9500CF7246 /* OrderVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderVC.swift; sourceTree = "<group>"; };
+		B941D00321C00DA300CF7246 /* OrderCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderCell.swift; sourceTree = "<group>"; };
 		B95E2D7E21A47B75009CCD72 /* OncekiSiparislerVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OncekiSiparislerVC.swift; sourceTree = "<group>"; };
 		B9706EAF214FB52100234067 /* Model.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Model.xcdatamodel; sourceTree = "<group>"; };
 		B9828011215D2B4700CBE76B /* CreateQR.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateQR.swift; sourceTree = "<group>"; };
@@ -156,7 +162,10 @@
 				B9FCE526213D90E0006BCB6C /* MasaVC.swift */,
 				B98EE458217B2E9400FA1E09 /* PopUpVC.swift */,
 				B941CFFD21BFBA9300CF7246 /* ManuelEkleVC.swift */,
+				B941D00121C00A9500CF7246 /* OrderVC.swift */,
+				B941CFFF21BFF10E00CF7246 /* ManuelEkleCell.swift */,
 				B98EE45A217B2F2900FA1E09 /* PopUpTVC.swift */,
+				B941D00321C00DA300CF7246 /* OrderCell.swift */,
 			);
 			path = Table;
 			sourceTree = "<group>";
@@ -349,6 +358,7 @@
 				B9FCE50F213D8486006BCB6C /* ViewController.swift in Sources */,
 				B90CD86B2152BEE90001A0B8 /* AddLocationVC.swift in Sources */,
 				B9706EB0214FB52100234067 /* Model.xcdatamodeld in Sources */,
+				B941D00421C00DA400CF7246 /* OrderCell.swift in Sources */,
 				B9F529CA2143DDD200BD45A6 /* MenuTVC.swift in Sources */,
 				B9FCE523213D90B8006BCB6C /* konumVC.swift in Sources */,
 				B93953812168C6AE005A5099 /* BilgilerimVC.swift in Sources */,
@@ -364,11 +374,13 @@
 				B9F529D621443C2000BD45A6 /* AddFoodInformationVC.swift in Sources */,
 				B9F529DA2144449600BD45A6 /* FoodInformationShowVC.swift in Sources */,
 				B9FCE527213D90E0006BCB6C /* MasaVC.swift in Sources */,
+				B941D00221C00A9500CF7246 /* OrderVC.swift in Sources */,
 				B95E2D7F21A47B75009CCD72 /* OncekiSiparislerVC.swift in Sources */,
 				B9FCE50D213D8486006BCB6C /* AppDelegate.swift in Sources */,
 				B93CBAA321A85B46000FEC3F /* DateTimeCell.swift in Sources */,
 				B91861CB21BE7C070024E2E6 /* Reachability.swift in Sources */,
 				B9E68670216E63F400EF4C65 /* ChangePasswordVC.swift in Sources */,
+				B941D00021BFF10E00CF7246 /* ManuelEkleCell.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
