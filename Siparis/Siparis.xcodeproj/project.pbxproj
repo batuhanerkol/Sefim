@@ -17,6 +17,7 @@
 		B941D00021BFF10E00CF7246 /* ManuelEkleCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B941CFFF21BFF10E00CF7246 /* ManuelEkleCell.swift */; };
 		B941D00221C00A9500CF7246 /* OrderVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = B941D00121C00A9500CF7246 /* OrderVC.swift */; };
 		B941D00421C00DA400CF7246 /* OrderCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B941D00321C00DA300CF7246 /* OrderCell.swift */; };
+		B941D00621C03FDE00CF7246 /* PaymentVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = B941D00521C03FDE00CF7246 /* PaymentVC.swift */; };
 		B95E2D7F21A47B75009CCD72 /* OncekiSiparislerVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = B95E2D7E21A47B75009CCD72 /* OncekiSiparislerVC.swift */; };
 		B9706EB0214FB52100234067 /* Model.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = B9706EAE214FB52100234067 /* Model.xcdatamodeld */; };
 		B9828012215D2B4700CBE76B /* CreateQR.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9828011215D2B4700CBE76B /* CreateQR.swift */; };
@@ -59,6 +60,7 @@
 		B941CFFF21BFF10E00CF7246 /* ManuelEkleCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ManuelEkleCell.swift; sourceTree = "<group>"; };
 		B941D00121C00A9500CF7246 /* OrderVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderVC.swift; sourceTree = "<group>"; };
 		B941D00321C00DA300CF7246 /* OrderCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderCell.swift; sourceTree = "<group>"; };
+		B941D00521C03FDE00CF7246 /* PaymentVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaymentVC.swift; sourceTree = "<group>"; };
 		B95E2D7E21A47B75009CCD72 /* OncekiSiparislerVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OncekiSiparislerVC.swift; sourceTree = "<group>"; };
 		B9706EAF214FB52100234067 /* Model.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Model.xcdatamodel; sourceTree = "<group>"; };
 		B9828011215D2B4700CBE76B /* CreateQR.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateQR.swift; sourceTree = "<group>"; };
@@ -163,6 +165,7 @@
 				B98EE458217B2E9400FA1E09 /* PopUpVC.swift */,
 				B941CFFD21BFBA9300CF7246 /* ManuelEkleVC.swift */,
 				B941D00121C00A9500CF7246 /* OrderVC.swift */,
+				B941D00521C03FDE00CF7246 /* PaymentVC.swift */,
 				B941CFFF21BFF10E00CF7246 /* ManuelEkleCell.swift */,
 				B98EE45A217B2F2900FA1E09 /* PopUpTVC.swift */,
 				B941D00321C00DA300CF7246 /* OrderCell.swift */,
@@ -365,6 +368,7 @@
 				B9960FD321ABFF0200C26569 /* FoodPriceCell.swift in Sources */,
 				B9960FD121ABFE9500C26569 /* PreviousOrdersInformationVC.swift in Sources */,
 				B98EE459217B2E9400FA1E09 /* PopUpVC.swift in Sources */,
+				B941D00621C03FDE00CF7246 /* PaymentVC.swift in Sources */,
 				B9F529D02144364F00BD45A6 /* FoodDetailsTVC.swift in Sources */,
 				B941CFFE21BFBA9300CF7246 /* ManuelEkleVC.swift in Sources */,
 				B9828012215D2B4700CBE76B /* CreateQR.swift in Sources */,
