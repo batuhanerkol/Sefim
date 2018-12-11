@@ -13,6 +13,7 @@
 		B91B248B21553045005C3DED /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B91B248A21553045005C3DED /* CoreLocation.framework */; };
 		B93953812168C6AE005A5099 /* BilgilerimVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = B93953802168C6AE005A5099 /* BilgilerimVC.swift */; };
 		B93CBAA321A85B46000FEC3F /* DateTimeCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B93CBAA221A85B46000FEC3F /* DateTimeCell.swift */; };
+		B941CFFE21BFBA9300CF7246 /* ManuelEkleVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = B941CFFD21BFBA9300CF7246 /* ManuelEkleVC.swift */; };
 		B95E2D7F21A47B75009CCD72 /* OncekiSiparislerVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = B95E2D7E21A47B75009CCD72 /* OncekiSiparislerVC.swift */; };
 		B9706EB0214FB52100234067 /* Model.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = B9706EAE214FB52100234067 /* Model.xcdatamodeld */; };
 		B9828012215D2B4700CBE76B /* CreateQR.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9828011215D2B4700CBE76B /* CreateQR.swift */; };
@@ -51,6 +52,7 @@
 		B91B248A21553045005C3DED /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
 		B93953802168C6AE005A5099 /* BilgilerimVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BilgilerimVC.swift; sourceTree = "<group>"; };
 		B93CBAA221A85B46000FEC3F /* DateTimeCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateTimeCell.swift; sourceTree = "<group>"; };
+		B941CFFD21BFBA9300CF7246 /* ManuelEkleVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ManuelEkleVC.swift; sourceTree = "<group>"; };
 		B95E2D7E21A47B75009CCD72 /* OncekiSiparislerVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OncekiSiparislerVC.swift; sourceTree = "<group>"; };
 		B9706EAF214FB52100234067 /* Model.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Model.xcdatamodel; sourceTree = "<group>"; };
 		B9828011215D2B4700CBE76B /* CreateQR.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateQR.swift; sourceTree = "<group>"; };
@@ -153,6 +155,7 @@
 			children = (
 				B9FCE526213D90E0006BCB6C /* MasaVC.swift */,
 				B98EE458217B2E9400FA1E09 /* PopUpVC.swift */,
+				B941CFFD21BFBA9300CF7246 /* ManuelEkleVC.swift */,
 				B98EE45A217B2F2900FA1E09 /* PopUpTVC.swift */,
 			);
 			path = Table;
@@ -353,6 +356,7 @@
 				B9960FD121ABFE9500C26569 /* PreviousOrdersInformationVC.swift in Sources */,
 				B98EE459217B2E9400FA1E09 /* PopUpVC.swift in Sources */,
 				B9F529D02144364F00BD45A6 /* FoodDetailsTVC.swift in Sources */,
+				B941CFFE21BFBA9300CF7246 /* ManuelEkleVC.swift in Sources */,
 				B9828012215D2B4700CBE76B /* CreateQR.swift in Sources */,
 				B9F529CE2144239E00BD45A6 /* AddFoodTitleVC.swift in Sources */,
 				B9FCE51F213D8E49006BCB6C /* SingInVC.swift in Sources */,

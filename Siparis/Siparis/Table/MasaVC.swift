@@ -290,11 +290,11 @@ class MasaVC: UIViewController {
 //                print("YemekTeslim:",  self.yemekTeslim)
 //                print("hesapIstendi", self.hesapIstendi)
                 
-                 let tableButtonIndex = (Int(self.hesapMasaSayisi)! - 1)
+              
                 
                 if  self.hesapOdendi != "" && self.tableButtonBackgroundColorChange.count > 0{
                     
-                   
+                      let tableButtonIndex = (Int(self.hesapMasaSayisi)! - 1)
                     
                     
                     if self.siparisVerildi == "Evet" && self.yemekHazir == "Evet" && self.yemekTeslim == "Evet"  && self.hesapIstendi != "" && self.hesapOdendi == "Evet" {
