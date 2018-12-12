@@ -74,18 +74,20 @@ class OrderVC: UIViewController,UITableViewDelegate, UITableViewDataSource {
         dateTime()
     }
     func dateTime(){
-        formatter.dateFormat = "dd.MM.yyyy"
+        formatter.dateFormat = "dd/MM/yyyy"
         formatter.timeStyle = .none
         formatter.dateStyle = .medium
         let loc = Locale(identifier: "tr")
         formatter.locale = loc
         let dateString = formatter.string(from: currentDateTime)
         dateLabel.text! = dateString
+     
         let date = Date()
         let calendar = Calendar.current
         let hour = calendar.component(.hour, from: date)
         let minute = calendar.component(.minute, from: date)
-        timeLabel.text = ("\(hour)  \(minute)")
+        timeLabel.text = ("\(hour):\(minute)")
+        
     }
     
     

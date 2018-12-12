@@ -35,6 +35,9 @@ class OncekiSiparislerVC: UIViewController, UITableViewDelegate, UITableViewData
     var testePoint = 0
     var servicePoint = 0
     
+    var date = ""
+    
+    
      var activityIndicator:UIActivityIndicatorView = UIActivityIndicatorView()
     
     @IBOutlet weak var previousOrderInfoTable: UITableView!
@@ -115,7 +118,11 @@ class OncekiSiparislerVC: UIViewController, UITableViewDelegate, UITableViewData
                     self.totalPriceArray.append(object.object(forKey: "ToplamFiyat") as! String)
                     self.paymentArray.append(object.object(forKey: "HesapIstendi") as! String)
                     
+                    self.date = self.dateArray.last!
                 }
+                print("Date:", self.date)
+                print("chosenCharacter:", self.date[3...5])
+                
                 self.activityIndicator.stopAnimating()
                 UIApplication.shared.endIgnoringInteractionEvents()
                 self.previousOrderInfoTable.reloadData()
@@ -288,4 +295,62 @@ class OncekiSiparislerVC: UIViewController, UITableViewDelegate, UITableViewData
         return 100
     }
     
+}
+
+
+extension String { // String in seçili harfine bakabilmek için
+    subscript (i: Int) -> Character {
+        return self[index(startIndex, offsetBy: i)]
+    }
+    subscript (bounds: CountableRange<Int>) -> Substring {
+        let start = index(startIndex, offsetBy: bounds.lowerBound)
+        let end = index(startIndex, offsetBy: bounds.upperBound)
+        return self[start ..< end]
+    }
+    subscript (bounds: CountableClosedRange<Int>) -> Substring {
+        let start = index(startIndex, offsetBy: bounds.lowerBound)
+        let end = index(startIndex, offsetBy: bounds.upperBound)
+        return self[start ... end]
+    }
+    subscript (bounds: CountablePartialRangeFrom<Int>) -> Substring {
+        let start = index(startIndex, offsetBy: bounds.lowerBound)
+        let end = index(endIndex, offsetBy: -1)
+        return self[start ... end]
+    }
+    subscript (bounds: PartialRangeThrough<Int>) -> Substring {
+        let end = index(startIndex, offsetBy: bounds.upperBound)
+        return self[startIndex ... end]
+    }
+    subscript (bounds: PartialRangeUpTo<Int>) -> Substring {
+        let end = index(startIndex, offsetBy: bounds.upperBound)
+        return self[startIndex ..< end]
+    }
+}
+extension Substring {
+    subscript (i: Int) -> Character {
+        return self[index(startIndex, offsetBy: i)]
+    }
+    subscript (bounds: CountableRange<Int>) -> Substring {
+        let start = index(startIndex, offsetBy: bounds.lowerBound)
+        let end = index(startIndex, offsetBy: bounds.upperBound)
+        return self[start ..< end]
+    }
+    subscript (bounds: CountableClosedRange<Int>) -> Substring {
+        let start = index(startIndex, offsetBy: bounds.lowerBound)
+        let end = index(startIndex, offsetBy: bounds.upperBound)
+        return self[start ... end]
+    }
+    subscript (bounds: CountablePartialRangeFrom<Int>) -> Substring {
+        let start = index(startIndex, offsetBy: bounds.lowerBound)
+        let end = index(endIndex, offsetBy: -1)
+        return self[start ... end]
+    }
+    subscript (bounds: PartialRangeThrough<Int>) -> Substring {
+        let end = index(startIndex, offsetBy: bounds.upperBound)
+        return self[startIndex ... end]
+    }
+    subscript (bounds: PartialRangeUpTo<Int>) -> Substring {
+        let end = index(startIndex, offsetBy: bounds.upperBound)
+        return self[startIndex ..< end]
+    }
 }
