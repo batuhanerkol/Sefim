@@ -207,13 +207,13 @@ class MasaVC: UIViewController {
                     
                 }
 
-                print("-----------control of buttons----------------")
-                print("hesapMasaSayisi",self.hesapMasaSAyisiArray)
-                print("siparisVerildi",self.siparisVerildiArray )
-                print("yemekHazir", self.yemekHazirArray)
-                print("YemekTeslim:",  self.yemekTeslimArray)
-                print("hesapIstendi", self.hesapIstendiArray)
-                print("hesapmasaArray,", self.hesapMasaSAyisiArray)
+//                print("-----------control of buttons----------------")
+//                print("hesapMasaSayisi",self.hesapMasaSAyisiArray)
+//                print("siparisVerildi",self.siparisVerildiArray )
+//                print("yemekHazir", self.yemekHazirArray)
+//                print("YemekTeslim:",  self.yemekTeslimArray)
+//                print("hesapIstendi", self.hesapIstendiArray)
+//                print("hesapmasaArray,", self.hesapMasaSAyisiArray)
 
                 if  self.tableButtonBackgroundColorChange.count > 0  && self.hesapMasaSAyisiArray.isEmpty == false{
          
@@ -246,7 +246,7 @@ class MasaVC: UIViewController {
                     
                 }
                 else{
-                    print("sorun burada: control of buttons()")
+                 
                 
                 }
                 self.activityIndicator.stopAnimating()

@@ -249,7 +249,6 @@ class PopUpVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
                     self.numberOfDeliveredOrder = (object.object(forKey: "TeslimEdilenSiparisSayisi") as! String)
 
                 }
-                 print("numberOfDeliveredOrder!", self.numberOfDeliveredOrder)
                 
                 
                 if self.numberOfDeliveredOrder == "" {
@@ -263,9 +262,10 @@ class PopUpVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
 //                 print("alldate:", self.allDateArray)
 //                 print("objectID:", self.objectIdArray)
                 
+                 self.orderTableView.reloadData()
+                
                 self.activityIndicator.stopAnimating()
                 UIApplication.shared.endIgnoringInteractionEvents()
-                 self.orderTableView.reloadData()
             }
             
           
@@ -275,6 +275,9 @@ class PopUpVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
     
     
     @IBAction func foodIsReadyButtonClicked(_ sender: Any) {
+        
+        activityIndicator.startAnimating()
+        UIApplication.shared.beginIgnoringInteractionEvents()
         
         orderNumber = 0
         if self.foodNameArray.isEmpty == false{
@@ -304,7 +307,11 @@ class PopUpVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
                             
                         }else{
 //                            self.performSegue(withIdentifier: "ToMasaVC", sender: nil)
-                            self.touchesBegan(Set<UITouch>(), with: nil)                        }
+                            self.touchesBegan(Set<UITouch>(), with: nil)
+                            
+                            self.activityIndicator.stopAnimating()
+                            UIApplication.shared.endIgnoringInteractionEvents()
+                        }
                     })
 //                    let alertController = UIAlertController(title: "Yemeğin Hazır Olduğuna Emin Misiniz ?", message: "", preferredStyle: .alert)
 //
@@ -338,6 +345,9 @@ class PopUpVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
             let okButton = UIAlertAction(title: "TAMAM", style: UIAlertAction.Style.cancel, handler: nil)
             alert.addAction(okButton)
             self.present(alert, animated: true, completion: nil)
+            
+            self.activityIndicator.stopAnimating()
+            UIApplication.shared.endIgnoringInteractionEvents()
         }
     }
 
@@ -349,6 +359,10 @@ class PopUpVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
     
     
     @IBAction func orderHasGivenButtonClicked(_ sender: Any) {
+        
+        activityIndicator.startAnimating()
+        UIApplication.shared.beginIgnoringInteractionEvents()
+        
         if self.yemekHazir != ""{
         orderTableView.reloadData()
         orderNumber = 0
@@ -382,6 +396,9 @@ class PopUpVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
                             else{
 //                                  self.performSegue(withIdentifier: "ToMasaVC", sender: nil)
                                   self.touchesBegan(Set<UITouch>(), with: nil)
+                                
+                                self.activityIndicator.stopAnimating()
+                                UIApplication.shared.endIgnoringInteractionEvents()
                             }
                         })
         
@@ -397,15 +414,25 @@ class PopUpVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
             let okButton = UIAlertAction(title: "TAMAM", style: UIAlertAction.Style.cancel, handler: nil)
             alert.addAction(okButton)
             self.present(alert, animated: true, completion: nil)
+            
+            self.activityIndicator.stopAnimating()
+            UIApplication.shared.endIgnoringInteractionEvents()
         }
         }else{
             let alert = UIAlertController(title: "Yemek Henüz Hazırlanmadı", message: "", preferredStyle: UIAlertController.Style.alert)
             let okButton = UIAlertAction(title: "TAMAM", style: UIAlertAction.Style.cancel, handler: nil)
             alert.addAction(okButton)
             self.present(alert, animated: true, completion: nil)
+            
+            self.activityIndicator.stopAnimating()
+            UIApplication.shared.endIgnoringInteractionEvents()
         }
     }
     @IBAction func chechkHasPaidButtonClicked(_ sender: Any) {
+        
+        activityIndicator.startAnimating()
+        UIApplication.shared.beginIgnoringInteractionEvents()
+        
         if self.hesapIstendi != ""{
             
         orderNumber = 0
@@ -437,6 +464,9 @@ class PopUpVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
                                  self.deleteGivenOrderDataFromOwersParse()
 //                                 self.performSegue(withIdentifier: "ToMasaVC", sender: nil)
                                   self.touchesBegan(Set<UITouch>(), with: nil)
+                                
+                                self.activityIndicator.stopAnimating()
+                                UIApplication.shared.endIgnoringInteractionEvents()
                             }
                         })
                         
@@ -453,12 +483,18 @@ class PopUpVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
             let okButton = UIAlertAction(title: "TAMAM", style: UIAlertAction.Style.cancel, handler: nil)
             alert.addAction(okButton)
             self.present(alert, animated: true, completion: nil)
+            
+            self.activityIndicator.stopAnimating()
+            UIApplication.shared.endIgnoringInteractionEvents()
         }
         }else{
             let alert = UIAlertController(title: "Hesap Henüz İstenmedi", message: "", preferredStyle: UIAlertController.Style.alert)
             let okButton = UIAlertAction(title: "TAMAM", style: UIAlertAction.Style.cancel, handler: nil)
             alert.addAction(okButton)
             self.present(alert, animated: true, completion: nil)
+            
+            self.activityIndicator.stopAnimating()
+            UIApplication.shared.endIgnoringInteractionEvents()
         }
     }
     func deleteGivenOrderDataFromOwersParse(){ // kullanıcı siparişine ekleme yaptığında eski aray i silmek için

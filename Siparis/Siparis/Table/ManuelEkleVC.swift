@@ -102,7 +102,7 @@ class ManuelEkleVC: UIViewController, UITableViewDelegate, UITableViewDataSource
                 
                 self.activityIndicator.stopAnimating()
                 UIApplication.shared.endIgnoringInteractionEvents()
-                print("foodtitle:", self.foodTitleArray)
+               
                 self.foodTitleTable.reloadData()
                 
             }
@@ -113,7 +113,7 @@ class ManuelEkleVC: UIViewController, UITableViewDelegate, UITableViewDataSource
     func getFoodData(){
       
         if foodTitleArray.isEmpty == false && chosenFoodTitle != ""{
-              print("aaaaa")
+            
         let query = PFQuery(className: "FoodInformation")
         query.whereKey("foodNameOwner", equalTo: (PFUser.current()?.username)!)
         query.whereKey("foodTitle", equalTo: String(chosenFoodTitle))
@@ -135,7 +135,7 @@ class ManuelEkleVC: UIViewController, UITableViewDelegate, UITableViewDataSource
 
             }
             self.foodNameTable.reloadData()
-            print("FOODNAME", self.foodNameArray)
+            
 
         }
         }

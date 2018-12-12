@@ -34,13 +34,15 @@ class OrderVC: UIViewController,UITableViewDelegate, UITableViewDataSource {
     var objectIdArray = [String]()
     var checkFoodNamesArray = [String]()
     var deliveredOrderNumberArray = [String]()
+    var hesapOdendiArray = [String]()
     
     var siparisIndexNumber = 0
     var totalPrice = 0
     var objectId = ""
     var businessName = ""
-    var hesapOdendi = ""
+  
     var deliveredOrderNumber = ""
+    var hesapOdendi = ""
     
     
    var editingStyleCheck = true
@@ -276,6 +278,7 @@ class OrderVC: UIViewController,UITableViewDelegate, UITableViewDataSource {
     func uploadOrderData(){
         
         getOrderData()
+        self.sendKitchenButton.isEnabled = false
     
         if orderTable.visibleCells.isEmpty == false && foodNameArray.isEmpty == false && priceArray.isEmpty == false && orderNoteArray.isEmpty == false && self.businessName != "" {
             
@@ -310,7 +313,7 @@ class OrderVC: UIViewController,UITableViewDelegate, UITableViewDataSource {
                 }
                     
                 else{
-                    let alert = UIAlertController(title: "Sipariş Verilmiştir", message: error?.localizedDescription, preferredStyle: UIAlertController.Style.alert)
+                    let alert = UIAlertController(title: "Mutfağa İletilmiştir", message: error?.localizedDescription, preferredStyle: UIAlertController.Style.alert)
                     let okButton = UIAlertAction(title: "TAMAM", style: UIAlertAction.Style.cancel, handler: nil)
                     alert.addAction(okButton)
                     self.present(alert, animated: true, completion: nil)
@@ -382,7 +385,7 @@ class OrderVC: UIViewController,UITableViewDelegate, UITableViewDataSource {
         query.whereKey("SiparisSahibi", equalTo: (PFUser.current()?.username)!)
         query.whereKey("IsletmeSahibi", equalTo: (PFUser.current()?.username)!)
         query.whereKey("MasaNo", equalTo: globalChosenTableNumberMasaVC)
-        query.whereKey("IsletmeAdi", equalTo: self.businessName)
+//        query.whereKey("IsletmeAdi", equalTo: self.businessName)
         query.whereKey("HesapOdendi", equalTo: "")
         
         
@@ -398,7 +401,7 @@ class OrderVC: UIViewController,UITableViewDelegate, UITableViewDataSource {
             }
             else{
                 
-               self.hesapOdendi = ""
+                self.hesapOdendiArray.removeAll(keepingCapacity: false)
                 self.checkFoodNamesArray.removeAll(keepingCapacity: false)
                 
                 
@@ -406,15 +409,11 @@ class OrderVC: UIViewController,UITableViewDelegate, UITableViewDataSource {
                     
                     
                     self.hesapOdendi = (object.object(forKey: "HesapOdendi") as! String)
-                   self.checkFoodNamesArray = object["SiparisAdi"] as! [String]
+                    self.checkFoodNamesArray = object["SiparisAdi"] as! [String]
                     
+                 
                 }
-                print("hesapOdendi:", self.hesapOdendi)
-                if self.hesapOdendi == ""  {
-                    
-                    
-                    
-                }
+
                 
             }
             
@@ -426,7 +425,7 @@ class OrderVC: UIViewController,UITableViewDelegate, UITableViewDataSource {
         query.whereKey("SiparisSahibi", equalTo: (PFUser.current()?.username)!)
         query.whereKey("IsletmeSahibi", equalTo: (PFUser.current()?.username)!)
         query.whereKey("MasaNo", equalTo: globalChosenTableNumberMasaVC)
-        query.whereKey("IsletmeAdi", equalTo: businessName)
+//        query.whereKey("IsletmeAdi", equalTo: businessName)
         query.whereKey("HesapOdendi", equalTo: "")
         
         
@@ -450,7 +449,7 @@ class OrderVC: UIViewController,UITableViewDelegate, UITableViewDataSource {
                     
                     self.deliveredOrderNumber = "\(self.deliveredOrderNumberArray.last!)"
                 }
-                print("delivered", self.deliveredOrderNumber)
+               
             }
             
         }
@@ -460,8 +459,8 @@ class OrderVC: UIViewController,UITableViewDelegate, UITableViewDataSource {
         let query = PFQuery(className: "VerilenSiparisler")
         query.whereKey("SiparisSahibi", equalTo: (PFUser.current()?.username)!)
         query.whereKey("IsletmeSahibi", equalTo: (PFUser.current()?.username)!)
-        query.whereKey("MasaNo", equalTo: globalChosenTableNumberMasaVC)
-        query.whereKey("IsletmeAdi", equalTo: businessName)
+        query.whereKey("MasaNo", equalTo: tableNumberLabel.text!)
+//        query.whereKey("IsletmeAdi", equalTo: businessName)
         query.whereKey("HesapOdendi", equalTo: "")
         
         
@@ -485,11 +484,9 @@ class OrderVC: UIViewController,UITableViewDelegate, UITableViewDataSource {
                             self.present(alert, animated: true, completion: nil)
                             
                         }else{
+                     
                             self.uploadOrderDataWithDeliveredOrderNumber()
-                            let alert = UIAlertController(title: "Siparişinize Eklenmiştir", message: "", preferredStyle: UIAlertController.Style.alert)
-                            let okButton = UIAlertAction(title: "TAMAM", style: UIAlertAction.Style.cancel, handler: nil)
-                            alert.addAction(okButton)
-                            self.present(alert, animated: true, completion: nil)
+                           
                         }
                     })
                 }
@@ -502,7 +499,7 @@ class OrderVC: UIViewController,UITableViewDelegate, UITableViewDataSource {
         getOrderData()
         self.sendKitchenButton.isEnabled = false
         
-        if orderTable.visibleCells.isEmpty == false && foodNameArray.isEmpty == false && priceArray.isEmpty == false && orderNoteArray.isEmpty == false {
+        if orderTable.visibleCells.isEmpty == false && foodNameArray.isEmpty == false && priceArray.isEmpty == false && orderNoteArray.isEmpty == false && businessName != "" {
             
             let object = PFObject(className: "VerilenSiparisler")
             
@@ -524,7 +521,7 @@ class OrderVC: UIViewController,UITableViewDelegate, UITableViewDataSource {
             object["HizmetBegenilmeDurumu"] = ""
             object["YemekTeslimEdildi"] = ""
             object["YemekHazir"] = ""
-            object["TeslimEdilenSiparisSayisi"] = "\(self.deliveredOrderNumber)"
+            object["TeslimEdilenSiparisSayisi"] = deliveredOrderNumber
             
             object.saveInBackground { (success, error) in
                 if error != nil{
@@ -535,7 +532,7 @@ class OrderVC: UIViewController,UITableViewDelegate, UITableViewDataSource {
                 }
                     
                 else{
-                    let alert = UIAlertController(title: "Sipariş Verilmiştir", message: error?.localizedDescription, preferredStyle: UIAlertController.Style.alert)
+                    let alert = UIAlertController(title: "Mutfak Siparişine Eklenmiştir", message: "", preferredStyle: UIAlertController.Style.alert)
                     let okButton = UIAlertAction(title: "TAMAM", style: UIAlertAction.Style.cancel, handler: nil)
                     alert.addAction(okButton)
                     self.present(alert, animated: true, completion: nil)
@@ -567,20 +564,37 @@ class OrderVC: UIViewController,UITableViewDelegate, UITableViewDataSource {
     }
     
     @IBAction func sendToKitchenButtonPressed(_ sender: Any) {
+        
         checkGivenOrder()
+        print("FoodnameArra:", foodNameArray)
+        print("checkFoodNamesArray:", checkFoodNamesArray)
+        print("hesapOdendi:", hesapOdendi)
+        print("deliveredOrderNumberArray:", deliveredOrderNumberArray)
+        
+    
         if self.foodNameArray.isEmpty == false && self.checkFoodNamesArray != self.foodNameArray {
             
-            if self.hesapOdendi == ""{
+            if self.deliveredOrderNumberArray.isEmpty == true{
                 uploadOrderData()
                 
             }
-            else if self.hesapOdendi != "" && self.deliveredOrderNumberArray.isEmpty == false {
+            else if  self.deliveredOrderNumberArray.isEmpty == false {
                 
                 print("DEvieredArray", self.deliveredOrderNumberArray.last!)
                 deletePreviousOrder()
                 
             }
+            
+            
         }
+        else{
+            let alert = UIAlertController(title: "Siparişiniz Boş veya Bir Değişiklik Yapılmamış", message: "", preferredStyle: UIAlertController.Style.alert)
+            let okButton = UIAlertAction(title: "TAMAM", style: UIAlertAction.Style.cancel, handler: nil)
+            alert.addAction(okButton)
+            self.present(alert, animated: true, completion: nil)
+        }
+        
+        
     }
         
     @IBAction func cancelButtonPressed(_ sender: Any) {
