@@ -239,11 +239,13 @@ class BilgilerimVC: UIViewController, UIImagePickerControllerDelegate, UINavigat
                     self.testePointArray.append(object.object(forKey: "LezzetPuan") as! String)
                      self.servicePointArray.append(object.object(forKey: "HizmetPuan") as! String)
                     
-                    
                 }
+                if self.testePointArray.isEmpty == false && self.servicePointArray.isEmpty == false{
                 self.hizmetPuanLabel.text = self.servicePointArray.last!
                 self.lezzetPuanLabel.text = self.testePointArray.last!
-            
+                }else{
+                    print("sorun: bilgilerimVC -> getBusinessPoints")
+                }
           
             }
         }

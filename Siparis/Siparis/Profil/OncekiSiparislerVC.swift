@@ -32,11 +32,17 @@ class OncekiSiparislerVC: UIViewController, UITableViewDelegate, UITableViewData
     var objectIdArray = [String]()
     var objectId = ""
     
+    var oneMounthDateArray = [String]()
+    var allMounths = ""
+    
+    var selectedMounthsArray = [String]()
+    
     var testePoint = 0
     var servicePoint = 0
     
     var date = ""
     
+    var chosenMounth = ""
     
      var activityIndicator:UIActivityIndicatorView = UIActivityIndicatorView()
     
@@ -93,8 +99,8 @@ class OncekiSiparislerVC: UIViewController, UITableViewDelegate, UITableViewData
         let query = PFQuery(className: "VerilenSiparisler")
         query.whereKey("IsletmeSahibi", equalTo: (PFUser.current()?.username)!)
         query.whereKey("HesapOdendi", equalTo: "Evet")
+        query.whereKey("Date", matchesText: chosenMounth)
         query.addDescendingOrder("createdAt")
-
         
         query.findObjectsInBackground { (objects, error) in
             
@@ -119,13 +125,13 @@ class OncekiSiparislerVC: UIViewController, UITableViewDelegate, UITableViewData
                     self.paymentArray.append(object.object(forKey: "HesapIstendi") as! String)
                     
                     self.date = self.dateArray.last!
+                     print("chosenCharacter:", self.date[3...5])
+                   
                 }
-                print("Date:", self.date)
-                print("chosenCharacter:", self.date[3...5])
-                
+   
+                self.previousOrderInfoTable.reloadData()
                 self.activityIndicator.stopAnimating()
                 UIApplication.shared.endIgnoringInteractionEvents()
-                self.previousOrderInfoTable.reloadData()
             }
         }
     }
@@ -159,8 +165,8 @@ class OncekiSiparislerVC: UIViewController, UITableViewDelegate, UITableViewData
                     self.testeArray.append(object.object(forKey: "LezzetBegeniDurumu") as! String)
                    
                 }
-                print("Service:", self.serviceArray)
-                print("teste:", self.testeArray)
+//                print("Service:", self.serviceArray)
+//                print("teste:", self.testeArray)
                 
                 self.liikedServiceArray = self.serviceArray.filter { $0 == "Evet" }
                 self.disLiikedServiceArray = self.serviceArray.filter { $0 == "Hayır" }
@@ -171,10 +177,10 @@ class OncekiSiparislerVC: UIViewController, UITableViewDelegate, UITableViewData
 
                 if self.liikedServiceArray.isEmpty == false && self.likedTesteArray.isEmpty == false{
                 self.servicePoint = (self.liikedServiceArray.count * 5) / self.serviceArray.count
-                print("ServicePoint:", self.servicePoint)
+//                print("ServicePoint:", self.servicePoint)
                 
                 self.testePoint = (self.likedTesteArray.count * 5) / self.testeArray.count
-                print("TestePoint:", self.testePoint)
+//                print("TestePoint:", self.testePoint)
                 }
             }
         }
@@ -209,8 +215,8 @@ class OncekiSiparislerVC: UIViewController, UITableViewDelegate, UITableViewData
                      self.disLikedTesteArray.append(object.object(forKey: "LezzetBegeniDurumu") as! String)
                     
                     
-                    print("ServiceDİS:", self.disLiikedServiceArray)
-                    print("TesteDİS:", self.disLikedTesteArray)
+//                    print("ServiceDİS:", self.disLiikedServiceArray)
+//                    print("TesteDİS:", self.disLikedTesteArray)
                     
                 }
             }
@@ -241,7 +247,7 @@ class OncekiSiparislerVC: UIViewController, UITableViewDelegate, UITableViewData
     }
     
     func savePoints(){
-        print("ID:", self.objectId)
+ 
         if self.serviceArray.isEmpty == false && self.testeArray.isEmpty == false{
             
         let query = PFQuery(className: "BusinessInformation")
