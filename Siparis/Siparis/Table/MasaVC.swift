@@ -245,10 +245,6 @@ class MasaVC: UIViewController {
                 }
                     
                 }
-                else{
-                 
-                
-                }
                 self.activityIndicator.stopAnimating()
                 UIApplication.shared.endIgnoringInteractionEvents()
             }
@@ -271,7 +267,13 @@ class MasaVC: UIViewController {
                 self.present(alert, animated: true, completion: nil)
             }
             else{
-                self.hesapOdendiArray.removeAll(keepingCapacity: false)
+              
+                self.hesapOdendi = ""
+                self.yemekTeslim = ""
+                self.yemekHazir = ""
+                self.hesapIstendi = ""
+                self.hesapMasaSayisi = ""
+                self.siparisVerildi = ""
               
                 for object in objects! {
                     
@@ -291,20 +293,15 @@ class MasaVC: UIViewController {
 //                print("hesapIstendi", self.hesapIstendi)
                 
               
-                
                 if  self.hesapOdendi == "Evet" && self.tableButtonBackgroundColorChange.count > 0{
                     
-                    
-                    
-                    
-                    if self.siparisVerildi == "Evet" && self.yemekHazir == "Evet" && self.yemekTeslim == "Evet"  && self.hesapIstendi != "" && self.hesapOdendi == "Evet" {
+                    if self.siparisVerildi == "Evet" && self.yemekHazir == "Evet" && self.yemekTeslim == "Evet"  && self.hesapIstendi != "" {
                         
                          let tableButtonIndex = (Int(self.hesapMasaSayisi)! - 1)
                         
                         self.tableButtonBackgroundColorChange[tableButtonIndex].backgroundColor = UIColor.gray
                     }
                 }
-            
                 else{
                    
                     print("hesap Henuz Odenmedi")
@@ -313,6 +310,7 @@ class MasaVC: UIViewController {
             
         }
     }
+    
     
     
     func getButtonWhenAppOpen(){

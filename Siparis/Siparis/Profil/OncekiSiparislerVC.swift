@@ -47,10 +47,13 @@ class OncekiSiparislerVC: UIViewController, UITableViewDelegate, UITableViewData
     
     var mounthsArray = ["Oca","Şub","Mar","Nis","May","Haz","Tem","Ağu","Eyl","Eki","Kas","Ara"]
     
+    var totalPrice = 0
+    
     var activityIndicator:UIActivityIndicatorView = UIActivityIndicatorView()
     
     let mounthPicker = UIPickerView()
     
+    @IBOutlet weak var sumPriceLAbel: UILabel!
     @IBOutlet weak var selectedMounth: UITextField!
     @IBOutlet weak var previousOrderInfoTable: UITableView!
     
@@ -125,6 +128,20 @@ class OncekiSiparislerVC: UIViewController, UITableViewDelegate, UITableViewData
         view.endEditing(true)
     }
     
+    func calculateSumPrice(){
+        
+        totalPrice = 0
+        
+        for string in totalPriceArray{
+            if string != "" {
+                let myInt = Int(string)!
+                totalPrice = totalPrice + myInt
+            }
+        }
+        sumPriceLAbel.text = String(totalPrice)
+        
+    }
+    
     func getFoodDateTimeData(){
         if chosenMounth != ""{
             
@@ -165,8 +182,12 @@ class OncekiSiparislerVC: UIViewController, UITableViewDelegate, UITableViewData
                 }
    
                 self.previousOrderInfoTable.reloadData()
+                self.calculateSumPrice()
+                
                 self.activityIndicator.stopAnimating()
                 UIApplication.shared.endIgnoringInteractionEvents()
+                
+
             }
         }
         }

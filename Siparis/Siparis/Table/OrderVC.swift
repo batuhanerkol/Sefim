@@ -325,6 +325,8 @@ class OrderVC: UIViewController,UITableViewDelegate, UITableViewDataSource {
                         self.siparislerChangeSituation()
                         self.siparisIndexNumber += 1
                     }
+                    self.activityIndicator.stopAnimating()
+                    UIApplication.shared.endIgnoringInteractionEvents()
                 }
             }
             
@@ -544,6 +546,8 @@ class OrderVC: UIViewController,UITableViewDelegate, UITableViewDataSource {
                         self.siparislerChangeSituation()
                         self.siparisIndexNumber += 1
                     }
+                    self.activityIndicator.stopAnimating()
+                    UIApplication.shared.endIgnoringInteractionEvents()
                 }
             }
             
@@ -566,6 +570,8 @@ class OrderVC: UIViewController,UITableViewDelegate, UITableViewDataSource {
     }
     
     @IBAction func sendToKitchenButtonPressed(_ sender: Any) {
+        activityIndicator.startAnimating()
+        UIApplication.shared.beginIgnoringInteractionEvents()
         
         checkGivenOrder()
         print("FoodnameArra:", foodNameArray)
@@ -578,12 +584,14 @@ class OrderVC: UIViewController,UITableViewDelegate, UITableViewDataSource {
             
             if self.deliveredOrderNumberArray.isEmpty == true{
                 uploadOrderData()
+              
                 
             }
             else if  self.deliveredOrderNumberArray.isEmpty == false {
                 
                 print("DEvieredArray", self.deliveredOrderNumberArray.last!)
                 deletePreviousOrder()
+           
                 
             }
             
@@ -594,6 +602,9 @@ class OrderVC: UIViewController,UITableViewDelegate, UITableViewDataSource {
             let okButton = UIAlertAction(title: "TAMAM", style: UIAlertAction.Style.cancel, handler: nil)
             alert.addAction(okButton)
             self.present(alert, animated: true, completion: nil)
+            
+            self.activityIndicator.stopAnimating()
+            UIApplication.shared.endIgnoringInteractionEvents()
         }
         
         

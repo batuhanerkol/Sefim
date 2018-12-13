@@ -143,6 +143,8 @@ class ManuelEkleVC: UIViewController, UITableViewDelegate, UITableViewDataSource
 
     
     @IBAction func addToTableButtonPressed(_ sender: Any) {
+        activityIndicator.startAnimating()
+        UIApplication.shared.beginIgnoringInteractionEvents()
         
         let object = PFObject(className: "Siparisler")
         
@@ -170,6 +172,9 @@ class ManuelEkleVC: UIViewController, UITableViewDelegate, UITableViewDataSource
                 
                 self.selectedFoodNameLabel.text = ""
                 self.selectedFoodPriceLabel.text = ""
+                
+                self.activityIndicator.stopAnimating()
+                UIApplication.shared.endIgnoringInteractionEvents()
                 
             }
         }
@@ -220,6 +225,7 @@ class ManuelEkleVC: UIViewController, UITableViewDelegate, UITableViewDataSource
         let cell = UITableViewCell()
         cell.textLabel?.text = foodTitleArray[indexPath.row]
         return cell
+            
         }
         else{
             let cell = tableView.dequeueReusableCell(withIdentifier: "ManuelEkleCell", for: indexPath) as! ManuelEkleCell
