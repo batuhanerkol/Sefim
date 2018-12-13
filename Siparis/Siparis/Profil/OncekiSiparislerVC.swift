@@ -13,7 +13,8 @@ var globalTimeOncekiSiparisler = ""
 
 
 
-class OncekiSiparislerVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
+class OncekiSiparislerVC: UIViewController, UITableViewDelegate, UITableViewDataSource, UIPickerViewDelegate, UIPickerViewDataSource {
+   
     
     var dateArray = [String]()
     var timeArray = [String]()
@@ -42,31 +43,40 @@ class OncekiSiparislerVC: UIViewController, UITableViewDelegate, UITableViewData
     
     var date = ""
     
-    var chosenMounth = ""
+    var chosenMounth: String = ""
     
-     var activityIndicator:UIActivityIndicatorView = UIActivityIndicatorView()
+    var mounthsArray = ["Oca","Şub","Mar","Nis","May","Haz","Tem","Ağu","Eyl","Eki","Kas","Ara"]
     
+    var activityIndicator:UIActivityIndicatorView = UIActivityIndicatorView()
+    
+    let mounthPicker = UIPickerView()
+    
+    @IBOutlet weak var selectedMounth: UITextField!
     @IBOutlet weak var previousOrderInfoTable: UITableView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        
+        //internet kontrolü
         NotificationCenter.default.addObserver(self, selector: #selector(statusManager), name: .flagsChanged, object: Network.reachability)
         updateUserInterface()
 
         previousOrderInfoTable.dataSource = self
         previousOrderInfoTable.delegate = self
         
-   
         // loading sembolu
         activityIndicator.center = self.view.center
         activityIndicator.hidesWhenStopped = true
         activityIndicator.activityIndicatorViewStyle = UIActivityIndicatorView.Style.gray
         view.addSubview(activityIndicator)
         
-        activityIndicator.startAnimating()
-        UIApplication.shared.beginIgnoringInteractionEvents()
+//        activityIndicator.startAnimating()
+//        UIApplication.shared.beginIgnoringInteractionEvents()
+        
+        
+       
+        mounthPicker.delegate = self
+        selectedMounth.inputView = mounthPicker
 
     }
     
@@ -80,21 +90,46 @@ class OncekiSiparislerVC: UIViewController, UITableViewDelegate, UITableViewData
             self.present(alert, animated: true, completion: nil)
             
         case .wifi:
+            createToolbar()
+            
             getFoodDateTimeData()
             calculateBusinessLikedPoint()
             getObjectId()
+        
         case .wwan:
+            createToolbar()
+            
             getFoodDateTimeData()
             calculateBusinessLikedPoint()
             getObjectId()
+          
         }
     }
     @objc func statusManager(_ notification: Notification) {
         updateUserInterface()
     }
 
+    func createToolbar(){
+        let toolBar = UIToolbar()
+        toolBar.sizeToFit()
+        
+        let doneButton = UIBarButtonItem(title: "Seç", style: .plain, target: self, action: #selector(OncekiSiparislerVC.dismissKeyboard))
+        
+        toolBar.setItems([doneButton], animated: false)
+        toolBar.isUserInteractionEnabled = true
+        
+        selectedMounth.inputAccessoryView = toolBar
+        
+    }
+    @objc func dismissKeyboard(){
+        view.endEditing(true)
+    }
     
     func getFoodDateTimeData(){
+        if chosenMounth != ""{
+            
+                  activityIndicator.startAnimating()
+                  UIApplication.shared.beginIgnoringInteractionEvents()
         
         let query = PFQuery(className: "VerilenSiparisler")
         query.whereKey("IsletmeSahibi", equalTo: (PFUser.current()?.username)!)
@@ -133,6 +168,7 @@ class OncekiSiparislerVC: UIViewController, UITableViewDelegate, UITableViewData
                 self.activityIndicator.stopAnimating()
                 UIApplication.shared.endIgnoringInteractionEvents()
             }
+        }
         }
     }
     func calculateBusinessLikedPoint(){
@@ -269,6 +305,25 @@ class OncekiSiparislerVC: UIViewController, UITableViewDelegate, UITableViewData
         }
         }
     }
+ 
+    
+    
+    func numberOfComponents(in pickerView: UIPickerView) -> Int {
+        return 1
+    }
+    
+    func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
+        return mounthsArray.count
+    }
+    func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
+        return mounthsArray[row]
+    }
+    func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
+        chosenMounth = mounthsArray[row]
+        selectedMounth.text! = chosenMounth
+        getFoodDateTimeData()
+    }
+  
     
    
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
@@ -304,35 +359,13 @@ class OncekiSiparislerVC: UIViewController, UITableViewDelegate, UITableViewData
 }
 
 
+    
+
+    
+
+
+
 extension String { // String in seçili harfine bakabilmek için
-    subscript (i: Int) -> Character {
-        return self[index(startIndex, offsetBy: i)]
-    }
-    subscript (bounds: CountableRange<Int>) -> Substring {
-        let start = index(startIndex, offsetBy: bounds.lowerBound)
-        let end = index(startIndex, offsetBy: bounds.upperBound)
-        return self[start ..< end]
-    }
-    subscript (bounds: CountableClosedRange<Int>) -> Substring {
-        let start = index(startIndex, offsetBy: bounds.lowerBound)
-        let end = index(startIndex, offsetBy: bounds.upperBound)
-        return self[start ... end]
-    }
-    subscript (bounds: CountablePartialRangeFrom<Int>) -> Substring {
-        let start = index(startIndex, offsetBy: bounds.lowerBound)
-        let end = index(endIndex, offsetBy: -1)
-        return self[start ... end]
-    }
-    subscript (bounds: PartialRangeThrough<Int>) -> Substring {
-        let end = index(startIndex, offsetBy: bounds.upperBound)
-        return self[startIndex ... end]
-    }
-    subscript (bounds: PartialRangeUpTo<Int>) -> Substring {
-        let end = index(startIndex, offsetBy: bounds.upperBound)
-        return self[startIndex ..< end]
-    }
-}
-extension Substring {
     subscript (i: Int) -> Character {
         return self[index(startIndex, offsetBy: i)]
     }

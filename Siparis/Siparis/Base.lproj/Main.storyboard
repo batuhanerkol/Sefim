@@ -1490,7 +1490,7 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="rg0-nl-3NX">
-                                <rect key="frame" x="0.0" y="116" width="375" height="502"/>
+                                <rect key="frame" x="0.0" y="150" width="375" height="468"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <color key="sectionIndexBackgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <prototypes>
@@ -1613,28 +1613,49 @@
                                     </tableViewCell>
                                 </prototypes>
                             </tableView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Mevcut Ay:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="6o5-kz-bf4">
+                                <rect key="frame" x="0.0" y="112" width="133" height="30"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="20"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="snw-oH-aaP">
+                                <rect key="frame" x="128" y="112" width="247" height="30"/>
+                                <color key="backgroundColor" red="0.92143100499999997" green="0.92145264149999995" blue="0.92144101860000005" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <nil key="textColor"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits"/>
+                            </textField>
                         </subviews>
                         <color key="backgroundColor" red="0.92143100499999997" green="0.92145264149999995" blue="0.92144101860000005" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
                             <constraint firstItem="oWo-O1-ban" firstAttribute="trailing" secondItem="rg0-nl-3NX" secondAttribute="trailing" id="2vE-bC-Fyd"/>
+                            <constraint firstItem="uYP-Xn-FYe" firstAttribute="trailing" secondItem="6o5-kz-bf4" secondAttribute="trailing" constant="242" id="3zq-Rz-lIv"/>
                             <constraint firstItem="oWo-O1-ban" firstAttribute="leading" secondItem="Gsw-il-zG8" secondAttribute="leading" id="52a-Bn-hqC"/>
                             <constraint firstItem="oWo-O1-ban" firstAttribute="top" secondItem="uYP-Xn-FYe" secondAttribute="top" id="Cak-ZG-VFd"/>
+                            <constraint firstItem="6o5-kz-bf4" firstAttribute="leading" secondItem="oWo-O1-ban" secondAttribute="leading" id="Eei-AE-KU9"/>
                             <constraint firstAttribute="trailing" secondItem="oWo-O1-ban" secondAttribute="trailing" id="Ezc-rW-mJn"/>
-                            <constraint firstItem="rg0-nl-3NX" firstAttribute="top" secondItem="oWo-O1-ban" secondAttribute="bottom" constant="7" id="SSB-WQ-c3c"/>
+                            <constraint firstItem="rg0-nl-3NX" firstAttribute="top" secondItem="oWo-O1-ban" secondAttribute="bottom" constant="41" id="SSB-WQ-c3c"/>
+                            <constraint firstItem="snw-oH-aaP" firstAttribute="trailing" secondItem="oWo-O1-ban" secondAttribute="trailing" id="Ui9-O5-vcB"/>
                             <constraint firstItem="oWo-O1-ban" firstAttribute="leading" secondItem="rg0-nl-3NX" secondAttribute="leading" id="Y0B-r4-Zj5"/>
+                            <constraint firstItem="6o5-kz-bf4" firstAttribute="top" secondItem="snw-oH-aaP" secondAttribute="top" id="b8a-Fb-0AB"/>
+                            <constraint firstItem="rg0-nl-3NX" firstAttribute="top" secondItem="snw-oH-aaP" secondAttribute="bottom" constant="8" symbolic="YES" id="h38-of-F3L"/>
+                            <constraint firstItem="rg0-nl-3NX" firstAttribute="top" secondItem="6o5-kz-bf4" secondAttribute="bottom" constant="8" symbolic="YES" id="ioG-u5-g7o"/>
                             <constraint firstItem="rg0-nl-3NX" firstAttribute="bottom" secondItem="uYP-Xn-FYe" secondAttribute="bottom" id="khQ-jd-2pk"/>
+                            <constraint firstItem="snw-oH-aaP" firstAttribute="leading" secondItem="uYP-Xn-FYe" secondAttribute="leading" constant="128" id="xfN-P3-lbN"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="uYP-Xn-FYe"/>
                     </view>
                     <connections>
                         <outlet property="previousOrderInfoTable" destination="rg0-nl-3NX" id="xPh-Qw-WCg"/>
+                        <outlet property="selectedMounth" destination="snw-oH-aaP" id="Peg-aN-8XH"/>
                         <segue destination="On0-td-PJd" kind="show" identifier="foodDetails" id="Xjx-kJ-JuT"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="OFI-Sj-4rs" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="9201" y="1388"/>
+            <point key="canvasLocation" x="9200.7999999999993" y="1387.5562218890557"/>
         </scene>
         <!--Previous Orders InformationVC-->
         <scene sceneID="5kX-FQ-RlB">
