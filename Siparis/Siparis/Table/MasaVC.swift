@@ -51,7 +51,7 @@ class MasaVC: UIViewController {
     var deneme = 0
     
    
-      var activityIndicator:UIActivityIndicatorView = UIActivityIndicatorView()
+    var activityIndicator:UIActivityIndicatorView = UIActivityIndicatorView()
 
     
     var tableBottomBackgroundColor = UIColor.gray
@@ -72,12 +72,12 @@ class MasaVC: UIViewController {
         super.viewDidLoad()
         
         NotificationCenter.default.addObserver(self, selector: #selector(statusManager), name: .flagsChanged, object: Network.reachability)
-        updateUserInterface()
+           updateUserInterface()
          
        
         
-        let value = UIInterfaceOrientation.landscapeRight.rawValue
-        UIDevice.current.setValue(value, forKey: "orientation")
+//        let value = UIInterfaceOrientation.landscapeRight.rawValue
+//        UIDevice.current.setValue(value, forKey: "orientation")
         
         _ = Timer.scheduledTimer(timeInterval: 10, target: self, selector: #selector(viewWillAppear(_:)), userInfo: nil, repeats: true)
         
@@ -138,8 +138,11 @@ class MasaVC: UIViewController {
             buttonHeight = 140
         }
         else if screenWidth < 1000{
-            buttonWidth = 45
-            buttonHeight = 45
+            buttonWidth = 40
+            buttonHeight = 40
+            
+            xLocation = 10
+            yLocation = 100
         }
      
     }
