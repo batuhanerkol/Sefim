@@ -87,6 +87,7 @@ class AddFoodTitleVC: UIViewController,UITextFieldDelegate {
             foodTitle["foodTitle"] = textField.text!
             foodTitle["foodTitleOwner"] = PFUser.current()!.username!
             foodTitle["BusinessName"] = businessName
+            foodTitle["HesapOnaylandi"] = ""
             
             foodTitle.saveInBackground { (success, error) in
                 

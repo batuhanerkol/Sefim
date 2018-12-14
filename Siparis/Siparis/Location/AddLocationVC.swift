@@ -138,6 +138,7 @@ class AddLocationVC: UIViewController, MKMapViewDelegate, CLLocationManagerDeleg
         object["LezzetPuan"] = ""
         object["HizmetPuan"] = ""
         object["MasaSayisi"] = "0"
+        object["HesapOnaylandi"] = ""
         
         object.saveInBackground { (success, error) in
             if error != nil{
