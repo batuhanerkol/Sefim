@@ -48,6 +48,10 @@ class AddFoodTitleVC: UIViewController,UITextFieldDelegate {
             let okButton = UIAlertAction(title: "TAMAM", style: UIAlertAction.Style.cancel, handler: nil)
             alert.addAction(okButton)
             self.present(alert, animated: true, completion: nil)
+            
+            self.activityIndicator.stopAnimating()
+            UIApplication.shared.endIgnoringInteractionEvents()
+            
             self.addButton.isEnabled = false
             
         case .wifi:
@@ -72,6 +76,9 @@ class AddFoodTitleVC: UIViewController,UITextFieldDelegate {
             let okButton = UIAlertAction(title: "TAMAM", style: UIAlertActionStyle.cancel, handler: nil)
             alert.addAction(okButton)
             self.present(alert, animated: true, completion: nil)
+            
+            self.activityIndicator.stopAnimating()
+            UIApplication.shared.endIgnoringInteractionEvents()
         }
         }
     func addFoodTitle(){
@@ -96,6 +103,9 @@ class AddFoodTitleVC: UIViewController,UITextFieldDelegate {
                     let okButton = UIAlertAction(title: "TAMAM", style: UIAlertActionStyle.cancel, handler: nil)
                     alert.addAction(okButton)
                     self.present(alert, animated: true, completion: nil)
+                    
+                    self.activityIndicator.stopAnimating()
+                    UIApplication.shared.endIgnoringInteractionEvents()
                 }
                 else{
                     self.activityIndicator.stopAnimating()
@@ -111,6 +121,9 @@ class AddFoodTitleVC: UIViewController,UITextFieldDelegate {
             let okButton = UIAlertAction(title: "TAMAM", style: UIAlertActionStyle.cancel, handler: nil)
             alert.addAction(okButton)
             self.present(alert, animated: true, completion: nil)
+            
+            self.activityIndicator.stopAnimating()
+            UIApplication.shared.endIgnoringInteractionEvents()
         }
     }
     func getBussinessNameData(){
@@ -123,6 +136,9 @@ class AddFoodTitleVC: UIViewController,UITextFieldDelegate {
                 let okButton = UIAlertAction(title: "TAMAM", style: UIAlertAction.Style.cancel, handler: nil)
                 alert.addAction(okButton)
                 self.present(alert, animated: true, completion: nil)
+                
+                self.activityIndicator.stopAnimating()
+                UIApplication.shared.endIgnoringInteractionEvents()
             }
             else{
                 self.nameArray.removeAll(keepingCapacity: false)

@@ -57,6 +57,10 @@ class AddFoodInformationVC: UIViewController, UIImagePickerControllerDelegate, U
             let okButton = UIAlertAction(title: "TAMAM", style: UIAlertAction.Style.cancel, handler: nil)
             alert.addAction(okButton)
             self.present(alert, animated: true, completion: nil)
+            
+            self.activityIndicator.stopAnimating()
+            UIApplication.shared.endIgnoringInteractionEvents()
+            
             self.confirmButton.isEnabled = false
             
         case .wifi:
@@ -95,6 +99,10 @@ class AddFoodInformationVC: UIViewController, UIImagePickerControllerDelegate, U
     }
     
     func addFoodInfo(){
+        
+        activityIndicator.startAnimating()
+        UIApplication.shared.beginIgnoringInteractionEvents()
+        
         if textField.text != "" && longTextField.text != "" && priceTextField.text != ""  {
             self.confirmButton.isHidden = true
             

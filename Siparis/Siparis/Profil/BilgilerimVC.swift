@@ -79,6 +79,10 @@ class BilgilerimVC: UIViewController, UIImagePickerControllerDelegate, UINavigat
             let okButton = UIAlertAction(title: "TAMAM", style: UIAlertAction.Style.cancel, handler: nil)
             alert.addAction(okButton)
             self.present(alert, animated: true, completion: nil)
+            
+            self.activityIndicator.stopAnimating()
+            UIApplication.shared.endIgnoringInteractionEvents()
+            
             self.saceLogoButton.isEnabled = false
             self.saveChangesButton.isEnabled = false
             self.saveChangesButton.isEnabled = false

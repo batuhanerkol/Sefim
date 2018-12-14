@@ -60,6 +60,10 @@ class FoodDetailsTVC: UITableViewController {
             let okButton = UIAlertAction(title: "TAMAM", style: UIAlertAction.Style.cancel, handler: nil)
             alert.addAction(okButton)
             self.present(alert, animated: true, completion: nil)
+            
+            self.activityIndicator.stopAnimating()
+            UIApplication.shared.endIgnoringInteractionEvents()
+            
             self.editButton.isEnabled = false
             
         case .wifi:
@@ -104,6 +108,9 @@ class FoodDetailsTVC: UITableViewController {
                 let okButton = UIAlertAction(title: "TAMAM", style: UIAlertActionStyle.cancel, handler: nil)
                 alert.addAction(okButton)
                 self.present(alert, animated: true, completion: nil)
+                
+                self.activityIndicator.stopAnimating()
+                UIApplication.shared.endIgnoringInteractionEvents()
             }
             else{
                 self.foodNameArray.removeAll(keepingCapacity: false)
@@ -132,6 +139,9 @@ class FoodDetailsTVC: UITableViewController {
                 let okButton = UIAlertAction(title: "TAMAM", style: UIAlertActionStyle.cancel, handler: nil)
                 alert.addAction(okButton)
                 self.present(alert, animated: true, completion: nil)
+                
+                self.activityIndicator.stopAnimating()
+                UIApplication.shared.endIgnoringInteractionEvents()
             }
             else{
                 self.foodNameArray.removeAll(keepingCapacity: false)

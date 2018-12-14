@@ -28,6 +28,9 @@ class IsletmeProfilVC: UIViewController {
             let okButton = UIAlertAction(title: "TAMAM", style: UIAlertAction.Style.cancel, handler: nil)
             alert.addAction(okButton)
             self.present(alert, animated: true, completion: nil)
+            
+    
+            
     self.logOutButton.isEnabled = false
 
         case .wifi:
