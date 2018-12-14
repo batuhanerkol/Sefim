@@ -33,7 +33,7 @@ class FoodDetailsTVC: UITableViewController {
         tableView.delegate = self
         tableView.dataSource = self
         
-        var activityIndicator:UIActivityIndicatorView = UIActivityIndicatorView()
+ 
         // loading sembolu
         activityIndicator.center = self.view.center
         activityIndicator.hidesWhenStopped = true
@@ -42,8 +42,7 @@ class FoodDetailsTVC: UITableViewController {
         
         activityIndicator.startAnimating()
         UIApplication.shared.beginIgnoringInteractionEvents()
-        
-        //-------------------
+    
     
     
     }

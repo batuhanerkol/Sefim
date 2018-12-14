@@ -132,17 +132,20 @@ class MasaVC: UIViewController {
         if screenWidth > 1000 && screenWidth < 1200 {
             buttonWidth = 90
             buttonHeight = 90
+            
+            xLocation = 10
+            yLocation = 90
         }
         else if screenWidth > 1200{
             buttonWidth = 140
-            buttonHeight = 150
+            buttonHeight = 140
         }
         else if screenWidth < 1000{
             buttonWidth = 40
             buttonHeight = 40
             
             xLocation = 10
-            yLocation = 100
+            yLocation = 70
         }
      
     }
@@ -243,13 +246,15 @@ class MasaVC: UIViewController {
                     self.tableButtonBackgroundColorChange[tableButtonIndex].backgroundColor = UIColor.red
               
                     }
-                    self.controlOfCheck()
+                   
                         hesapMasaSayisiIndex += 1
                 }
                     
                 }
                 self.activityIndicator.stopAnimating()
                 UIApplication.shared.endIgnoringInteractionEvents()
+                
+                 self.controlOfCheck()
             }
             
         }

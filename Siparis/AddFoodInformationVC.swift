@@ -40,9 +40,7 @@ class AddFoodInformationVC: UIViewController, UIImagePickerControllerDelegate, U
         activityIndicator.hidesWhenStopped = true
         activityIndicator.activityIndicatorViewStyle = UIActivityIndicatorView.Style.gray
         view.addSubview(activityIndicator)
-        
-        activityIndicator.startAnimating()
-        UIApplication.shared.beginIgnoringInteractionEvents()
+
         
     }
     override func viewWillAppear(_ animated: Bool) {
@@ -171,6 +169,10 @@ class AddFoodInformationVC: UIViewController, UIImagePickerControllerDelegate, U
     }
     
     func getBussinessNameData(){
+        
+        activityIndicator.startAnimating()
+        UIApplication.shared.beginIgnoringInteractionEvents()
+        
         let query = PFQuery(className: "BusinessInformation")
         query.whereKey("businessUserName", equalTo: "\(PFUser.current()!.username!)")
         

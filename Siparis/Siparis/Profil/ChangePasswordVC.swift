@@ -71,13 +71,25 @@ class ChangePasswordVC: UIViewController {
             }
             else{
                 if self.oldPasswordTextField.text! != PFUser.current()?.password{
+                    
                     if self.newPasswordTextField.text! == self.newPasswordAgainTextField.text{
+                        
                 object!["password"] = self.newPasswordAgainTextField.text!
-                object?.saveInBackground()
-                let alert = UIAlertController(title: "Şifre Başarıyla Değiştirildi", message: "", preferredStyle: UIAlertControllerStyle.alert)
-                let okButton = UIAlertAction(title: "TAMAM", style: UIAlertActionStyle.cancel, handler: nil)
-                alert.addAction(okButton)
-                self.present(alert, animated: true, completion: nil)
+                        object?.saveInBackground(block: { (success, error) in
+                            if error != nil{
+                                let alert = UIAlertController(title: "HATA", message: error?.localizedDescription, preferredStyle: UIAlertControllerStyle.alert)
+                                let okButton = UIAlertAction(title: "TAMAM", style: UIAlertActionStyle.cancel, handler: nil)
+                                alert.addAction(okButton)
+                                self.present(alert, animated: true, completion: nil)
+                            }else{
+                                self.login()
+                                let alert = UIAlertController(title: "Şifre Başarıyla Değiştirildi", message: "", preferredStyle: UIAlertControllerStyle.alert)
+                                let okButton = UIAlertAction(title: "TAMAM", style: UIAlertActionStyle.cancel, handler: nil)
+                                alert.addAction(okButton)
+                                self.present(alert, animated: true, completion: nil)
+                            }
+                        })
+                        
                 }
                     else{
                         let alert = UIAlertController(title: "Yeni Şifre Eşleşmiyor", message: "", preferredStyle: UIAlertControllerStyle.alert)
@@ -97,6 +109,25 @@ class ChangePasswordVC: UIViewController {
             }
         }
        
+    }
+    func login(){
+        
+        PFUser.logInWithUsername(inBackground: (PFUser.current()?.username)!, password: self.newPasswordAgainTextField.text!) { (user, error) in
+            if error != nil{
+                let alert = UIAlertController(title: "HATA", message: error?.localizedDescription, preferredStyle: UIAlertController.Style.alert)
+                let okButton = UIAlertAction(title: "TAMAM", style: UIAlertAction.Style.cancel, handler: nil)
+                alert.addAction(okButton)
+                self.present(alert, animated: true, completion: nil)
+            }
+            else{
+                
+                
+                self.activityIndicator.stopAnimating()
+                UIApplication.shared.endIgnoringInteractionEvents()
+            }
+        }
+        
+        
     }
     
   
