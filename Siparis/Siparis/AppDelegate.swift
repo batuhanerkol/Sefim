@@ -33,9 +33,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         rememberUser()
         
         let config = ParseClientConfiguration { (ParseMutableClientConfiguration) in
-            ParseMutableClientConfiguration.applicationId = "741b0f4ea3b290196f78245e7893fff5e46cac1e"
-            ParseMutableClientConfiguration.clientKey = "cb667b25903077a8ade2f625112798abdffe2ce8"
-            ParseMutableClientConfiguration.server = "http://54.186.194.33:80/parse"
+            ParseMutableClientConfiguration.applicationId = "zfDyQZzwXlFGEcnvSjQJlzI52a55K0ui1BXvYRXo"
+            ParseMutableClientConfiguration.clientKey = "ZC2d1OyaL5QYpUS2TeAsJggSOIhnRkGLUwl9D8YW"
+            ParseMutableClientConfiguration.server = "https://parseapi.back4app.com/"
         }
         
         Parse.initialize(with: config)

@@ -44,8 +44,7 @@ class FoodDetailsTVC: UITableViewController {
         UIApplication.shared.beginIgnoringInteractionEvents()
         
         //-------------------
-        self.activityIndicator.stopAnimating()
-        UIApplication.shared.endIgnoringInteractionEvents()
+    
     
     }
     
@@ -92,7 +91,8 @@ class FoodDetailsTVC: UITableViewController {
     }
    
     func getData(){
-        
+        self.activityIndicator.stopAnimating()
+        UIApplication.shared.endIgnoringInteractionEvents()
         
         let query = PFQuery(className: "FoodInformation")
         query.whereKey("foodNameOwner", equalTo: "\(PFUser.current()!.username!)")
@@ -114,6 +114,7 @@ class FoodDetailsTVC: UITableViewController {
             }
             self.activityIndicator.stopAnimating()
             UIApplication.shared.endIgnoringInteractionEvents()
+            
             self.nameTableView.reloadData()
             
         }

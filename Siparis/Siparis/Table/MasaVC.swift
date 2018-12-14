@@ -88,8 +88,8 @@ class MasaVC: UIViewController {
         activityIndicator.activityIndicatorViewStyle = UIActivityIndicatorView.Style.gray
         view.addSubview(activityIndicator)
         
-        activityIndicator.startAnimating()
-        UIApplication.shared.beginIgnoringInteractionEvents()
+//        activityIndicator.startAnimating()
+//        UIApplication.shared.beginIgnoringInteractionEvents()
         
 
     }
@@ -110,18 +110,18 @@ class MasaVC: UIViewController {
             
             
         case .wifi:
-           controlOfButtons()
            buttonSizes()
            getTableNumberData()
            getButtonWhenAppOpen()
            getObjectId()
+           controlOfButtons()
               self.createButton.isEnabled = true
         case .wwan:
-         controlOfButtons()
          buttonSizes()
          getTableNumberData()
          getButtonWhenAppOpen()
          getObjectId()
+        controlOfButtons()
               self.createButton.isEnabled = true
         }
     }
@@ -135,7 +135,7 @@ class MasaVC: UIViewController {
         }
         else if screenWidth > 1200{
             buttonWidth = 140
-            buttonHeight = 140
+            buttonHeight = 150
         }
         else if screenWidth < 1000{
             buttonWidth = 40

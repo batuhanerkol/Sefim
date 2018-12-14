@@ -88,6 +88,8 @@ class AddFoodInformationVC: UIViewController, UIImagePickerControllerDelegate, U
 
     @IBAction func confirmButtonPressed(_ sender: Any) {
         
+        activityIndicator.startAnimating()
+        UIApplication.shared.beginIgnoringInteractionEvents()
             addFoodInfo()
      
     }
@@ -129,7 +131,8 @@ class AddFoodInformationVC: UIViewController, UIImagePickerControllerDelegate, U
                         self.longTextField.text = ""
                         self.selectedImage.image = UIImage(named: "fotosecin.png")
                         
-                        
+                        self.activityIndicator.stopAnimating()
+                        UIApplication.shared.endIgnoringInteractionEvents()
                         
                     }
                 }
@@ -139,6 +142,9 @@ class AddFoodInformationVC: UIViewController, UIImagePickerControllerDelegate, U
                     alert.addAction(okButton)
                     self.present(alert, animated: true, completion: nil)
                     
+                    self.activityIndicator.stopAnimating()
+                    UIApplication.shared.endIgnoringInteractionEvents()
+                    
                 }
             }
         }
@@ -147,6 +153,9 @@ class AddFoodInformationVC: UIViewController, UIImagePickerControllerDelegate, U
             let okButton = UIAlertAction(title: "TAMAM", style: UIAlertActionStyle.cancel, handler: nil)
             alert.addAction(okButton)
             self.present(alert, animated: true, completion: nil)
+            
+            self.activityIndicator.stopAnimating()
+            UIApplication.shared.endIgnoringInteractionEvents()
             
         }
         
@@ -162,6 +171,9 @@ class AddFoodInformationVC: UIViewController, UIImagePickerControllerDelegate, U
                 let okButton = UIAlertAction(title: "TAMAM", style: UIAlertAction.Style.cancel, handler: nil)
                 alert.addAction(okButton)
                 self.present(alert, animated: true, completion: nil)
+                
+                self.activityIndicator.stopAnimating()
+                UIApplication.shared.endIgnoringInteractionEvents()
             }
             else{
                 self.nameArray.removeAll(keepingCapacity: false)

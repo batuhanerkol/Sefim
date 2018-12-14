@@ -46,7 +46,6 @@ class PopUpVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
     @IBOutlet weak var orderHasGivenButton: UIButton!
     @IBOutlet weak var foodIsReadyButton: UIButton!
     @IBOutlet weak var hesapDurumuLabel: UILabel!
-    @IBOutlet weak var totalPriceLabel: UILabel!
     @IBOutlet weak var tableNumberLabel: UILabel!
     @IBOutlet weak var orderTableView: UITableView!
     
@@ -234,7 +233,6 @@ class PopUpVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
                     
                     self.objectIdArray.append(object.objectId! as String)
                     
-                    self.totalPriceLabel.text = "\(self.totalPriceArray.last!)"
                     self.chosenDate = "\(self.dateArray.last!)"
                     self.chosenTime = "\(self.timeArray.last!)"
                     self.chosenBusiness = "\(self.businessNameArray.last!)"
