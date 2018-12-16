@@ -56,9 +56,6 @@ class FoodInformationShowVC: UIViewController {
             alert.addAction(okButton)
             self.present(alert, animated: true, completion: nil)
             
-            self.activityIndicator.stopAnimating()
-            UIApplication.shared.endIgnoringInteractionEvents()
-            
         case .wifi:
              findFood()
         case .wwan:

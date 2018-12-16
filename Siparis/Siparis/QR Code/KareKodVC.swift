@@ -71,7 +71,6 @@ class KareKodVC: UIViewController , UIImagePickerControllerDelegate, UINavigatio
             self.present(alert, animated: true, completion: nil)
          self.saveToParseButton.isEnabled = false
             
-            
         case .wifi:
              getQRDataFromParse()
              getObjectId()

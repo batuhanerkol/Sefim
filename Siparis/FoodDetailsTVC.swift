@@ -60,9 +60,6 @@ class FoodDetailsTVC: UITableViewController {
             alert.addAction(okButton)
             self.present(alert, animated: true, completion: nil)
             
-            self.activityIndicator.stopAnimating()
-            UIApplication.shared.endIgnoringInteractionEvents()
-            
             self.editButton.isEnabled = false
             
         case .wifi:

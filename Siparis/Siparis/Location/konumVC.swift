@@ -73,9 +73,7 @@ class konumVC: UIViewController, MKMapViewDelegate, CLLocationManagerDelegate {
             let okButton = UIAlertAction(title: "TAMAM", style: UIAlertAction.Style.cancel, handler: nil)
             alert.addAction(okButton)
             self.present(alert, animated: true, completion: nil)
-            
-            self.activityIndicator.stopAnimating()
-            UIApplication.shared.endIgnoringInteractionEvents()
+
             
             self.addButton.isEnabled = false
             self.deleteLocationButton.isEnabled = false

@@ -56,9 +56,6 @@ class AddFoodInformationVC: UIViewController, UIImagePickerControllerDelegate, U
             alert.addAction(okButton)
             self.present(alert, animated: true, completion: nil)
             
-            self.activityIndicator.stopAnimating()
-            UIApplication.shared.endIgnoringInteractionEvents()
-            
             self.confirmButton.isEnabled = false
             
         case .wifi:
