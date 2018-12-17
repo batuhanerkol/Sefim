@@ -115,13 +115,15 @@ class MasaVC: UIViewController {
            getButtonWhenAppOpen()
            getObjectId()
            controlOfButtons()
+  
               self.createButton.isEnabled = true
         case .wwan:
          buttonSizes()
          getTableNumberData()
          getButtonWhenAppOpen()
          getObjectId()
-        controlOfButtons()
+         controlOfButtons()
+ 
               self.createButton.isEnabled = true
         }
     }
@@ -179,9 +181,8 @@ class MasaVC: UIViewController {
     
         let query = PFQuery(className: "VerilenSiparisler")
         query.whereKey("IsletmeSahibi", equalTo: (PFUser.current()?.username)!)
-        query.whereKey("HesapOdendi", notEqualTo: "Evet")
+//        query.whereKey("HesapOdendi", notEqualTo: "Evet")
 
-        
         query.findObjectsInBackground { (objects, error) in
             
             if error != nil{
@@ -196,6 +197,7 @@ class MasaVC: UIViewController {
                 self.hesapIstendiArray.removeAll(keepingCapacity: false)
                 self.hesapMasaSAyisiArray.removeAll(keepingCapacity: false)
                 self.siparisVerildiArray.removeAll(keepingCapacity: false)
+                self.hesapOdendiArray.removeAll(keepingCapacity: false)
                 
                 for object in objects! {
                     
@@ -204,7 +206,7 @@ class MasaVC: UIViewController {
                     self.hesapIstendiArray.append(object.object(forKey: "HesapIstendi") as! String)
                     self.hesapMasaSAyisiArray.append(object.object(forKey: "MasaNo") as! String)
                    self.siparisVerildiArray.append(object.object(forKey: "SiparisVerildi") as! String)
-                    
+                  self.hesapOdendiArray.append(object.object(forKey: "HesapOdendi") as! String)
 //                    self.yemekHazir = "\(self.yemekHazirArray.last!)"
 //                    self.yemekTeslim = "\(self.yemekTeslimArray.last!)"
 //                    self.hesapIstendi = "\(self.hesapIstendiArray.last!)"
@@ -226,41 +228,47 @@ class MasaVC: UIViewController {
                     while hesapMasaSayisiIndex < self.hesapMasaSAyisiArray.count {
                     let tableButtonIndex = Int(self.hesapMasaSAyisiArray[hesapMasaSayisiIndex])! - 1  // işlem yapılan bütün masaların renk değişimleri gerçekleşsin
     
-                if self.siparisVerildiArray[hesapMasaSayisiIndex] == "Evet" && self.yemekHazirArray[hesapMasaSayisiIndex] == "" && self.yemekTeslimArray[hesapMasaSayisiIndex] == "" && self.hesapIstendiArray[hesapMasaSayisiIndex] == "" {
+                if self.siparisVerildiArray[hesapMasaSayisiIndex] == "Evet" && self.yemekHazirArray[hesapMasaSayisiIndex] == "" && self.yemekTeslimArray[hesapMasaSayisiIndex] == "" && self.hesapIstendiArray[hesapMasaSayisiIndex] == "" && self.hesapOdendiArray[hesapMasaSayisiIndex] == "" {
                     
                     self.tableButtonBackgroundColorChange[tableButtonIndex].backgroundColor = UIColor.orange
          
                 }
-                else  if self.siparisVerildiArray[hesapMasaSayisiIndex] == "Evet" && self.yemekHazirArray[hesapMasaSayisiIndex] == "Evet" && self.yemekTeslimArray[hesapMasaSayisiIndex] == ""  && self.hesapIstendiArray[hesapMasaSayisiIndex] == ""{
+                else  if self.siparisVerildiArray[hesapMasaSayisiIndex] == "Evet" && self.yemekHazirArray[hesapMasaSayisiIndex] == "Evet" && self.yemekTeslimArray[hesapMasaSayisiIndex] == ""  && self.hesapIstendiArray[hesapMasaSayisiIndex] == "" && self.hesapOdendiArray[hesapMasaSayisiIndex] == ""{
                     
                     self.tableButtonBackgroundColorChange[tableButtonIndex].backgroundColor = UIColor.blue
                 
                     }
-                else  if self.siparisVerildiArray[hesapMasaSayisiIndex] == "Evet" && self.yemekHazirArray[hesapMasaSayisiIndex] == "Evet" && self.yemekTeslimArray[hesapMasaSayisiIndex] == "Evet"  && self.hesapIstendiArray[hesapMasaSayisiIndex] == ""{
+                else  if self.siparisVerildiArray[hesapMasaSayisiIndex] == "Evet" && self.yemekHazirArray[hesapMasaSayisiIndex] == "Evet" && self.yemekTeslimArray[hesapMasaSayisiIndex] == "Evet"  && self.hesapIstendiArray[hesapMasaSayisiIndex] == "" && self.hesapOdendiArray[hesapMasaSayisiIndex] == ""{
                     
                     self.tableButtonBackgroundColorChange[tableButtonIndex].backgroundColor = UIColor.green
                  
                     }
-                else  if self.siparisVerildiArray[hesapMasaSayisiIndex] == "Evet" && self.yemekHazirArray[hesapMasaSayisiIndex] == "Evet" && self.yemekTeslimArray[hesapMasaSayisiIndex] == "Evet"  && self.hesapIstendiArray[hesapMasaSayisiIndex] != ""{
+                else  if self.siparisVerildiArray[hesapMasaSayisiIndex] == "Evet" && self.yemekHazirArray[hesapMasaSayisiIndex] == "Evet" && self.yemekTeslimArray[hesapMasaSayisiIndex] == "Evet"  && self.hesapIstendiArray[hesapMasaSayisiIndex] != "" && self.hesapOdendiArray[hesapMasaSayisiIndex] == ""{
                     
                     self.tableButtonBackgroundColorChange[tableButtonIndex].backgroundColor = UIColor.red
               
                     }
+                else  if self.siparisVerildiArray[hesapMasaSayisiIndex] == "Evet" && self.yemekHazirArray[hesapMasaSayisiIndex] == "Evet" && self.yemekTeslimArray[hesapMasaSayisiIndex] == "Evet"  && self.hesapIstendiArray[hesapMasaSayisiIndex] != "" && self.hesapOdendiArray[hesapMasaSayisiIndex] != ""{
+                    
+                     self.tableButtonBackgroundColorChange[tableButtonIndex].backgroundColor = UIColor.gray
+                    
+                        }
                    
                         hesapMasaSayisiIndex += 1
                 }
+                    
                     
                 }
                 self.activityIndicator.stopAnimating()
                 UIApplication.shared.endIgnoringInteractionEvents()
                 
-                 self.controlOfCheck()
+             
             }
             
         }
     }
     
-    func controlOfCheck(){
+    func controlOfCheck(){ // kullanılmıyor
         let query = PFQuery(className: "VerilenSiparisler")
         query.whereKey("IsletmeSahibi", equalTo: (PFUser.current()?.username)!)
         query.whereKey("HesapOdendi", equalTo: "Evet")
