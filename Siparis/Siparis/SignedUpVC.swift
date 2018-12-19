@@ -96,6 +96,7 @@ class SignedUpVC: UIViewController, UITextFieldDelegate {
                     print("kullanıcı oluşturuldu")
                     
                     self.performSegue(withIdentifier: "SignedUpToTabBar", sender: nil)
+                    
                     UserDefaults.standard.set(self.userName.text!, forKey: "userName")
                     UserDefaults.standard.synchronize()
                     
