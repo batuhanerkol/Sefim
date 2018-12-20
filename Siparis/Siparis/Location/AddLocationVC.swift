@@ -142,7 +142,6 @@ class AddLocationVC: UIViewController, MKMapViewDelegate, CLLocationManagerDeleg
         object["MasaSayisi"] = "0"
         object["HesapOnaylandi"] = ""
         object["EkranSifresi"] = ""
-        
         object.saveInBackground { (success, error) in
             if error != nil{
                 let alert = UIAlertController(title: "HATA", message: error?.localizedDescription, preferredStyle: UIAlertControllerStyle.alert)
