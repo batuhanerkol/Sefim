@@ -15,6 +15,9 @@ class konumVC: UIViewController, MKMapViewDelegate, CLLocationManagerDelegate {
     var selectedName = ""
     var chosenLatitude = ""
     var chosenLongitude = ""
+    var screenPassword = ""
+    
+    var passwordTextField: UITextField?
     
     @IBOutlet weak var deleteLocationButton: UIButton!
     @IBOutlet weak var businessNameLabel: UILabel!
@@ -22,6 +25,7 @@ class konumVC: UIViewController, MKMapViewDelegate, CLLocationManagerDelegate {
     @IBOutlet weak var longitudeLabel: UILabel!
     @IBOutlet weak var latitudeLabel: UILabel!
     @IBOutlet weak var mapView: MKMapView!
+    
     
     var chosenbusinessArray = [String]()
     var chosenLatitudeArray = [String]()
@@ -60,7 +64,7 @@ class konumVC: UIViewController, MKMapViewDelegate, CLLocationManagerDelegate {
             }
     override func viewWillAppear(_ animated: Bool) {
              self.addButton.isHidden = true
-        
+        enteringPassword()
         updateUserInterface()
     }
     
@@ -91,6 +95,59 @@ class konumVC: UIViewController, MKMapViewDelegate, CLLocationManagerDelegate {
     @objc func statusManager(_ notification: Notification) {
         updateUserInterface()
     }
+    
+    func enteringPassword(){
+        
+        let alertController = UIAlertController(title: "Şifre Girin", message: "", preferredStyle: .
+            alert)
+        let action = UIAlertAction(title: "Tamam", style: .default) { (action) in
+            
+            
+            
+            let query = PFQuery(className: "BusinessInformation")
+            query.whereKey("businessUserName", equalTo: "\(PFUser.current()!.username!)")
+            
+            query.findObjectsInBackground { (objects, error) in
+                if error != nil{
+                    let alert = UIAlertController(title: "HATA", message: error?.localizedDescription, preferredStyle: UIAlertControllerStyle.alert)
+                    let okButton = UIAlertAction(title: "TAMAM", style: UIAlertActionStyle.cancel, handler: nil)
+                    alert.addAction(okButton)
+                    self.present(alert, animated: true, completion: nil)
+                    
+                    self.activityIndicator.stopAnimating()
+                    UIApplication.shared.endIgnoringInteractionEvents()
+                }
+                else{
+                    
+                    self.screenPassword = ""
+                    
+                    for object in objects!{
+                        
+                        self.screenPassword = (object.object(forKey: "EkranSifresi") as! String)
+                        
+                    }
+                    
+                    if alertController.textFields?.first?.text! == self.screenPassword{
+                        print("Şifreler eşleşiyor")
+                    }
+                    else{
+                        
+                        self.viewWillAppear(false)
+                    }
+                    
+                }
+            }
+        }
+        
+        alertController.addTextField { (passwordTextField) in
+            print(passwordTextField.text!)
+        }
+        alertController.textFields?.first?.isSecureTextEntry = true
+        alertController.addAction(action)
+        present(alertController, animated: true, completion: nil)
+        
+    }
+    
     
     
     @IBAction func AddLocationPressed(_ sender: Any) {

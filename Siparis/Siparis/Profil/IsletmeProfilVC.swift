@@ -12,6 +12,10 @@ import Parse
 class IsletmeProfilVC: UIViewController {
     @IBOutlet weak var logOutButton: UIBarButtonItem!
     @IBOutlet weak var bussinessInfoButton: UIButton!
+    
+    var screenPassword = ""
+    
+    var passwordTextField: UITextField?
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -19,6 +23,9 @@ class IsletmeProfilVC: UIViewController {
         NotificationCenter.default.addObserver(self, selector: #selector(statusManager), name: .flagsChanged, object: Network.reachability)
         updateUserInterface()
 
+    }
+    override func viewWillAppear(_ animated: Bool) {
+        enteringPassword()
     }
     func updateUserInterface() {
         guard let status = Network.reachability?.status else { return }
@@ -45,6 +52,56 @@ class IsletmeProfilVC: UIViewController {
         updateUserInterface()
     }
     
+    
+    func enteringPassword(){
+        
+        let alertController = UIAlertController(title: "Şifre Girin", message: "", preferredStyle: .
+            alert)
+        let action = UIAlertAction(title: "Tamam", style: .default) { (action) in
+            
+            
+            
+            let query = PFQuery(className: "BusinessInformation")
+            query.whereKey("businessUserName", equalTo: "\(PFUser.current()!.username!)")
+            
+            query.findObjectsInBackground { (objects, error) in
+                if error != nil{
+                    let alert = UIAlertController(title: "HATA", message: error?.localizedDescription, preferredStyle: UIAlertControllerStyle.alert)
+                    let okButton = UIAlertAction(title: "TAMAM", style: UIAlertActionStyle.cancel, handler: nil)
+                    alert.addAction(okButton)
+                    self.present(alert, animated: true, completion: nil)
+                
+                }
+                else{
+                    
+                    self.screenPassword = ""
+                    
+                    for object in objects!{
+                        
+                        self.screenPassword = (object.object(forKey: "EkranSifresi") as! String)
+                        
+                    }
+                    
+                    if alertController.textFields?.first?.text! == self.screenPassword{
+                        print("Şifreler eşleşiyor")
+                    }
+                    else{
+                        
+                        self.viewWillAppear(false)
+                    }
+                    
+                }
+            }
+        }
+        
+        alertController.addTextField { (passwordTextField) in
+            print(passwordTextField.text!)
+        }
+        alertController.textFields?.first?.isSecureTextEntry = true
+        alertController.addAction(action)
+        present(alertController, animated: true, completion: nil)
+        
+    }
     
     @IBAction func logoutClicked(_ sender: Any) {
         

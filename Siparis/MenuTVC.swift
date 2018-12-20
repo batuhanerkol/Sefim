@@ -20,11 +20,15 @@ class MenuTVC: UITableViewController {
 
     var chosenFood = ""
     
-       var activityIndicator:UIActivityIndicatorView = UIActivityIndicatorView()
+    var screenPassword = ""
+    
+    var passwordTextField: UITextField?
+    
+    var activityIndicator:UIActivityIndicatorView = UIActivityIndicatorView()
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+
         NotificationCenter.default.addObserver(self, selector: #selector(statusManager), name: .flagsChanged, object: Network.reachability)
         updateUserInterface()
         
@@ -46,7 +50,7 @@ class MenuTVC: UITableViewController {
         
     }
     override func viewWillAppear(_ animated: Bool) {
-         updateUserInterface()
+         enteringPassword()
     }
     
     func updateUserInterface() {
@@ -61,12 +65,12 @@ class MenuTVC: UITableViewController {
             
             self.editButton.isEnabled = false
         case .wifi:
-              self.editButton.isEnabled = true
+            self.editButton.isEnabled = true
             if PFUser.current()?.username != nil{
                 getData()
             }
         case .wwan:
-                  self.editButton.isEnabled = true
+            self.editButton.isEnabled = true
             if PFUser.current()?.username != nil{
                 getData()
             }
@@ -75,7 +79,58 @@ class MenuTVC: UITableViewController {
     @objc func statusManager(_ notification: Notification) {
         updateUserInterface()
     }
-
+    
+    func enteringPassword(){
+  
+        let alertController = UIAlertController(title: "Şifre Girin", message: "", preferredStyle: .
+        alert)
+        let action = UIAlertAction(title: "Tamam", style: .default) { (action) in
+            
+            
+            
+                let query = PFQuery(className: "BusinessInformation")
+                query.whereKey("businessUserName", equalTo: "\(PFUser.current()!.username!)")
+                
+                query.findObjectsInBackground { (objects, error) in
+                    if error != nil{
+                        let alert = UIAlertController(title: "HATA", message: error?.localizedDescription, preferredStyle: UIAlertControllerStyle.alert)
+                        let okButton = UIAlertAction(title: "TAMAM", style: UIAlertActionStyle.cancel, handler: nil)
+                        alert.addAction(okButton)
+                        self.present(alert, animated: true, completion: nil)
+                        
+                        self.activityIndicator.stopAnimating()
+                        UIApplication.shared.endIgnoringInteractionEvents()
+                    }
+                    else{
+                      
+                        self.screenPassword = ""
+                        
+                        for object in objects!{
+                           
+                            self.screenPassword = (object.object(forKey: "EkranSifresi") as! String)
+                            
+                        }
+                
+                        if alertController.textFields?.first?.text! == self.screenPassword{
+                            print("Şifreler eşleşiyor")
+                        }
+                        else{
+                        
+                            self.viewWillAppear(false)
+                        }
+                
+                    }
+                }
+        }
+      
+        alertController.addTextField { (passwordTextField) in
+            print(passwordTextField.text!)
+        }
+          alertController.textFields?.first?.isSecureTextEntry = true
+        alertController.addAction(action)
+        present(alertController, animated: true, completion: nil)
+       
+    }
     
     @IBAction func addButtonPressed(_ sender: UIBarButtonItem) {
         performSegue(withIdentifier: "MenuVCToAddFoodTitleVC", sender: nil)

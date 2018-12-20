@@ -11,6 +11,7 @@
 		B90CD86B2152BEE90001A0B8 /* AddLocationVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = B90CD86A2152BEE90001A0B8 /* AddLocationVC.swift */; };
 		B917457F21CA7A0900F569D6 /* sefimYazi.png in Resources */ = {isa = PBXBuildFile; fileRef = B917457E21CA7A0900F569D6 /* sefimYazi.png */; };
 		B917458321CB88EE00F569D6 /* ForgotPassword.swift in Sources */ = {isa = PBXBuildFile; fileRef = B917458221CB88EE00F569D6 /* ForgotPassword.swift */; };
+		B917458521CBB9B300F569D6 /* EkranSifresiVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = B917458421CBB9B300F569D6 /* EkranSifresiVC.swift */; };
 		B91861CB21BE7C070024E2E6 /* Reachability.swift in Sources */ = {isa = PBXBuildFile; fileRef = B91861CA21BE7C070024E2E6 /* Reachability.swift */; };
 		B91B248B21553045005C3DED /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B91B248A21553045005C3DED /* CoreLocation.framework */; };
 		B93953812168C6AE005A5099 /* BilgilerimVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = B93953802168C6AE005A5099 /* BilgilerimVC.swift */; };
@@ -54,6 +55,7 @@
 		B90CD86A2152BEE90001A0B8 /* AddLocationVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddLocationVC.swift; sourceTree = "<group>"; };
 		B917457E21CA7A0900F569D6 /* sefimYazi.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = sefimYazi.png; sourceTree = "<group>"; };
 		B917458221CB88EE00F569D6 /* ForgotPassword.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ForgotPassword.swift; sourceTree = "<group>"; };
+		B917458421CBB9B300F569D6 /* EkranSifresiVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EkranSifresiVC.swift; sourceTree = "<group>"; };
 		B91861CA21BE7C070024E2E6 /* Reachability.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Reachability.swift; sourceTree = "<group>"; };
 		B91B248A21553045005C3DED /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
 		B93953802168C6AE005A5099 /* BilgilerimVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BilgilerimVC.swift; sourceTree = "<group>"; };
@@ -183,6 +185,7 @@
 				B93CBAA221A85B46000FEC3F /* DateTimeCell.swift */,
 				B9960FD021ABFE9500C26569 /* PreviousOrdersInformationVC.swift */,
 				B9960FD221ABFF0200C26569 /* FoodPriceCell.swift */,
+				B917458421CBB9B300F569D6 /* EkranSifresiVC.swift */,
 			);
 			path = Profil;
 			sourceTree = "<group>";
@@ -355,6 +358,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B917458521CBB9B300F569D6 /* EkranSifresiVC.swift in Sources */,
 				B9FCE529213D90F5006BCB6C /* IsletmeProfilVC.swift in Sources */,
 				B9FCE525213D90CE006BCB6C /* KareKodVC.swift in Sources */,
 				B98EE45B217B2F2900FA1E09 /* PopUpTVC.swift in Sources */,
