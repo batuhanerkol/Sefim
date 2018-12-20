@@ -10,8 +10,7 @@ import UIKit
 import Parse
 var globalDateOncekiSparisler = ""
 var globalTimeOncekiSiparisler = ""
-
-
+var globaTotalPriceOncekiSiparisler = ""
 
 class OncekiSiparislerVC: UIViewController, UITableViewDelegate, UITableViewDataSource, UIPickerViewDelegate, UIPickerViewDataSource {
    
@@ -351,9 +350,11 @@ class OncekiSiparislerVC: UIViewController, UITableViewDelegate, UITableViewData
       
         globalDateOncekiSparisler = dateArray[indexPath.row]
         globalTimeOncekiSiparisler = timeArray[indexPath.row]
+        globaTotalPriceOncekiSiparisler = totalPriceArray[indexPath.row]
         
         performSegue(withIdentifier: "foodDetails", sender: nil)
     }
+    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return dateArray.count
     }
@@ -379,14 +380,7 @@ class OncekiSiparislerVC: UIViewController, UITableViewDelegate, UITableViewData
     
 }
 
-
-    
-
-    
-
-
-
-extension String { // String in seçili harfine bakabilmek için
+extension String { // String in seçili harfine bakabilmek için kullanılmıyor
     subscript (i: Int) -> Character {
         return self[index(startIndex, offsetBy: i)]
     }

@@ -72,6 +72,7 @@ class PreviousOrdersInformationVC: UIViewController, UITableViewDelegate, UITabl
         query.whereKey("HesapOdendi", equalTo: "Evet")
         query.whereKey("Date", equalTo: globalDateOncekiSparisler)
         query.whereKey("Time", equalTo: globalTimeOncekiSiparisler)
+        query.whereKey("ToplamFiyat", equalTo: globaTotalPriceOncekiSiparisler)
         query.addDescendingOrder("createdAt")
         
         

@@ -182,8 +182,8 @@
 				B93953802168C6AE005A5099 /* BilgilerimVC.swift */,
 				B9E6866F216E63F400EF4C65 /* ChangePasswordVC.swift */,
 				B95E2D7E21A47B75009CCD72 /* OncekiSiparislerVC.swift */,
-				B93CBAA221A85B46000FEC3F /* DateTimeCell.swift */,
 				B9960FD021ABFE9500C26569 /* PreviousOrdersInformationVC.swift */,
+				B93CBAA221A85B46000FEC3F /* DateTimeCell.swift */,
 				B9960FD221ABFF0200C26569 /* FoodPriceCell.swift */,
 				B917458421CBB9B300F569D6 /* EkranSifresiVC.swift */,
 			);
