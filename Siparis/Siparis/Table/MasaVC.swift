@@ -95,6 +95,8 @@ class MasaVC: UIViewController {
     }
     override func viewWillAppear(_ animated: Bool) {
         
+        button.backgroundColor = .gray
+        
          updateUserInterface()
 
     }
@@ -231,7 +233,7 @@ class MasaVC: UIViewController {
                 if self.siparisVerildiArray[hesapMasaSayisiIndex] == "Evet" && self.yemekHazirArray[hesapMasaSayisiIndex] == "" && self.yemekTeslimArray[hesapMasaSayisiIndex] == "" && self.hesapIstendiArray[hesapMasaSayisiIndex] == "" && self.hesapOdendiArray[hesapMasaSayisiIndex] == "" {
                     
                     self.tableButtonBackgroundColorChange[tableButtonIndex].backgroundColor = UIColor.orange
-         
+                    
                 }
                 else  if self.siparisVerildiArray[hesapMasaSayisiIndex] == "Evet" && self.yemekHazirArray[hesapMasaSayisiIndex] == "Evet" && self.yemekTeslimArray[hesapMasaSayisiIndex] == ""  && self.hesapIstendiArray[hesapMasaSayisiIndex] == "" && self.hesapOdendiArray[hesapMasaSayisiIndex] == ""{
                     
@@ -253,6 +255,7 @@ class MasaVC: UIViewController {
                      self.tableButtonBackgroundColorChange[tableButtonIndex].backgroundColor = UIColor.gray
                     
                         }
+                
                    
                         hesapMasaSayisiIndex += 1
                 }
@@ -262,7 +265,6 @@ class MasaVC: UIViewController {
                 self.activityIndicator.stopAnimating()
                 UIApplication.shared.endIgnoringInteractionEvents()
                 
-             
             }
             
         }
