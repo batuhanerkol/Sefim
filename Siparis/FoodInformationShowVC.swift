@@ -76,6 +76,9 @@ class FoodInformationShowVC: UIViewController {
                 let okButton = UIAlertAction(title: "TAMAM", style: UIAlertActionStyle.cancel, handler: nil)
                 alert.addAction(okButton)
                 self.present(alert, animated: true, completion: nil)
+                
+                self.activityIndicator.stopAnimating()
+                UIApplication.shared.endIgnoringInteractionEvents()
             }
             else{
                 self.foodNameArray.removeAll(keepingCapacity: false)
@@ -99,6 +102,9 @@ class FoodInformationShowVC: UIViewController {
                             let okButton = UIAlertAction(title: "TAMAM", style: UIAlertActionStyle.cancel, handler: nil)
                             alert.addAction(okButton)
                             self.present(alert, animated: true, completion: nil)
+                            
+                            self.activityIndicator.stopAnimating()
+                            UIApplication.shared.endIgnoringInteractionEvents()
                     }
                         else{
                             self.foodImage.image = UIImage(data: (data)!)

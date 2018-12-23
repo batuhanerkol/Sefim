@@ -1,44 +1,35 @@
 //
-//  AddFoodTitleVC.swift
+//  HammaddeEkleVC.swift
 //  Siparis
 //
-//  Created by Batuhan Erkol on 8.09.2018.
+//  Created by Batuhan Erkol on 23.12.2018.
 //  Copyright © 2018 Batuhan Erkol. All rights reserved.
 //
 
 import UIKit
 import Parse
 
+class HammaddeEkleVC: UIViewController  {
 
-
-class AddFoodTitleVC: UIViewController,UITextFieldDelegate {
+    @IBOutlet weak var hammaddeKgUcretiTextField: UITextField!
+    @IBOutlet weak var hammaddeMiktariTextField: UITextField!
+    @IBOutlet weak var hammaddeAdiTextField: UITextField!
     
-    var nameArray = [String]()
     var businessName = ""
-    
-    @IBOutlet weak var addButton: UIButton!
-    @IBOutlet weak var textField: UITextField!
-    
-      var activityIndicator:UIActivityIndicatorView = UIActivityIndicatorView()
+    var toplamUcret = 0
+    var activityIndicator:UIActivityIndicatorView = UIActivityIndicatorView()
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        // internet kontrolü
         NotificationCenter.default.addObserver(self, selector: #selector(statusManager), name: .flagsChanged, object: Network.reachability)
         updateUserInterface()
         
-        self.textField.delegate = self
-      self.addButton.isHidden = false
-        
-     
     }
-
     
     override func viewWillAppear(_ animated: Bool) {
-        updateUserInterface()
-        
+         updateUserInterface()
     }
-    
     
     func updateUserInterface() {
         guard let status = Network.reachability?.status else { return }
@@ -48,16 +39,16 @@ class AddFoodTitleVC: UIViewController,UITextFieldDelegate {
             let okButton = UIAlertAction(title: "TAMAM", style: UIAlertAction.Style.cancel, handler: nil)
             alert.addAction(okButton)
             self.present(alert, animated: true, completion: nil)
-   
             
-            self.addButton.isEnabled = false
+            
+      
             
         case .wifi:
-            self.addButton.isEnabled = true
+     
             
             getBussinessNameData()
         case .wwan:
-            self.addButton.isEnabled = true
+     
             
             getBussinessNameData()
         }
@@ -65,25 +56,18 @@ class AddFoodTitleVC: UIViewController,UITextFieldDelegate {
     @objc func statusManager(_ notification: Notification) {
         updateUserInterface()
     }
-    
-    
-    @IBAction func addButtonPressed(_ sender: Any) {
+    @IBAction func ekleButtonClicked(_ sender: Any) {
         
-        self.addButton.isHidden = true
-        if businessName != ""{
-            addFoodTitle()
-        }else{
-            let alert = UIAlertController(title: "Lütfen Öncelikle Konum ve İsim Bilgilerini Girin", message: "", preferredStyle: UIAlertControllerStyle.alert)
-            let okButton = UIAlertAction(title: "TAMAM", style: UIAlertActionStyle.cancel, handler: nil)
-            alert.addAction(okButton)
-            self.present(alert, animated: true, completion: nil)
+        // loading sembolu
+        activityIndicator.center = self.view.center
+        activityIndicator.hidesWhenStopped = true
+        activityIndicator.activityIndicatorViewStyle = UIActivityIndicatorView.Style.gray
+        view.addSubview(activityIndicator)
+        
+        if hammaddeAdiTextField.text != "" && hammaddeMiktariTextField.text != "" && hammaddeKgUcretiTextField.text != "" {
             
-            self.activityIndicator.stopAnimating()
-            UIApplication.shared.endIgnoringInteractionEvents()
-        }
-        }
-    func addFoodTitle(){
-        if textField.text != "" {
+            toplamUcret = Int(hammaddeMiktariTextField.text!)! * Int(hammaddeKgUcretiTextField.text!)!
+            if toplamUcret != 0 {
             
             // loading sembolu
             activityIndicator.center = self.view.center
@@ -91,16 +75,18 @@ class AddFoodTitleVC: UIViewController,UITextFieldDelegate {
             activityIndicator.activityIndicatorViewStyle = UIActivityIndicatorView.Style.gray
             view.addSubview(activityIndicator)
             
-            let foodTitle = PFObject(className: "FoodTitle")
-            foodTitle["foodTitle"] = textField.text!
-            foodTitle["foodTitleOwner"] = PFUser.current()!.username!
-            foodTitle["BusinessName"] = businessName
-            foodTitle["HesapOnaylandi"] = ""
+            let hammadde = PFObject(className: "HammaddeBilgileri")
+            hammadde["HammaddeSahibi"] = PFUser.current()!.username!
+            hammadde["HammaddeAdi"] = hammaddeAdiTextField.text
+            hammadde["HammaddeUcreti"] = hammaddeKgUcretiTextField.text
+            hammadde["HammaddeMiktariKg"] = hammaddeMiktariTextField.text
+            hammadde["ToplamUcret"] = String(toplamUcret)
+            hammadde["IsletmeAdi"] = businessName
             
-            foodTitle.saveInBackground { (success, error) in
+            hammadde.saveInBackground { (success, error) in
                 
                 if error != nil{
-                    let alert = UIAlertController(title: "HATA", message: error?.localizedDescription, preferredStyle: UIAlertControllerStyle.alert)
+                    let alert = UIAlertController(title: "Bir Hata Oluştu Lütfen Tekrar Deneyin", message: error?.localizedDescription, preferredStyle: UIAlertControllerStyle.alert)
                     let okButton = UIAlertAction(title: "TAMAM", style: UIAlertActionStyle.cancel, handler: nil)
                     alert.addAction(okButton)
                     self.present(alert, animated: true, completion: nil)
@@ -112,13 +98,26 @@ class AddFoodTitleVC: UIViewController,UITextFieldDelegate {
                     self.activityIndicator.stopAnimating()
                     UIApplication.shared.endIgnoringInteractionEvents()
                     print("success")
-                    self.performSegue(withIdentifier: "AddFoodTitleVCToMenuTVC", sender: nil)
+                    
+                    self.performSegue(withIdentifier: "backToHammadde", sender: nil)
+         
                 }
             }
             
         }
+            else{
+                let alert = UIAlertController(title: "Bir Hata Oluştu Lütfen Tekrar Deneyin", message: "", preferredStyle: UIAlertControllerStyle.alert)
+                let okButton = UIAlertAction(title: "TAMAM", style: UIAlertActionStyle.cancel, handler: nil)
+                alert.addAction(okButton)
+                self.present(alert, animated: true, completion: nil)
+                
+                self.activityIndicator.stopAnimating()
+                UIApplication.shared.endIgnoringInteractionEvents()
+            }
+        }
+    
         else{
-            let alert = UIAlertController(title: "HATA", message: "Lütfen Başlık Giriniz", preferredStyle: UIAlertControllerStyle.alert)
+            let alert = UIAlertController(title: "HATA", message: "Lütfen Bütün Bilgileri Giriniz", preferredStyle: UIAlertControllerStyle.alert)
             let okButton = UIAlertAction(title: "TAMAM", style: UIAlertActionStyle.cancel, handler: nil)
             alert.addAction(okButton)
             self.present(alert, animated: true, completion: nil)
@@ -127,8 +126,7 @@ class AddFoodTitleVC: UIViewController,UITextFieldDelegate {
             UIApplication.shared.endIgnoringInteractionEvents()
         }
     }
-    
-    
+
     func getBussinessNameData(){
         let query = PFQuery(className: "BusinessInformation")
         query.whereKey("businessUserName", equalTo: "\(PFUser.current()!.username!)")
@@ -144,16 +142,15 @@ class AddFoodTitleVC: UIViewController,UITextFieldDelegate {
                 UIApplication.shared.endIgnoringInteractionEvents()
             }
             else{
-                self.nameArray.removeAll(keepingCapacity: false)
+                self.businessName =  ""
                 for object in objects!{
-                    self.nameArray.append(object.object(forKey: "businessName") as! String)
+                    self.businessName = (object.object(forKey: "businessName") as! String)
                     
-                   self.businessName = "\(self.nameArray.last!)"
                 }
             }
         }
     }
-
+    
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         self.view.endEditing(true)
     }
@@ -161,7 +158,6 @@ class AddFoodTitleVC: UIViewController,UITextFieldDelegate {
         textField.resignFirstResponder()
         return(true)
     }
-    }
     
-
-
+    
+}

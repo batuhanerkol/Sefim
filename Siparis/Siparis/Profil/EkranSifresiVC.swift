@@ -24,8 +24,6 @@ class EkranSifresiVC: UIViewController, UITextFieldDelegate {
     
     @IBAction func createButtonClicked(_ sender: Any) {
 
-        
-      
         if self.screenPaswordTextField.text! != ""{
                 
                 let query = PFQuery(className: "BusinessInformation")
