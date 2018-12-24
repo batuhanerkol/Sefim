@@ -23,6 +23,7 @@
 		B941D00621C03FDE00CF7246 /* PaymentVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = B941D00521C03FDE00CF7246 /* PaymentVC.swift */; };
 		B95E2D7F21A47B75009CCD72 /* OncekiSiparislerVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = B95E2D7E21A47B75009CCD72 /* OncekiSiparislerVC.swift */; };
 		B9706EB0214FB52100234067 /* Model.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = B9706EAE214FB52100234067 /* Model.xcdatamodeld */; };
+		B977BB5521D0F6F2008B5BD2 /* HammaddeBilgisiVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = B977BB5421D0F6F2008B5BD2 /* HammaddeBilgisiVC.swift */; };
 		B9828012215D2B4700CBE76B /* CreateQR.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9828011215D2B4700CBE76B /* CreateQR.swift */; };
 		B98EE459217B2E9400FA1E09 /* PopUpVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = B98EE458217B2E9400FA1E09 /* PopUpVC.swift */; };
 		B98EE45B217B2F2900FA1E09 /* PopUpTVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = B98EE45A217B2F2900FA1E09 /* PopUpTVC.swift */; };
@@ -71,6 +72,7 @@
 		B941D00521C03FDE00CF7246 /* PaymentVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaymentVC.swift; sourceTree = "<group>"; };
 		B95E2D7E21A47B75009CCD72 /* OncekiSiparislerVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OncekiSiparislerVC.swift; sourceTree = "<group>"; };
 		B9706EAF214FB52100234067 /* Model.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Model.xcdatamodel; sourceTree = "<group>"; };
+		B977BB5421D0F6F2008B5BD2 /* HammaddeBilgisiVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HammaddeBilgisiVC.swift; sourceTree = "<group>"; };
 		B9828011215D2B4700CBE76B /* CreateQR.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateQR.swift; sourceTree = "<group>"; };
 		B98EE458217B2E9400FA1E09 /* PopUpVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopUpVC.swift; sourceTree = "<group>"; };
 		B98EE45A217B2F2900FA1E09 /* PopUpTVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopUpTVC.swift; sourceTree = "<group>"; };
@@ -144,6 +146,7 @@
 				B9F529CD2144239E00BD45A6 /* AddFoodTitleVC.swift */,
 				B9F529CF2144364F00BD45A6 /* FoodDetailsTVC.swift */,
 				B9F529D521443C2000BD45A6 /* AddFoodInformationVC.swift */,
+				B977BB5421D0F6F2008B5BD2 /* HammaddeBilgisiVC.swift */,
 				B9F529D92144449600BD45A6 /* FoodInformationShowVC.swift */,
 			);
 			name = Menu;
@@ -373,6 +376,7 @@
 				B917458521CBB9B300F569D6 /* EkranSifresiVC.swift in Sources */,
 				B9F6ED6221D017B9009066A5 /* HammaddeEkleVC.swift in Sources */,
 				B9FCE529213D90F5006BCB6C /* IsletmeProfilVC.swift in Sources */,
+				B977BB5521D0F6F2008B5BD2 /* HammaddeBilgisiVC.swift in Sources */,
 				B9FCE525213D90CE006BCB6C /* KareKodVC.swift in Sources */,
 				B98EE45B217B2F2900FA1E09 /* PopUpTVC.swift in Sources */,
 				B90CD86B2152BEE90001A0B8 /* AddLocationVC.swift in Sources */,
