@@ -33,10 +33,10 @@ class PopUpVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
     
     
     
-    var hammaddeAdiArray = [String]()
-    var hammaddeMiktariArray = [String]()
-    var hammaddeAdiArrayFoodInfo = [String]()
-    var hammaddeMiktariArrayFoodInfo = [String]()
+    var hammaddeAdiDepoArray = [String]()
+    var hammaddeMiktariDepoArray = [String]()
+    var hammaddeAdiArrayKullanilan = [String]()
+    var hammaddeMiktariArrayKullanilan = [String]()
     
     var numberOfDeliveredOrder = ""
     
@@ -546,16 +546,16 @@ class PopUpVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
             }
             else{
 
-                self.hammaddeAdiArrayFoodInfo.removeAll(keepingCapacity: false)
-                self.hammaddeMiktariArrayFoodInfo.removeAll(keepingCapacity: false)
+                self.hammaddeAdiArrayKullanilan.removeAll(keepingCapacity: false)
+                self.hammaddeMiktariArrayKullanilan.removeAll(keepingCapacity: false)
                 
                 for object in objects!{
                     
-                     self.hammaddeAdiArrayFoodInfo = object["Hammadde"] as! [String]
-                     self.hammaddeMiktariArrayFoodInfo = object["HammaddeMiktarlari"] as! [String]
+                     self.hammaddeAdiArrayKullanilan = object["Hammadde"] as! [String]
+                     self.hammaddeMiktariArrayKullanilan = object["HammaddeMiktarlari"] as! [String]
                     
-                    print("Kullanılan Hammadde Adi", self.hammaddeAdiArrayFoodInfo)
-                    print("Kullanılan Hammadde Miktari", self.hammaddeMiktariArrayFoodInfo)
+                    print("Kullanılan Hammadde Adi", self.hammaddeAdiArrayKullanilan)
+                    print("Kullanılan Hammadde Miktari", self.hammaddeMiktariArrayKullanilan)
                     
                      // ---------------------------------------------
                     
@@ -573,19 +573,43 @@ class PopUpVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
                             UIApplication.shared.endIgnoringInteractionEvents()
                         }
                         else{
-                            self.hammaddeAdiArray.removeAll(keepingCapacity: false)
-                            self.hammaddeMiktariArray.removeAll(keepingCapacity: false)
+                            self.hammaddeAdiDepoArray.removeAll(keepingCapacity: false)
+                            self.hammaddeMiktariDepoArray.removeAll(keepingCapacity: false)
                             
                             for object in objects!{
                                 
-                                self.hammaddeAdiArray.append(object.object(forKey: "HammaddeAdi") as! String)
-                                self.hammaddeMiktariArray.append(object.object(forKey: "HammaddeMiktariGr") as! String)
+                                self.hammaddeAdiDepoArray.append(object.object(forKey: "HammaddeAdi") as! String)
+                                self.hammaddeMiktariDepoArray.append(object.object(forKey: "HammaddeMiktariGr") as! String)
 
                     }
                             
-                            print("Depodaki Hammadde Adi", self.hammaddeAdiArray)
-                            print("Depodaki Hammadde Miktari", self.hammaddeMiktariArray)
+                            print("Depodaki Hammadde Adi", self.hammaddeAdiDepoArray)
+                            print("Depodaki Hammadde Miktari", self.hammaddeMiktariDepoArray)
 
+                        
+                            var kullanilanIndexNumber = 0
+                            var indexNumber = 0
+                            
+                            while indexNumber < self.hammaddeMiktariArrayKullanilan.count{
+                                
+                            var depoIndexNumber = 0
+                                
+                            if self.hammaddeAdiDepoArray[depoIndexNumber] == self.hammaddeAdiArrayKullanilan[kullanilanIndexNumber]{
+                              print(Int(self.hammaddeMiktariDepoArray[depoIndexNumber])! - Int(self.hammaddeMiktariArrayKullanilan[kullanilanIndexNumber])! )
+                            }
+                            else{
+                                while self.hammaddeAdiDepoArray[depoIndexNumber] != self.hammaddeAdiArrayKullanilan[kullanilanIndexNumber]{
+                                    depoIndexNumber += 1
+                                }
+                                print("AAAAAAAAAAAAAAAAAAAA")
+                               print(Int(self.hammaddeMiktariDepoArray[depoIndexNumber])! - Int(self.hammaddeMiktariArrayKullanilan[kullanilanIndexNumber])! )
+                            
+                                
+                            }
+                                indexNumber += 1
+                                kullanilanIndexNumber += 1
+                            }
+                           
             }
         }
             }
