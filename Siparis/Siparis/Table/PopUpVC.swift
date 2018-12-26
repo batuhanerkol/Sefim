@@ -23,12 +23,20 @@ class PopUpVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
     var hesapOdendiArray = [String]()
     var hesapIstendiArray = [String]()
     var yemekTeslimEdildiArray = [String]()
+    var foodNameBeforeDeleteArray = [String]()
     
     var allFoodsNamesArray = [String]()
     var allPricesArray = [String]()
     var allNoteArray = [String]()
     var allDateArray = [String]()
     var allTimeArray = [String]()
+    
+    
+    
+    var hammaddeAdiArray = [String]()
+    var hammaddeMiktariArray = [String]()
+    var hammaddeAdiArrayFoodInfo = [String]()
+    var hammaddeMiktariArrayFoodInfo = [String]()
     
     var numberOfDeliveredOrder = ""
     
@@ -41,6 +49,7 @@ class PopUpVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
      var hesapIstendi = ""
      var orderNumber = 0
      var yemekHazir = ""
+    
     
     @IBOutlet weak var checkPaidButton: UIButton!
     @IBOutlet weak var orderHasGivenButton: UIButton!
@@ -426,6 +435,8 @@ class PopUpVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
             UIApplication.shared.endIgnoringInteractionEvents()
         }
     }
+    
+    
     @IBAction func chechkHasPaidButtonClicked(_ sender: Any) {
         
         activityIndicator.startAnimating()
@@ -495,7 +506,7 @@ class PopUpVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
             UIApplication.shared.endIgnoringInteractionEvents()
         }
     }
-    func deleteGivenOrderDataFromOwersParse(){ // kullanıcı siparişine ekleme yaptığında eski aray i silmek için
+    func deleteGivenOrderDataFromOwersParse(){
     
     let query = PFQuery(className: "Siparisler")
     query.whereKey("IsletmeSahibi", equalTo: "\(PFUser.current()!.username!)")
@@ -510,9 +521,79 @@ class PopUpVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
     self.present(alert, animated: true, completion: nil)
     }
     else {
+        
+        self.foodNameBeforeDeleteArray.removeAll(keepingCapacity: false)
 
     for object in objects! {
+        
+        self.foodNameBeforeDeleteArray.append(object.object(forKey: "SiparisAdi") as! String)
+        
+            // ---------------------------------------------
+        
+        let query = PFQuery(className: "FoodInformation")
+        query.whereKey("foodNameOwner", equalTo: "\(PFUser.current()!.username!)")
+        query.whereKey("foodName", equalTo: self.foodNameBeforeDeleteArray.last!)
+        
+        query.findObjectsInBackground { (objects, error) in
+            if error != nil{
+                let alert = UIAlertController(title: "HATA", message: error?.localizedDescription, preferredStyle: UIAlertControllerStyle.alert)
+                let okButton = UIAlertAction(title: "TAMAM", style: UIAlertActionStyle.cancel, handler: nil)
+                alert.addAction(okButton)
+                self.present(alert, animated: true, completion: nil)
+                
+                self.activityIndicator.stopAnimating()
+                UIApplication.shared.endIgnoringInteractionEvents()
+            }
+            else{
+
+                self.hammaddeAdiArrayFoodInfo.removeAll(keepingCapacity: false)
+                self.hammaddeMiktariArrayFoodInfo.removeAll(keepingCapacity: false)
+                
+                for object in objects!{
+                    
+                     self.hammaddeAdiArrayFoodInfo = object["Hammadde"] as! [String]
+                     self.hammaddeMiktariArrayFoodInfo = object["HammaddeMiktarlari"] as! [String]
+                    
+                    print("Kullanılan Hammadde Adi", self.hammaddeAdiArrayFoodInfo)
+                    print("Kullanılan Hammadde Miktari", self.hammaddeMiktariArrayFoodInfo)
+                    
+                     // ---------------------------------------------
+                    
+                    let query = PFQuery(className: "HammaddeBilgileri")
+                    query.whereKey("HammaddeSahibi", equalTo: "\(PFUser.current()!.username!)")
+                    query.findObjectsInBackground { (objects, error) in
+                        
+                        if error != nil{
+                            let alert = UIAlertController(title: "HATA", message: error?.localizedDescription, preferredStyle: UIAlertControllerStyle.alert)
+                            let okButton = UIAlertAction(title: "TAMAM", style: UIAlertActionStyle.cancel, handler: nil)
+                            alert.addAction(okButton)
+                            self.present(alert, animated: true, completion: nil)
+                            
+                            self.activityIndicator.stopAnimating()
+                            UIApplication.shared.endIgnoringInteractionEvents()
+                        }
+                        else{
+                            self.hammaddeAdiArray.removeAll(keepingCapacity: false)
+                            self.hammaddeMiktariArray.removeAll(keepingCapacity: false)
+                            
+                            for object in objects!{
+                                
+                                self.hammaddeAdiArray.append(object.object(forKey: "HammaddeAdi") as! String)
+                                self.hammaddeMiktariArray.append(object.object(forKey: "HammaddeMiktariGr") as! String)
+
+                    }
+                            
+                            print("Depodaki Hammadde Adi", self.hammaddeAdiArray)
+                            print("Depodaki Hammadde Miktari", self.hammaddeMiktariArray)
+
+            }
+        }
+            }
+        }
+        }
+        
     object.deleteInBackground()
+        
 
     self.orderTableView.reloadData()
     }

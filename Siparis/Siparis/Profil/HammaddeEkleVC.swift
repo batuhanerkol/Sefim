@@ -66,7 +66,7 @@ class HammaddeEkleVC: UIViewController  {
         
         if hammaddeAdiTextField.text != "" && hammaddeMiktariTextField.text != "" && hammaddeKgUcretiTextField.text != "" {
             
-            toplamUcret = Int(hammaddeMiktariTextField.text!)! * Int(hammaddeKgUcretiTextField.text!)!
+            toplamUcret = (Int(hammaddeMiktariTextField.text!)! * Int(hammaddeKgUcretiTextField.text!)!) / 1000
             if toplamUcret != 0 {
             
             // loading sembolu
@@ -79,7 +79,7 @@ class HammaddeEkleVC: UIViewController  {
             hammadde["HammaddeSahibi"] = PFUser.current()!.username!
             hammadde["HammaddeAdi"] = hammaddeAdiTextField.text
             hammadde["HammaddeUcreti"] = hammaddeKgUcretiTextField.text
-            hammadde["HammaddeMiktariKg"] = hammaddeMiktariTextField.text
+            hammadde["HammaddeMiktariGr"] = hammaddeMiktariTextField.text
             hammadde["ToplamUcret"] = String(toplamUcret)
             hammadde["IsletmeAdi"] = businessName
             

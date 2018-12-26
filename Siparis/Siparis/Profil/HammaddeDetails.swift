@@ -125,7 +125,7 @@ class HammaddeDetails: UIViewController {
                 self.toplamFiyat = ""
                 for object in objects! {
                     self.hammaddeAdi = (object.object(forKey: "HammaddeAdi") as! String)
-                     self.hammaddeMiktari = (object.object(forKey: "HammaddeMiktariKg") as! String)
+                     self.hammaddeMiktari = (object.object(forKey: "HammaddeMiktariGr") as! String)
                      self.hammaddeFiyati = (object.object(forKey: "HammaddeUcreti") as! String)
                     self.toplamFiyat = (object.object(forKey: "ToplamUcret") as! String)
                    
@@ -159,7 +159,7 @@ class HammaddeDetails: UIViewController {
         
         if hammaddeAdiTExtField.text != "" && hammaddeFiyatiTextField.text != "" && hammaddeMiktariTextFiedl.text != "" {
             
-            toplamUcret = Int(self.hammaddeFiyatiTextField.text!)! * Int(hammaddeMiktariTextFiedl.text!)!
+            toplamUcret = (Int(self.hammaddeFiyatiTextField.text!)! * Int(hammaddeMiktariTextFiedl.text!)!) / 1000
             
         let query = PFQuery(className: "HammaddeBilgileri")
         query.whereKey("HammaddeSahibi", equalTo: "\(PFUser.current()!.username!)")
@@ -175,7 +175,7 @@ class HammaddeDetails: UIViewController {
             }else {
                 
                 objects!["HammaddeAdi"] = self.hammaddeAdiTExtField.text!
-                 objects!["HammaddeMiktariKg"] = self.hammaddeMiktariTextFiedl.text!
+                 objects!["HammaddeMiktariGr"] = self.hammaddeMiktariTextFiedl.text!
                  objects!["HammaddeUcreti"] = self.hammaddeFiyatiTextField.text!
                  objects!["ToplamUcret"] = toplamUcret
                 

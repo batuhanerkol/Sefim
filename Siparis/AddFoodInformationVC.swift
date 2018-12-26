@@ -15,7 +15,7 @@ class AddFoodInformationVC: UIViewController, UIImagePickerControllerDelegate, U
     
     var hammaddeAdiArray = [String]()
     var hammaddeToplamAdiArray = [String]()
-    var hammaddeFiyatlariArray = [String]()
+    var hammaddeMiktarlariArray = [String]()
     
     var hammaddePicker = UIPickerView()
      var hammadde2Picker = UIPickerView()
@@ -180,7 +180,7 @@ class AddFoodInformationVC: UIViewController, UIImagePickerControllerDelegate, U
             foodInformation["BusinessName"] = businessName
             foodInformation["HesapOnaylandi"] = ""
             foodInformation["Hammadde"] = hammaddeToplamAdiArray
-            foodInformation["HammaddeFiyatlari"] = hammaddeFiyatlariArray
+            foodInformation["HammaddeMiktarlari"] = hammaddeMiktarlariArray
 
             
             if let imageData = UIImageJPEGRepresentation(selectedImage.image!, 0.5){
@@ -302,16 +302,16 @@ class AddFoodInformationVC: UIViewController, UIImagePickerControllerDelegate, U
     }
     func addFiyatToArray(){
          if hammadde1Text.text != "" && miktar1Text.text != ""{
-            hammaddeFiyatlariArray.append(miktar1Text.text!)
+            hammaddeMiktarlariArray.append(miktar1Text.text!)
             
             if hammadde2Text.text != "" && miktar2Text.text != ""{
-                hammaddeFiyatlariArray.append(miktar2Text.text!)
+                hammaddeMiktarlariArray.append(miktar2Text.text!)
                 
                 if hammadde3Text.text != "" && miktar3Text.text != ""{
-                    hammaddeFiyatlariArray.append(miktar3Text.text!)
+                    hammaddeMiktarlariArray.append(miktar3Text.text!)
                     
                     if hammadde4Text.text != "" && miktar4Text.text != ""{
-                        hammaddeFiyatlariArray.append(miktar4Text.text!)
+                        hammaddeMiktarlariArray.append(miktar4Text.text!)
                     }
                 }
             }

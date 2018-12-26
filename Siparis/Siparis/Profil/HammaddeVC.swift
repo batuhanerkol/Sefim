@@ -90,7 +90,7 @@ class HammaddeVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
                  self.hammaddeKalanMiktarArray.removeAll(keepingCapacity: false)
                 for object in objects! {
                     self.hammaddeAdiArray.append(object.object(forKey: "HammaddeAdi") as! String)
-                     self.hammaddeKalanMiktarArray.append(object.object(forKey: "HammaddeMiktariKg") as! String)
+                     self.hammaddeKalanMiktarArray.append(object.object(forKey: "HammaddeMiktariGr") as! String)
                 }
                 self.activityIndicator.stopAnimating()
                 UIApplication.shared.endIgnoringInteractionEvents()
