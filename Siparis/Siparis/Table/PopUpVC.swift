@@ -24,6 +24,8 @@ class PopUpVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
     var hesapIstendiArray = [String]()
     var yemekTeslimEdildiArray = [String]()
     var foodNameBeforeDeleteArray = [String]()
+    var hammaddeObjectIdArray = [String]()
+
     
     var allFoodsNamesArray = [String]()
     var allPricesArray = [String]()
@@ -49,6 +51,11 @@ class PopUpVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
      var hesapIstendi = ""
      var orderNumber = 0
      var yemekHazir = ""
+    var hammaddeObjectId = ""
+    var kalanHammaddeMiktar = ""
+    var kullanilanIndexNumber = 0
+    var indexNumber = 0
+    var depoIndexNumber = 0
     
     
     @IBOutlet weak var checkPaidButton: UIButton!
@@ -506,6 +513,10 @@ class PopUpVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
             UIApplication.shared.endIgnoringInteractionEvents()
         }
     }
+    
+    
+    
+    
     func deleteGivenOrderDataFromOwersParse(){
     
     let query = PFQuery(className: "Siparisler")
@@ -587,27 +598,50 @@ class PopUpVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
                             print("Depodaki Hammadde Miktari", self.hammaddeMiktariDepoArray)
 
                         
-                            var kullanilanIndexNumber = 0
-                            var indexNumber = 0
-                            
-                            while indexNumber < self.hammaddeMiktariArrayKullanilan.count{
+                         
+                         
+                        
+                            while self.indexNumber < self.hammaddeMiktariArrayKullanilan.count{
                                 
-                            var depoIndexNumber = 0
+                          
+                                self.depoIndexNumber = 0
                                 
-                            if self.hammaddeAdiDepoArray[depoIndexNumber] == self.hammaddeAdiArrayKullanilan[kullanilanIndexNumber]{
-                              print(Int(self.hammaddeMiktariDepoArray[depoIndexNumber])! - Int(self.hammaddeMiktariArrayKullanilan[kullanilanIndexNumber])! )
+                            if self.hammaddeAdiDepoArray[self.depoIndexNumber] == self.hammaddeAdiArrayKullanilan[self.kullanilanIndexNumber]{
+                                 print("AAAAAAAAAAAAAAAAAAAA1")
+                              
+                                self.kalanHammaddeMiktar = ""
+                                
+                                 self.kalanHammaddeMiktar = String(Int(self.hammaddeMiktariDepoArray[self.depoIndexNumber])! - Int(self.hammaddeMiktariArrayKullanilan[self.kullanilanIndexNumber])!)
+                                
+                                   self.getObjectId()
+                    
+                                print("kalanHammaddeMiktar", self.kalanHammaddeMiktar)
+                                
+                              
                             }
                             else{
-                                while self.hammaddeAdiDepoArray[depoIndexNumber] != self.hammaddeAdiArrayKullanilan[kullanilanIndexNumber]{
-                                    depoIndexNumber += 1
+                                while self.hammaddeAdiDepoArray[self.depoIndexNumber] != self.hammaddeAdiArrayKullanilan[self.kullanilanIndexNumber]{
+                                    self.depoIndexNumber += 1
                                 }
-                                print("AAAAAAAAAAAAAAAAAAAA")
-                               print(Int(self.hammaddeMiktariDepoArray[depoIndexNumber])! - Int(self.hammaddeMiktariArrayKullanilan[kullanilanIndexNumber])! )
-                            
+                                print("AAAAAAAAAAAAAAAAAAAA2")
+                               
+                                self.kalanHammaddeMiktar = ""
+                                
+                                self.kalanHammaddeMiktar = String(Int(self.hammaddeMiktariDepoArray[self.depoIndexNumber])! - Int(self.hammaddeMiktariArrayKullanilan[self.kullanilanIndexNumber])! )
+                                
+                                if self.kalanHammaddeMiktar != ""{
+                                       self.getObjectId()
+                                }
+                             
+                              
+
+                                print("kalanHammaddeMiktar", self.kalanHammaddeMiktar)
+                                
+                              
                                 
                             }
-                                indexNumber += 1
-                                kullanilanIndexNumber += 1
+                                self.indexNumber += 1
+                                self.kullanilanIndexNumber += 1
                             }
                            
             }
@@ -625,6 +659,66 @@ class PopUpVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
     }
     }
         
+    }
+    
+    func getObjectId(){
+        let query = PFQuery(className: "HammaddeBilgileri")
+        query.whereKey("HammaddeSahibi", equalTo: (PFUser.current()?.username)!)
+        query.whereKey("HammaddeAdi", equalTo: self.hammaddeAdiDepoArray[depoIndexNumber])
+        
+        query.findObjectsInBackground { (objects, error) in
+            if error != nil{
+                let alert = UIAlertController(title: "HATA", message: error?.localizedDescription, preferredStyle: UIAlertController.Style.alert)
+                let okButton = UIAlertAction(title: "TAMAM", style: UIAlertAction.Style.cancel, handler: nil)
+                alert.addAction(okButton)
+                self.present(alert, animated: true, completion: nil)
+            }
+            else{
+                self.objectIdArray.removeAll(keepingCapacity: false)
+                
+                for object in objects! {
+                    self.hammaddeObjectIdArray.append(object.objectId! )
+                    
+                    self.hammaddeObjectId = "\(self.hammaddeObjectIdArray.last!)"
+                    
+                }
+                print("objectId", self.hammaddeObjectIdArray)
+                self.changeHammadde()
+
+            }
+        }
+    }
+    
+    func changeHammadde(){
+        
+        
+        let query = PFQuery(className: "HammaddeBilgileri")
+        query.whereKey("HammaddeSahibi", equalTo: (PFUser.current()?.username)!)
+
+        query.getObjectInBackground(withId: self.hammaddeObjectIdArray[self.depoIndexNumber]) { (objects, error) in
+            if error != nil{
+                let alert = UIAlertController(title: "HATA", message: error?.localizedDescription, preferredStyle: UIAlertController.Style.alert)
+                let okButton = UIAlertAction(title: "TAMAM", style: UIAlertAction.Style.cancel, handler: nil)
+                alert.addAction(okButton)
+                self.present(alert, animated: true, completion: nil)
+                
+            }else {
+                objects!["HammaddeMiktariGr"] = self.kalanHammaddeMiktar
+            
+                objects!.saveInBackground(block: { (success, error) in
+                    if error != nil{
+                        let alert = UIAlertController(title: "Lütfen Tekrar Deneyin", message: "", preferredStyle: UIAlertController.Style.alert)
+                        let okButton = UIAlertAction(title: "TAMAM", style: UIAlertAction.Style.cancel, handler: nil)
+                        alert.addAction(okButton)
+                        self.present(alert, animated: true, completion: nil)
+                        
+                    }
+                    
+                })
+                
+            
+            }
+        }
     }
     
   

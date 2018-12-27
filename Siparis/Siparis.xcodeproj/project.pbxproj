@@ -34,6 +34,11 @@
 		B9A741CC21BB2090001130D1 /* fotosecin.png in Resources */ = {isa = PBXBuildFile; fileRef = B9A741CB21BB2090001130D1 /* fotosecin.png */; };
 		B9A741CE21BB214B001130D1 /* LogoSec.png in Resources */ = {isa = PBXBuildFile; fileRef = B9A741CD21BB214A001130D1 /* LogoSec.png */; };
 		B9E68670216E63F400EF4C65 /* ChangePasswordVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9E6866F216E63F400EF4C65 /* ChangePasswordVC.swift */; };
+		B9F1D46321D55A7400D804C1 /* konum.png in Resources */ = {isa = PBXBuildFile; fileRef = B9F1D45E21D55A6C00D804C1 /* konum.png */; };
+		B9F1D46421D55A7400D804C1 /* menu.png in Resources */ = {isa = PBXBuildFile; fileRef = B9F1D45F21D55A6E00D804C1 /* menu.png */; };
+		B9F1D46521D55A7400D804C1 /* profil.png in Resources */ = {isa = PBXBuildFile; fileRef = B9F1D46021D55A6E00D804C1 /* profil.png */; };
+		B9F1D46621D55A7400D804C1 /* karekod.png in Resources */ = {isa = PBXBuildFile; fileRef = B9F1D46121D55A7000D804C1 /* karekod.png */; };
+		B9F1D46721D55A7400D804C1 /* masa.png in Resources */ = {isa = PBXBuildFile; fileRef = B9F1D46221D55A7300D804C1 /* masa.png */; };
 		B9F529CA2143DDD200BD45A6 /* MenuTVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9F529C92143DDD200BD45A6 /* MenuTVC.swift */; };
 		B9F529CE2144239E00BD45A6 /* AddFoodTitleVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9F529CD2144239E00BD45A6 /* AddFoodTitleVC.swift */; };
 		B9F529D02144364F00BD45A6 /* FoodDetailsTVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9F529CF2144364F00BD45A6 /* FoodDetailsTVC.swift */; };
@@ -83,6 +88,11 @@
 		B9A741CB21BB2090001130D1 /* fotosecin.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = fotosecin.png; sourceTree = "<group>"; };
 		B9A741CD21BB214A001130D1 /* LogoSec.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = LogoSec.png; sourceTree = "<group>"; };
 		B9E6866F216E63F400EF4C65 /* ChangePasswordVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChangePasswordVC.swift; sourceTree = "<group>"; };
+		B9F1D45E21D55A6C00D804C1 /* konum.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = konum.png; sourceTree = "<group>"; };
+		B9F1D45F21D55A6E00D804C1 /* menu.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = menu.png; sourceTree = "<group>"; };
+		B9F1D46021D55A6E00D804C1 /* profil.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = profil.png; sourceTree = "<group>"; };
+		B9F1D46121D55A7000D804C1 /* karekod.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = karekod.png; sourceTree = "<group>"; };
+		B9F1D46221D55A7300D804C1 /* masa.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = masa.png; sourceTree = "<group>"; };
 		B9F529C92143DDD200BD45A6 /* MenuTVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuTVC.swift; sourceTree = "<group>"; };
 		B9F529CD2144239E00BD45A6 /* AddFoodTitleVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddFoodTitleVC.swift; sourceTree = "<group>"; };
 		B9F529CF2144364F00BD45A6 /* FoodDetailsTVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FoodDetailsTVC.swift; sourceTree = "<group>"; };
@@ -131,6 +141,11 @@
 		B9A741CA21BB2035001130D1 /* Images */ = {
 			isa = PBXGroup;
 			children = (
+				B9F1D46121D55A7000D804C1 /* karekod.png */,
+				B9F1D45E21D55A6C00D804C1 /* konum.png */,
+				B9F1D46221D55A7300D804C1 /* masa.png */,
+				B9F1D45F21D55A6E00D804C1 /* menu.png */,
+				B9F1D46021D55A6E00D804C1 /* profil.png */,
 				B9A741CB21BB2090001130D1 /* fotosecin.png */,
 				B917457E21CA7A0900F569D6 /* sefimYazi.png */,
 				B9A741C821BB2000001130D1 /* QRIcınDokun.png */,
@@ -317,10 +332,15 @@
 			files = (
 				B9A741CE21BB214B001130D1 /* LogoSec.png in Resources */,
 				B9A741CC21BB2090001130D1 /* fotosecin.png in Resources */,
+				B9F1D46421D55A7400D804C1 /* menu.png in Resources */,
 				B9FCE517213D8488006BCB6C /* LaunchScreen.storyboard in Resources */,
 				B9FCE514213D8488006BCB6C /* Assets.xcassets in Resources */,
+				B9F1D46721D55A7400D804C1 /* masa.png in Resources */,
 				B9A741C921BB2000001130D1 /* QRIcınDokun.png in Resources */,
 				B9FCE512213D8486006BCB6C /* Main.storyboard in Resources */,
+				B9F1D46621D55A7400D804C1 /* karekod.png in Resources */,
+				B9F1D46521D55A7400D804C1 /* profil.png in Resources */,
+				B9F1D46321D55A7400D804C1 /* konum.png in Resources */,
 				B917457F21CA7A0900F569D6 /* sefimYazi.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
