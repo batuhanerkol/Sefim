@@ -550,6 +550,35 @@ class PopUpVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
         }
     }
     
+    func deleteData(foodIndexName : String){
+        let query = PFQuery(className: "Siparisler")
+        query.whereKey("IsletmeSahibi", equalTo: "\(PFUser.current()!.username!)")
+        query.whereKey("SiparisAdi", equalTo: foodIndexName)
+        query.whereKey("MasaNumarasi", equalTo: globalChosenTableNumberMasaVC)
+        
+        query.findObjectsInBackground { (objects, error) in
+            if error != nil{
+                let alert = UIAlertController(title: "HATA", message: error?.localizedDescription, preferredStyle: UIAlertControllerStyle.alert)
+                let okButton = UIAlertAction(title: "TAMAM", style: UIAlertActionStyle.cancel, handler: nil)
+                alert.addAction(okButton)
+                self.present(alert, animated: true, completion: nil)
+                
+                self.activityIndicator.stopAnimating()
+                UIApplication.shared.endIgnoringInteractionEvents()
+            }
+            else {
+//                self.foodNameArray.removeAll(keepingCapacity: false)
+                for object in objects! {
+                    object.deleteInBackground()
+                    self.orderTableView.reloadData()
+                    self.getOrderData()
+                }
+                
+            }
+        }
+    }
+
+    
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         dismiss(animated: true, completion: nil)
@@ -587,6 +616,29 @@ class PopUpVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 50
         
+    }
+    
+     func tableView(_ tableView: UITableView, canMoveRowAt indexPath: IndexPath) -> Bool {
+        return true
+    }
+    
+     func tableView(_ tableView: UITableView, moveRowAt sourceIndexPath: IndexPath, to destinationIndexPath: IndexPath) {
+        let item = foodNameArray[sourceIndexPath.row]
+        foodNameArray.remove(at: sourceIndexPath.row)
+        foodNameArray.insert(item, at: destinationIndexPath.row)
+    }
+    
+     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
+        
+        if (editingStyle == .delete){
+            let foodIndexName = orderTableView.cellForRow(at: indexPath)?.textLabel?.text!
+            
+            foodNameArray.remove(at: indexPath.item)
+            tableView.deleteRows(at: [indexPath], with: .automatic)
+            
+            
+            deleteData(foodIndexName: foodIndexName!)
+        }
     }
 }
 
