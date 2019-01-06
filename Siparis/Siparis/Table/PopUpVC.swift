@@ -33,12 +33,12 @@ class PopUpVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
     var allDateArray = [String]()
     var allTimeArray = [String]()
     
-    
-    
     var hammaddeAdiDepoArray = [String]()
     var hammaddeMiktariDepoArray = [String]()
-    var hammaddeAdiArrayKullanilan = [String]()
-    var hammaddeMiktariArrayKullanilan = [String]()
+    var hammaddeKullanilanAdiArray = [String]()
+    var hammaddeKullanilanMiktarArray = [String]()
+    var lastHammaddeAdiArray = [String]()
+    var lastHammaddeMiktarArray = [String]()
     
     var numberOfDeliveredOrder = ""
     
@@ -51,11 +51,6 @@ class PopUpVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
      var hesapIstendi = ""
      var orderNumber = 0
      var yemekHazir = ""
-    var hammaddeObjectId = ""
-    var kalanHammaddeMiktar = ""
-    var kullanilanIndexNumber = 0
-    var indexNumber = 0
-    var depoIndexNumber = 0
     
     
     @IBOutlet weak var checkPaidButton: UIButton!
@@ -518,7 +513,7 @@ class PopUpVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
     
     
     func deleteGivenOrderDataFromOwersParse(){
-    
+        
     let query = PFQuery(className: "Siparisler")
     query.whereKey("IsletmeSahibi", equalTo: "\(PFUser.current()!.username!)")
     query.whereKey("MasaNumarasi", equalTo: globalChosenTableNumberMasaVC)
@@ -532,196 +527,30 @@ class PopUpVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
     self.present(alert, animated: true, completion: nil)
     }
     else {
-        
-        self.foodNameBeforeDeleteArray.removeAll(keepingCapacity: false)
+    
+         self.foodNameBeforeDeleteArray.removeAll(keepingCapacity: false)
+         self.hammaddeKullanilanAdiArray.removeAll(keepingCapacity: false)
+         self.hammaddeKullanilanMiktarArray.removeAll(keepingCapacity: false)
 
     for object in objects! {
         
         self.foodNameBeforeDeleteArray.append(object.object(forKey: "SiparisAdi") as! String)
+        self.hammaddeKullanilanAdiArray = object["HammaddeAdi"] as! [String]
+        self.hammaddeKullanilanMiktarArray = object["HammaddeMiktari"] as! [String]
         
-            // ---------------------------------------------
-        
-        let query = PFQuery(className: "FoodInformation")
-        query.whereKey("foodNameOwner", equalTo: "\(PFUser.current()!.username!)")
-        query.whereKey("foodName", equalTo: self.foodNameBeforeDeleteArray.last!)
-        
-        query.findObjectsInBackground { (objects, error) in
-            if error != nil{
-                let alert = UIAlertController(title: "HATA", message: error?.localizedDescription, preferredStyle: UIAlertControllerStyle.alert)
-                let okButton = UIAlertAction(title: "TAMAM", style: UIAlertActionStyle.cancel, handler: nil)
-                alert.addAction(okButton)
-                self.present(alert, animated: true, completion: nil)
-                
-                self.activityIndicator.stopAnimating()
-                UIApplication.shared.endIgnoringInteractionEvents()
-            }
-            else{
-
-                self.hammaddeAdiArrayKullanilan.removeAll(keepingCapacity: false)
-                self.hammaddeMiktariArrayKullanilan.removeAll(keepingCapacity: false)
-                
-                for object in objects!{
-                    
-                     self.hammaddeAdiArrayKullanilan = object["Hammadde"] as! [String]
-                     self.hammaddeMiktariArrayKullanilan = object["HammaddeMiktarlari"] as! [String]
-                    
-                    print("Kullanılan Hammadde Adi", self.hammaddeAdiArrayKullanilan)
-                    print("Kullanılan Hammadde Miktari", self.hammaddeMiktariArrayKullanilan)
-                    
-                     // ---------------------------------------------
-                    
-                    let query = PFQuery(className: "HammaddeBilgileri")
-                    query.whereKey("HammaddeSahibi", equalTo: "\(PFUser.current()!.username!)")
-                    query.findObjectsInBackground { (objects, error) in
-                        
-                        if error != nil{
-                            let alert = UIAlertController(title: "HATA", message: error?.localizedDescription, preferredStyle: UIAlertControllerStyle.alert)
-                            let okButton = UIAlertAction(title: "TAMAM", style: UIAlertActionStyle.cancel, handler: nil)
-                            alert.addAction(okButton)
-                            self.present(alert, animated: true, completion: nil)
-                            
-                            self.activityIndicator.stopAnimating()
-                            UIApplication.shared.endIgnoringInteractionEvents()
-                        }
-                        else{
-                            self.hammaddeAdiDepoArray.removeAll(keepingCapacity: false)
-                            self.hammaddeMiktariDepoArray.removeAll(keepingCapacity: false)
-                            
-                            for object in objects!{
-                                
-                                self.hammaddeAdiDepoArray.append(object.object(forKey: "HammaddeAdi") as! String)
-                                self.hammaddeMiktariDepoArray.append(object.object(forKey: "HammaddeMiktariGr") as! String)
-
-                    }
-                            
-                            print("Depodaki Hammadde Adi", self.hammaddeAdiDepoArray)
-                            print("Depodaki Hammadde Miktari", self.hammaddeMiktariDepoArray)
-
-                        
-                         
-                         
-                        
-                            while self.indexNumber < self.hammaddeMiktariArrayKullanilan.count{
-                                
-                          
-                                self.depoIndexNumber = 0
-                                
-                            if self.hammaddeAdiDepoArray[self.depoIndexNumber] == self.hammaddeAdiArrayKullanilan[self.kullanilanIndexNumber]{
-                                 print("AAAAAAAAAAAAAAAAAAAA1")
-                              
-                                self.kalanHammaddeMiktar = ""
-                                
-                                 self.kalanHammaddeMiktar = String(Int(self.hammaddeMiktariDepoArray[self.depoIndexNumber])! - Int(self.hammaddeMiktariArrayKullanilan[self.kullanilanIndexNumber])!)
-                                
-                                   self.getObjectId()
-                    
-                                print("kalanHammaddeMiktar", self.kalanHammaddeMiktar)
-                                
-                              
-                            }
-                            else{
-                                while self.hammaddeAdiDepoArray[self.depoIndexNumber] != self.hammaddeAdiArrayKullanilan[self.kullanilanIndexNumber]{
-                                    self.depoIndexNumber += 1
-                                }
-                                print("AAAAAAAAAAAAAAAAAAAA2")
-                               
-                                self.kalanHammaddeMiktar = ""
-                                
-                                self.kalanHammaddeMiktar = String(Int(self.hammaddeMiktariDepoArray[self.depoIndexNumber])! - Int(self.hammaddeMiktariArrayKullanilan[self.kullanilanIndexNumber])! )
-                                
-                                if self.kalanHammaddeMiktar != ""{
-                                       self.getObjectId()
-                                }
-                             
-                              
-
-                                print("kalanHammaddeMiktar", self.kalanHammaddeMiktar)
-                                
-                              
-                                
-                            }
-                                self.indexNumber += 1
-                                self.kullanilanIndexNumber += 1
-                            }
-                           
-            }
-        }
-            }
-        }
-        }
+         print("hammaddeKullanilanAdiArray", self.hammaddeKullanilanAdiArray)
+         print("hammaddeKullanilanMiktarArray", self.hammaddeKullanilanMiktarArray)
         
     object.deleteInBackground()
-        
-
-    self.orderTableView.reloadData()
     }
+      
+          self.orderTableView.reloadData()
     
     }
-    }
-        
-    }
-    
-    func getObjectId(){
-        let query = PFQuery(className: "HammaddeBilgileri")
-        query.whereKey("HammaddeSahibi", equalTo: (PFUser.current()?.username)!)
-        query.whereKey("HammaddeAdi", equalTo: self.hammaddeAdiDepoArray[depoIndexNumber])
-        
-        query.findObjectsInBackground { (objects, error) in
-            if error != nil{
-                let alert = UIAlertController(title: "HATA", message: error?.localizedDescription, preferredStyle: UIAlertController.Style.alert)
-                let okButton = UIAlertAction(title: "TAMAM", style: UIAlertAction.Style.cancel, handler: nil)
-                alert.addAction(okButton)
-                self.present(alert, animated: true, completion: nil)
-            }
-            else{
-                self.objectIdArray.removeAll(keepingCapacity: false)
-                
-                for object in objects! {
-                    self.hammaddeObjectIdArray.append(object.objectId! )
-                    
-                    self.hammaddeObjectId = "\(self.hammaddeObjectIdArray.last!)"
-                    
-                }
-                print("objectId", self.hammaddeObjectIdArray)
-                self.changeHammadde()
-
-            }
         }
     }
     
-    func changeHammadde(){
-        
-        
-        let query = PFQuery(className: "HammaddeBilgileri")
-        query.whereKey("HammaddeSahibi", equalTo: (PFUser.current()?.username)!)
-
-        query.getObjectInBackground(withId: self.hammaddeObjectIdArray[self.depoIndexNumber]) { (objects, error) in
-            if error != nil{
-                let alert = UIAlertController(title: "HATA", message: error?.localizedDescription, preferredStyle: UIAlertController.Style.alert)
-                let okButton = UIAlertAction(title: "TAMAM", style: UIAlertAction.Style.cancel, handler: nil)
-                alert.addAction(okButton)
-                self.present(alert, animated: true, completion: nil)
-                
-            }else {
-                objects!["HammaddeMiktariGr"] = self.kalanHammaddeMiktar
-            
-                objects!.saveInBackground(block: { (success, error) in
-                    if error != nil{
-                        let alert = UIAlertController(title: "Lütfen Tekrar Deneyin", message: "", preferredStyle: UIAlertController.Style.alert)
-                        let okButton = UIAlertAction(title: "TAMAM", style: UIAlertAction.Style.cancel, handler: nil)
-                        alert.addAction(okButton)
-                        self.present(alert, animated: true, completion: nil)
-                        
-                    }
-                    
-                })
-                
-            
-            }
-        }
-    }
     
-  
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         dismiss(animated: true, completion: nil)
     }
@@ -739,10 +568,10 @@ class PopUpVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
         
                 if allFoodsNamesArray.count > indexPath.row && allPricesArray.count > indexPath.row && allNoteArray.count > indexPath.row{
                     
-        if indexPath.row < Int(numberOfDeliveredOrder)!  {
-        
-                cell.doneLabel.isHidden = false
-            }
+//        if indexPath.row < Int(numberOfDeliveredOrder)!  {
+//
+//                cell.doneLabel.isHidden = false
+//            }
                     
         cell.foodNameLabel.text = allFoodsNamesArray[indexPath.row]
         cell.foodPriceLabel.text = allPricesArray[indexPath.row]

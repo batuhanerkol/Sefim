@@ -12,15 +12,15 @@ import Parse
 class BilgilerimVC: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     
 
+    @IBOutlet weak var phoneNumberLabel: UILabel!
     @IBOutlet weak var lezzetPuanLabel: UILabel!
     @IBOutlet weak var hizmetPuanLabel: UILabel!
     @IBOutlet weak var saceLogoButton: UIButton!
     @IBOutlet weak var logoImageView: UIImageView!
     @IBOutlet weak var usernameLabel: UILabel!
-    @IBOutlet weak var emailTextField: UITextField!
     @IBOutlet weak var nameTextField: UITextField!
     @IBOutlet weak var lastnameTextField: UITextField!
-    @IBOutlet weak var phoneNumberTextField: UITextField!
+    
     @IBOutlet weak var saveChangesButton: UIButton!
     @IBOutlet weak var changePasswordButton: UIButton!
     
@@ -52,10 +52,6 @@ class BilgilerimVC: UIViewController, UIImagePickerControllerDelegate, UINavigat
         
     saveChangesButton.isHidden = true
 
-        if emailTextField.text == "" || nameTextField.text == "" || lastnameTextField.text == "" || phoneNumberTextField.text == ""{
-
-        }
-        
         
        
         // loading sembolu
@@ -113,10 +109,9 @@ class BilgilerimVC: UIViewController, UIImagePickerControllerDelegate, UINavigat
     }
     
     func whenTextFiledsChange(){
-        emailTextField.addTarget(self, action: #selector(BilgilerimVC.textFieldDidChange(_:)), for: UIControlEvents.editingChanged)
+  
         nameTextField.addTarget(self, action: #selector(BilgilerimVC.textFieldDidChange(_:)), for: UIControlEvents.editingChanged)
         lastnameTextField.addTarget(self, action: #selector(BilgilerimVC.textFieldDidChange(_:)), for: UIControlEvents.editingChanged)
-        phoneNumberTextField.addTarget(self, action: #selector(BilgilerimVC.textFieldDidChange(_:)), for: UIControlEvents.editingChanged)
     }
     @objc func textFieldDidChange(_ textField: UITextField) {
         saveChangesButton.isHidden = false
@@ -174,8 +169,8 @@ class BilgilerimVC: UIViewController, UIImagePickerControllerDelegate, UINavigat
                     self.nameTextField.text = "\(self.nameArray.last!)"
                     self.lastnameTextField.text = "\(self.surnameArray.last!)"
                     self.usernameLabel.text = "\(self.userNameArray.last!)"
-                    self.phoneNumberTextField.text = "\(self.phoneNumberArray.last!)"
-                    self.emailTextField.text = "\(self.emailArray.last!)"
+                    self.phoneNumberLabel.text = "\(self.phoneNumberArray.last!)"
+                   
                     
                 }
                 self.activityIndicator.stopAnimating()
@@ -196,11 +191,10 @@ class BilgilerimVC: UIViewController, UIImagePickerControllerDelegate, UINavigat
                 self.present(alert, animated: true, completion: nil)
             }
             else{
-                if self.nameTextField.text! != "" && self.lastnameTextField.text! != "" && self.phoneNumberTextField.text! != "" && self.emailTextField.text! != ""{
+                if self.nameTextField.text! != "" && self.lastnameTextField.text! != ""  {
                 object!["name"] = self.nameTextField.text!
                 object!["lastname"] = self.lastnameTextField.text!
-                object!["PhoneNumber"] = self.phoneNumberTextField.text!
-                object!["email"] = self.emailTextField.text!
+              
                 object?.saveInBackground()
                     
                     let alert = UIAlertController(title: "Değişiklikler Kayıt Edildi", message: "", preferredStyle: UIAlertController.Style.alert)
