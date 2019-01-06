@@ -215,7 +215,7 @@
                                 <constraints>
                                     <constraint firstAttribute="height" constant="30" id="Cr1-ZS-UKe"/>
                                 </constraints>
-                                <nil key="textColor"/>
+                                <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits" keyboardType="emailAddress" returnKeyType="done"/>
                             </textField>
@@ -225,7 +225,7 @@
                                 <constraints>
                                     <constraint firstAttribute="height" constant="30" id="eA8-C0-QZZ"/>
                                 </constraints>
-                                <nil key="textColor"/>
+                                <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits" returnKeyType="done" secureTextEntry="YES" textContentType="password"/>
                             </textField>
@@ -235,7 +235,7 @@
                                 <constraints>
                                     <constraint firstAttribute="height" constant="30" id="R12-xO-fpV"/>
                                 </constraints>
-                                <nil key="textColor"/>
+                                <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits" returnKeyType="done" secureTextEntry="YES" textContentType="password"/>
                             </textField>
@@ -245,7 +245,7 @@
                                 <constraints>
                                     <constraint firstAttribute="height" constant="30" id="uu6-p7-kdg"/>
                                 </constraints>
-                                <nil key="textColor"/>
+                                <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits" keyboardType="phonePad" returnKeyType="done"/>
                             </textField>
@@ -255,7 +255,7 @@
                                 <constraints>
                                     <constraint firstAttribute="height" constant="30" id="CMj-Ay-D8w"/>
                                 </constraints>
-                                <nil key="textColor"/>
+                                <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits" returnKeyType="done"/>
                             </textField>
@@ -265,7 +265,7 @@
                                 <constraints>
                                     <constraint firstAttribute="height" constant="30" id="W4E-gX-LAe"/>
                                 </constraints>
-                                <nil key="textColor"/>
+                                <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits" returnKeyType="done"/>
                             </textField>
@@ -799,7 +799,7 @@
                                             <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         </state>
                                         <connections>
-                                            <segue destination="RoN-y1-Sfe" kind="show" id="1a2-A0-qut"/>
+                                            <action selector="manuelEkleClicked:" destination="4Uq-T9-kuY" eventType="touchUpInside" id="U8S-ZU-y5K"/>
                                         </connections>
                                     </button>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Geri" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="vSu-ih-uJR">
@@ -847,10 +847,12 @@
                         <outlet property="checkPaidButton" destination="CZv-Bb-czj" id="gTW-Lt-VTY"/>
                         <outlet property="foodIsReadyButton" destination="f8X-bI-9Te" id="B7x-qY-Mtl"/>
                         <outlet property="hesapDurumuLabel" destination="TmX-EW-uZ4" id="aif-yV-co1"/>
+                        <outlet property="manuelEkle" destination="CuA-Lr-RBm" id="KsM-hp-2R9"/>
                         <outlet property="orderHasGivenButton" destination="Nn8-q0-WqY" id="sRW-DE-biZ"/>
                         <outlet property="orderTableView" destination="WDp-ob-la6" id="dwn-JR-OLg"/>
                         <outlet property="tableNumberLabel" destination="BgL-QH-jhG" id="zjF-U6-LRW"/>
                         <segue destination="ZY4-vk-Nsm" kind="show" identifier="ToMasaVC" id="oKV-jo-zY3"/>
+                        <segue destination="RoN-y1-Sfe" kind="show" identifier="toManuelEkleVC" id="nRf-R8-vYh"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="pwO-sf-MUm" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -1120,7 +1122,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="CnT-5V-EX2" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="6080.2734375" y="1739.84375"/>
+            <point key="canvasLocation" x="6095" y="1791"/>
         </scene>
         <!--OrderVC-->
         <scene sceneID="QMH-xM-ARJ">
@@ -3636,7 +3638,7 @@
     <inferredMetricsTieBreakers>
         <segue reference="eUa-i6-rIX"/>
         <segue reference="TaP-KR-vuL"/>
-        <segue reference="w0M-8p-9bV"/>
+        <segue reference="Kqe-M7-6sh"/>
         <segue reference="oKV-jo-zY3"/>
         <segue reference="0Xj-E9-vqK"/>
         <segue reference="9Lt-ew-kxa"/>

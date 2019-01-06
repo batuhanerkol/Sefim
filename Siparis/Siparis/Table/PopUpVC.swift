@@ -51,8 +51,10 @@ class PopUpVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
      var hesapIstendi = ""
      var orderNumber = 0
      var yemekHazir = ""
+    var masaDoluArray = [String]()
     
     
+    @IBOutlet weak var manuelEkle: UIButton!
     @IBOutlet weak var checkPaidButton: UIButton!
     @IBOutlet weak var orderHasGivenButton: UIButton!
     @IBOutlet weak var foodIsReadyButton: UIButton!
@@ -359,12 +361,6 @@ class PopUpVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
             UIApplication.shared.endIgnoringInteractionEvents()
         }
     }
-
-    
-    @IBAction func closeButtonClicked(_ sender: Any) {
-       performSegue(withIdentifier: "toMasaVC", sender: nil)
-    }
-    
     
     
     @IBAction func orderHasGivenButtonClicked(_ sender: Any) {
@@ -509,6 +505,46 @@ class PopUpVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
         }
     }
     
+    @IBAction func manuelEkleClicked(_ sender: Any) {
+        
+        let query = PFQuery(className: "VerilenSiparisler")
+        query.whereKey("IsletmeSahibi", equalTo: (PFUser.current()?.username)!)
+        query.whereKey("MasaNo", equalTo: globalChosenTableNumberMasaVC)
+        query.whereKey("SiparisSahibi", notEqualTo: (PFUser.current()?.username)!)
+        
+        query.findObjectsInBackground { (objects, error) in
+            
+            if error != nil{
+                let alert = UIAlertController(title: "HATA", message: error?.localizedDescription, preferredStyle: UIAlertController.Style.alert)
+                let okButton = UIAlertAction(title: "TAMAM", style: UIAlertAction.Style.cancel, handler: nil)
+                alert.addAction(okButton)
+                self.present(alert, animated: true, completion: nil)
+            }
+            else{
+                
+                self.masaDoluArray.removeAll(keepingCapacity: false)
+                
+                for object in objects! {
+                    
+                    self.masaDoluArray.append(object.object(forKey: "SiparisVerildi") as! String)
+                    
+                }
+                if self.masaDoluArray.isEmpty != true{
+                    let alert = UIAlertController(title: "Telefon İle Sipariş Verilmiş Masaya Manül Ekleme Yapılamaz.", message: "", preferredStyle: UIAlertController.Style.alert)
+                    let okButton = UIAlertAction(title: "TAMAM", style: UIAlertAction.Style.cancel, handler: nil)
+                    alert.addAction(okButton)
+                    self.present(alert, animated: true, completion: nil)
+                    self.manuelEkle.isEnabled = false
+                    
+                }else{
+                    self.performSegue(withIdentifier: "toManuelEkleVC", sender: nil
+                    )
+                }
+                
+            }
+            
+        }
+    }
     
     
     
@@ -535,11 +571,6 @@ class PopUpVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
     for object in objects! {
         
         self.foodNameBeforeDeleteArray.append(object.object(forKey: "SiparisAdi") as! String)
-        self.hammaddeKullanilanAdiArray = object["HammaddeAdi"] as! [String]
-        self.hammaddeKullanilanMiktarArray = object["HammaddeMiktari"] as! [String]
-        
-         print("hammaddeKullanilanAdiArray", self.hammaddeKullanilanAdiArray)
-         print("hammaddeKullanilanMiktarArray", self.hammaddeKullanilanMiktarArray)
         
     object.deleteInBackground()
     }
@@ -631,13 +662,15 @@ class PopUpVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
      func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
         
         if (editingStyle == .delete){
-            let foodIndexName = orderTableView.cellForRow(at: indexPath)?.textLabel?.text!
             
+            let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath) as! PopUpTVC
+            
+            let foodIndexName = orderTableView.cellForRow(at: indexPath)
             foodNameArray.remove(at: indexPath.item)
             tableView.deleteRows(at: [indexPath], with: .automatic)
             
-            
-            deleteData(foodIndexName: foodIndexName!)
+//
+//            deleteData(foodIndexName: foodIndexName!)
         }
     }
 }

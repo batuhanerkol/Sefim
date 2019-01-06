@@ -10,12 +10,17 @@ import UIKit
 import MapKit
 import Parse
 
+var globalBusinessNameTextFieldKonumVC = ""
+
 class konumVC: UIViewController, MKMapViewDelegate, CLLocationManagerDelegate {
    
     var selectedName = ""
     var chosenLatitude = ""
     var chosenLongitude = ""
     var screenPassword = ""
+    
+    var objectIdArray = [String]()
+    var objectId = ""
     
     var passwordTextField: UITextField?
     
@@ -63,7 +68,13 @@ class konumVC: UIViewController, MKMapViewDelegate, CLLocationManagerDelegate {
         
             }
     override func viewWillAppear(_ animated: Bool) {
-             self.addButton.isHidden = true
+        
+        if businessNameLabel.text == ""{
+            self.addButton.isHidden = false
+        }else{
+            self.addButton.isHidden = true
+        }
+        
         enteringPassword()
         updateUserInterface()
     }
@@ -158,17 +169,14 @@ class konumVC: UIViewController, MKMapViewDelegate, CLLocationManagerDelegate {
     
     
     @IBAction func cleanButtonPressed(_ sender: Any) {
-        let alertController = UIAlertController(title: "EMİN MİSİNİZ ?", message: "Eğer Bilgilerinizi Sıfırlarsanız Bütün Bilgilerinizi En Baştan Girmeniz Gerekir (Menü, Logo vb.)", preferredStyle: .alert)
+        if businessNameLabel.text != ""{
+        
+        let alertController = UIAlertController(title: "EMİN MİSİNİZ ?", message: "", preferredStyle: .alert)
         
         // Create the actions
         let okAction = UIAlertAction(title: "Evet", style: UIAlertActionStyle.default) {
             UIAlertAction in
-            
-            self.addButton.isHidden = false
-            self.deleteBusinessInfo()
-            self.deleteFoodInfo()
-            self.deleteFoodTitle()
-            self.deleteFromFavorites()
+            self.deleteWithObjectId()
             
         }
         let cancelAction = UIAlertAction(title: "Hayır", style: UIAlertActionStyle.cancel) {
@@ -182,9 +190,60 @@ class konumVC: UIViewController, MKMapViewDelegate, CLLocationManagerDelegate {
         // Present the controller
         self.present(alertController, animated: true, completion: nil)
         
-       
+        }else{
+            let alert = UIAlertController(title: "Lütfen Konum Ekleyin", message: "", preferredStyle: UIAlertController.Style.alert)
+            let okButton = UIAlertAction(title: "TAMAM", style: UIAlertAction.Style.cancel, handler: nil)
+            alert.addAction(okButton)
+            self.present(alert, animated: true, completion: nil)
+        }
     }
+    
+
+    func deleteWithObjectId(){
+        let query = PFQuery(className: "BusinessInformation")
+        query.whereKey("businessUserName", equalTo: (PFUser.current()?.username)!)
         
+        query.findObjectsInBackground { (objects, error) in
+            if error != nil{
+                let alert = UIAlertController(title: "HATA", message: error?.localizedDescription, preferredStyle: UIAlertController.Style.alert)
+                let okButton = UIAlertAction(title: "TAMAM", style: UIAlertAction.Style.cancel, handler: nil)
+                alert.addAction(okButton)
+                self.present(alert, animated: true, completion: nil)
+            }
+            else{
+                self.objectIdArray.removeAll(keepingCapacity: false)
+                
+                for object in objects! {
+                    self.objectIdArray.append(object.objectId!)
+                    
+                    self.objectId = "\(self.objectIdArray.last!)"
+                }
+                
+                let query = PFQuery(className: "BusinessInformation")
+                query.whereKey("businessUserName", equalTo: "\(PFUser.current()!.username!)")
+                
+                query.getObjectInBackground(withId: self.objectId) { (object, error) in
+                    if error != nil{
+                        let alert = UIAlertController(title: "HATA", message: error?.localizedDescription, preferredStyle: UIAlertControllerStyle.alert)
+                        let okButton = UIAlertAction(title: "TAMAM", style: UIAlertActionStyle.cancel, handler: nil)
+                        alert.addAction(okButton)
+                        self.present(alert, animated: true, completion: nil)
+                    }
+                    else{
+                        object!["latitude"] = ""
+                        object!["longitude"] = ""
+                        
+                        object?.saveInBackground()
+                        
+                       self.longitudeLabel.text = ""
+                       self.latitudeLabel.text = ""
+                        
+                        self.addButton.isHidden = false
+                    }
+                }
+            }
+        }
+    }
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         
         if self.chosenLongitude != "" && self.chosenLatitude != ""{
@@ -281,110 +340,15 @@ class konumVC: UIViewController, MKMapViewDelegate, CLLocationManagerDelegate {
                     
                     
                 }
+                globalBusinessNameTextFieldKonumVC = self.businessNameLabel.text!
+                
                 self.activityIndicator.stopAnimating()
                 UIApplication.shared.endIgnoringInteractionEvents()
             }
         }
         
     }
-    
-    func deleteBusinessInfo(){
-        let query = PFQuery(className: "BusinessInformation")
-        query.whereKey("businessUserName", equalTo: "\(PFUser.current()!.username!)")
-        query.findObjectsInBackground { (objects, error) in
-            
-            if error != nil{
-                let alert = UIAlertController(title: "HATA", message: error?.localizedDescription, preferredStyle: UIAlertControllerStyle.alert)
-                let okButton = UIAlertAction(title: "TAMAM", style: UIAlertActionStyle.cancel, handler: nil)
-                alert.addAction(okButton)
-                self.present(alert, animated: true, completion: nil)
-            }
-            else {
-                self.chosenLatitudeArray.removeAll(keepingCapacity: false)
-                self.chosenLongitudeArray.removeAll(keepingCapacity: false)
-                self.chosenbusinessArray.removeAll(keepingCapacity: false)
-                for object in objects! {
-                    object.deleteInBackground()
-                    
-                    self.longitudeLabel.text = ""
-                    self.latitudeLabel.text = ""
-                    self.businessNameLabel.text = ""
-                    
-                    let annotation = MKPointAnnotation()
-                     self.mapView.removeAnnotation(annotation)
-                }
-                
-            }
-        }
-    }
-    func deleteFoodInfo(){
-        let query = PFQuery(className: "FoodInformation")
-        query.whereKey("foodNameOwner", equalTo: "\(PFUser.current()!.username!)")
-        query.findObjectsInBackground { (objects, error) in
-            
-            if error != nil{
-                let alert = UIAlertController(title: "HATA", message: error?.localizedDescription, preferredStyle: UIAlertControllerStyle.alert)
-                let okButton = UIAlertAction(title: "TAMAM", style: UIAlertActionStyle.cancel, handler: nil)
-                alert.addAction(okButton)
-                self.present(alert, animated: true, completion: nil)
-            }
-            else {
-              
-                for object in objects! {
-                    object.deleteInBackground()
-                    
-                }
-                
-            }
-        }
-    }
-    
-    func deleteFoodTitle(){
-        let query = PFQuery(className: "FoodTitle")
-        query.whereKey("foodTitleOwner", equalTo: "\(PFUser.current()!.username!)")
-        query.findObjectsInBackground { (objects, error) in
-            
-            if error != nil{
-                let alert = UIAlertController(title: "HATA", message: error?.localizedDescription, preferredStyle: UIAlertControllerStyle.alert)
-                let okButton = UIAlertAction(title: "TAMAM", style: UIAlertActionStyle.cancel, handler: nil)
-                alert.addAction(okButton)
-                self.present(alert, animated: true, completion: nil)
-            }
-            else {
-                
-                for object in objects! {
-                    object.deleteInBackground()
-                    
-                }
-                
-            }
-        }
-    }
-    
-    func deleteFromFavorites(){
-        let query = PFQuery(className: "FavorilerListesi")
-        query.whereKey("IsletmeSahibi", equalTo: "\(PFUser.current()!.username!)")
-        query.findObjectsInBackground { (objects, error) in
-            
-            if error != nil{
-                let alert = UIAlertController(title: "HATA", message: error?.localizedDescription, preferredStyle: UIAlertControllerStyle.alert)
-                let okButton = UIAlertAction(title: "TAMAM", style: UIAlertActionStyle.cancel, handler: nil)
-                alert.addAction(okButton)
-                self.present(alert, animated: true, completion: nil)
-            }
-            else {
-                
-                for object in objects! {
-                    object.deleteInBackground()
-                    
-                }
-                
-            }
-        }
-    }
-    
-  
-    
+
     
     }
 

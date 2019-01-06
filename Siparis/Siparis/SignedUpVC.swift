@@ -66,7 +66,7 @@ class SignedUpVC: UIViewController, UITextFieldDelegate {
         let emailTest = NSPredicate(format:"SELF MATCHES %@", emailRegEx)
         return emailTest.evaluate(with: testStr)
     }
-   
+    
     @IBAction func SignedUpClicked(_ sender: Any) {
        
         let email = isValidEmail(testStr: userName.text!)
@@ -93,7 +93,7 @@ class SignedUpVC: UIViewController, UITextFieldDelegate {
                     self.present(alert, animated: true, completion: nil)
                 }
                 else{
-                    print("kullanıcı oluşturuldu")
+    
                     
                     self.performSegue(withIdentifier: "SignedUpToTabBar", sender: nil)
                     
@@ -102,6 +102,7 @@ class SignedUpVC: UIViewController, UITextFieldDelegate {
                     
                     let delegate : AppDelegate = UIApplication.shared.delegate as! AppDelegate
                     delegate.rememberUser()
+                
                     
                 }
                 
