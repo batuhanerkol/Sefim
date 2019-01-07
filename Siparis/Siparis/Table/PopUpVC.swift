@@ -663,14 +663,13 @@ class PopUpVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
         
         if (editingStyle == .delete){
             
-            let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath) as! PopUpTVC
             
-            let foodIndexName = orderTableView.cellForRow(at: indexPath)
+            let foodIndexName = orderTableView.cellForRow(at: indexPath)?.textLabel?.text!
             foodNameArray.remove(at: indexPath.item)
             tableView.deleteRows(at: [indexPath], with: .automatic)
             
-//
-//            deleteData(foodIndexName: foodIndexName!)
+
+            deleteData(foodIndexName: foodIndexName!)
         }
     }
 }
