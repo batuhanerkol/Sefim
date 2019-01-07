@@ -17,15 +17,12 @@ class PopUpVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
     var orderNoteArray = [String]()
     var dateArray = [String]()
     var timeArray =  [String]()
-    var tableNumberArray = [String]()
     var totalPriceArray = [String]()
     var objectIdArray = [String]()
     var hesapOdendiArray = [String]()
     var hesapIstendiArray = [String]()
     var yemekTeslimEdildiArray = [String]()
     var foodNameBeforeDeleteArray = [String]()
-    var hammaddeObjectIdArray = [String]()
-
     
     var allFoodsNamesArray = [String]()
     var allPricesArray = [String]()
@@ -33,16 +30,13 @@ class PopUpVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
     var allDateArray = [String]()
     var allTimeArray = [String]()
     
-    var hammaddeAdiDepoArray = [String]()
-    var hammaddeMiktariDepoArray = [String]()
-    var hammaddeKullanilanAdiArray = [String]()
-    var hammaddeKullanilanMiktarArray = [String]()
-    var lastHammaddeAdiArray = [String]()
-    var lastHammaddeMiktarArray = [String]()
+    var siparislerObjectId = [String]()
+    
+    var deletingFoodNameArray = [String]()
+    var deletingFoodName = ""
     
     var numberOfDeliveredOrder = ""
     
-     var tableNumber = ""
      var objectId = ""
      var chosenBusiness = ""
      var chosenDate = ""
@@ -52,6 +46,7 @@ class PopUpVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
      var orderNumber = 0
      var yemekHazir = ""
     var masaDoluArray = [String]()
+    var deleteIndex = 0
     
     
     @IBOutlet weak var manuelEkle: UIButton!
@@ -107,13 +102,11 @@ class PopUpVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
             
             
         case .wifi:
-            getTableNumberData()
             checkHesapToGetOrder()
             self.checkPaidButton.isEnabled = true
             self.orderHasGivenButton.isEnabled = true
             self.foodIsReadyButton.isEnabled = true
         case .wwan:
-            getTableNumberData()
             checkHesapToGetOrder()
             self.checkPaidButton.isEnabled = true
             self.orderHasGivenButton.isEnabled = true
@@ -125,32 +118,6 @@ class PopUpVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
     }
    
    
-    func getTableNumberData(){ // app açıuldığında eski girilmiş olan masa sayısını almak için
-        
-        let query = PFQuery(className: "BusinessInformation")
-        query.whereKey("businessUserName", equalTo: (PFUser.current()?.username)!)
-        query.whereKeyExists("MasaSayisi")
-        
-        query.findObjectsInBackground { (objects, error) in
-            
-            if error != nil{
-                let alert = UIAlertController(title: "HATA", message: error?.localizedDescription, preferredStyle: UIAlertController.Style.alert)
-                let okButton = UIAlertAction(title: "TAMAM", style: UIAlertAction.Style.cancel, handler: nil)
-                alert.addAction(okButton)
-                self.present(alert, animated: true, completion: nil)
-            }
-            else{
-                
-                self.tableNumberArray.removeAll(keepingCapacity: false)
-                for object in objects! {
-                    self.tableNumberArray.append(object.object(forKey: "MasaSayisi") as! String)
-                }
-            }
-            if self.tableNumberArray.isEmpty == false{
-            self.tableNumber = self.tableNumberArray.last!
-            }
-        }
-    }
     func checkHesapToGetOrder(){ // istenen hesabın nakit-kredi kartı olduğunu görebilmek için
         let query = PFQuery(className: "VerilenSiparisler")
         query.whereKey("IsletmeSahibi", equalTo: (PFUser.current()?.username)!)
@@ -169,6 +136,7 @@ class PopUpVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
                 self.hesapOdendiArray.removeAll(keepingCapacity: false)
                  self.hesapIstendiArray.removeAll(keepingCapacity: false)
                 self.yemekHazir = ""
+                self.hesapDurumuLabel.text = ""
                 
                 
                 for object in objects! {
@@ -284,6 +252,12 @@ class PopUpVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
     }
   
     
+    func getSiparislerObjectId(){ // kaydırarak silmebilmek için gerekli olan object Id
+
+       
+        
+    }
+
     
     @IBAction func foodIsReadyButtonClicked(_ sender: Any) {
         
@@ -554,6 +528,7 @@ class PopUpVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
     query.whereKey("IsletmeSahibi", equalTo: "\(PFUser.current()!.username!)")
     query.whereKey("MasaNumarasi", equalTo: globalChosenTableNumberMasaVC)
     query.whereKey("SiparisDurumu", equalTo: "Verildi")
+
     
     query.findObjectsInBackground { (objects, error) in
     if error != nil{
@@ -565,8 +540,6 @@ class PopUpVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
     else {
     
          self.foodNameBeforeDeleteArray.removeAll(keepingCapacity: false)
-         self.hammaddeKullanilanAdiArray.removeAll(keepingCapacity: false)
-         self.hammaddeKullanilanMiktarArray.removeAll(keepingCapacity: false)
 
     for object in objects! {
         
@@ -581,32 +554,118 @@ class PopUpVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
         }
     }
     
-    func deleteData(foodIndexName : String){
+    func deleteData(foodobjectId : String){ // kaydırarak silmek
         let query = PFQuery(className: "Siparisler")
         query.whereKey("IsletmeSahibi", equalTo: "\(PFUser.current()!.username!)")
-        query.whereKey("SiparisAdi", equalTo: foodIndexName)
-        query.whereKey("MasaNumarasi", equalTo: globalChosenTableNumberMasaVC)
+        query.whereKey("objectId", equalTo: foodobjectId)
+    
         
         query.findObjectsInBackground { (objects, error) in
             if error != nil{
-                let alert = UIAlertController(title: "HATA", message: error?.localizedDescription, preferredStyle: UIAlertControllerStyle.alert)
-                let okButton = UIAlertAction(title: "TAMAM", style: UIAlertActionStyle.cancel, handler: nil)
+                let alert = UIAlertController(title: "HATA", message: error?.localizedDescription, preferredStyle: UIAlertController.Style.alert)
+                let okButton = UIAlertAction(title: "TAMAM", style: UIAlertAction.Style.cancel, handler: nil)
                 alert.addAction(okButton)
                 self.present(alert, animated: true, completion: nil)
-                
-                self.activityIndicator.stopAnimating()
-                UIApplication.shared.endIgnoringInteractionEvents()
             }
             else {
-//                self.foodNameArray.removeAll(keepingCapacity: false)
-                for object in objects! {
-                    object.deleteInBackground()
-                    self.orderTableView.reloadData()
-                    self.getOrderData()
-                }
+ 
+                self.deletingFoodName = ""
                 
+                for object in objects! {
+                    
+                    self.deletingFoodName = (object.object(forKey: "SiparisAdi") as! String)
+                    
+                    object.deleteInBackground(block: { (sucess, error) in
+                        if error != nil{
+                            let alert = UIAlertController(title: "HATA", message: error?.localizedDescription, preferredStyle: UIAlertController.Style.alert)
+                            let okButton = UIAlertAction(title: "TAMAM", style: UIAlertAction.Style.cancel, handler: nil)
+                            alert.addAction(okButton)
+                            self.present(alert, animated: true, completion: nil)
+                        }
+                    })
+                    print("Siparişlerden Çekilen Silinecek olan yemek ",  self.deletingFoodName)
+                    // ------------------------------------------------------------
+                    let query = PFQuery(className: "VerilenSiparisler")
+                    query.whereKey("IsletmeSahibi", equalTo: "\(PFUser.current()!.username!)")
+                    query.whereKey("MasaNo", equalTo: globalChosenTableNumberMasaVC)
+            
+                    
+                    query.findObjectsInBackground { (objects, error) in
+                        if error != nil{
+                            let alert = UIAlertController(title: "HATA", message: error?.localizedDescription, preferredStyle: UIAlertController.Style.alert)
+                            let okButton = UIAlertAction(title: "TAMAM", style: UIAlertAction.Style.cancel, handler: nil)
+                            alert.addAction(okButton)
+                            self.present(alert, animated: true, completion: nil)
+                        }
+                        else {
+                            
+                            self.deletingFoodNameArray.removeAll(keepingCapacity: false)
+                            self.objectIdArray.removeAll(keepingCapacity: false)
+                            
+                            for object in objects! {
+                                
+                                self.deletingFoodNameArray = object["SiparisAdi"] as! [String]
+                                self.objectIdArray.append(object.objectId! as String)
+                            }
+                            
+                            print("verilen Siparisler yemek arrayi", self.deletingFoodNameArray)
+                            print("verilen Siparisler yemek arrayi object IO ", self.objectIdArray)
+                            
+                            if self.deletingFoodNameArray.contains(self.deletingFoodName){
+                                print("deleteIndex:", self.deleteIndex)
+                                    self.deletingFoodNameArray.remove(at: self.deleteIndex)
+                        
+                                    
+                                    //----------------------------------------------------------------------
+                                    
+                                    let query = PFQuery(className: "VerilenSiparisler")
+                                    query.whereKey("IsletmeSahibi", equalTo: (PFUser.current()?.username)!)
+                                    query.whereKey("MasaNo", equalTo: globalChosenTableNumberMasaVC)
+                                    query.addDescendingOrder("createdAt")
+                                    
+                                    query.getObjectInBackground(withId: self.objectIdArray.last!) { (objects, error) in
+                                        if error != nil{
+                                            let alert = UIAlertController(title: "HATA", message: error?.localizedDescription, preferredStyle: UIAlertController.Style.alert)
+                                            let okButton = UIAlertAction(title: "TAMAM", style: UIAlertAction.Style.cancel, handler: nil)
+                                            alert.addAction(okButton)
+                                            self.present(alert, animated: true, completion: nil)
+                                            
+                                        }else {
+                                            print("silindikten sonra array de kalan:", self.deletingFoodNameArray)
+                                            if self.deletingFoodNameArray.count == 0{
+                                                objects!.deleteInBackground()
+                                                self.touchesBegan(Set<UITouch>(), with: nil)
+                                                
+                                            }else{
+                                            objects!["SiparisAdi"] = self.deletingFoodNameArray
+                                            objects!.saveInBackground(block: { (success, error) in
+                                                if error != nil{
+                                                    let alert = UIAlertController(title: "Lütfen Tekrar Deneyin", message: "", preferredStyle: UIAlertController.Style.alert)
+                                                    let okButton = UIAlertAction(title: "TAMAM", style: UIAlertAction.Style.cancel, handler: nil)
+                                                    alert.addAction(okButton)
+                                                    self.present(alert, animated: true, completion: nil)
+                                                    
+                                                }else{
+                                                    self.activityIndicator.stopAnimating()
+                                                    UIApplication.shared.endIgnoringInteractionEvents()
+                                                    self.getOrderData()
+                                                    self.orderTableView.reloadData()
+                                                }
+                                            })
+                                            
+                                        }
+                                        }
+                                    }
+                            }
+                        }
+                    }
+                }
+               self.orderTableView.reloadData()
             }
         }
+    }
+    func deleteFromVerilenSiparisler(){ // kaydırarak verilen Siparislerden silmek için silmek
+      
     }
 
     
@@ -663,13 +722,40 @@ class PopUpVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
         
         if (editingStyle == .delete){
             
+            activityIndicator.startAnimating()
+            UIApplication.shared.beginIgnoringInteractionEvents()
             
-            let foodIndexName = orderTableView.cellForRow(at: indexPath)?.textLabel?.text!
-            foodNameArray.remove(at: indexPath.item)
-            tableView.deleteRows(at: [indexPath], with: .automatic)
+            let query = PFQuery(className: "Siparisler")
+            query.whereKey("IsletmeSahibi", equalTo: "\(PFUser.current()!.username!)")
+            query.whereKey("MasaNumarasi", equalTo: globalChosenTableNumberMasaVC)
             
+            query.findObjectsInBackground { (objects, error) in
+                if error != nil{
+                    let alert = UIAlertController(title: "HATA", message: error?.localizedDescription, preferredStyle: UIAlertController.Style.alert)
+                    let okButton = UIAlertAction(title: "TAMAM", style: UIAlertAction.Style.cancel, handler: nil)
+                    alert.addAction(okButton)
+                    self.present(alert, animated: true, completion: nil)
+                }
+                else {
+                    self.siparislerObjectId.removeAll(keepingCapacity: false)
+                    
+                    for object in objects! {
+                        
+                        self.siparislerObjectId.append(object.objectId!)
+                    }
 
-            deleteData(foodIndexName: foodIndexName!)
+                    var obejctIdOne = ""
+                    print("Siparis object ID ilk Kaydırma", self.siparislerObjectId)
+                    print("indexPath.row", indexPath.row)
+                    
+                    self.deleteIndex = indexPath.row
+                    
+                    obejctIdOne = self.siparislerObjectId[indexPath.row]
+                    self.deleteData(foodobjectId: obejctIdOne)
+                    
+                }
+            }
+       
         }
     }
 }

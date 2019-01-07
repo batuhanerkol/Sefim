@@ -261,6 +261,8 @@ class MasaVC: UIViewController {
                 }
                     
                     
+                }else{
+                    self.tableBottomBackgroundColor = UIColor.gray
                 }
                 self.activityIndicator.stopAnimating()
                 UIApplication.shared.endIgnoringInteractionEvents()
