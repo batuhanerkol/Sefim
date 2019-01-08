@@ -10,6 +10,8 @@ import UIKit
 import Parse
 
 class SingInVC: UIViewController,UITextFieldDelegate {
+    
+     var activityIndicator:UIActivityIndicatorView = UIActivityIndicatorView()
 
     @IBOutlet weak var signUpButton: UIButton!
     @IBOutlet weak var signInButton: UIButton!
@@ -21,6 +23,11 @@ class SingInVC: UIViewController,UITextFieldDelegate {
         
         NotificationCenter.default.addObserver(self, selector: #selector(statusManager), name: .flagsChanged, object: Network.reachability)
         updateUserInterface()
+        
+        activityIndicator.center = self.view.center
+        activityIndicator.hidesWhenStopped = true
+        activityIndicator.activityIndicatorViewStyle = UIActivityIndicatorView.Style.gray
+        view.addSubview(activityIndicator)
         
         self.userNameText.delegate = self
         self.passwordText.delegate = self
@@ -58,7 +65,11 @@ class SingInVC: UIViewController,UITextFieldDelegate {
     }
     @IBAction func signInClicked(_ sender: Any) {
         
+        
         if userNameText.text != "" && passwordText.text != ""{
+            
+            activityIndicator.startAnimating()
+            UIApplication.shared.beginIgnoringInteractionEvents()
            
                 PFUser.logInWithUsername(inBackground: self.userNameText.text!, password: self.passwordText.text!) { (user, error) in
                 if error != nil{
@@ -66,6 +77,9 @@ class SingInVC: UIViewController,UITextFieldDelegate {
                     let okButton = UIAlertAction(title: "TAMAM", style: UIAlertActionStyle.cancel, handler: nil)
                     alert.addAction(okButton)
                     self.present(alert, animated: true, completion: nil)
+                    
+                    self.activityIndicator.stopAnimating()
+                    UIApplication.shared.endIgnoringInteractionEvents()
                 }
                 else{
                     UserDefaults.standard.set(self.userNameText.text!, forKey: "userName")
@@ -73,6 +87,9 @@ class SingInVC: UIViewController,UITextFieldDelegate {
                     
                     let delegate : AppDelegate = UIApplication.shared.delegate as! AppDelegate
                     delegate.rememberUser()
+                    
+                    self.activityIndicator.stopAnimating()
+                    UIApplication.shared.endIgnoringInteractionEvents()
                 }
             }
         }
@@ -81,6 +98,9 @@ class SingInVC: UIViewController,UITextFieldDelegate {
             let okButton = UIAlertAction(title: "TAMAM", style: UIAlertActionStyle.cancel, handler: nil)
             alert.addAction(okButton)
             self.present(alert, animated: true, completion: nil)
+            
+            self.activityIndicator.stopAnimating()
+            UIApplication.shared.endIgnoringInteractionEvents()
         }
     dismissKeyboard()
     }
@@ -91,34 +111,34 @@ class SingInVC: UIViewController,UITextFieldDelegate {
 }
     
     
-    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
-        self.view.endEditing(true)
-    }
-    
-    func textFieldDidBeginEditing(_ textField: UITextField) {
-        moveTextField(textField, moveDistance: -250, up: true)
-    }
-    
-    // Finish Editing The Text Field
-    func textFieldDidEndEditing(_ textField: UITextField) {
-        moveTextField(textField, moveDistance: -250, up: false)
-    }
-    
-    // Hide the keyboard when the return key pressed
-    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-        textField.resignFirstResponder()
-        return true
-    }
-    
+//    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+//        self.view.endEditing(true)
+//    }
+//    
+//    func textFieldDidBeginEditing(_ textField: UITextField) {
+//        moveTextField(textField, moveDistance: -250, up: true)
+//    }
+//    
+//    // Finish Editing The Text Field
+//    func textFieldDidEndEditing(_ textField: UITextField) {
+//        moveTextField(textField, moveDistance: -250, up: false)
+//    }
+//    
+//    // Hide the keyboard when the return key pressed
+//    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+//        textField.resignFirstResponder()
+//        return true
+//    }
+//    
     // Move the text field in a pretty animation!
-    func moveTextField(_ textField: UITextField, moveDistance: Int, up: Bool) {
-        let moveDuration = 0.3
-        let movement: CGFloat = CGFloat(up ? moveDistance : -moveDistance)
-        
-        UIView.beginAnimations("animateTextField", context: nil)
-        UIView.setAnimationBeginsFromCurrentState(true)
-        UIView.setAnimationDuration(moveDuration)
-        self.view.frame = self.view.frame.offsetBy(dx: 0, dy: movement)
-        UIView.commitAnimations()
-    }
+//    func moveTextField(_ textField: UITextField, moveDistance: Int, up: Bool) {
+//        let moveDuration = 0.3
+//        let movement: CGFloat = CGFloat(up ? moveDistance : -moveDistance)
+//
+//        UIView.beginAnimations("animateTextField", context: nil)
+//        UIView.setAnimationBeginsFromCurrentState(true)
+//        UIView.setAnimationDuration(moveDuration)
+//        self.view.frame = self.view.frame.offsetBy(dx: 0, dy: movement)
+//        UIView.commitAnimations()
+//    }
 }
