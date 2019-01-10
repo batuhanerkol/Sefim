@@ -15,6 +15,7 @@ class PaymentVC: UIViewController {
     var date = ""
     var time = ""
     var objectId = ""
+    var yemekTeslimEdildiArray = [String]()
     var objectIdArray = [String]()
     var dateArray = [String]()
     var timeArray = [String]()
@@ -65,11 +66,11 @@ class PaymentVC: UIViewController {
             
         case .wifi:
             
-            getDateTimeForPayment()
+      getObjectId()
             self.creditButton.isEnabled = true
             self.cashButton.isEnabled = true
         case .wwan:
-            getDateTimeForPayment()
+          getObjectId()
             self.creditButton.isEnabled = true
             self.cashButton.isEnabled = true
         }
@@ -82,8 +83,7 @@ class PaymentVC: UIViewController {
         let query = PFQuery(className: "VerilenSiparisler")
         query.whereKey("SiparisSahibi", equalTo: (PFUser.current()?.username)!)
         query.whereKey("IsletmeSahibi", equalTo: (PFUser.current()?.username)!)
-        query.whereKey("MasaNo", equalTo: globalChosenTableNumberMasaVC)
-        query.whereKey("IsletmeAdi", equalTo: globalBusinessNameOrderVC)
+
         query.whereKey("HesapOdendi", notEqualTo: "Evet")
         
         query.findObjectsInBackground { (objects, error) in
@@ -98,6 +98,7 @@ class PaymentVC: UIViewController {
                 
                 self.dateArray.removeAll(keepingCapacity: false)
                 self.time.removeAll(keepingCapacity: false)
+               
                 
                 for object in objects! {
                     
@@ -105,16 +106,21 @@ class PaymentVC: UIViewController {
                     self.dateArray.append(object.object(forKey: "Date") as! String)
                     self.timeArray.append(object.object(forKey: "Time") as! String)
                     
+                    self.yemekTeslimEdildiArray.append(object.object(forKey: "YemekTEslimEdildi") as! String)
+                    
                     self.date = "\(self.dateArray.last!)"
                     self.time = "\(self.timeArray.last!)"
                 }
                 
                 print(self.date)
                 print(self.time)
-                self.getObjectId()
                 
-                self.activityIndicator.stopAnimating()
-                UIApplication.shared.endIgnoringInteractionEvents()
+                if self.yemekTeslimEdildiArray.isEmpty == false && self.yemekTeslimEdildiArray.last! == "Evet"{
+                         self.getObjectId()
+                }
+           
+                
+               
                 
             }
             
@@ -124,9 +130,7 @@ class PaymentVC: UIViewController {
         let query = PFQuery(className: "VerilenSiparisler")
         query.whereKey("SiparisSahibi", equalTo: (PFUser.current()?.username)!)
         query.whereKey("IsletmeSahibi", equalTo: (PFUser.current()?.username)!)
-        query.whereKey("IsletmeAdi", equalTo: globalBusinessNameOrderVC)
-        query.whereKey("Date", equalTo: date) //siparişi verdiğim anın tarihi
-        query.whereKey("Time", equalTo: time)
+        query.whereKey("MasaNo", equalTo: globalChosenTableNumberMasaVC)
         query.whereKey("HesapOdendi", notEqualTo: "Evet")
         
         query.findObjectsInBackground { (objects, error) in
@@ -135,23 +139,31 @@ class PaymentVC: UIViewController {
                 let okButton = UIAlertAction(title: "TAMAM", style: UIAlertAction.Style.cancel, handler: nil)
                 alert.addAction(okButton)
                 self.present(alert, animated: true, completion: nil)
+                
+                self.activityIndicator.stopAnimating()
+                UIApplication.shared.endIgnoringInteractionEvents()
             }
             else{
                 self.objectIdArray.removeAll(keepingCapacity: false)
+                 self.yemekTeslimEdildiArray.removeAll(keepingCapacity: false)
                 
                 for object in objects! {
                     self.objectIdArray.append(object.objectId! )
+                    self.yemekTeslimEdildiArray.append(object.object(forKey: "YemekTeslimEdildi") as! String)
                     
                     self.objectId = "\(self.objectIdArray.last!)"
                 }
                 print("objectId:",self.objectId)
                 self.cashButton.isEnabled = true
                 self.creditButton.isEnabled = true
+                
+                self.activityIndicator.stopAnimating()
+                UIApplication.shared.endIgnoringInteractionEvents()
             }
         }
     }
     @IBAction func cashButtonPressed(_ sender: Any) {
-        if objectIdArray.isEmpty == false{
+        if objectIdArray.isEmpty == false && yemekTeslimEdildiArray.last! == "Evet"{
             let query = PFQuery(className: "VerilenSiparisler")
             
             query.getObjectInBackground(withId: objectId) { (objects, error) in
@@ -171,11 +183,17 @@ class PaymentVC: UIViewController {
                     self.present(alert, animated: true, completion: nil)
                 }
             }
+        }else{
+            let alert = UIAlertController(title: "Yemek Henüz Teslim Edilmedi", message: "", preferredStyle: UIAlertController.Style.alert)
+            let okButton = UIAlertAction(title: "TAMAM", style: UIAlertAction.Style.cancel, handler: nil)
+            alert.addAction(okButton)
+            self.present(alert, animated: true, completion: nil)
+
         }
     }
     
     @IBAction func creditCardButtonPressed(_ sender: Any) {
-        if objectIdArray.isEmpty == false{
+        if objectIdArray.isEmpty == false && yemekTeslimEdildiArray.last! == "Evet"{
             let query = PFQuery(className: "VerilenSiparisler")
             
             query.getObjectInBackground(withId: objectId) { (objects, error) in
@@ -195,6 +213,13 @@ class PaymentVC: UIViewController {
                     self.present(alert, animated: true, completion: nil)
                 }
             }
+        }
+        else{
+            let alert = UIAlertController(title: "Yemek Henüz Teslim Edilmedi", message: "", preferredStyle: UIAlertController.Style.alert)
+            let okButton = UIAlertAction(title: "TAMAM", style: UIAlertAction.Style.cancel, handler: nil)
+            alert.addAction(okButton)
+            self.present(alert, animated: true, completion: nil)
+
         }
     }
     

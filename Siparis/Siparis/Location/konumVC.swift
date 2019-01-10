@@ -24,8 +24,8 @@ class konumVC: UIViewController, MKMapViewDelegate, CLLocationManagerDelegate {
     
     var passwordTextField: UITextField?
     
-    @IBOutlet weak var deleteLocationButton: UIButton!
     @IBOutlet weak var businessNameLabel: UILabel!
+    @IBOutlet weak var deleteLocationButton: UIButton!
     @IBOutlet weak var addButton: UIButton!
     @IBOutlet weak var longitudeLabel: UILabel!
     @IBOutlet weak var latitudeLabel: UILabel!
@@ -335,6 +335,7 @@ class konumVC: UIViewController, MKMapViewDelegate, CLLocationManagerDelegate {
                     self.latitudeLabel.text = "\(self.chosenLatitudeArray.last!)"
                     self.longitudeLabel.text = "\(self.chosenLongitudeArray.last!)"
                     self.businessNameLabel.text = "\(self.chosenbusinessArray.last!)"
+                    print("self.businessNameLabel.text", self.businessNameLabel.text)
                     
                      self.manager.startUpdatingLocation()
                     

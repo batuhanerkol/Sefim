@@ -143,6 +143,7 @@ class ManuelEkleVC: UIViewController, UITableViewDelegate, UITableViewDataSource
 
     
     @IBAction func addToTableButtonPressed(_ sender: Any) {
+        if selectedFoodNameLabel.text! != ""{
         activityIndicator.startAnimating()
         UIApplication.shared.beginIgnoringInteractionEvents()
         
@@ -177,6 +178,12 @@ class ManuelEkleVC: UIViewController, UITableViewDelegate, UITableViewDataSource
                 UIApplication.shared.endIgnoringInteractionEvents()
                 
             }
+        }
+        }else{
+            let alert = UIAlertController(title: "Yemek Seçmeniz Gerekli", message:"", preferredStyle: UIAlertController.Style.alert)
+            let okButton = UIAlertAction(title: "TAMAM", style: UIAlertAction.Style.cancel, handler: nil)
+            alert.addAction(okButton)
+            self.present(alert, animated: true, completion: nil)
         }
     }
     
