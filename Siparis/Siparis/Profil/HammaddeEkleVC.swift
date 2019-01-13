@@ -30,7 +30,7 @@ class HammaddeEkleVC: UIViewController  {
     override func viewWillAppear(_ animated: Bool) {
          updateUserInterface()
     }
-    
+    // Ik sonrası yapılacaklar
     func updateUserInterface() {
         guard let status = Network.reachability?.status else { return }
         switch status {
@@ -40,16 +40,9 @@ class HammaddeEkleVC: UIViewController  {
             alert.addAction(okButton)
             self.present(alert, animated: true, completion: nil)
             
-            
-      
-            
         case .wifi:
-     
-            
             getBussinessNameData()
         case .wwan:
-     
-            
             getBussinessNameData()
         }
     }

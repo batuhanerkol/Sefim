@@ -20,10 +20,11 @@ class SingInVC: UIViewController,UITextFieldDelegate {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        //internet kontrolü
         NotificationCenter.default.addObserver(self, selector: #selector(statusManager), name: .flagsChanged, object: Network.reachability)
         updateUserInterface()
         
+        // loading sembolü
         activityIndicator.center = self.view.center
         activityIndicator.hidesWhenStopped = true
         activityIndicator.activityIndicatorViewStyle = UIActivityIndicatorView.Style.gray
@@ -35,6 +36,7 @@ class SingInVC: UIViewController,UITextFieldDelegate {
         self.navigationItem.setHidesBackButton(true, animated:true)
         
     }
+    //internet kontrolü sonrası yapılacaklar
     func updateUserInterface() {
         guard let status = Network.reachability?.status else { return }
         switch status {
@@ -109,6 +111,8 @@ class SingInVC: UIViewController,UITextFieldDelegate {
        
         performSegue(withIdentifier: "SignInVCtoSignUpVC", sender: nil)
 }
+    
+    // textfield a basıldığında klavye sıgacak sekilde ekranı yukarı kaydırmak için kodlar
     
     
 //    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {

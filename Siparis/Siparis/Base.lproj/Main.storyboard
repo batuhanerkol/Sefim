@@ -2414,11 +2414,11 @@ Türk Ceza Kanunu’nun 138. maddesinde ve Kanunu’nun 7. maddesinde düzenlend
         <scene sceneID="LlI-uo-wlA">
             <objects>
                 <viewController id="qkf-0T-5ER" customClass="EkranSifresiVC" customModule="Siparis" customModuleProvider="target" sceneMemberID="viewController">
-                    <view key="view" contentMode="scaleToFill" id="nO8-bX-tv2">
+                    <view key="view" contentMode="scaleToFill" ambiguous="YES" id="nO8-bX-tv2">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="808"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="line" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="GUl-Zq-5DC">
+                            <textField opaque="NO" contentMode="scaleToFill" ambiguous="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="line" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="GUl-Zq-5DC">
                                 <rect key="frame" x="20" y="191" width="374" height="50"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
@@ -2428,7 +2428,7 @@ Türk Ceza Kanunu’nun 138. maddesinde ve Kanunu’nun 7. maddesinde düzenlend
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits" keyboardType="numberPad" returnKeyType="done" secureTextEntry="YES"/>
                             </textField>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="8Sc-z7-Zxh">
+                            <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="8Sc-z7-Zxh">
                                 <rect key="frame" x="20" y="249" width="374" height="50"/>
                                 <fontDescription key="fontDescription" type="system" weight="black" pointSize="21"/>
                                 <state key="normal" title="Oluştur veya Değişitir">
@@ -4164,7 +4164,6 @@ Türk Ceza Kanunu’nun 138. maddesinde ve Kanunu’nun 7. maddesinde düzenlend
     </resources>
     <inferredMetricsTieBreakers>
         <segue reference="s1z-7O-8hN"/>
-        <segue reference="Beh-JA-TQy"/>
         <segue reference="TaP-KR-vuL"/>
         <segue reference="w0M-8p-9bV"/>
         <segue reference="oKV-jo-zY3"/>

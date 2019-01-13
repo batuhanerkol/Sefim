@@ -21,14 +21,11 @@ class ChangePasswordVC: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
  
+        // internet kontrolü
         NotificationCenter.default.addObserver(self, selector: #selector(statusManager), name: .flagsChanged, object: Network.reachability)
         updateUserInterface()
-
-        
-     
-    
     }
-    
+    // ik sonrası yapılacaklar
     func updateUserInterface() {
         guard let status = Network.reachability?.status else { return }
         switch status {

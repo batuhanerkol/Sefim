@@ -62,7 +62,7 @@ class PopUpVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        // internet kontrolü
         NotificationCenter.default.addObserver(self, selector: #selector(statusManager), name: .flagsChanged, object: Network.reachability)
         updateUserInterface()
 
@@ -86,7 +86,7 @@ class PopUpVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
     override func viewWillAppear(_ animated: Bool) {
               updateUserInterface()
     }
-    
+    // Ik sonbrası yapılacaklar
     func updateUserInterface() {
         guard let status = Network.reachability?.status else { return }
         switch status {
@@ -98,9 +98,7 @@ class PopUpVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
             self.checkPaidButton.isEnabled = false
             self.orderHasGivenButton.isEnabled = false
             self.foodIsReadyButton.isEnabled = false
-            
-            
-            
+        
         case .wifi:
             checkHesapToGetOrder()
             self.checkPaidButton.isEnabled = true
@@ -151,11 +149,12 @@ class PopUpVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
                 }
                 if self.hesapOdendi != "Evet"{
                   self.getOrderData()
-                    if self.hesapIstendi == ""{
-                        
+                    
+                    if self.hesapIstendi != ""{
+                          self.hesapDurumuLabel.text = self.hesapIstendiArray.joined(separator: ",") // aynı masada farklı kişiler hesap istediğinde
                     }else{
                       
-                        self.hesapDurumuLabel.text = self.hesapIstendiArray.joined(separator: ",") // aynı masada farklı kişiler hesap istediğinde
+                      
                     }
                 }
                 self.activityIndicator.stopAnimating()
@@ -219,6 +218,7 @@ class PopUpVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
                     self.chosenBusiness = "\(self.businessNameArray.last!)"
                     self.objectId = "\(self.objectIdArray.last!)"
                     
+                    // eğer birden fazla sipariş vermiş kişi varsa hepsinin siparişin görüntülemek için
                     self.allFoodsNamesArray.append(contentsOf: self.foodNameArray)
                     self.allPricesArray.append(contentsOf: self.priceArray)
                     self.allNoteArray.append(contentsOf: self.orderNoteArray)
@@ -228,12 +228,7 @@ class PopUpVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
                     self.numberOfDeliveredOrder = (object.object(forKey: "TeslimEdilenSiparisSayisi") as! String)
 
                 }
-                
-                
-                if self.numberOfDeliveredOrder == "" {
-                 
-                   
-                }
+  
 //                print("--------------------------------------------")
 //                 print("allFOODNAME:", self.allFoodsNamesArray)
 //                 print("allPrice:", self.allPricesArray)
@@ -250,15 +245,7 @@ class PopUpVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
           
         }
     }
-  
-    
-    func getSiparislerObjectId(){ // kaydırarak silmebilmek için gerekli olan object Id
 
-       
-        
-    }
-
-    
     @IBAction func foodIsReadyButtonClicked(_ sender: Any) {
         
         activityIndicator.startAnimating()
@@ -291,7 +278,6 @@ class PopUpVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
                             self.present(alert, animated: true, completion: nil)
                             
                         }else{
-//                            self.performSegue(withIdentifier: "ToMasaVC", sender: nil)
                             self.touchesBegan(Set<UITouch>(), with: nil)
                             
                             self.activityIndicator.stopAnimating()
@@ -373,7 +359,6 @@ class PopUpVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
                                 
                             }
                             else{
-//                                  self.performSegue(withIdentifier: "ToMasaVC", sender: nil)
                                   self.touchesBegan(Set<UITouch>(), with: nil)
                                 
                                 self.activityIndicator.stopAnimating()
@@ -521,7 +506,7 @@ class PopUpVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
     }
     
     
-    
+    // verilen siparişleri silmek için
     func deleteGivenOrderDataFromOwersParse(){
         
     let query = PFQuery(className: "Siparisler")
@@ -717,6 +702,8 @@ class PopUpVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
         foodNameArray.remove(at: sourceIndexPath.row)
         foodNameArray.insert(item, at: destinationIndexPath.row)
     }
+    
+    
     
      func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
         

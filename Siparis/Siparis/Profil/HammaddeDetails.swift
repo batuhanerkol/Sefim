@@ -39,7 +39,7 @@ class HammaddeDetails: UIViewController {
         activityIndicator.startAnimating()
         UIApplication.shared.beginIgnoringInteractionEvents()
     }
-    
+    // IK sonrası yaılacaklar
     func updateUserInterface() {
         guard let status = Network.reachability?.status else { return }
         switch status {
@@ -49,19 +49,17 @@ class HammaddeDetails: UIViewController {
             alert.addAction(okButton)
             self.present(alert, animated: true, completion: nil)
             
-            
-            
         case .wifi:
             
             if PFUser.current()?.username != nil{
                 getObjectId()
-                getData()
+                getHammaddeInfo()
             }
         case .wwan:
             
             if PFUser.current()?.username != nil{
                 getObjectId()
-                getData()
+                getHammaddeInfo()
             }
         }
     }
@@ -102,7 +100,7 @@ class HammaddeDetails: UIViewController {
     }
     
     
-    func getData(){
+    func getHammaddeInfo(){
         if selectedHammadde != ""{
         let query = PFQuery(className: "HammaddeBilgileri")
         query.whereKey("HammaddeSahibi", equalTo: "\(PFUser.current()!.username!)")
@@ -174,7 +172,7 @@ class HammaddeDetails: UIViewController {
                 
             }else {
                 
-                objects!["HammaddeAdi"] = self.hammaddeAdiTExtField.text!
+                 objects!["HammaddeAdi"] = self.hammaddeAdiTExtField.text!
                  objects!["HammaddeMiktariGr"] = self.hammaddeMiktariTextFiedl.text!
                  objects!["HammaddeUcreti"] = self.hammaddeFiyatiTextField.text!
                  objects!["ToplamUcret"] = toplamUcret

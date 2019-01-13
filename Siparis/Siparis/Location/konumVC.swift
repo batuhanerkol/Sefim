@@ -43,7 +43,7 @@ class konumVC: UIViewController, MKMapViewDelegate, CLLocationManagerDelegate {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        // interner kontrolü
         NotificationCenter.default.addObserver(self, selector: #selector(statusManager), name: .flagsChanged, object: Network.reachability)
         updateUserInterface()
       
@@ -107,6 +107,7 @@ class konumVC: UIViewController, MKMapViewDelegate, CLLocationManagerDelegate {
         updateUserInterface()
     }
     
+    // işletme sahibi hariç kişiler diğer ekranlarda değişiklik yapmasın diye
     func enteringPassword(){
         
         let alertController = UIAlertController(title: "Şifre Girin", message: "", preferredStyle: .
@@ -167,18 +168,19 @@ class konumVC: UIViewController, MKMapViewDelegate, CLLocationManagerDelegate {
     }
     
     
-    
+    // mevcut konumu sıfırlamak için
     @IBAction func cleanButtonPressed(_ sender: Any) {
         if businessNameLabel.text != ""{
         
         let alertController = UIAlertController(title: "EMİN MİSİNİZ ?", message: "", preferredStyle: .alert)
         
-        // Create the actions
+        // Evet e basılırsa olacaklar
         let okAction = UIAlertAction(title: "Evet", style: UIAlertActionStyle.default) {
             UIAlertAction in
             self.deleteWithObjectId()
             
         }
+            // hayır a basılırsa olacaklar
         let cancelAction = UIAlertAction(title: "Hayır", style: UIAlertActionStyle.cancel) {
             UIAlertAction in
         }
@@ -198,7 +200,7 @@ class konumVC: UIViewController, MKMapViewDelegate, CLLocationManagerDelegate {
         }
     }
     
-
+// işletme bilgilerine göre, mevcut işletmenin mevcut konumunun kayıtlı olduğu object id ile, longitude-latitude sıfırlamak
     func deleteWithObjectId(){
         let query = PFQuery(className: "BusinessInformation")
         query.whereKey("businessUserName", equalTo: (PFUser.current()?.username)!)
@@ -244,6 +246,7 @@ class konumVC: UIViewController, MKMapViewDelegate, CLLocationManagerDelegate {
             }
         }
     }
+    // bilgilerinin kullanımı
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         
         if self.chosenLongitude != "" && self.chosenLatitude != ""{
@@ -283,7 +286,9 @@ class konumVC: UIViewController, MKMapViewDelegate, CLLocationManagerDelegate {
     }
 
     func mapView(_ mapView: MKMapView, annotationView view: MKAnnotationView, calloutAccessoryControlTapped control: UIControl) {
+        
         if self.chosenLatitude != "" && self.chosenLongitude != "" {
+            
             self.requestCLLocation = CLLocation(latitude: Double(self.chosenLatitude)!, longitude: Double(self.chosenLongitude)!)
 
             CLGeocoder().reverseGeocodeLocation(requestCLLocation) { (placemarks, error)in
@@ -300,6 +305,7 @@ class konumVC: UIViewController, MKMapViewDelegate, CLLocationManagerDelegate {
     }
     }
 
+    // eğer kayıtlı konum varsa o konum bilgilerini ekranda gösterebilmek için
     func getLocationData(){
         
         let query = PFQuery(className: "BusinessInformation")
@@ -335,7 +341,6 @@ class konumVC: UIViewController, MKMapViewDelegate, CLLocationManagerDelegate {
                     self.latitudeLabel.text = "\(self.chosenLatitudeArray.last!)"
                     self.longitudeLabel.text = "\(self.chosenLongitudeArray.last!)"
                     self.businessNameLabel.text = "\(self.chosenbusinessArray.last!)"
-                    print("self.businessNameLabel.text", self.businessNameLabel.text)
                     
                      self.manager.startUpdatingLocation()
                     

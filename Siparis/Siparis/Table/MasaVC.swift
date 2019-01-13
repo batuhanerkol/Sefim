@@ -74,11 +74,7 @@ class MasaVC: UIViewController {
         NotificationCenter.default.addObserver(self, selector: #selector(statusManager), name: .flagsChanged, object: Network.reachability)
            updateUserInterface()
          
-       
-        
-//        let value = UIInterfaceOrientation.landscapeRight.rawValue
-//        UIDevice.current.setValue(value, forKey: "orientation")
-        
+          // 10 saniyede ekranın güncellenmesi
         _ = Timer.scheduledTimer(timeInterval: 10, target: self, selector: #selector(viewWillAppear(_:)), userInfo: nil, repeats: true)
         
      
@@ -87,9 +83,6 @@ class MasaVC: UIViewController {
         activityIndicator.hidesWhenStopped = true
         activityIndicator.activityIndicatorViewStyle = UIActivityIndicatorView.Style.gray
         view.addSubview(activityIndicator)
-        
-//        activityIndicator.startAnimating()
-//        UIApplication.shared.beginIgnoringInteractionEvents()
         
 
     }
@@ -113,7 +106,6 @@ class MasaVC: UIViewController {
             
         case .wifi:
            buttonSizes()
-           getTableNumberData()
            getButtonWhenAppOpen()
            getObjectId()
            controlOfButtons()
@@ -121,7 +113,6 @@ class MasaVC: UIViewController {
               self.createButton.isEnabled = true
         case .wwan:
          buttonSizes()
-         getTableNumberData()
          getButtonWhenAppOpen()
          getObjectId()
          controlOfButtons()
@@ -132,6 +123,7 @@ class MasaVC: UIViewController {
     @objc func statusManager(_ notification: Notification) {
         updateUserInterface()
     }
+    
     func buttonSizes(){
         if screenWidth > 1000 && screenWidth < 1200 {
             buttonWidth = 90
@@ -153,7 +145,7 @@ class MasaVC: UIViewController {
         }
      
     }
-    
+    //  masa bilgilerinin kayıtlı olduğu işletme satırının obejct Id si
     func getObjectId(){
         let query = PFQuery(className: "BusinessInformation")
         query.whereKey("businessUserName", equalTo: (PFUser.current()?.username)!)
@@ -177,7 +169,7 @@ class MasaVC: UIViewController {
             }
         }
     }
-   
+   // masaların bilgilerinin çekilmesi
     func controlOfButtons(){
          var hesapMasaSayisiIndex = 0
     
@@ -225,6 +217,8 @@ class MasaVC: UIViewController {
 //                print("hesapIstendi", self.hesapIstendiArray)
 //                print("hesapmasaArray,", self.hesapMasaSAyisiArray)
 
+                // BUARADA MASALARIN DURUMUANA GÖRE "YEMEK HAZIR VB"  RENK DEĞİŞİMLERİNİ GERÇEKLEŞTİRİLİYOR
+                
                 if  self.tableButtonBackgroundColorChange.count > 0  && self.hesapMasaSAyisiArray.isEmpty == false{
          
                     while hesapMasaSayisiIndex < self.hesapMasaSAyisiArray.count {
@@ -272,70 +266,9 @@ class MasaVC: UIViewController {
         }
     }
     
-    func controlOfCheck(){ // kullanılmıyor
-        let query = PFQuery(className: "VerilenSiparisler")
-        query.whereKey("IsletmeSahibi", equalTo: (PFUser.current()?.username)!)
-        query.whereKey("HesapOdendi", equalTo: "Evet")
-        
-        
-        query.findObjectsInBackground { (objects, error) in
-            
-            if error != nil{
-                let alert = UIAlertController(title: "HATA", message: error?.localizedDescription, preferredStyle: UIAlertController.Style.alert)
-                let okButton = UIAlertAction(title: "TAMAM", style: UIAlertAction.Style.cancel, handler: nil)
-                alert.addAction(okButton)
-                self.present(alert, animated: true, completion: nil)
-            }
-            else{
-              
-                self.hesapOdendi = ""
-                self.yemekTeslim = ""
-                self.yemekHazir = ""
-                self.hesapIstendi = ""
-                self.hesapMasaSayisi = ""
-                self.siparisVerildi = ""
-              
-                for object in objects! {
-                    
-                    self.hesapOdendi = (object.object(forKey: "HesapOdendi") as! String)
-                    self.yemekTeslim = (object.object(forKey: "YemekTeslimEdildi") as! String)
-                    self.yemekHazir = (object.object(forKey: "YemekHazir") as! String)
-                    self.hesapIstendi = (object.object(forKey: "HesapIstendi") as! String)
-                    self.hesapMasaSayisi = (object.object(forKey: "MasaNo") as! String)
-                    self.siparisVerildi = (object.object(forKey: "SiparisVerildi") as! String)
-                    
-                }
-//                print("---------------------------")
-//                print("hesapMasaSayisi",self.hesapMasaSayisi)
-//                print("siparisVerildi",self.siparisVerildi )
-//                print("yemekHazir", self.yemekHazir)
-//                print("YemekTeslim:",  self.yemekTeslim)
-//                print("hesapIstendi", self.hesapIstendi)
-                
-              
-                if  self.hesapOdendi == "Evet" && self.tableButtonBackgroundColorChange.count > 0{
-                    
-                    if self.siparisVerildi == "Evet" && self.yemekHazir == "Evet" && self.yemekTeslim == "Evet"  && self.hesapIstendi != "" {
-                        
-                         let tableButtonIndex = (Int(self.hesapMasaSayisi)! - 1)
-                        
-                        self.tableButtonBackgroundColorChange[tableButtonIndex].backgroundColor = UIColor.gray
-                    }
-                }
-                else{
-                   
-                    print("hesap Henuz Odenmedi")
-                }
-            }
-            
-        }
-    }
-    
-    
-    
-    func getButtonWhenAppOpen(){
- 
-    
+   
+    func getButtonWhenAppOpen(){ // uygulama açıldığında mevcut masa sayısını çekmek ve msaları oluşturmak için
+
         let query = PFQuery(className: "BusinessInformation")
         query.whereKey("businessUserName", equalTo: "\(PFUser.current()!.username!)")
         query.whereKeyExists("MasaSayisi")
@@ -375,32 +308,8 @@ class MasaVC: UIViewController {
         }
        
     }
-    func getTableNumberData(){
-    
-        let query = PFQuery(className: "BusinessInformation")
-        query.whereKey("businessUserName", equalTo: "\(PFUser.current()!.username!)")
-        query.whereKeyExists("MasaSayisi")
-       
-        query.findObjectsInBackground { (objects, error) in
-            if error != nil{
-                let alert = UIAlertController(title: "HATA", message: error?.localizedDescription, preferredStyle: UIAlertControllerStyle.alert)
-                let okButton = UIAlertAction(title: "TAMAM", style: UIAlertActionStyle.cancel, handler: nil)
-                alert.addAction(okButton)
-                self.present(alert, animated: true, completion: nil)
-            }
-            else{
-                for object in objects!{
-                 self.tableNumberArray.append(object.object(forKey: "MasaSayisi") as! String)
-                self.tableNumberLabel.text = "\(self.tableNumberArray.last!)"
-                    
-                    
-                }
-                self.createButton.isHidden = false
-                self.textField.text = ""
-            }
-        }
-        
-    }
+
+    // Button = Masalar
     var button = UIButton()
     func createBtn(){
         button = UIButton()
@@ -424,6 +333,7 @@ class MasaVC: UIViewController {
         self.performSegue(withIdentifier: "tableToPopUp", sender: nil)
     }
    
+    
     @IBAction func createButtonClicked(_ sender: Any) {
         
         if tableNumberLabel == nil {
@@ -503,7 +413,7 @@ class MasaVC: UIViewController {
         
     }
     
-    func deleteTableData(){ // silme işlemi artık yapılmıyor
+    func deleteTableData(){ // silme işlemi artık yapılmıyor Lazım olabilir diye dursun
         let query = PFQuery(className: "BusinessInformation")
         query.whereKey("businessUserName", equalTo: "\(PFUser.current()!.username!)")
         query.whereKeyExists("MasaSayisi")
@@ -525,7 +435,7 @@ class MasaVC: UIViewController {
                     self.yLocation = 100
                     
                 
-//                 yeni button vb eklerken buradan düzelt
+                // yeni button vb eklerken buradan düzelt çünkü silerken ekranda gözüken onje sayısına göre siliyor
                 // silme işlemi yapılmıyor artık
                 var viewItemNumber = Int(self.tableNumberLabel.text!)! + 3
                 while self.view.subviews.count > 4 {
@@ -554,29 +464,6 @@ class MasaVC: UIViewController {
         self.view.endEditing(true)
     }
     
-//    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-//        if segue.identifier == "tableToPopUp" {
-//            let destination = segue.destination as! PopUpVC
-//            destination.delegate = self
-//        }
-//    }
-//
+
 }
 
-//extension MasaVC : SetTableButtonColor {
-//    func setFoodIsReadyButtonColor() {
-//
-//        let tableButtonIndex = Int(globalChosenTableNumber)! - 1
-//        tableButtonBackgroundColorAray[tableButtonIndex].backgroundColor = UIColor.blue
-//    }
-//
-//    func setFoodIsGivenButtonColor(){
-//        let tableButtonIndex = Int(globalChosenTableNumber)! - 1
-//        tableButtonBackgroundColorAray[tableButtonIndex].backgroundColor = UIColor.green
-//    }
-//    func checkHasPaidButtonColor(){
-//        let tableButtonIndex = Int(globalChosenTableNumber)! - 1
-//        tableButtonBackgroundColorAray[tableButtonIndex].backgroundColor = UIColor.gray
-//    }
-//
-//}

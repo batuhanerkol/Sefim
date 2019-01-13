@@ -29,6 +29,7 @@ class FoodInformationShowVC: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        // interner kontrolü
         NotificationCenter.default.addObserver(self, selector: #selector(statusManager), name: .flagsChanged, object: Network.reachability)
         updateUserInterface()
         
@@ -46,7 +47,7 @@ class FoodInformationShowVC: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
           updateUserInterface()
     }
-    
+    // İ.k Sonrası yapıalcaklar
     func updateUserInterface() {
         guard let status = Network.reachability?.status else { return }
         switch status {
@@ -65,7 +66,7 @@ class FoodInformationShowVC: UIViewController {
     @objc func statusManager(_ notification: Notification) {
         updateUserInterface()
     }
-    
+    // selected food bilgisi table da secilen yemek ismi sonrası prepare for segue ile geliyor
     func findFood(){
         let query = PFQuery(className: "FoodInformation")
         query.whereKey("foodName", equalTo: self.selectedFood)

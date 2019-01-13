@@ -55,7 +55,7 @@ class ManuelEkleVC: UIViewController, UITableViewDelegate, UITableViewDataSource
         
         tableNumberLabel.text = globalChosenTableNumberMasaVC
     }
-    
+    // IK sonrası yapılacaklar
     func updateUserInterface() {
         guard let status = Network.reachability?.status else { return }
         switch status {

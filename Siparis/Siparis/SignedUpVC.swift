@@ -25,6 +25,7 @@ class SignedUpVC: UIViewController, UITextFieldDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        //internet kontrolü
         NotificationCenter.default.addObserver(self, selector: #selector(statusManager), name: .flagsChanged, object: Network.reachability)
         updateUserInterface()
         
@@ -40,6 +41,7 @@ class SignedUpVC: UIViewController, UITextFieldDelegate {
         
     }
     
+    // internet kontrolu sonrası yapıalcakalr
     
     func updateUserInterface() {
         guard let status = Network.reachability?.status else { return }
@@ -60,7 +62,7 @@ class SignedUpVC: UIViewController, UITextFieldDelegate {
         updateUserInterface()
     }
     
-    
+    // text field in e-mail şeklinde yazıldığını doğrulamak için
     func isValidEmail(testStr:String) -> Bool {
         let emailRegEx = "[A-Z0-9a-z._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,64}"
         let emailTest = NSPredicate(format:"SELF MATCHES %@", emailRegEx)

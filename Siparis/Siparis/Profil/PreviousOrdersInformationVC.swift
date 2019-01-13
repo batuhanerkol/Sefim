@@ -46,7 +46,7 @@ class PreviousOrdersInformationVC: UIViewController, UITableViewDelegate, UITabl
  
        
     }
-    
+    // Ik sonrası işlemler
     func updateUserInterface() {
         guard let status = Network.reachability?.status else { return }
         switch status {
@@ -57,15 +57,15 @@ class PreviousOrdersInformationVC: UIViewController, UITableViewDelegate, UITabl
             self.present(alert, animated: true, completion: nil)
             
         case .wifi:
-            getFoodNamePrice()
+            getFoodInfo()
         case .wwan:
-              getFoodNamePrice()
+              getFoodInfo()
         }
     }
     @objc func statusManager(_ notification: Notification) {
         updateUserInterface()
     }
-    func getFoodNamePrice(){
+    func getFoodInfo(){
         
         let query = PFQuery(className: "VerilenSiparisler")
         query.whereKey("IsletmeSahibi", equalTo: (PFUser.current()?.username)!)

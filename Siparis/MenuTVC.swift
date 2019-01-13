@@ -29,6 +29,7 @@ class MenuTVC: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        //internet kontroplü
         NotificationCenter.default.addObserver(self, selector: #selector(statusManager), name: .flagsChanged, object: Network.reachability)
         updateUserInterface()
         
@@ -37,14 +38,13 @@ class MenuTVC: UITableViewController {
 
         self.navigationItem.hidesBackButton = true
         
-        
-   
         // loading sembolu
         activityIndicator.center = self.view.center
         activityIndicator.hidesWhenStopped = true
         activityIndicator.activityIndicatorViewStyle = UIActivityIndicatorView.Style.gray
         view.addSubview(activityIndicator)
         
+        //loading sembolu ve ekran erişimini kapalı, başlatmak için
         activityIndicator.startAnimating()
         UIApplication.shared.beginIgnoringInteractionEvents()
         
@@ -53,6 +53,7 @@ class MenuTVC: UITableViewController {
          enteringPassword()
     }
     
+    // internet kontrolü sonrası yapılacaklar
     func updateUserInterface() {
         guard let status = Network.reachability?.status else { return }
         switch status {
@@ -67,12 +68,12 @@ class MenuTVC: UITableViewController {
         case .wifi:
             self.editButton.isEnabled = true
             if PFUser.current()?.username != nil{
-                getData()
+                getFoodTitle()
             }
         case .wwan:
             self.editButton.isEnabled = true
             if PFUser.current()?.username != nil{
-                getData()
+                getFoodTitle()
             }
         }
     }
@@ -80,6 +81,7 @@ class MenuTVC: UITableViewController {
         updateUserInterface()
     }
     
+    // uygulama sahibi dışındaki kişilerin ekrana erişimini engellemek için ekran şifresi isteme
     func enteringPassword(){
   
         let alertController = UIAlertController(title: "Şifre Girin", message: "", preferredStyle: .
@@ -151,7 +153,7 @@ class MenuTVC: UITableViewController {
     
     
    
-    func getData(){
+    func getFoodTitle(){
         let query = PFQuery(className: "FoodTitle")
         query.whereKey("foodTitleOwner", equalTo: "\(PFUser.current()!.username!)")
         query.findObjectsInBackground { (objects, error) in
@@ -177,7 +179,7 @@ class MenuTVC: UITableViewController {
         }
     }
 
-    func deleteData(foodIndexTitle : String){
+    func deleteFoodTitle(foodIndexTitle : String){
         let query = PFQuery(className: "FoodTitle")
         query.whereKey("foodTitleOwner", equalTo: "\(PFUser.current()!.username!)")
        query.whereKey("foodTitle", equalTo: foodIndexTitle)
@@ -196,19 +198,24 @@ class MenuTVC: UITableViewController {
                 for object in objects! {
                     object.deleteInBackground()
                     self.titleTableView.reloadData()
-                    self.getData()
+                    self.getFoodTitle()
                 }
                
             }
         }
     }
-
+// segue yapmadan önce bilgi aktarımı için
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
             if segue.identifier == "MenuToFoodDetailsTVC"{
                 let destinationVC = segue.destination as! FoodDetailsTVC
                 destinationVC.chosenFood = self.chosenFood
             }
     }
+    
+    
+    
+    
+    // tableView ayarları
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return foodTitleArray.count
@@ -245,7 +252,7 @@ class MenuTVC: UITableViewController {
             
             foodTitleArray.remove(at: indexPath.item)
             tableView.deleteRows(at: [indexPath], with: .automatic)
-            deleteData(foodIndexTitle: foodIndexTitle!)
+            deleteFoodTitle(foodIndexTitle: foodIndexTitle!)
         }
     }
     }

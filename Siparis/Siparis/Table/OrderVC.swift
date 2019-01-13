@@ -108,7 +108,7 @@ class OrderVC: UIViewController,UITableViewDelegate, UITableViewDataSource {
             getOrderData()
             getObjectId()
             checkGivenOrder()
-            getDeliveredORrderNumber()
+
             
             self.sendKitchenButton.isEnabled = true
             self.cancelButton.isEnabled = true
@@ -118,7 +118,7 @@ class OrderVC: UIViewController,UITableViewDelegate, UITableViewDataSource {
             getOrderData()
             getObjectId()
             checkGivenOrder()
-            getDeliveredORrderNumber()
+
             
             self.sendKitchenButton.isEnabled = true
             self.cancelButton.isEnabled = true
@@ -144,7 +144,7 @@ class OrderVC: UIViewController,UITableViewDelegate, UITableViewDataSource {
         
     }
     
-    func getOrderData(){
+    func getOrderData(){// manuel eklenmiş siparşleri görüntülemek
         
         let query = PFQuery(className: "Siparisler")
         query.whereKey("SiparisSahibi", equalTo: (PFUser.current()?.username)!)
@@ -189,7 +189,7 @@ class OrderVC: UIViewController,UITableViewDelegate, UITableViewDataSource {
         
     }
     
-    func getObjectId(){
+    func getObjectId(){ // siparişin ekli olduğu satırın obejct Id si
         let query = PFQuery(className: "Siparisler")
         query.whereKey("SiparisSahibi", equalTo: (PFUser.current()?.username)!)
         query.whereKey("IsletmeSahibi", equalTo: (PFUser.current()?.username)!)
@@ -277,6 +277,7 @@ class OrderVC: UIViewController,UITableViewDelegate, UITableViewDataSource {
         }
     }
 
+    // manuel eklenmiş siparişü vermek
     func uploadOrderData(){
         
         getOrderData()
@@ -389,7 +390,6 @@ class OrderVC: UIViewController,UITableViewDelegate, UITableViewDataSource {
         query.whereKey("SiparisSahibi", equalTo: (PFUser.current()?.username)!)
         query.whereKey("IsletmeSahibi", equalTo: (PFUser.current()?.username)!)
         query.whereKey("MasaNo", equalTo: globalChosenTableNumberMasaVC)
-//        query.whereKey("IsletmeAdi", equalTo: self.businessName)
         query.whereKey("HesapOdendi", equalTo: "")
         
         
@@ -407,6 +407,7 @@ class OrderVC: UIViewController,UITableViewDelegate, UITableViewDataSource {
                 
                 self.hesapOdendiArray.removeAll(keepingCapacity: false)
                 self.checkFoodNamesArray.removeAll(keepingCapacity: false)
+                self.deliveredOrderNumberArray.removeAll(keepingCapacity: false)
                 
                 
                 for object in objects! {
@@ -414,6 +415,9 @@ class OrderVC: UIViewController,UITableViewDelegate, UITableViewDataSource {
                     
                     self.hesapOdendi = (object.object(forKey: "HesapOdendi") as! String)
                     self.checkFoodNamesArray = object["SiparisAdi"] as! [String]
+                    self.deliveredOrderNumberArray.append(object.object(forKey: "TeslimEdilenSiparisSayisi") as! String)
+                    
+                    self.deliveredOrderNumber = "\(self.deliveredOrderNumberArray.last!)"
                     
                  
                 }
@@ -423,48 +427,13 @@ class OrderVC: UIViewController,UITableViewDelegate, UITableViewDataSource {
             
         }
     }
-    func getDeliveredORrderNumber(){ // hesabın ödenmediğinden emin olmak ve verilmiş sipariş sayısına bakmak için
-        
-        let query = PFQuery(className: "VerilenSiparisler")
-        query.whereKey("SiparisSahibi", equalTo: (PFUser.current()?.username)!)
-        query.whereKey("IsletmeSahibi", equalTo: (PFUser.current()?.username)!)
-        query.whereKey("MasaNo", equalTo: globalChosenTableNumberMasaVC)
-//        query.whereKey("IsletmeAdi", equalTo: businessName)
-        query.whereKey("HesapOdendi", equalTo: "")
-        
-        
-        query.findObjectsInBackground { (objects, error) in
-            
-            if error != nil{
-                let alert = UIAlertController(title: "HATA", message: error?.localizedDescription, preferredStyle: UIAlertController.Style.alert)
-                let okButton = UIAlertAction(title: "TAMAM", style: UIAlertAction.Style.cancel, handler: nil)
-                alert.addAction(okButton)
-                self.present(alert, animated: true, completion: nil)
-                
-                self.orderTable.reloadData()
-            }
-            else{
-                
-                self.deliveredOrderNumberArray.removeAll(keepingCapacity: false)
-                
-                for object in objects! {
-                    
-                    self.deliveredOrderNumberArray.append(object.object(forKey: "TeslimEdilenSiparisSayisi") as! String)
-                    
-                    self.deliveredOrderNumber = "\(self.deliveredOrderNumberArray.last!)"
-                }
-               
-            }
-            
-        }
-    }
-    func deletePreviousOrder(){
+
+    func deletePreviousOrder(){ // geçmiş siparişe ekleme yapıldıgında eskisini silmek için
         
         let query = PFQuery(className: "VerilenSiparisler")
         query.whereKey("SiparisSahibi", equalTo: (PFUser.current()?.username)!)
         query.whereKey("IsletmeSahibi", equalTo: (PFUser.current()?.username)!)
         query.whereKey("MasaNo", equalTo: tableNumberLabel.text!)
-//        query.whereKey("IsletmeAdi", equalTo: businessName)
         query.whereKey("HesapOdendi", equalTo: "")
         
         
@@ -498,7 +467,7 @@ class OrderVC: UIViewController,UITableViewDelegate, UITableViewDataSource {
         }
     }
     
-    func uploadOrderDataWithDeliveredOrderNumber(){
+    func uploadOrderDataWithDeliveredOrderNumber(){ // siparişe ekleme yapıldıgıdna, eski verilmiş sipariş sayısı ile birlikte kayıt etmek için 
         
         getOrderData()
         self.sendKitchenButton.isEnabled = false

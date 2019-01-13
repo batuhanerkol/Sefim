@@ -38,6 +38,7 @@ class AddLocationVC: UIViewController, MKMapViewDelegate, CLLocationManagerDeleg
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        //internet kontrolü
         NotificationCenter.default.addObserver(self, selector: #selector(statusManager), name: .flagsChanged, object: Network.reachability)
        updateUserInterface()
         
@@ -49,6 +50,7 @@ class AddLocationVC: UIViewController, MKMapViewDelegate, CLLocationManagerDeleg
         self.manager.requestWhenInUseAuthorization()
         self.manager.startUpdatingLocation()
         
+        // ekrana 1.5 saniye basılı tutulduğunda pin eklemek için
         let recognizer = UILongPressGestureRecognizer(target: self, action: #selector(AddLocationVC.chooseLocation(gestureRecognizer:)))
         recognizer.minimumPressDuration = 1.5
         mapView.addGestureRecognizer(recognizer)
@@ -60,7 +62,7 @@ class AddLocationVC: UIViewController, MKMapViewDelegate, CLLocationManagerDeleg
         
   
     }
-    
+    // i.k sonrası yapıalcaklar
     func updateUserInterface() {
         guard let status = Network.reachability?.status else { return }
         switch status {
@@ -89,6 +91,7 @@ class AddLocationVC: UIViewController, MKMapViewDelegate, CLLocationManagerDeleg
         updateUserInterface()
     }
     
+    
     @objc func chooseLocation(gestureRecognizer: UIGestureRecognizer){
         
         if gestureRecognizer.state == UIGestureRecognizerState.began{
@@ -110,7 +113,7 @@ class AddLocationVC: UIViewController, MKMapViewDelegate, CLLocationManagerDeleg
 
         }
     }
-    
+    // kişinin bulunduğu konumu göstermek
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         
         let location = CLLocationCoordinate2D(latitude: locations[0].coordinate.latitude, longitude: locations[0].coordinate.longitude)
@@ -126,9 +129,11 @@ class AddLocationVC: UIViewController, MKMapViewDelegate, CLLocationManagerDeleg
     
     
     
-    
+    // seçilen pin in konumunu kaytı etmek
+    // mevcut lokasyon bilgilerini güncellemek
     @IBAction func addButtonClicked(_ sender: Any) {
         if globalBusinessNameTextFieldKonumVC != ""{
+            
             if self.chosenLatitude != "" && self.chosenLongitude != ""{
                  let actualLocation = PFGeoPoint(latitude:self.chosenLatitudeDouble,longitude:self.chosenLongitudeDouble)
                 
@@ -162,7 +167,7 @@ class AddLocationVC: UIViewController, MKMapViewDelegate, CLLocationManagerDeleg
             }
             
         }else{
-            if businessNameTextField.text != "" {
+            if businessNameTextField.text != "" {// eğer önceden kayıt edilmiş lokasyon yok ise burada tanımlanıyor 
                 saveLocation()
                 self.performSegue(withIdentifier: "addLocationVCToKonumVC", sender: nil)
             }
@@ -204,7 +209,7 @@ class AddLocationVC: UIViewController, MKMapViewDelegate, CLLocationManagerDeleg
         }
         
     }
-    
+    // işletmenin "busineesİnformation" parse classındaki bilgilerinin kayıtlı olduğu satırın obejct Id si
     func getObjectId(){
         let query = PFQuery(className: "BusinessInformation")
         query.whereKey("businessUserName", equalTo: (PFUser.current()?.username)!)

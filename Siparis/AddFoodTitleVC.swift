@@ -24,6 +24,7 @@ class AddFoodTitleVC: UIViewController,UITextFieldDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        // internet kontrolü
         NotificationCenter.default.addObserver(self, selector: #selector(statusManager), name: .flagsChanged, object: Network.reachability)
         updateUserInterface()
         
@@ -39,7 +40,7 @@ class AddFoodTitleVC: UIViewController,UITextFieldDelegate {
         
     }
     
-    
+    // İ.K Sonrası yapılacaklar
     func updateUserInterface() {
         guard let status = Network.reachability?.status else { return }
         switch status {
@@ -70,6 +71,7 @@ class AddFoodTitleVC: UIViewController,UITextFieldDelegate {
     @IBAction func addButtonPressed(_ sender: Any) {
         
         self.addButton.isHidden = true
+        
         if businessName != ""{
             addFoodTitle()
         }else{
@@ -82,6 +84,8 @@ class AddFoodTitleVC: UIViewController,UITextFieldDelegate {
             UIApplication.shared.endIgnoringInteractionEvents()
         }
         }
+    
+    
     func addFoodTitle(){
         if textField.text != "" {
             
@@ -111,7 +115,7 @@ class AddFoodTitleVC: UIViewController,UITextFieldDelegate {
                 else{
                     self.activityIndicator.stopAnimating()
                     UIApplication.shared.endIgnoringInteractionEvents()
-                    print("success")
+
                     self.performSegue(withIdentifier: "AddFoodTitleVCToMenuTVC", sender: nil)
                 }
             }
@@ -128,7 +132,7 @@ class AddFoodTitleVC: UIViewController,UITextFieldDelegate {
         }
     }
     
-    
+    // yemek baslıgı kayıt ederken, yemeği kayıt eden işletme ismini de kayıt edebilmek için bu bilgi çekildi
     func getBussinessNameData(){
         let query = PFQuery(className: "BusinessInformation")
         query.whereKey("businessUserName", equalTo: "\(PFUser.current()!.username!)")
@@ -153,7 +157,9 @@ class AddFoodTitleVC: UIViewController,UITextFieldDelegate {
             }
         }
     }
-
+    
+    
+// ekrana dokunulduğunda klavyeyi kapatmak
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         self.view.endEditing(true)
     }

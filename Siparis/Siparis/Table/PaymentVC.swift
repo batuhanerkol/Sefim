@@ -17,8 +17,6 @@ class PaymentVC: UIViewController {
     var objectId = ""
     var yemekTeslimEdildiArray = [String]()
     var objectIdArray = [String]()
-    var dateArray = [String]()
-    var timeArray = [String]()
     
     var activityIndicator:UIActivityIndicatorView = UIActivityIndicatorView()
 
@@ -28,7 +26,7 @@ class PaymentVC: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        
+        //internet kontolü
         NotificationCenter.default.addObserver(self, selector: #selector(statusManager), name: .flagsChanged, object: Network.reachability)
         updateUserInterface()
         
@@ -79,53 +77,7 @@ class PaymentVC: UIViewController {
         updateUserInterface()
     }
     
-    func getDateTimeForPayment(){
-        let query = PFQuery(className: "VerilenSiparisler")
-        query.whereKey("SiparisSahibi", equalTo: (PFUser.current()?.username)!)
-        query.whereKey("IsletmeSahibi", equalTo: (PFUser.current()?.username)!)
-
-        query.whereKey("HesapOdendi", notEqualTo: "Evet")
-        
-        query.findObjectsInBackground { (objects, error) in
-            
-            if error != nil{
-                let alert = UIAlertController(title: "HATA", message: error?.localizedDescription, preferredStyle: UIAlertController.Style.alert)
-                let okButton = UIAlertAction(title: "TAMAM", style: UIAlertAction.Style.cancel, handler: nil)
-                alert.addAction(okButton)
-                self.present(alert, animated: true, completion: nil)
-            }
-            else{
-                
-                self.dateArray.removeAll(keepingCapacity: false)
-                self.time.removeAll(keepingCapacity: false)
-               
-                
-                for object in objects! {
-                    
-                    
-                    self.dateArray.append(object.object(forKey: "Date") as! String)
-                    self.timeArray.append(object.object(forKey: "Time") as! String)
-                    
-                    self.yemekTeslimEdildiArray.append(object.object(forKey: "YemekTEslimEdildi") as! String)
-                    
-                    self.date = "\(self.dateArray.last!)"
-                    self.time = "\(self.timeArray.last!)"
-                }
-                
-                print(self.date)
-                print(self.time)
-                
-                if self.yemekTeslimEdildiArray.isEmpty == false && self.yemekTeslimEdildiArray.last! == "Evet"{
-                         self.getObjectId()
-                }
-           
-                
-               
-                
-            }
-            
-        }
-    }
+ 
     func getObjectId(){
         let query = PFQuery(className: "VerilenSiparisler")
         query.whereKey("SiparisSahibi", equalTo: (PFUser.current()?.username)!)

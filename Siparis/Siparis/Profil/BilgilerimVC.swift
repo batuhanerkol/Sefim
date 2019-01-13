@@ -41,7 +41,7 @@ class BilgilerimVC: UIViewController, UIImagePickerControllerDelegate, UINavigat
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        //internet kontrolü
         NotificationCenter.default.addObserver(self, selector: #selector(statusManager), name: .flagsChanged, object: Network.reachability)
         updateUserInterface()
 
@@ -116,6 +116,8 @@ class BilgilerimVC: UIViewController, UIImagePickerControllerDelegate, UINavigat
     @objc func textFieldDidChange(_ textField: UITextField) {
         saveChangesButton.isHidden = false
     }
+    
+    
     func getObjectId(){
         let query = PFQuery(className: "BusinessInformation")
         query.whereKey("businessUserName", equalTo: (PFUser.current()?.username)!)
@@ -246,35 +248,7 @@ class BilgilerimVC: UIViewController, UIImagePickerControllerDelegate, UINavigat
             }
         }
     }
-//    @IBAction func ssaveLogoButtonPressed(_ sender: Any) {
-//          self.deleteData()
-//        let logo = PFObject(className: "BusinessInformation")
-//
-//        logo["businessUserName"] = "\(PFUser.current()!.username!)"
-//
-//        if let imageData = UIImageJPEGRepresentation(logoImageView.image!, 0.5){
-//            logo["image"] = PFFile(name: "image.jpg", data: imageData)
-//        }
-//
-//        logo.saveInBackground { (success, error) in
-//
-//            if error != nil{
-//                let alert = UIAlertController(title: "HATA", message: error?.localizedDescription, preferredStyle: UIAlertControllerStyle.alert)
-//                let okButton = UIAlertAction(title: "TAMAM", style: UIAlertActionStyle.cancel, handler: nil)
-//                alert.addAction(okButton)
-//                self.present(alert, animated: true, completion: nil)
-//            }
-//            else{
-//
-//
-//                let alert = UIAlertController(title: "Logo Kaydedildi", message: "", preferredStyle: UIAlertControllerStyle.alert)
-//                let okButton = UIAlertAction(title: "TAMAM", style: UIAlertActionStyle.cancel, handler: nil)
-//                alert.addAction(okButton)
-//                self.present(alert, animated: true, completion: nil)
-//
-//            }
-//        }
-//    }
+
     
     @IBAction func saveLogoButtonPressed(_ sender: Any) {
         
@@ -289,7 +263,6 @@ class BilgilerimVC: UIViewController, UIImagePickerControllerDelegate, UINavigat
                 alert.addAction(okButton)
                 self.present(alert, animated: true, completion: nil)
             }else {
-                print(self.objectId)
                 if let imageData = UIImageJPEGRepresentation(self.logoImageView.image!, 0.5){
                     objects!["image"] = PFFile(name: "image.jpg", data: imageData)
                      objects!.saveInBackground()
@@ -319,7 +292,7 @@ class BilgilerimVC: UIViewController, UIImagePickerControllerDelegate, UINavigat
                 self.BusinessLogoNameArray.removeAll(keepingCapacity: false)
                 
                 for object in objects!{
-                    print("AAAAAA")
+
                     self.BusinessLogoNameArray.append(object.object(forKey: "image") as! PFFile)
                     
                     self.BusinessLogoNameArray.last?.getDataInBackground(block: { (data, error) in
@@ -341,29 +314,8 @@ class BilgilerimVC: UIViewController, UIImagePickerControllerDelegate, UINavigat
         }
         
     }
-//    func getBussinessNameData(){
-//        let query = PFQuery(className: "BusinessInformation")
-//        query.whereKey("businessUserName", equalTo: "\(PFUser.current()!.username!)")
-//
-//        query.findObjectsInBackground { (objects, error) in
-//            if error != nil{
-//                let alert = UIAlertController(title: "HATA", message: error?.localizedDescription, preferredStyle: UIAlertController.Style.alert)
-//                let okButton = UIAlertAction(title: "TAMAM", style: UIAlertAction.Style.cancel, handler: nil)
-//                alert.addAction(okButton)
-//                self.present(alert, animated: true, completion: nil)
-//            }
-//            else{
-//                self.BusinessLogoNameArray.removeAll(keepingCapacity: false)
-//                for object in objects!{
-//                    self.BusinessLogoNameArray.append(object.object(forKey: "businessName") as! String)
-//
-//                    self.businessName = "\(self.BusinessLogoNameArray.last!)"
-//                }
-//            }
-//        }
-//    }
+
     @objc func selectImage() {
-        
         
         let picker = UIImagePickerController()
         picker.delegate = self
@@ -377,29 +329,7 @@ class BilgilerimVC: UIViewController, UIImagePickerControllerDelegate, UINavigat
         self.dismiss(animated: true, completion: nil)
     }
 
-    func deleteData(){
-        let query = PFQuery(className: "BusinessLOGO")
-        query.whereKey("BusinessOwner", equalTo: "\(PFUser.current()!.username!)")
-        
-        query.findObjectsInBackground { (objects, error) in
-            if error != nil{
-                let alert = UIAlertController(title: "HATA", message: error?.localizedDescription, preferredStyle: UIAlertControllerStyle.alert)
-                let okButton = UIAlertAction(title: "TAMAM", style: UIAlertActionStyle.cancel, handler: nil)
-                alert.addAction(okButton)
-                self.present(alert, animated: true, completion: nil)
-            }
-            else{
-              
-                for object in objects! {
-                    object.deleteInBackground()
-                 
-                  
-                }
-            }
-            
-        }
-        
-    }
+   
     @IBAction func changePassworButtonPressed(_ sender: Any) {
     }
     func dismissKeyboard() {

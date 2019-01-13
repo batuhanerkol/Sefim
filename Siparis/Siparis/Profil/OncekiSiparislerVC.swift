@@ -37,8 +37,8 @@ class OncekiSiparislerVC: UIViewController, UITableViewDelegate, UITableViewData
     
     var selectedMounthsArray = [String]()
     
-    var testePoint = 0
-    var servicePoint = 0
+    var testePoint: Double = 0
+    var servicePoint: Double = 0
     
     var date = ""
     
@@ -81,7 +81,7 @@ class OncekiSiparislerVC: UIViewController, UITableViewDelegate, UITableViewData
         selectedMounth.inputView = mounthPicker
 
     }
-    
+    // IK sonrası yapılacaklar
     func updateUserInterface() {
         guard let status = Network.reachability?.status else { return }
         switch status {
@@ -92,18 +92,16 @@ class OncekiSiparislerVC: UIViewController, UITableViewDelegate, UITableViewData
             self.present(alert, animated: true, completion: nil)
             
         case .wifi:
-            createToolbar()
-            
-            getFoodDateTimeData()
-            calculateBusinessLikedPoint()
             getObjectId()
+            createToolbar()
+            getFoodInfo()
+            calculateBusinessLikedPoint()
         
         case .wwan:
-            createToolbar()
-            
-            getFoodDateTimeData()
-            calculateBusinessLikedPoint()
             getObjectId()
+            createToolbar()
+            getFoodInfo()
+            calculateBusinessLikedPoint()
           
         }
     }
@@ -111,7 +109,7 @@ class OncekiSiparislerVC: UIViewController, UITableViewDelegate, UITableViewData
         updateUserInterface()
     }
 
-    func createToolbar(){
+    func createToolbar(){ // Geçmiş Siparişlerin seçili ayı göstermek için
         let toolBar = UIToolbar()
         toolBar.sizeToFit()
         
@@ -141,7 +139,7 @@ class OncekiSiparislerVC: UIViewController, UITableViewDelegate, UITableViewData
         
     }
     
-    func getFoodDateTimeData(){
+    func getFoodInfo(){
         if chosenMounth != ""{
             
                   activityIndicator.startAnimating()
@@ -176,8 +174,6 @@ class OncekiSiparislerVC: UIViewController, UITableViewDelegate, UITableViewData
                     self.paymentArray.append(object.object(forKey: "HesapIstendi") as! String)
                     
                     self.date = self.dateArray.last!
-                     print("chosenCharacter:", self.date[3...5])
-                   
                 }
    
                 self.previousOrderInfoTable.reloadData()
@@ -185,8 +181,6 @@ class OncekiSiparislerVC: UIViewController, UITableViewDelegate, UITableViewData
                 
                 self.activityIndicator.stopAnimating()
                 UIApplication.shared.endIgnoringInteractionEvents()
-                
-
             }
         }
         }
@@ -232,53 +226,18 @@ class OncekiSiparislerVC: UIViewController, UITableViewDelegate, UITableViewData
                 self.disLikedTesteArray = self.testeArray.filter { $0 == "Hayır" }
 
                 if self.liikedServiceArray.isEmpty == false && self.likedTesteArray.isEmpty == false{
-                self.servicePoint = (self.liikedServiceArray.count * 5) / self.serviceArray.count
+                    self.servicePoint = Double((self.liikedServiceArray.count * 5) / self.serviceArray.count)
 //                print("ServicePoint:", self.servicePoint)
                 
-                self.testePoint = (self.likedTesteArray.count * 5) / self.testeArray.count
+                    self.testePoint = Double((self.likedTesteArray.count * 5) / self.testeArray.count)
 //                print("TestePoint:", self.testePoint)
                 }
             }
         }
     }
-    func calculateBusinessDisLikedPoint(){
-        let query = PFQuery(className: "VerilenSiparisler")
-        query.whereKey("IsletmeSahibi", equalTo: (PFUser.current()?.username)!)
-        query.whereKey("HesapOdendi", equalTo: "Evet")
-        query.whereKey("LezzetBegeniDurumu", equalTo: "Hayır")
-        query.whereKey("HizmetBegenilmeDurumu", equalTo: "Hayır")
-        
-        query.addDescendingOrder("createdAt")
-        
-        query.findObjectsInBackground { (objects, error) in
-            
-            if error != nil{
-                let alert = UIAlertController(title: "HATA", message: error?.localizedDescription, preferredStyle: UIAlertController.Style.alert)
-                let okButton = UIAlertAction(title: "TAMAM", style: UIAlertAction.Style.cancel, handler: nil)
-                alert.addAction(okButton)
-                self.present(alert, animated: true, completion: nil)
-            }
-            else{
-                
-                
-                self.disLiikedServiceArray.removeAll(keepingCapacity: false)
-                  self.disLikedTesteArray.removeAll(keepingCapacity: false)
-                
-                
-                for object in objects! {
-                    
-                    self.disLiikedServiceArray.append(object.object(forKey: "HizmetBegenilmeDurumu") as! String)
-                     self.disLikedTesteArray.append(object.object(forKey: "LezzetBegeniDurumu") as! String)
-                    
-                    
-//                    print("ServiceDİS:", self.disLiikedServiceArray)
-//                    print("TesteDİS:", self.disLikedTesteArray)
-                    
-                }
-            }
-        }
-    }
-    func getObjectId(){
+    
+
+    func getObjectId(){ // işletme bilgilerinin olduğu satırın object ID si
         let query = PFQuery(className: "BusinessInformation")
         query.whereKey("businessUserName", equalTo: (PFUser.current()?.username)!)
         
@@ -341,7 +300,7 @@ class OncekiSiparislerVC: UIViewController, UITableViewDelegate, UITableViewData
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
         chosenMounth = mounthsArray[row]
         selectedMounth.text! = chosenMounth
-        getFoodDateTimeData()
+        getFoodInfo()
     }
   
     

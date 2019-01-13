@@ -49,7 +49,7 @@ class CreateQR: UIViewController, UINavigationControllerDelegate, UIImagePickerC
         }
     }
    
-    
+    // arşive kayıt
     @IBAction func saveToPhotoButtonPressed(_ sender: Any) {
         
         UIGraphicsBeginImageContext(imageView.frame.size)

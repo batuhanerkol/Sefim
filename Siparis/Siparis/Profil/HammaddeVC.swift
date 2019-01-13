@@ -27,7 +27,7 @@ class HammaddeVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
         hammaddeTableView.delegate = self
         hammaddeTableView.dataSource = self
         navigationItem.hidesBackButton = true
-        
+        // interenet kontorlü
         NotificationCenter.default.addObserver(self, selector: #selector(statusManager), name: .flagsChanged, object: Network.reachability)
         updateUserInterface()
         
@@ -43,7 +43,7 @@ class HammaddeVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
     override func viewWillAppear(_ animated: Bool) {
           updateUserInterface()
     }
-    
+    // ık sonrası yapılacaklar
     func updateUserInterface() {
         guard let status = Network.reachability?.status else { return }
         switch status {
@@ -58,12 +58,12 @@ class HammaddeVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
         case .wifi:
          
             if PFUser.current()?.username != nil{
-                getData()
+                getHammaddeInfo()
             }
         case .wwan:
     
             if PFUser.current()?.username != nil{
-                getData()
+                getHammaddeInfo()
             }
         }
     }
@@ -71,7 +71,7 @@ class HammaddeVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
         updateUserInterface()
     }
     
-    func getData(){
+    func getHammaddeInfo(){
         let query = PFQuery(className: "HammaddeBilgileri")
         query.whereKey("HammaddeSahibi", equalTo: "\(PFUser.current()!.username!)")
         query.findObjectsInBackground { (objects, error) in

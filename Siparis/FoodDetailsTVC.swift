@@ -27,6 +27,7 @@ class FoodDetailsTVC: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        // internet kontrolü
         NotificationCenter.default.addObserver(self, selector: #selector(statusManager), name: .flagsChanged, object: Network.reachability)
         updateUserInterface()
         
@@ -51,6 +52,8 @@ class FoodDetailsTVC: UITableViewController {
    
          updateUserInterface()
     }
+    
+    // i.k sonrası yapılacaklar
     func updateUserInterface() {
         guard let status = Network.reachability?.status else { return }
         switch status {
@@ -63,10 +66,10 @@ class FoodDetailsTVC: UITableViewController {
             self.editButton.isEnabled = false
             
         case .wifi:
-               getData()
+               getFoodName()
                self.editButton.isEnabled = true
         case .wwan:
-               getData()
+               getFoodName()
                self.editButton.isEnabled = true
         }
     }
@@ -74,6 +77,9 @@ class FoodDetailsTVC: UITableViewController {
         updateUserInterface()
     }
     
+    
+    
+    // table da düzenle button basıldığında tusun alacagı isimler için
     @IBAction func editButtonPressed(_ sender: UIBarButtonItem) {
         nameTableView.isEditing = !nameTableView.isEditing
         
@@ -84,13 +90,14 @@ class FoodDetailsTVC: UITableViewController {
             editButton.title = "Düzenle"
         }
     }
-    
+    // yemek ayrıntıları ekleme ekranına
     @IBAction func addButtonClicked(_ sender: UIBarButtonItem) {
         
         performSegue(withIdentifier: "FoodDetailsTVCToFoodDetailsVC", sender: nil)
     }
    
-    func getData(){
+    
+    func getFoodName(){
         self.activityIndicator.stopAnimating()
         UIApplication.shared.endIgnoringInteractionEvents()
         
@@ -123,7 +130,7 @@ class FoodDetailsTVC: UITableViewController {
         }
         
     }
-    
+    // kaydırarak silmek için
     func deleteData(foodIndexName : String){
         let query = PFQuery(className: "FoodInformation")
        query.whereKey("foodNameOwner", equalTo: "\(PFUser.current()!.username!)")
@@ -144,7 +151,7 @@ class FoodDetailsTVC: UITableViewController {
                 for object in objects! {
                     object.deleteInBackground()
                     self.nameTableView.reloadData()
-                    self.getData()
+                    self.getFoodName()
                 }
             }
             
@@ -152,13 +159,16 @@ class FoodDetailsTVC: UITableViewController {
         
     }
    
-    
+    // segue öncesi bilgi aktarımı
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "FoodDetaisTVCToFoodInformationShowVC"{
             let destinationVC = segue.destination as! FoodInformationShowVC
             destinationVC.selectedFood = self.chosenFood
         }
     }
+    
+    
+    //  table ayarları
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         self.chosenFood = foodNameArray[indexPath.row]
 

@@ -41,6 +41,7 @@ class EkranSifresiVC: UIViewController, UITextFieldDelegate {
                         
                         objects!["EkranSifresi"] = self.screenPaswordTextField.text!
                         objects!.saveInBackground(block: { (success, error) in
+                            
                             if error != nil{
                                 let alert = UIAlertController(title: "Lütfen Tekrar Deneyin", message: "", preferredStyle: UIAlertController.Style.alert)
                                 let okButton = UIAlertAction(title: "TAMAM", style: UIAlertAction.Style.cancel, handler: nil)

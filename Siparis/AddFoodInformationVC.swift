@@ -52,10 +52,10 @@ class AddFoodInformationVC: UIViewController, UIImagePickerControllerDelegate, U
         updateUserInterface()
 
 
-        
+        // yemek bilgisi eklerken Fotograf ekleyebilme ayarları
           selectedImage.isUserInteractionEnabled = true
-        let gestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(AddFoodInformationVC.selectImage))
-            selectedImage.addGestureRecognizer(gestureRecognizer)
+          let gestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(AddFoodInformationVC.selectImage))
+          selectedImage.addGestureRecognizer(gestureRecognizer)
         
      
         // loading sembolu
@@ -64,33 +64,57 @@ class AddFoodInformationVC: UIViewController, UIImagePickerControllerDelegate, U
         activityIndicator.activityIndicatorViewStyle = UIActivityIndicatorView.Style.gray
         view.addSubview(activityIndicator)
 
-        
-        
-          priceTextField.delegate = self
+         priceTextField.delegate = self
           miktar1Text.delegate = self
           miktar2Text.delegate = self
           miktar3Text.delegate = self
           miktar4Text.delegate = self
         
+        hammaddePicker.delegate = self
+        hammadde2Picker.delegate = self
+        hammadde3Picker.delegate = self
+        hammadde4Picker.delegate = self
         
-           hammaddePicker.delegate = self
-           hammadde2Picker.delegate = self
-           hammadde3Picker.delegate = self
-           hammadde4Picker.delegate = self
-        
+        // text e tıklandığında listeden seç, ekranını çıkartmak için
         hammadde1Text.inputView = hammaddePicker
         hammadde2Text.inputView = hammadde2Picker
         hammadde3Text.inputView = hammadde3Picker
         hammadde4Text.inputView = hammadde4Picker
-        
-        
-        
         
     }
     override func viewWillAppear(_ animated: Bool) {
         updateUserInterface()
     }
     
+    // İ.k Kontrolü
+    func updateUserInterface() {
+        guard let status = Network.reachability?.status else { return }
+        switch status {
+        case .unreachable:
+            let alert = UIAlertController(title: "İnternet Bağlantınız Bulunmuyor.", message: "Lütfen Kontrol Edin", preferredStyle: UIAlertController.Style.alert)
+            let okButton = UIAlertAction(title: "TAMAM", style: UIAlertAction.Style.cancel, handler: nil)
+            alert.addAction(okButton)
+            self.present(alert, animated: true, completion: nil)
+            
+            self.confirmButton.isEnabled = false
+            
+        case .wifi:
+            self.confirmButton.isEnabled = true
+            getBussinessNameData()
+            getHammaddeData()
+            createToolbar()
+        case .wwan:
+            getBussinessNameData()
+            getHammaddeData()
+            createToolbar()
+            self.confirmButton.isEnabled = true
+        }
+    }
+    @objc func statusManager(_ notification: Notification) {
+        updateUserInterface()
+    }
+    
+    // text e tıklandığında listeden seç, ekranını çıkartmak için
     func createToolbar(){
         let toolBar = UIToolbar()
         toolBar.sizeToFit()
@@ -110,36 +134,9 @@ class AddFoodInformationVC: UIViewController, UIImagePickerControllerDelegate, U
         view.endEditing(true)
     }
     
-    
-    func updateUserInterface() {
-        guard let status = Network.reachability?.status else { return }
-        switch status {
-        case .unreachable:
-            let alert = UIAlertController(title: "İnternet Bağlantınız Bulunmuyor.", message: "Lütfen Kontrol Edin", preferredStyle: UIAlertController.Style.alert)
-            let okButton = UIAlertAction(title: "TAMAM", style: UIAlertAction.Style.cancel, handler: nil)
-            alert.addAction(okButton)
-            self.present(alert, animated: true, completion: nil)
-            
-            self.confirmButton.isEnabled = false
-            
-        case .wifi:
-             self.confirmButton.isEnabled = true
-             getBussinessNameData()
-            getHammaddeData()
-             createToolbar()
-        case .wwan:
-             getBussinessNameData()
-             getHammaddeData()
-              createToolbar()
-             self.confirmButton.isEnabled = true
-        }
-    }
-    @objc func statusManager(_ notification: Notification) {
-        updateUserInterface()
-    }
+
     
     @objc func selectImage() {
-        
         
         let picker = UIImagePickerController()
         picker.delegate = self
@@ -153,11 +150,14 @@ class AddFoodInformationVC: UIViewController, UIImagePickerControllerDelegate, U
         self.dismiss(animated: true, completion: nil)
     }
 
+    
+    
     @IBAction func confirmButtonPressed(_ sender: Any) {
-        
+        // loading sembolu, erişim engelleyici baslatma
         activityIndicator.startAnimating()
         UIApplication.shared.beginIgnoringInteractionEvents()
-            addFoodInfo()
+    
+        addFoodInfo()
      
     }
     
@@ -247,7 +247,7 @@ class AddFoodInformationVC: UIViewController, UIImagePickerControllerDelegate, U
         }
         
     }
-    
+    // herhangi bir hammedde seçili text te seçilirse o hammadde miktarının girildiğinden emin olmak için
     func controlTextFields() -> Bool{
         
         if self.hammadde1Text.text != "" && miktar1Text.text == "" {
@@ -294,12 +294,15 @@ class AddFoodInformationVC: UIViewController, UIImagePickerControllerDelegate, U
             return false
         }
         else{
-            return true
             self.activityIndicator.stopAnimating()
             UIApplication.shared.endIgnoringInteractionEvents()
+            
+            return true
+        
         }
     
     }
+    // seçili hammaddenin miktarı girilmişse array e eklemek için
     func addFiyatToArray(){
          if hammadde1Text.text != "" && miktar1Text.text != ""{
             hammaddeMiktarlariArray.append(miktar1Text.text!)
@@ -319,7 +322,7 @@ class AddFoodInformationVC: UIViewController, UIImagePickerControllerDelegate, U
     
         }
     
-    
+    // yemek bilgilerine işletme isminide kayıt edebilmek için
     func getBussinessNameData(){
         
         activityIndicator.startAnimating()
@@ -379,6 +382,8 @@ class AddFoodInformationVC: UIViewController, UIImagePickerControllerDelegate, U
             }
         }
     
+    
+    // pickerView( hammadde seçim ekranı) ve Table ayarları
     func numberOfComponents(in pickerView: UIPickerView) -> Int {
         return 1
     }

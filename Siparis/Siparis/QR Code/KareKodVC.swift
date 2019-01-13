@@ -30,22 +30,20 @@ class KareKodVC: UIViewController , UIImagePickerControllerDelegate, UINavigatio
     override func viewDidLoad() {
         super.viewDidLoad()
  
+        // interner kontrolü
         NotificationCenter.default.addObserver(self, selector: #selector(statusManager), name: .flagsChanged, object: Network.reachability)
         updateUserInterface()
         
     
-        
+        // Qr kod
         QRImageView.isUserInteractionEnabled = true
         let gestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(KareKodVC.selectImage))
         QRImageView.addGestureRecognizer(gestureRecognizer)
         
         
-        if QRImageView.image == nil{
+        if QRImageView.image == nil{ // qr boş ise görünecek image
             self.QRImageView.image = UIImage(named: "QRIcınDokun.png")
-//            saveToParseButton.isHidden = false
-//            createButton.isHidden = false
-//            deleteButton.isHidden = true
-//            textField.isHidden = true
+
         }
         
       
@@ -64,7 +62,7 @@ class KareKodVC: UIViewController , UIImagePickerControllerDelegate, UINavigatio
         enteringPassword()
         updateUserInterface()
     }
-    
+    // İK sonrası yapılacaklar
     func updateUserInterface() {
         guard let status = Network.reachability?.status else { return }
         switch status {
@@ -90,7 +88,7 @@ class KareKodVC: UIViewController , UIImagePickerControllerDelegate, UINavigatio
     @objc func statusManager(_ notification: Notification) {
         updateUserInterface()
     }
-    
+    // ekran şifresi
     func enteringPassword(){
         
         let alertController = UIAlertController(title: "Şifre Girin", message: "", preferredStyle: .
@@ -144,7 +142,7 @@ class KareKodVC: UIViewController , UIImagePickerControllerDelegate, UINavigatio
     }
     
     
-    
+    // faleriden Qr seçmek
     @objc func selectImage() {
         
         let picker = UIImagePickerController()
@@ -169,15 +167,9 @@ class KareKodVC: UIViewController , UIImagePickerControllerDelegate, UINavigatio
         performSegue(withIdentifier: "KareKodToCreateQR", sender: nil)
        
     }
-    func isValidEmail(testStr:String) -> Bool {
-        let emailRegEx = "[A-Z0-9a-z._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,64}"
-        let emailTest = NSPredicate(format:"SELF MATCHES %@", emailRegEx)
-        return emailTest.evaluate(with: testStr)
-    }
-    
+
    
-   
-    func getQRDataFromParse(){
+    func getQRDataFromParse(){ // eğer kayıt edilmiş Qr varsa çekmek için
         let query = PFQuery(className: "BusinessInformation")
         query.whereKey("businessUserName", equalTo: (PFUser.current()?.username)!)
         query.whereKeyExists("QRKod")
@@ -219,6 +211,8 @@ class KareKodVC: UIViewController , UIImagePickerControllerDelegate, UINavigatio
         }
         
     }
+    
+    // qr ın kayıtlı olduğu satırın obejct Id si
     func getObjectId(){
         let query = PFQuery(className: "BusinessInformation")
         query.whereKey("businessUserName", equalTo: (PFUser.current()?.username)!)
@@ -242,7 +236,7 @@ class KareKodVC: UIViewController , UIImagePickerControllerDelegate, UINavigatio
             }
         }
     }
-    
+    // Qr resmini kayır etmek
     @IBAction func savetoParseButtonClicked(_ sender: Any) {
         
         let query = PFQuery(className: "BusinessInformation")
