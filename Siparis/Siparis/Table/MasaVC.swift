@@ -222,6 +222,7 @@ class MasaVC: UIViewController {
                 if  self.tableButtonBackgroundColorChange.count > 0  && self.hesapMasaSAyisiArray.isEmpty == false{
          
                     while hesapMasaSayisiIndex < self.hesapMasaSAyisiArray.count {
+                        print(" self.hesapMasaSAyisiArray",  self.hesapMasaSAyisiArray)
                     let tableButtonIndex = Int(self.hesapMasaSAyisiArray[hesapMasaSayisiIndex])! - 1  // işlem yapılan bütün masaların renk değişimleri gerçekleşsin
     
                 if self.siparisVerildiArray[hesapMasaSayisiIndex] == "Evet" && self.yemekHazirArray[hesapMasaSayisiIndex] == "" && self.yemekTeslimArray[hesapMasaSayisiIndex] == "" && self.hesapIstendiArray[hesapMasaSayisiIndex] == "" && self.hesapOdendiArray[hesapMasaSayisiIndex] == "" {
