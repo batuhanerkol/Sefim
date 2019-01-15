@@ -23,11 +23,11 @@ class OncekiSiparislerVC: UIViewController, UITableViewDelegate, UITableViewData
     var serviceArray = [String]()
     var testeArray = [String]()
     
-    var liikedServiceArray = [String]()
-    var likedTesteArray = [String]()
+    var servisBegenildiArray = [String]()
+    var lezzetBegenildiArray = [String]()
     
-    var disLiikedServiceArray = [String]()
-    var disLikedTesteArray = [String]()
+    var servisBegenilmediArray = [String]()
+    var lezzetBegenilmediArray = [String]()
     
     var objectIdArray = [String]()
     var objectId = ""
@@ -37,8 +37,14 @@ class OncekiSiparislerVC: UIViewController, UITableViewDelegate, UITableViewData
     
     var selectedMounthsArray = [String]()
     
-    var testePoint: Double = 0
-    var servicePoint: Double = 0
+    var totalLezzet: Float = 0
+    var totalServis: Float = 0
+    
+    var servisPuan1Bas = ""
+    var lezzetPuan1Bas = ""
+    
+    var lezzetPoint: Float = 0
+    var servicePoint: Float = 0
     
     var date = ""
     
@@ -189,8 +195,6 @@ class OncekiSiparislerVC: UIViewController, UITableViewDelegate, UITableViewData
         let query = PFQuery(className: "VerilenSiparisler")
         query.whereKey("IsletmeSahibi", equalTo: (PFUser.current()?.username)!)
         query.whereKey("HesapOdendi", equalTo: "Evet")
-        query.whereKey("LezzetBegeniDurumu", notEqualTo: "")
-        query.whereKey("HizmetBegenilmeDurumu", notEqualTo: "")
 
         query.addDescendingOrder("createdAt")
         
@@ -207,6 +211,19 @@ class OncekiSiparislerVC: UIViewController, UITableViewDelegate, UITableViewData
                
                 self.serviceArray.removeAll(keepingCapacity: false)
                 self.testeArray.removeAll(keepingCapacity: false)
+                
+                self.servisBegenildiArray.removeAll(keepingCapacity: false)
+                self.servisBegenilmediArray.removeAll(keepingCapacity: false)
+                
+                self.lezzetBegenildiArray.removeAll(keepingCapacity: false)
+                self.lezzetBegenilmediArray.removeAll(keepingCapacity: false)
+                
+                self.totalServis = 0
+                self.totalLezzet = 0
+                self.lezzetPoint = 0
+                self.servicePoint = 0
+                self.lezzetPuan1Bas = ""
+                self.servisPuan1Bas = ""
            
                 
                 for object in objects! {
@@ -215,22 +232,43 @@ class OncekiSiparislerVC: UIViewController, UITableViewDelegate, UITableViewData
                     self.testeArray.append(object.object(forKey: "LezzetBegeniDurumu") as! String)
                    
                 }
-//                print("Service:", self.serviceArray)
-//                print("teste:", self.testeArray)
-                
-                self.liikedServiceArray = self.serviceArray.filter { $0 == "Evet" }
-                self.disLiikedServiceArray = self.serviceArray.filter { $0 == "Hayır" }
 
+                self.servisBegenildiArray = self.serviceArray.filter { $0 == "Evet" }
+                self.servisBegenilmediArray = self.serviceArray.filter { $0 == "Hayır" }
                 
-                self.likedTesteArray = self.testeArray.filter { $0 == "Evet" }
-                self.disLikedTesteArray = self.testeArray.filter { $0 == "Hayır" }
+                self.lezzetBegenildiArray = self.testeArray.filter { $0 == "Evet" }
+                self.lezzetBegenilmediArray = self.testeArray.filter { $0 == "Hayır" }
+                
+                self.totalLezzet = Float(self.lezzetBegenildiArray.count + self.lezzetBegenilmediArray.count)
+                self.totalServis = Float(self.servisBegenildiArray.count + self.servisBegenilmediArray.count)
+                
 
-                if self.liikedServiceArray.isEmpty == false && self.likedTesteArray.isEmpty == false{
-                    self.servicePoint = Double((self.liikedServiceArray.count * 5) / self.serviceArray.count)
-//                print("ServicePoint:", self.servicePoint)
-                
-                    self.testePoint = Double((self.likedTesteArray.count * 5) / self.testeArray.count)
-//                print("TestePoint:", self.testePoint)
+                if self.servisBegenildiArray.isEmpty == false && self.lezzetBegenildiArray.isEmpty == false{
+                    
+                    self.servicePoint = Float(self.servisBegenildiArray.count * 5) / self.totalServis
+                    self.lezzetPoint = Float(self.lezzetBegenildiArray.count * 5) / self.totalLezzet
+                    
+                    self.servisPuan1Bas = String(format: "%.1f", ceil(self.servicePoint*100)/100)
+                     self.lezzetPuan1Bas = String(format: "%.1f", ceil(self.lezzetPoint*100)/100)
+                    
+                    print("bütün servis puanlama sayısı:", self.serviceArray.count)
+                    print("bütün lezzet puanlama sayısı:", self.testeArray.count)
+                    print("---------------------------------")
+                    print("SERVIS beg-begme top:", self.totalServis)
+                    print("LEZZET beg-begme top:", self.totalLezzet)
+                     print("---------------------------------")
+                    print("servis beğenme sayısı:", self.servisBegenildiArray.count)
+                    print("servis beğenmeme sayısı:", self.servisBegenilmediArray.count)
+                     print("---------------------------------")
+                    print("lezzet beğenmeme sayısı:", self.lezzetBegenildiArray.count)
+                    print("lezzet beğenmeme sayısı:", self.lezzetBegenilmediArray.count)
+                     print("---------------------------------")
+                    print("servis puanı:", self.servicePoint)
+                    print("testePoint puanı:", self.lezzetPoint)
+                    print("---------------------------------")
+                    print("servis puanı 1 basamak:", self.servisPuan1Bas)
+                    print("testePoint puanı 1 basamak:", self.lezzetPuan1Bas)
+
                 }
             }
         }
@@ -276,8 +314,8 @@ class OncekiSiparislerVC: UIViewController, UITableViewDelegate, UITableViewData
                 self.present(alert, animated: true, completion: nil)
             }
             else{
-                object!["LezzetPuan"] = String(self.testePoint)
-                object!["HizmetPuan"] = String(self.servicePoint)
+                object!["LezzetPuan"] = String(self.lezzetPuan1Bas)
+                object!["HizmetPuan"] = String(self.servisPuan1Bas)
               
                 object?.saveInBackground()
             }
