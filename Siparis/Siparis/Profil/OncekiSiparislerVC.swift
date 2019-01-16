@@ -102,6 +102,9 @@ class OncekiSiparislerVC: UIViewController, UITableViewDelegate, UITableViewData
             createToolbar()
             getFoodInfo()
             calculateBusinessLikedPoint()
+            
+            getFoodNames()
+            
         
         case .wwan:
             getObjectId()
@@ -109,6 +112,8 @@ class OncekiSiparislerVC: UIViewController, UITableViewDelegate, UITableViewData
             getFoodInfo()
             calculateBusinessLikedPoint()
           
+            getFoodNames()
+           
         }
     }
     @objc func statusManager(_ notification: Notification) {
@@ -143,6 +148,52 @@ class OncekiSiparislerVC: UIViewController, UITableViewDelegate, UITableViewData
         }
         sumPriceLAbel.text = String(totalPrice)
         
+    }
+    
+    var foodNamesArray = [String]()
+    func getFoodNames(){
+        let query = PFQuery(className: "FoodInformation")
+        query.whereKey("foodNameOwner", equalTo: (PFUser.current()?.username)!)
+        query.whereKey("HesapOnaylandi", equalTo: "Evet")
+        query.findObjectsInBackground { (objects, error) in
+            if error != nil {
+                
+            } else {
+                self.foodNamesArray.removeAll(keepingCapacity: false)
+                for object in objects! {
+                    self.foodNamesArray.append(object.object(forKey: "foodName") as! String)
+                }
+                print("self.foodNamesArray", self.foodNamesArray)
+            }
+        }
+        
+    }
+    
+     // Son kullanılacak array bu !!!!! yukarıdaki foodNamesArray ile eşleştirip tek tek bir sayı belirlemen gerekli
+    var odendiSiparisArray = [[String]]()
+    var allOdendiSiparisArray = [String]()
+    func getPaidFoodStock() {
+        let query = PFQuery(className: "VerilenSiparisler")
+        query.whereKey("IsletmeSahibi", equalTo: (PFUser.current()?.username)!)
+        query.whereKey("HesapOdendi", equalTo: "Evet")
+        query.whereKey("Date", matchesText: chosenMounth)
+        query.addDescendingOrder("createdAt")
+        query.findObjectsInBackground { (objects, error) in
+            if error != nil {
+                
+            } else {
+                for object in objects! {
+                    self.odendiSiparisArray.append(object["SiparisAdi"] as! [String])
+                    
+                }
+                for tekArray in self.odendiSiparisArray {
+                    for tekUrun in tekArray  {
+                        self.allOdendiSiparisArray.append(tekUrun)
+                    }
+                }
+                
+            }
+        }
     }
     
     func getFoodInfo(){
@@ -339,6 +390,7 @@ class OncekiSiparislerVC: UIViewController, UITableViewDelegate, UITableViewData
         chosenMounth = mounthsArray[row]
         selectedMounth.text! = chosenMounth
         getFoodInfo()
+        getPaidFoodStock()
     }
   
     

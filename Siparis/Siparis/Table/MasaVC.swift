@@ -48,7 +48,7 @@ class MasaVC: UIViewController {
     var tableNumberArray = [String]()
     var tableNumberText = ""
     
-    var deneme = 0
+    var mevcutMasaSayisi = 0
     
    
     var activityIndicator:UIActivityIndicatorView = UIActivityIndicatorView()
@@ -222,7 +222,7 @@ class MasaVC: UIViewController {
                 if  self.tableButtonBackgroundColorChange.count > 0  && self.hesapMasaSAyisiArray.isEmpty == false{
          
                     while hesapMasaSayisiIndex < self.hesapMasaSAyisiArray.count {
-                        print(" self.hesapMasaSAyisiArray",  self.hesapMasaSAyisiArray)
+                       
                     let tableButtonIndex = Int(self.hesapMasaSAyisiArray[hesapMasaSayisiIndex])! - 1  // işlem yapılan bütün masaların renk değişimleri gerçekleşsin
     
                 if self.siparisVerildiArray[hesapMasaSayisiIndex] == "Evet" && self.yemekHazirArray[hesapMasaSayisiIndex] == "" && self.yemekTeslimArray[hesapMasaSayisiIndex] == "" && self.hesapIstendiArray[hesapMasaSayisiIndex] == "" && self.hesapOdendiArray[hesapMasaSayisiIndex] == "" {
@@ -288,11 +288,11 @@ class MasaVC: UIViewController {
                     
                     self.textField.text! = self.tableNumberLabel.text!
                     
-                    self.deneme = Int(self.tableNumberLabel.text!)!
+                    self.mevcutMasaSayisi = Int(self.tableNumberLabel.text!)!
                     
                     
                 }
-                while self.tableNumber < self.deneme {
+                while self.tableNumber < self.mevcutMasaSayisi {
                     self.createBtn()
                     self.tableNumber = self.tableNumber + 1
                     
@@ -414,43 +414,43 @@ class MasaVC: UIViewController {
         
     }
     
-    func deleteTableData(){ // silme işlemi artık yapılmıyor Lazım olabilir diye dursun
-        let query = PFQuery(className: "BusinessInformation")
-        query.whereKey("businessUserName", equalTo: "\(PFUser.current()!.username!)")
-        query.whereKeyExists("MasaSayisi")
-        
-        query.getObjectInBackground(withId: objectId) { (objects, error) in
-            if error != nil{
-                let alert = UIAlertController(title: "HATA", message: error?.localizedDescription, preferredStyle: UIAlertControllerStyle.alert)
-                let okButton = UIAlertAction(title: "TAMAM", style: UIAlertActionStyle.cancel, handler: nil)
-                alert.addAction(okButton)
-                self.present(alert, animated: true, completion: nil)
-            }
-            else{
-              
-                    objects!["MasaSayisi"] = ""
-                    objects!.saveInBackground()
-                
-                    
-                    self.xLocation = 10
-                    self.yLocation = 100
-                    
-                
-                // yeni button vb eklerken buradan düzelt çünkü silerken ekranda gözüken onje sayısına göre siliyor
-                // silme işlemi yapılmıyor artık
-                var viewItemNumber = Int(self.tableNumberLabel.text!)! + 3
-                while self.view.subviews.count > 4 {
-                    self.view.subviews[viewItemNumber].removeFromSuperview()
-                    viewItemNumber -= 1
-                }
-                 self.tableNumberLabel.text = ""
-
-            }
-        }
-      
-    }
-    
-  
+//    func deleteTableData(){ // silme işlemi artık yapılmıyor Lazım olabilir diye dursun
+//        let query = PFQuery(className: "BusinessInformation")
+//        query.whereKey("businessUserName", equalTo: "\(PFUser.current()!.username!)")
+//        query.whereKeyExists("MasaSayisi")
+//
+//        query.getObjectInBackground(withId: objectId) { (objects, error) in
+//            if error != nil{
+//                let alert = UIAlertController(title: "HATA", message: error?.localizedDescription, preferredStyle: UIAlertControllerStyle.alert)
+//                let okButton = UIAlertAction(title: "TAMAM", style: UIAlertActionStyle.cancel, handler: nil)
+//                alert.addAction(okButton)
+//                self.present(alert, animated: true, completion: nil)
+//            }
+//            else{
+//
+//                    objects!["MasaSayisi"] = ""
+//                    objects!.saveInBackground()
+//
+//
+//                    self.xLocation = 10
+//                    self.yLocation = 100
+//
+//
+//                // yeni button vb eklerken buradan düzelt çünkü silerken ekranda gözüken onje sayısına göre siliyor
+//                // silme işlemi yapılmıyor artık
+//                var viewItemNumber = Int(self.tableNumberLabel.text!)! + 3
+//                while self.view.subviews.count > 4 {
+//                    self.view.subviews[viewItemNumber].removeFromSuperview()
+//                    viewItemNumber -= 1
+//                }
+//                 self.tableNumberLabel.text = ""
+//
+//            }
+//        }
+//
+//    }
+//
+//
    
     @IBAction func updateButtonPressed(_ sender: Any) {
         

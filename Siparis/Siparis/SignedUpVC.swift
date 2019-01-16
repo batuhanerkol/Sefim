@@ -54,8 +54,10 @@ class SignedUpVC: UIViewController, UITextFieldDelegate {
              self.createAcount.isEnabled = false
         case .wifi:
    self.createAcount.isEnabled = true
+            
         case .wwan:
         self.createAcount.isEnabled = true
+            
         }
     }
     @objc func statusManager(_ notification: Notification) {

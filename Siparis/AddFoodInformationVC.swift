@@ -24,7 +24,7 @@ class AddFoodInformationVC: UIViewController, UIImagePickerControllerDelegate, U
     
 
     
-    @IBOutlet weak var longTextField: UITextView!
+    @IBOutlet weak var yorumTextField: UITextView!
     @IBOutlet weak var confirmButton: UIButton!
     @IBOutlet weak var priceTextField: UITextField!
     @IBOutlet weak var textField: UITextField!
@@ -163,7 +163,7 @@ class AddFoodInformationVC: UIViewController, UIImagePickerControllerDelegate, U
     
     func addFoodInfo(){
         
-        if textField.text != "" && longTextField.text != "" && priceTextField.text != ""  {
+        if textField.text != "" && yorumTextField.text != "" && priceTextField.text != ""  {
             if controlTextFields(){
            
             self.confirmButton.isHidden = true
@@ -173,7 +173,7 @@ class AddFoodInformationVC: UIViewController, UIImagePickerControllerDelegate, U
             
             let foodInformation = PFObject(className: "FoodInformation")
             foodInformation["foodName"] = textField.text!
-            foodInformation["foodInformation"] = longTextField.text!
+            foodInformation["foodInformation"] = yorumTextField.text!
             foodInformation["foodPrice"] = priceTextField.text!
             foodInformation["foodNameOwner"] = PFUser.current()!.username!
             foodInformation["foodTitle"] = selectecTitle
@@ -189,7 +189,7 @@ class AddFoodInformationVC: UIViewController, UIImagePickerControllerDelegate, U
             
             foodInformation.saveInBackground { (success, error) in
                 
-                if self.textField.text != "" && self.longTextField.text != "" && self.priceTextField.text != ""{
+                if self.textField.text != "" && self.yorumTextField.text != "" && self.priceTextField.text != ""{
                     
                     if error != nil{
                         let alert = UIAlertController(title: "HATA", message: error?.localizedDescription, preferredStyle: UIAlertControllerStyle.alert)
@@ -206,7 +206,7 @@ class AddFoodInformationVC: UIViewController, UIImagePickerControllerDelegate, U
                         self.confirmButton.isHidden = false
                         self.priceTextField.text = ""
                         self.textField.text = ""
-                        self.longTextField.text = ""
+                        self.yorumTextField.text = ""
                         self.selectedImage.image = UIImage(named: "fotosecin.png")
                         self.hammadde1Text.text = ""
                         self.hammadde2Text.text = ""
@@ -222,7 +222,7 @@ class AddFoodInformationVC: UIViewController, UIImagePickerControllerDelegate, U
                         
                     }
                 }
-                else if self.textField.text == "" || self.longTextField.text == "" || self.priceTextField.text == ""{
+                else if self.textField.text == "" || self.yorumTextField.text == "" || self.priceTextField.text == ""{
                     let alert = UIAlertController(title: "HATA", message: "Lütfen Bilgileri Tam Giriniz", preferredStyle: UIAlertControllerStyle.alert)
                     let okButton = UIAlertAction(title: "TAMAM", style: UIAlertActionStyle.cancel, handler: nil)
                     alert.addAction(okButton)
@@ -235,7 +235,7 @@ class AddFoodInformationVC: UIViewController, UIImagePickerControllerDelegate, U
             }
         }
         }
-        else if self.textField.text == "" || self.longTextField.text == "" || self.priceTextField.text == ""{
+        else if self.textField.text == "" || self.yorumTextField.text == "" || self.priceTextField.text == ""{
             let alert = UIAlertController(title: "HATA", message: "Lütfen Bilgileri Tam Giriniz", preferredStyle: UIAlertControllerStyle.alert)
             let okButton = UIAlertAction(title: "TAMAM", style: UIAlertActionStyle.cancel, handler: nil)
             alert.addAction(okButton)

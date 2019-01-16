@@ -109,6 +109,7 @@ class PopUpVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
             self.checkPaidButton.isEnabled = true
             self.orderHasGivenButton.isEnabled = true
             self.foodIsReadyButton.isEnabled = true
+            
         }
     }
     @objc func statusManager(_ notification: Notification) {
@@ -539,6 +540,10 @@ class PopUpVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
         }
     }
     
+    
+    
+    
+    
     func deleteData(foodobjectId : String){ // kaydırarak silmek
         let query = PFQuery(className: "Siparisler")
         query.whereKey("IsletmeSahibi", equalTo: "\(PFUser.current()!.username!)")
@@ -649,10 +654,7 @@ class PopUpVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
             }
         }
     }
-    func deleteFromVerilenSiparisler(){ // kaydırarak verilen Siparislerden silmek için silmek
-      
-    }
-
+ 
     
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {

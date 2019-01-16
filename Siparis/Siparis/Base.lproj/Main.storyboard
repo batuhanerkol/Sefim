@@ -855,8 +855,8 @@ Türk Ceza Kanunu’nun 138. maddesinde ve Kanunu’nun 7. maddesinde düzenlend
                                                             <nil key="textColor"/>
                                                             <nil key="highlightedColor"/>
                                                         </label>
-                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="oiJ-wD-XsC">
-                                                            <rect key="frame" x="15" y="25" width="247" height="7"/>
+                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="oiJ-wD-XsC">
+                                                            <rect key="frame" x="15" y="16" width="247" height="24"/>
                                                             <color key="backgroundColor" red="0.29529064890000001" green="0.64371454719999999" blue="0.15804424880000001" alpha="0.55395657592024539" colorSpace="custom" customColorSpace="sRGB"/>
                                                             <constraints>
                                                                 <constraint firstAttribute="width" constant="247" id="2Sx-39-OG1"/>
@@ -870,7 +870,7 @@ Türk Ceza Kanunu’nun 138. maddesinde ve Kanunu’nun 7. maddesinde düzenlend
                                                         <constraint firstItem="acr-hC-kLt" firstAttribute="top" secondItem="yQk-mU-DI4" secondAttribute="top" id="Az9-sA-Iia"/>
                                                         <constraint firstItem="acr-hC-kLt" firstAttribute="leading" secondItem="U3r-0W-B7u" secondAttribute="trailing" constant="8" symbolic="YES" id="BRc-4b-rc7"/>
                                                         <constraint firstItem="U3r-0W-B7u" firstAttribute="firstBaseline" secondItem="yQk-mU-DI4" secondAttribute="firstBaseline" id="Df8-0K-FjW"/>
-                                                        <constraint firstItem="oiJ-wD-XsC" firstAttribute="baseline" secondItem="acr-hC-kLt" secondAttribute="firstBaseline" id="Dhb-hS-MDb"/>
+                                                        <constraint firstItem="oiJ-wD-XsC" firstAttribute="baseline" secondItem="acr-hC-kLt" secondAttribute="firstBaseline" constant="10" id="Dhb-hS-MDb"/>
                                                         <constraint firstAttribute="trailingMargin" secondItem="yQk-mU-DI4" secondAttribute="trailing" constant="-5" id="JUq-vp-HQi"/>
                                                         <constraint firstItem="oiJ-wD-XsC" firstAttribute="leading" secondItem="U3r-0W-B7u" secondAttribute="leading" id="N12-as-yhZ"/>
                                                         <constraint firstItem="yQk-mU-DI4" firstAttribute="height" secondItem="U3r-0W-B7u" secondAttribute="height" id="RaB-qX-QjD"/>
@@ -3833,7 +3833,6 @@ Türk Ceza Kanunu’nun 138. maddesinde ve Kanunu’nun 7. maddesinde düzenlend
                         <outlet property="hammadde2Text" destination="HRD-P0-ru3" id="dT6-OH-Uhi"/>
                         <outlet property="hammadde3Text" destination="xj3-uT-8we" id="ivd-r7-EYj"/>
                         <outlet property="hammadde4Text" destination="kxe-tE-kRZ" id="yhp-U9-GTi"/>
-                        <outlet property="longTextField" destination="nVA-mr-9kC" id="tic-I9-ixn"/>
                         <outlet property="miktar1Text" destination="TJD-Ej-n5u" id="lTK-qW-Jr1"/>
                         <outlet property="miktar2Text" destination="G5E-ut-rvu" id="dFM-9a-aCx"/>
                         <outlet property="miktar3Text" destination="osV-CV-Stu" id="5Ub-p9-z0A"/>
@@ -3841,6 +3840,7 @@ Türk Ceza Kanunu’nun 138. maddesinde ve Kanunu’nun 7. maddesinde düzenlend
                         <outlet property="priceTextField" destination="PRg-oh-zgD" id="WQ5-jP-ULO"/>
                         <outlet property="selectedImage" destination="AIg-hW-Pbo" id="v1N-EQ-JK3"/>
                         <outlet property="textField" destination="1bT-LK-VX3" id="cJ7-Dg-CwJ"/>
+                        <outlet property="yorumTextField" destination="nVA-mr-9kC" id="tic-I9-ixn"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="TyB-6E-aaD" userLabel="First Responder" sceneMemberID="firstResponder"/>
