@@ -15,6 +15,7 @@ var globaTotalPriceOncekiSiparisler = ""
 class OncekiSiparislerVC: UIViewController, UITableViewDelegate, UITableViewDataSource, UIPickerViewDelegate, UIPickerViewDataSource {
    
     // değişiklik yapılıyor
+    // atakan değişiklikler mukemmel olmus ellerine saglık ß
     
     var dateArray = [String]()
     var timeArray = [String]()
