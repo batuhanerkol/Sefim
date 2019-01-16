@@ -126,7 +126,7 @@ class OncekiSiparislerVC: UIViewController, UITableViewDelegate, UITableViewData
         let toolBar = UIToolbar()
         toolBar.sizeToFit()
         
-        let doneButton = UIBarButtonItem(title: "Seç", style: .plain, target: self, action: #selector(OncekiSiparislerVC.dismissKeyboard))
+        let doneButton = UIBarButtonItem(title: "Seç", style: .plain, target: self, action: #selector(OncekiSiparislerVC.getPaidFoodStock))
         
         toolBar.setItems([doneButton], animated: false)
         toolBar.isUserInteractionEnabled = true
@@ -152,6 +152,7 @@ class OncekiSiparislerVC: UIViewController, UITableViewDelegate, UITableViewData
         
     }
     
+    
     var foodNamesArray = [String]()
     func getFoodNames(){
         let query = PFQuery(className: "FoodInformation")
@@ -174,7 +175,10 @@ class OncekiSiparislerVC: UIViewController, UITableViewDelegate, UITableViewData
      // Son kullanılacak array bu !!!!! yukarıdaki foodNamesArray ile eşleştirip tek tek bir sayı belirlemen gerekli
     var odendiSiparisArray = [[String]]()
     var allOdendiSiparisArray = [String]()
-    func getPaidFoodStock() {
+    var allOdendıSiparisSayiArray = [Int]()
+    
+   @objc func getPaidFoodStock() {
+        allOdendiSiparisArray.removeAll()
         let query = PFQuery(className: "VerilenSiparisler")
         query.whereKey("IsletmeSahibi", equalTo: (PFUser.current()?.username)!)
         query.whereKey("HesapOdendi", equalTo: "Evet")
@@ -184,6 +188,7 @@ class OncekiSiparislerVC: UIViewController, UITableViewDelegate, UITableViewData
             if error != nil {
                 
             } else {
+                self.allOdendiSiparisArray.removeAll()
                 for object in objects! {
                     self.odendiSiparisArray.append(object["SiparisAdi"] as! [String])
                     
@@ -194,7 +199,25 @@ class OncekiSiparislerVC: UIViewController, UITableViewDelegate, UITableViewData
                     }
                 }
                 
+                self.calculateStokAdet()
+                
             }
+        }
+    }
+    
+    func calculateStokAdet(){
+        allOdendıSiparisSayiArray.removeAll()
+        for foodName in self.foodNamesArray {
+            var counter = 0
+            for siparisFoodName in self.allOdendiSiparisArray {
+                if foodName == siparisFoodName {
+                    counter += 1
+                }
+            }
+            self.allOdendıSiparisSayiArray.append(counter)
+            print("------", self.allOdendıSiparisSayiArray)
+            
+            dismissKeyboard()
         }
     }
     
@@ -392,7 +415,6 @@ class OncekiSiparislerVC: UIViewController, UITableViewDelegate, UITableViewData
         chosenMounth = mounthsArray[row]
         selectedMounth.text! = chosenMounth
         getFoodInfo()
-        getPaidFoodStock()
     }
   
     
