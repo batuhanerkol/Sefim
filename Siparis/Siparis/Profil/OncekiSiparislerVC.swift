@@ -155,6 +155,7 @@ class OncekiSiparislerVC: UIViewController, UITableViewDelegate, UITableViewData
     
     var foodNamesArray = [String]()
     func getFoodNames(){
+        foodNamesArray.removeAll()
         let query = PFQuery(className: "FoodInformation")
         query.whereKey("foodNameOwner", equalTo: (PFUser.current()?.username)!)
         query.whereKey("HesapOnaylandi", equalTo: "Evet")
@@ -162,7 +163,7 @@ class OncekiSiparislerVC: UIViewController, UITableViewDelegate, UITableViewData
             if error != nil {
                 
             } else {
-                self.foodNamesArray.removeAll(keepingCapacity: false)
+                
                 for object in objects! {
                     self.foodNamesArray.append(object.object(forKey: "foodName") as! String)
                 }
@@ -178,7 +179,10 @@ class OncekiSiparislerVC: UIViewController, UITableViewDelegate, UITableViewData
     var allOdendıSiparisSayiArray = [Int]()
     
    @objc func getPaidFoodStock() {
+        getFoodInfo()
+        odendiSiparisArray.removeAll()
         allOdendiSiparisArray.removeAll()
+        allOdendıSiparisSayiArray.removeAll()
         let query = PFQuery(className: "VerilenSiparisler")
         query.whereKey("IsletmeSahibi", equalTo: (PFUser.current()?.username)!)
         query.whereKey("HesapOdendi", equalTo: "Evet")
@@ -198,9 +202,7 @@ class OncekiSiparislerVC: UIViewController, UITableViewDelegate, UITableViewData
                         self.allOdendiSiparisArray.append(tekUrun)
                     }
                 }
-                
                 self.calculateStokAdet()
-                
             }
         }
     }
@@ -215,10 +217,10 @@ class OncekiSiparislerVC: UIViewController, UITableViewDelegate, UITableViewData
                 }
             }
             self.allOdendıSiparisSayiArray.append(counter)
-            print("------", self.allOdendıSiparisSayiArray)
-            
             dismissKeyboard()
         }
+        print("siparisArray",self.allOdendiSiparisArray)
+        print("sayıArray", self.allOdendıSiparisSayiArray)
     }
     
     func getFoodInfo(){
@@ -414,7 +416,7 @@ class OncekiSiparislerVC: UIViewController, UITableViewDelegate, UITableViewData
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
         chosenMounth = mounthsArray[row]
         selectedMounth.text! = chosenMounth
-        getFoodInfo()
+        
     }
   
     
