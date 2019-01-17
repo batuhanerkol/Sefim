@@ -219,8 +219,9 @@ class OncekiSiparislerVC: UIViewController, UITableViewDelegate, UITableViewData
             self.allOdendıSiparisSayiArray.append(counter)
             dismissKeyboard()
         }
-        print("siparisArray",self.allOdendiSiparisArray)
-        print("sayıArray", self.allOdendıSiparisSayiArray)
+//        print("siparisArray",self.allOdendiSiparisArray)
+//        print("sayıArray", self.allOdendıSiparisSayiArray)
+        previousOrderInfoTable.reloadData()
     }
     
     func getFoodInfo(){
@@ -400,7 +401,27 @@ class OncekiSiparislerVC: UIViewController, UITableViewDelegate, UITableViewData
         }
         }
     }
- 
+    
+    // Buttonlara basıldığında index değiştirip table a yaz
+    var indexOfButtons = 2
+    
+    @IBAction func ciroButtonClicked(_ sender: Any) {
+        
+        indexOfButtons = 0
+        getPaidFoodStock()
+        previousOrderInfoTable.reloadData()
+    }
+    
+    @IBAction func toplamSatılanClicked(_ sender: Any) {
+        activityIndicator.startAnimating()
+        UIApplication.shared.beginIgnoringInteractionEvents()
+        
+        indexOfButtons = 1
+        previousOrderInfoTable.reloadData()
+        
+        activityIndicator.stopAnimating()
+        UIApplication.shared.endIgnoringInteractionEvents()
+    }
     
     
     func numberOfComponents(in pickerView: UIPickerView) -> Int {
@@ -420,6 +441,7 @@ class OncekiSiparislerVC: UIViewController, UITableViewDelegate, UITableViewData
     }
   
     
+    
    
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
       
@@ -431,15 +453,52 @@ class OncekiSiparislerVC: UIViewController, UITableViewDelegate, UITableViewData
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        if indexOfButtons == 1 {
+            return foodNamesArray.count
+        }
         return dateArray.count
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
         let cell = tableView.dequeueReusableCell(withIdentifier: "DateTimeCell", for: indexPath) as! DateTimeCell
-        
-   if indexPath.row < dateArray.count && indexPath.row < timeArray.count {
+            // Stok durumu için tableView ayarla
+        if indexOfButtons == 1 {
+            if selectedMounth.text != "" {
+                for lab in cell.labelsToHide {
+                    lab.isHidden = true
+            }
+            cell.totalPriceLabel.text = foodNamesArray[indexPath.row]
+            var sayiArray = [String] ()
+                sayiArray.removeAll()
+            for i in allOdendıSiparisSayiArray {
+                sayiArray.append(String(i))
+            }
+                print("--------foodArray",self.foodNamesArray)
+                print("--------sayıArray",sayiArray)
+                if !sayiArray.isEmpty {
+                    cell.sumPriceLabel.text = sayiArray[indexPath.row]
+                }
+                cell.sumPriceLabel.isHidden = false
+                cell.isUserInteractionEnabled = false
+            return cell
+            } else {
+                for lab in cell.labelsToHide {
+                    lab.isHidden = true
+                }
+                cell.sumPriceLabel.isHidden = true
+                cell.totalPriceLabel.text = "Ay seçiniz"
+            }
+        }
+        // Ciro için tableView ayarla
+        if indexPath.row < dateArray.count && indexPath.row < timeArray.count {
     
+            for lab in cell.labelsToHide {
+                lab.isHidden = false
+            }
+    
+            cell.totalPriceLabel.text = "Toplam fiyat"
+            cell.isUserInteractionEnabled = true
             cell.dateLabel.text = dateArray[indexPath.row]
             cell.timeLabel.text = timeArray[indexPath.row]
             cell.sumPriceLabel.text = totalPriceArray[indexPath.row]
@@ -450,6 +509,9 @@ class OncekiSiparislerVC: UIViewController, UITableViewDelegate, UITableViewData
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        if indexOfButtons == 1 {
+            return 40
+        }
         return 100
     }
     
