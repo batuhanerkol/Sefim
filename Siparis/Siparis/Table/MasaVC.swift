@@ -50,12 +50,15 @@ class MasaVC: UIViewController {
     
     var mevcutMasaSayisi = 0
     
+    var siraIndex = 0
+    
    
     var activityIndicator:UIActivityIndicatorView = UIActivityIndicatorView()
 
     
     var tableBottomBackgroundColor = UIColor.gray
     var tableButtonBackgroundColorChange = [UIButton]()
+    var siraLabelBackgroundColorChange = [UILabel]()
     
   public var screenWidth: CGFloat {
         return UIScreen.main.bounds.width
@@ -88,7 +91,7 @@ class MasaVC: UIViewController {
     }
     override func viewWillAppear(_ animated: Bool) {
         
-        button.backgroundColor = .gray
+        tableButton.backgroundColor = .gray
         
          updateUserInterface()
 
@@ -218,40 +221,50 @@ class MasaVC: UIViewController {
 //                print("hesapmasaArray,", self.hesapMasaSAyisiArray)
 
                 // BUARADA MASALARIN DURUMUANA GÖRE "YEMEK HAZIR VB"  RENK DEĞİŞİMLERİNİ GERÇEKLEŞTİRİLİYOR
-                
+        
                 if  self.tableButtonBackgroundColorChange.count > 0  && self.hesapMasaSAyisiArray.isEmpty == false{
          
                     while hesapMasaSayisiIndex < self.hesapMasaSAyisiArray.count {
+                        
+                       
                        
                     let tableButtonIndex = Int(self.hesapMasaSAyisiArray[hesapMasaSayisiIndex])! - 1  // işlem yapılan bütün masaların renk değişimleri gerçekleşsin
     
                 if self.siparisVerildiArray[hesapMasaSayisiIndex] == "Evet" && self.yemekHazirArray[hesapMasaSayisiIndex] == "" && self.yemekTeslimArray[hesapMasaSayisiIndex] == "" && self.hesapIstendiArray[hesapMasaSayisiIndex] == "" && self.hesapOdendiArray[hesapMasaSayisiIndex] == "" {
                     
                     self.tableButtonBackgroundColorChange[tableButtonIndex].backgroundColor = UIColor.orange
+                    self.siraLabelBackgroundColorChange[tableButtonIndex].backgroundColor = UIColor.orange
+                  
+                    self.siraIndex += 1
+                    print("siraIndex:", self.siraIndex)
                     
+                     self.siraLabel.text = "Sıra:\(self.siraIndex)"
                 }
                 else  if self.siparisVerildiArray[hesapMasaSayisiIndex] == "Evet" && self.yemekHazirArray[hesapMasaSayisiIndex] == "Evet" && self.yemekTeslimArray[hesapMasaSayisiIndex] == ""  && self.hesapIstendiArray[hesapMasaSayisiIndex] == "" && self.hesapOdendiArray[hesapMasaSayisiIndex] == ""{
                     
                     self.tableButtonBackgroundColorChange[tableButtonIndex].backgroundColor = UIColor.blue
+                    self.siraLabelBackgroundColorChange[tableButtonIndex].backgroundColor = UIColor.blue
                 
                     }
                 else  if self.siparisVerildiArray[hesapMasaSayisiIndex] == "Evet" && self.yemekHazirArray[hesapMasaSayisiIndex] == "Evet" && self.yemekTeslimArray[hesapMasaSayisiIndex] == "Evet"  && self.hesapIstendiArray[hesapMasaSayisiIndex] == "" && self.hesapOdendiArray[hesapMasaSayisiIndex] == ""{
                     
                     self.tableButtonBackgroundColorChange[tableButtonIndex].backgroundColor = UIColor.green
+                    self.siraLabelBackgroundColorChange[tableButtonIndex].backgroundColor = UIColor.green
                  
                     }
                 else  if self.siparisVerildiArray[hesapMasaSayisiIndex] == "Evet" && self.yemekHazirArray[hesapMasaSayisiIndex] == "Evet" && self.yemekTeslimArray[hesapMasaSayisiIndex] == "Evet"  && self.hesapIstendiArray[hesapMasaSayisiIndex] != "" && self.hesapOdendiArray[hesapMasaSayisiIndex] == ""{
                     
                     self.tableButtonBackgroundColorChange[tableButtonIndex].backgroundColor = UIColor.red
+                    self.siraLabelBackgroundColorChange[tableButtonIndex].backgroundColor = UIColor.red
               
                     }
                 else  if self.siparisVerildiArray[hesapMasaSayisiIndex] == "Evet" && self.yemekHazirArray[hesapMasaSayisiIndex] == "Evet" && self.yemekTeslimArray[hesapMasaSayisiIndex] == "Evet"  && self.hesapIstendiArray[hesapMasaSayisiIndex] != "" && self.hesapOdendiArray[hesapMasaSayisiIndex] != ""{
                     
                      self.tableButtonBackgroundColorChange[tableButtonIndex].backgroundColor = UIColor.gray
+                    self.siraLabelBackgroundColorChange[tableButtonIndex].backgroundColor = UIColor.gray
                     
                         }
                 
-                   
                         hesapMasaSayisiIndex += 1
                 }
                     
@@ -262,6 +275,7 @@ class MasaVC: UIViewController {
                 self.activityIndicator.stopAnimating()
                 UIApplication.shared.endIgnoringInteractionEvents()
                 
+                   self.siraIndex = 0
             }
             
         }
@@ -293,7 +307,8 @@ class MasaVC: UIViewController {
                     
                 }
                 while self.tableNumber < self.mevcutMasaSayisi {
-                    self.createBtn()
+                    self.createTableButton()
+                    self.createSiraLabel()
                     self.tableNumber = self.tableNumber + 1
                     
                     if CGFloat(self.xLocation) < self.screenWidth - CGFloat(self.buttonWidth * 2) {
@@ -301,7 +316,7 @@ class MasaVC: UIViewController {
                     }
                     else if CGFloat(self.xLocation) >= self.screenWidth - CGFloat(self.buttonWidth * 2)  {
                         self.xLocation = 10
-                        self.yLocation = self.yLocation + self.buttonWidth + self.spacer
+                        self.yLocation = self.yLocation + self.buttonWidth + self.spacer + 10
                     }
                     
                 }
@@ -310,19 +325,34 @@ class MasaVC: UIViewController {
        
     }
 
-    // Button = Masalar
-    var button = UIButton()
-    func createBtn(){
-        button = UIButton()
+    //   Masalar
+    var tableButton = UIButton()
+    func createTableButton(){
+        tableButton = UIButton()
 
-        button.frame = CGRect(x:   xLocation, y:   yLocation, width: buttonWidth, height: buttonHeight)
-        button.backgroundColor = tableBottomBackgroundColor
-        button.setTitle("\(tableNumber + 1)", for: .normal)
-        button.addTarget(self, action: #selector(buttonAction), for: .touchUpInside)
+        tableButton.frame = CGRect(x:   xLocation, y:   yLocation, width: buttonWidth, height: buttonHeight)
+        tableButton.backgroundColor = tableBottomBackgroundColor
+        tableButton.setTitle("\(tableNumber + 1)", for: .normal)
+        tableButton.addTarget(self, action: #selector(buttonAction), for: .touchUpInside)
         
-        tableButtonBackgroundColorChange.append(button)
+        tableButtonBackgroundColorChange.append(tableButton)
         
-        self.view.addSubview(button)
+        self.view.addSubview(tableButton)
+    }
+    
+    //   SıraNo:
+    var siraLabel = UILabel()
+    func createSiraLabel(){
+        siraLabel = UILabel()
+        
+        siraLabel.frame = CGRect(x:   xLocation, y:   yLocation - (buttonHeight / 3), width: buttonWidth, height: buttonHeight / 3)
+        siraLabel.backgroundColor = tableBottomBackgroundColor
+        siraLabel.textColor = .white
+        siraLabel.text = "Sıra:..."
+        siraLabel.font = siraLabel.font.withSize(9)
+        siraLabelBackgroundColorChange.append(siraLabel)
+        
+        self.view.addSubview(siraLabel)
     }
 
     
@@ -359,7 +389,8 @@ class MasaVC: UIViewController {
               
             while tableNumber < textfieldInt! {
                 
-                 createBtn()
+                 createTableButton()
+                createSiraLabel()
                  tableNumber = tableNumber + 1
                 
                 if CGFloat(xLocation) < screenWidth - CGFloat(buttonWidth * 2) {

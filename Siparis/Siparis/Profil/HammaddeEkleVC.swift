@@ -25,6 +25,12 @@ class HammaddeEkleVC: UIViewController  {
         NotificationCenter.default.addObserver(self, selector: #selector(statusManager), name: .flagsChanged, object: Network.reachability)
         updateUserInterface()
         
+        // loading sembolu
+        activityIndicator.center = self.view.center
+        activityIndicator.hidesWhenStopped = true
+        activityIndicator.activityIndicatorViewStyle = UIActivityIndicatorView.Style.gray
+        view.addSubview(activityIndicator)
+        
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -51,22 +57,12 @@ class HammaddeEkleVC: UIViewController  {
     }
     @IBAction func ekleButtonClicked(_ sender: Any) {
         
-        // loading sembolu
-        activityIndicator.center = self.view.center
-        activityIndicator.hidesWhenStopped = true
-        activityIndicator.activityIndicatorViewStyle = UIActivityIndicatorView.Style.gray
-        view.addSubview(activityIndicator)
-        
         if hammaddeAdiTextField.text != "" && hammaddeMiktariTextField.text != "" && hammaddeKgUcretiTextField.text != "" {
             
             toplamUcret = (Int(hammaddeMiktariTextField.text!)! * Int(hammaddeKgUcretiTextField.text!)!) / 1000
             if toplamUcret != 0 {
             
-            // loading sembolu
-            activityIndicator.center = self.view.center
-            activityIndicator.hidesWhenStopped = true
-            activityIndicator.activityIndicatorViewStyle = UIActivityIndicatorView.Style.gray
-            view.addSubview(activityIndicator)
+           
             
             let hammadde = PFObject(className: "HammaddeBilgileri")
             hammadde["HammaddeSahibi"] = PFUser.current()!.username!
