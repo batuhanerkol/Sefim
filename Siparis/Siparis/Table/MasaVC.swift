@@ -178,7 +178,6 @@ class MasaVC: UIViewController {
     
         let query = PFQuery(className: "VerilenSiparisler")
         query.whereKey("IsletmeSahibi", equalTo: (PFUser.current()?.username)!)
-//        query.whereKey("HesapOdendi", notEqualTo: "Evet")
 
         query.findObjectsInBackground { (objects, error) in
             
@@ -204,12 +203,6 @@ class MasaVC: UIViewController {
                     self.hesapMasaSAyisiArray.append(object.object(forKey: "MasaNo") as! String)
                    self.siparisVerildiArray.append(object.object(forKey: "SiparisVerildi") as! String)
                   self.hesapOdendiArray.append(object.object(forKey: "HesapOdendi") as! String)
-//                    self.yemekHazir = "\(self.yemekHazirArray.last!)"
-//                    self.yemekTeslim = "\(self.yemekTeslimArray.last!)"
-//                    self.hesapIstendi = "\(self.hesapIstendiArray.last!)"
-//                    self.hesapMasaSayisi = "\(self.hesapMasaSAyisiArray.last!)"
-//                    self.siparisVerildi = "\(self.siparisVerildiArray.last!)"
-                    
                 }
 
 //                print("-----------control of buttons----------------")
@@ -234,11 +227,15 @@ class MasaVC: UIViewController {
                     
                     self.tableButtonBackgroundColorChange[tableButtonIndex].backgroundColor = UIColor.orange
                     self.siraLabelBackgroundColorChange[tableButtonIndex].backgroundColor = UIColor.orange
-                  
-                    self.siraIndex += 1
-                    print("siraIndex:", self.siraIndex)
                     
-                     self.siraLabel.text = "Sıra:\(self.siraIndex)"
+                    self.siraIndex += 1
+                    
+                    self.siraLabelBackgroundColorChange[tableButtonIndex].text = "sıra:\(self.siraIndex)"
+                  
+                    
+
+                    self.siraLabel.text = "aaaaaaaa"
+                    print("tableButtonIndex:", tableButtonIndex) // +1 == rengi değişmiş masa
                 }
                 else  if self.siparisVerildiArray[hesapMasaSayisiIndex] == "Evet" && self.yemekHazirArray[hesapMasaSayisiIndex] == "Evet" && self.yemekTeslimArray[hesapMasaSayisiIndex] == ""  && self.hesapIstendiArray[hesapMasaSayisiIndex] == "" && self.hesapOdendiArray[hesapMasaSayisiIndex] == ""{
                     
@@ -262,6 +259,8 @@ class MasaVC: UIViewController {
                     
                      self.tableButtonBackgroundColorChange[tableButtonIndex].backgroundColor = UIColor.gray
                     self.siraLabelBackgroundColorChange[tableButtonIndex].backgroundColor = UIColor.gray
+                    
+                     self.siraLabelBackgroundColorChange[tableButtonIndex].text = "sıra:..."
                     
                         }
                 
