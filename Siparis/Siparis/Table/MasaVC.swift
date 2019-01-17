@@ -234,9 +234,8 @@ class MasaVC: UIViewController {
                     
                     self.tableButtonBackgroundColorChange[tableButtonIndex].backgroundColor = UIColor.orange
                     self.siraLabelBackgroundColorChange[tableButtonIndex].backgroundColor = UIColor.orange
-                  
+                    
                     self.siraIndex += 1
-                    print("siraIndex:", self.siraIndex)
                     
                      self.siraLabel.text = "Sıra:\(self.siraIndex)"
                 }
