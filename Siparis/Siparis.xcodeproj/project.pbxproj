@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		013495FCE6E95FF809EAFECA /* Pods_Siparis.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9134C9FA788C8B1E178C22F6 /* Pods_Siparis.framework */; };
+		094C8F2F21F0AFB8003288CA /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 094C8F2E21F0AFB8003288CA /* Extensions.swift */; };
 		B90CD86B2152BEE90001A0B8 /* AddLocationVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = B90CD86A2152BEE90001A0B8 /* AddLocationVC.swift */; };
 		B917457F21CA7A0900F569D6 /* sefimYazi.png in Resources */ = {isa = PBXBuildFile; fileRef = B917457E21CA7A0900F569D6 /* sefimYazi.png */; };
 		B917458321CB88EE00F569D6 /* ForgotPassword.swift in Sources */ = {isa = PBXBuildFile; fileRef = B917458221CB88EE00F569D6 /* ForgotPassword.swift */; };
@@ -61,6 +62,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		094C8F2E21F0AFB8003288CA /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
 		257F260B6429E26C1436ECBD /* Pods-Siparis.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Siparis.release.xcconfig"; path = "Pods/Target Support Files/Pods-Siparis/Pods-Siparis.release.xcconfig"; sourceTree = "<group>"; };
 		9134C9FA788C8B1E178C22F6 /* Pods_Siparis.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Siparis.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		B90CD86A2152BEE90001A0B8 /* AddLocationVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddLocationVC.swift; sourceTree = "<group>"; };
@@ -260,6 +262,7 @@
 				B9FCE515213D8488006BCB6C /* LaunchScreen.storyboard */,
 				B9FCE518213D8488006BCB6C /* Info.plist */,
 				B9706EAE214FB52100234067 /* Model.xcdatamodeld */,
+				094C8F2E21F0AFB8003288CA /* Extensions.swift */,
 			);
 			path = Siparis;
 			sourceTree = "<group>";
@@ -403,6 +406,7 @@
 				B9FCE525213D90CE006BCB6C /* KareKodVC.swift in Sources */,
 				B98EE45B217B2F2900FA1E09 /* PopUpTVC.swift in Sources */,
 				B90CD86B2152BEE90001A0B8 /* AddLocationVC.swift in Sources */,
+				094C8F2F21F0AFB8003288CA /* Extensions.swift in Sources */,
 				B9706EB0214FB52100234067 /* Model.xcdatamodeld in Sources */,
 				B941D00421C00DA400CF7246 /* OrderCell.swift in Sources */,
 				B9F6ED6621D0281A009066A5 /* HammaddeDetails.swift in Sources */,

@@ -503,7 +503,7 @@ class OncekiSiparislerVC: UIViewController, UITableViewDelegate, UITableViewData
             cell.timeLabel.text = timeArray[indexPath.row]
             cell.sumPriceLabel.text = totalPriceArray[indexPath.row]
             cell.paymentLabel.text = paymentArray[indexPath.row]
- 
+            
         }
           return cell
     }
