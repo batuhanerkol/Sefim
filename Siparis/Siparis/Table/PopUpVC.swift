@@ -471,6 +471,7 @@ class PopUpVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
         query.whereKey("IsletmeSahibi", equalTo: (PFUser.current()?.username)!)
         query.whereKey("MasaNo", equalTo: globalChosenTableNumberMasaVC)
         query.whereKey("SiparisSahibi", notEqualTo: (PFUser.current()?.username)!)
+        query.whereKey("HesapOdendi", notEqualTo: "Evet")
         
         query.findObjectsInBackground { (objects, error) in
             
