@@ -510,7 +510,7 @@ class OncekiSiparislerVC: UIViewController, UITableViewDelegate, UITableViewData
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         if indexOfButtons == 1 {
-            return 40
+            return 50
         }
         return 100
     }

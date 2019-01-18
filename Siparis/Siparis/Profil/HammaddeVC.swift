@@ -29,7 +29,7 @@ class HammaddeVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
         navigationItem.hidesBackButton = true
         // interenet kontorlü
         NotificationCenter.default.addObserver(self, selector: #selector(statusManager), name: .flagsChanged, object: Network.reachability)
-        updateUserInterface()
+        //updateUserInterface()
         
         // loading sembolu
         activityIndicator.center = self.view.center
@@ -40,8 +40,12 @@ class HammaddeVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
         activityIndicator.startAnimating()
         UIApplication.shared.beginIgnoringInteractionEvents()
     }
+    
     override func viewWillAppear(_ animated: Bool) {
           updateUserInterface()
+    }
+    @objc func dismissKeyboard(){
+        view.endEditing(true)
     }
     // ık sonrası yapılacaklar
     func updateUserInterface() {
@@ -67,21 +71,27 @@ class HammaddeVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
             }
         }
     }
+    
     @objc func statusManager(_ notification: Notification) {
         updateUserInterface()
     }
     
     func getHammaddeInfo(){
+        // Remove arrays
+        hammaddeAdiArray.removeAll(keepingCapacity: false)
+        hammaddeKalanMiktarArray.removeAll(keepingCapacity: false)
+        allHammaddeBigArray.removeAll(keepingCapacity: false)
+        allHammaddeArray.removeAll(keepingCapacity: false)
+        allHammaddeMiktarBigArray.removeAll(keepingCapacity: false)
+        allHammaddeMiktarBigArray.removeAll(keepingCapacity: false)
+        harcananHammaddeMiktarıArray.removeAll(keepingCapacity: false)
+        // Start Query
         let query = PFQuery(className: "HammaddeBilgileri")
         query.whereKey("HammaddeSahibi", equalTo: "\(PFUser.current()!.username!)")
         query.findObjectsInBackground { (objects, error) in
             
             if error != nil{
-                let alert = UIAlertController(title: "HATA", message: error?.localizedDescription, preferredStyle: UIAlertControllerStyle.alert)
-                let okButton = UIAlertAction(title: "TAMAM", style: UIAlertActionStyle.cancel, handler: nil)
-                alert.addAction(okButton)
-                self.present(alert, animated: true, completion: nil)
-                
+                self.alertMessage(title: "HATA", message: (error?.localizedDescription)!)
                 self.activityIndicator.stopAnimating()
                 UIApplication.shared.endIgnoringInteractionEvents()
             }
@@ -95,9 +105,106 @@ class HammaddeVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
                 self.activityIndicator.stopAnimating()
                 UIApplication.shared.endIgnoringInteractionEvents()
                 
-                self.hammaddeTableView.reloadData()
+               // self.hammaddeTableView.reloadData()
+                
+                print("---Fonksiyon çağırıldı(getHarcanan)")
+                self.getHarcananHammadde()
+            }
+            
+        }
+        
+    }
+    
+  
+    
+    // [[String]] --> [String]
+    func turnBigToSingleArray(){
+        for tekArray in self.allHammaddeBigArray {
+            for tekUrun in tekArray  {
+                self.allHammaddeArray.append(tekUrun)
             }
         }
+        for tekArray in self.allHammaddeMiktarBigArray {
+            for tekUrun in tekArray  {
+                self.allHammaddeMiktarArray.append(tekUrun)
+            }
+        }
+    }
+    
+    // Tüm hammadde ve sayıları arrayleri
+    var allHammaddeBigArray = [[String]]()
+    var allHammaddeArray = [String]()
+    var allHammaddeMiktarBigArray = [[String]]()
+    var allHammaddeMiktarArray = [String]()
+    var harcananHammaddeMiktarıArray = [Double]()
+    
+    func getHarcananHammadde(){
+        allHammaddeBigArray.removeAll(keepingCapacity: false)
+        allHammaddeArray.removeAll(keepingCapacity: false)
+        allHammaddeMiktarBigArray.removeAll(keepingCapacity: false)
+        allHammaddeMiktarBigArray.removeAll(keepingCapacity: false)
+        harcananHammaddeMiktarıArray.removeAll(keepingCapacity: false)
+        let query = PFQuery(className:  "FoodInformation")
+        query.whereKey("HesapOnaylandi", equalTo: "Evet")
+        query.whereKey("foodNameOwner", equalTo: (PFUser.current()?.username)!)
+        query.findObjectsInBackground { (objects, error) in
+            if error != nil {
+               self.alertMessage(title: "Hata", message: "Bir hata oluştu")
+            } else {
+                for object in objects! {
+                    if object["Hammadde"] != nil && object["HammaddeMiktarlari"] != nil {
+                        self.allHammaddeBigArray.append(object["Hammadde"] as! [String])
+                        self.allHammaddeMiktarBigArray.append(object["HammaddeMiktarlari"] as! [String])
+                    }
+                }
+                self.turnBigToSingleArray()
+                var counter: Double = 0
+                var intHamMiktarArray = [Double]()
+                
+                // miktarı int arraye çeviriyor
+                for hm in self.allHammaddeMiktarArray {
+                    if let a = Double(hm) {
+                        intHamMiktarArray.append(a)
+                    }
+                }
+                for _ in (self.hammaddeAdiArray.indices){
+                    self.harcananHammaddeMiktarıArray.append(0)
+                }
+                ///////////////////////////////////////////////////
+                // Hammaddelerle miktarlarını eşitliyor
+                for hamIndex in self.hammaddeAdiArray.indices {
+                    counter = 0
+                    for i in self.allHammaddeArray.indices {
+                        if self.hammaddeAdiArray[hamIndex] == self.allHammaddeArray[i] {
+                            counter = intHamMiktarArray[i]
+                            self.harcananHammaddeMiktarıArray[hamIndex] += counter
+                        }
+                    }
+                }
+                print("----HAMMADDE ADI =",self.hammaddeAdiArray)
+                print("----HAMMADDE MİKTARI =",self.harcananHammaddeMiktarıArray)
+                self.calculateKalanHammadde()
+            }
+    }
+    }
+    
+    func calculateKalanHammadde(){
+        print("İşlem tamam")
+        var maddeMiktarıDoubleArray = [Double]()
+        maddeMiktarıDoubleArray.removeAll(keepingCapacity: false)
+        for mad in self.hammaddeKalanMiktarArray {
+            let a = Double(mad)
+            maddeMiktarıDoubleArray.append(a!)
+        }
+        for i in harcananHammaddeMiktarıArray.indices {
+            harcananHammaddeMiktarıArray[i] = harcananHammaddeMiktarıArray[i] / 1000
+        }
+        // Substract arrays
+        for i in hammaddeKalanMiktarArray.indices {
+            let total = String(maddeMiktarıDoubleArray[i] - harcananHammaddeMiktarıArray[i])
+            hammaddeKalanMiktarArray[i] = total
+        }
+        self.hammaddeTableView.reloadData()
     }
 
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
