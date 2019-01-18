@@ -34,6 +34,7 @@
 		B9A741C921BB2000001130D1 /* QRIcınDokun.png in Resources */ = {isa = PBXBuildFile; fileRef = B9A741C821BB2000001130D1 /* QRIcınDokun.png */; };
 		B9A741CE21BB214B001130D1 /* LogoSec.png in Resources */ = {isa = PBXBuildFile; fileRef = B9A741CD21BB214A001130D1 /* LogoSec.png */; };
 		B9BD4AA721E0B97D00BFFDDD /* fotosecin.png in Resources */ = {isa = PBXBuildFile; fileRef = B9BD4AA621E0B97D00BFFDDD /* fotosecin.png */; };
+		B9D260A021F1C0DE00B27FE6 /* TotalHammaddeVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9D2609F21F1C0DE00B27FE6 /* TotalHammaddeVC.swift */; };
 		B9E68670216E63F400EF4C65 /* ChangePasswordVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9E6866F216E63F400EF4C65 /* ChangePasswordVC.swift */; };
 		B9F337BC21E3963600B64378 /* qr1.png in Resources */ = {isa = PBXBuildFile; fileRef = B9F337B721E3963500B64378 /* qr1.png */; };
 		B9F337BD21E3963600B64378 /* table.png in Resources */ = {isa = PBXBuildFile; fileRef = B9F337B821E3963600B64378 /* table.png */; };
@@ -90,6 +91,7 @@
 		B9A741C821BB2000001130D1 /* QRIcınDokun.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "QRIcınDokun.png"; sourceTree = "<group>"; };
 		B9A741CD21BB214A001130D1 /* LogoSec.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = LogoSec.png; sourceTree = "<group>"; };
 		B9BD4AA621E0B97D00BFFDDD /* fotosecin.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = fotosecin.png; sourceTree = "<group>"; };
+		B9D2609F21F1C0DE00B27FE6 /* TotalHammaddeVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TotalHammaddeVC.swift; sourceTree = "<group>"; };
 		B9E6866F216E63F400EF4C65 /* ChangePasswordVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChangePasswordVC.swift; sourceTree = "<group>"; };
 		B9F337B721E3963500B64378 /* qr1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = qr1.png; sourceTree = "<group>"; };
 		B9F337B821E3963600B64378 /* table.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = table.png; sourceTree = "<group>"; };
@@ -216,6 +218,7 @@
 				B9F6ED5F21D01675009066A5 /* HammaddeVC.swift */,
 				B9F6ED6121D017B9009066A5 /* HammaddeEkleVC.swift */,
 				B9F6ED6521D0281A009066A5 /* HammaddeDetails.swift */,
+				B9D2609F21F1C0DE00B27FE6 /* TotalHammaddeVC.swift */,
 				B9FF8BE221EE6FD20088EA23 /* UygulamaHakkindaVC.swift */,
 				B9F6ED6321D0256D009066A5 /* HammaddeCell.swift */,
 				B93CBAA221A85B46000FEC3F /* DateTimeCell.swift */,
@@ -416,6 +419,7 @@
 				B9960FD321ABFF0200C26569 /* FoodPriceCell.swift in Sources */,
 				B9960FD121ABFE9500C26569 /* PreviousOrdersInformationVC.swift in Sources */,
 				B98EE459217B2E9400FA1E09 /* PopUpVC.swift in Sources */,
+				B9D260A021F1C0DE00B27FE6 /* TotalHammaddeVC.swift in Sources */,
 				B941D00621C03FDE00CF7246 /* PaymentVC.swift in Sources */,
 				B9F529D02144364F00BD45A6 /* FoodDetailsTVC.swift in Sources */,
 				B941CFFE21BFBA9300CF7246 /* ManuelEkleVC.swift in Sources */,
