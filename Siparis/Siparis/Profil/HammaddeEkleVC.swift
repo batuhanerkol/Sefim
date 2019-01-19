@@ -16,7 +16,7 @@ class HammaddeEkleVC: UIViewController  {
     @IBOutlet weak var hammaddeAdiTextField: UITextField!
     
     var businessName = ""
-    var toplamUcret = 0
+    var toplamUcret: Double = 0
     var activityIndicator:UIActivityIndicatorView = UIActivityIndicatorView()
     
     override func viewDidLoad() {
@@ -59,10 +59,8 @@ class HammaddeEkleVC: UIViewController  {
         
         if hammaddeAdiTextField.text != "" && hammaddeMiktariTextField.text != "" && hammaddeKgUcretiTextField.text != "" {
             
-            toplamUcret = (Int(hammaddeMiktariTextField.text!)! * Int(hammaddeKgUcretiTextField.text!)!) / 1000
+            toplamUcret = Double((Double(hammaddeMiktariTextField.text!)! * Double(hammaddeKgUcretiTextField.text!)!) / 1000)
             if toplamUcret != 0 {
-            
-           
             
             let hammadde = PFObject(className: "HammaddeBilgileri")
             hammadde["HammaddeSahibi"] = PFUser.current()!.username!
