@@ -152,10 +152,14 @@ class OncekiSiparislerVC: UIViewController, UITableViewDelegate, UITableViewData
         
     }
     
+    var hammaddeAdlari = [[String]]()
+    var hammaddeMiktarlari = [[String]]()
     
     var foodNamesArray = [String]()
     func getFoodNames(){
         foodNamesArray.removeAll()
+        hammaddeAdlari.removeAll(keepingCapacity: false)
+        hammaddeMiktarlari.removeAll(keepingCapacity: false)
         let query = PFQuery(className: "FoodInformation")
         query.whereKey("foodNameOwner", equalTo: (PFUser.current()?.username)!)
         query.whereKey("HesapOnaylandi", equalTo: "Evet")
@@ -166,8 +170,12 @@ class OncekiSiparislerVC: UIViewController, UITableViewDelegate, UITableViewData
                 
                 for object in objects! {
                     self.foodNamesArray.append(object.object(forKey: "foodName") as! String)
+                    self.hammaddeAdlari.append(object.object(forKey: "Hammadde") as! [String])
+                    self.hammaddeMiktarlari.append(object.object(forKey: "HammaddeMiktarlari") as! [String])
                 }
-                print("self.foodNamesArray", self.foodNamesArray)
+                print("======Yemek",self.foodNamesArray)
+                print("======Hammadde",self.hammaddeAdlari)
+                print("======Miktarları",self.hammaddeMiktarlari)
             }
         }
         
@@ -443,26 +451,51 @@ class OncekiSiparislerVC: UIViewController, UITableViewDelegate, UITableViewData
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "toTotalHammadde" {
             if let destination = segue.destination as? TotalHammaddeVC {
+                destination.selectedHammadde = selectedHammadde
+                destination.selectedHammaddeMiktar = selectedHAmmaddeMiktarı
                 
+                print("-----selectedHammakdemiktarı", self.selectedHAmmaddeMiktarı)
             }
         }
     }
     
     var selectedUrunAdi = ""
-    var selectedHammadde = ""
-    var selectedHAmmaddeMiktarı = ""
+    var selectedHammadde = [String]()
+    var selectedHAmmaddeMiktarı = [String]()
+    var intMiktar = [Int]()
    
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-      
+        intMiktar.removeAll(keepingCapacity: false)
+        selectedHAmmaddeMiktarı.removeAll(keepingCapacity: false)
+        
         globalDateOncekiSparisler = dateArray[indexPath.row]
         globalTimeOncekiSiparisler = timeArray[indexPath.row]
         globaTotalPriceOncekiSiparisler = totalPriceArray[indexPath.row]
         if indexOfButtons == 1 {
             selectedUrunAdi = foodNamesArray[indexPath.row]
+            for i in foodNamesArray.indices {
+                if foodNamesArray[i] == foodNamesArray[indexPath.row] {
+                    selectedHammadde = hammaddeAdlari[i]
+                    selectedHAmmaddeMiktarı = hammaddeMiktarlari[i]
+                }
+            }
+            
+            for stringMiktar in selectedHAmmaddeMiktarı {
+                intMiktar.append(Int(stringMiktar)!)
+            }
+            
+            for i in intMiktar.indices {
+                intMiktar[i] = intMiktar[i] * allOdendıSiparisSayiArray[indexPath.row]
+            }
+            for i in intMiktar.indices {
+                selectedHAmmaddeMiktarı[i] = String(intMiktar[i])
+            }
             
             performSegue(withIdentifier: "toTotalHammadde", sender: nil)
         }
-        performSegue(withIdentifier: "foodDetails", sender: nil)
+        if indexOfButtons == 0 {
+            performSegue(withIdentifier: "foodDetails", sender: nil)
+        }
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {

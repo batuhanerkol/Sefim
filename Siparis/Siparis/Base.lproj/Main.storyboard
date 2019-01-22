@@ -3082,15 +3082,66 @@ Türk Ceza Kanunu’nun 138. maddesinde ve Kanunu’nun 7. maddesinde düzenlend
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="bN6-hb-fSG">
+                                <rect key="frame" x="30" y="188" width="964" height="460"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <view key="tableFooterView" contentMode="scaleToFill" id="SiG-6a-nYI">
+                                    <rect key="frame" x="0.0" y="72" width="964" height="44"/>
+                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                    <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                </view>
+                                <prototypes>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="totalcellidentifier" id="VaB-Jb-fxR" customClass="TotalHammaddeCell" customModule="Siparis" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="28" width="964" height="44"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="VaB-Jb-fxR" id="E6c-hQ-aob">
+                                            <rect key="frame" x="0.0" y="0.0" width="964" height="43.5"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="eGw-zH-ZYy">
+                                                    <rect key="frame" x="258" y="0.0" width="42" height="43.5"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <nil key="textColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="5I1-Kl-L3l">
+                                                    <rect key="frame" x="10" y="0.0" width="168" height="43.5"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="width" constant="168" id="5Fe-qh-3HV"/>
+                                                    </constraints>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <nil key="textColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstAttribute="bottom" secondItem="5I1-Kl-L3l" secondAttribute="bottom" id="0Dc-JP-VF3"/>
+                                                <constraint firstItem="5I1-Kl-L3l" firstAttribute="leading" secondItem="E6c-hQ-aob" secondAttribute="leading" constant="10" id="9iQ-7g-UVS"/>
+                                                <constraint firstAttribute="bottom" secondItem="eGw-zH-ZYy" secondAttribute="bottom" id="H18-8s-tU0"/>
+                                                <constraint firstItem="5I1-Kl-L3l" firstAttribute="top" secondItem="E6c-hQ-aob" secondAttribute="top" id="JiZ-uz-Xqv"/>
+                                                <constraint firstItem="eGw-zH-ZYy" firstAttribute="top" secondItem="E6c-hQ-aob" secondAttribute="top" id="gKC-ix-TKQ"/>
+                                                <constraint firstItem="eGw-zH-ZYy" firstAttribute="leading" secondItem="5I1-Kl-L3l" secondAttribute="trailing" constant="80" id="tlL-x9-1PT"/>
+                                            </constraints>
+                                        </tableViewCellContentView>
+                                        <connections>
+                                            <outlet property="hammaddeAdiLabel" destination="5I1-Kl-L3l" id="ICY-4u-foy"/>
+                                            <outlet property="hammaddeMiktarıLabel" destination="eGw-zH-ZYy" id="C1K-E9-Ljx"/>
+                                        </connections>
+                                    </tableViewCell>
+                                </prototypes>
+                            </tableView>
                         </subviews>
                         <color key="backgroundColor" red="0.92143100499999997" green="0.92145264149999995" blue="0.92144101860000005" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
                             <constraint firstItem="6uf-HZ-bcR" firstAttribute="firstBaseline" secondItem="ZeA-wH-o2c" secondAttribute="firstBaseline" id="7VJ-yw-7Hp"/>
                             <constraint firstItem="6uf-HZ-bcR" firstAttribute="top" secondItem="6yO-sv-0qk" secondAttribute="bottom" constant="8" symbolic="YES" id="7f5-lf-50N"/>
+                            <constraint firstItem="bN6-hb-fSG" firstAttribute="top" secondItem="6uf-HZ-bcR" secondAttribute="bottom" constant="10" id="E1H-YG-mWb"/>
                             <constraint firstItem="6yO-sv-0qk" firstAttribute="top" secondItem="Ik4-kF-6kF" secondAttribute="top" constant="20" symbolic="YES" id="Fdp-NZ-peG"/>
                             <constraint firstItem="o6f-KB-wMq" firstAttribute="bottom" secondItem="6uf-HZ-bcR" secondAttribute="bottom" constant="470" id="H5m-zG-mC9"/>
                             <constraint firstItem="6uf-HZ-bcR" firstAttribute="height" secondItem="6yO-sv-0qk" secondAttribute="height" id="Jft-aK-gCt"/>
                             <constraint firstItem="6yO-sv-0qk" firstAttribute="leading" secondItem="6uf-HZ-bcR" secondAttribute="leading" id="KJs-7S-Cqa"/>
+                            <constraint firstItem="o6f-KB-wMq" firstAttribute="bottom" secondItem="bN6-hb-fSG" secondAttribute="bottom" id="UsO-bt-Md6"/>
+                            <constraint firstItem="o6f-KB-wMq" firstAttribute="trailing" secondItem="bN6-hb-fSG" secondAttribute="trailing" constant="30" id="VUO-Fx-WIz"/>
                             <constraint firstItem="ZeA-wH-o2c" firstAttribute="width" secondItem="6uf-HZ-bcR" secondAttribute="width" id="Vc0-h2-BFA"/>
                             <constraint firstItem="6uf-HZ-bcR" firstAttribute="baseline" secondItem="ZeA-wH-o2c" secondAttribute="baseline" id="XAM-J8-Gg9"/>
                             <constraint firstItem="ZeA-wH-o2c" firstAttribute="height" secondItem="6yO-sv-0qk" secondAttribute="height" id="Zrv-a6-RZG"/>
@@ -3098,18 +3149,20 @@ Türk Ceza Kanunu’nun 138. maddesinde ve Kanunu’nun 7. maddesinde düzenlend
                             <constraint firstItem="ZeA-wH-o2c" firstAttribute="leading" secondItem="6uf-HZ-bcR" secondAttribute="trailing" constant="4" id="f1R-0s-qLO"/>
                             <constraint firstItem="6yO-sv-0qk" firstAttribute="trailing" secondItem="ZeA-wH-o2c" secondAttribute="trailing" id="n2h-7C-sue"/>
                             <constraint firstItem="6yO-sv-0qk" firstAttribute="leading" secondItem="Ik4-kF-6kF" secondAttribute="leadingMargin" id="w9t-Lh-XTO"/>
+                            <constraint firstItem="bN6-hb-fSG" firstAttribute="leading" secondItem="o6f-KB-wMq" secondAttribute="leading" constant="30" id="xDd-Fz-zrE"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="o6f-KB-wMq"/>
                     </view>
                     <connections>
                         <outlet property="hammaddeAdiLabel" destination="6uf-HZ-bcR" id="JSf-cZ-BKg"/>
                         <outlet property="secilenUrunAdi" destination="6yO-sv-0qk" id="To3-eK-ilk"/>
+                        <outlet property="tableView" destination="bN6-hb-fSG" id="8M8-V2-1bF"/>
                         <outlet property="toplamMiktarLabel" destination="ZeA-wH-o2c" id="BZa-zE-ktm"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="tW8-kf-teB" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="6533" y="2354"/>
+            <point key="canvasLocation" x="6532.6171875" y="2353.90625"/>
         </scene>
         <!--Previous Orders InformationVC-->
         <scene sceneID="5kX-FQ-RlB">
