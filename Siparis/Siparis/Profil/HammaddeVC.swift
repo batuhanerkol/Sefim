@@ -15,6 +15,8 @@ class HammaddeVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
      var activityIndicator:UIActivityIndicatorView = UIActivityIndicatorView()
     
     var hammaddeAdiArray = [String]()
+    var harcananHammadde = [Double]()
+    
     var hammaddeKalanMiktarArray = [String]()
     
     var chosenHammadde = ""
@@ -62,12 +64,15 @@ class HammaddeVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
         case .wifi:
          
             if PFUser.current()?.username != nil{
+                getFoodNames()
                 getHammaddeInfo()
             }
         case .wwan:
     
             if PFUser.current()?.username != nil{
+                getFoodNames()
                 getHammaddeInfo()
+                
             }
         }
     }
@@ -84,7 +89,7 @@ class HammaddeVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
         allHammaddeArray.removeAll(keepingCapacity: false)
         allHammaddeMiktarBigArray.removeAll(keepingCapacity: false)
         allHammaddeMiktarBigArray.removeAll(keepingCapacity: false)
-        harcananHammaddeMiktarıArray.removeAll(keepingCapacity: false)
+        harcananHammadde.removeAll(keepingCapacity: false)
         // Start Query
         let query = PFQuery(className: "HammaddeBilgileri")
         query.whereKey("HammaddeSahibi", equalTo: "\(PFUser.current()!.username!)")
@@ -102,6 +107,11 @@ class HammaddeVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
                     self.hammaddeAdiArray.append(object.object(forKey: "HammaddeAdi") as! String)
                      self.hammaddeKalanMiktarArray.append(object.object(forKey: "HammaddeMiktariGr") as! String)
                 }
+                
+                for _ in self.hammaddeAdiArray {
+                    self.harcananHammadde.append(0)
+                }
+                print("Harcanan hammadde init", self.harcananHammadde)
                 self.activityIndicator.stopAnimating()
                 UIApplication.shared.endIgnoringInteractionEvents()
                 
@@ -114,42 +124,45 @@ class HammaddeVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
         }
         
     }
-    
-  
-    
-    // [[String]] --> [String]
-    func turnBigToSingleArray(){
-        for tekArray in self.allHammaddeBigArray {
-            for tekUrun in tekArray  {
-                self.allHammaddeArray.append(tekUrun)
+    // Yemek isimleri çekiliyor
+    var foodNamesArray = [String]()
+    func getFoodNames(){
+        foodNamesArray.removeAll()
+        let query = PFQuery(className: "FoodInformation")
+        query.whereKey("foodNameOwner", equalTo: (PFUser.current()?.username)!)
+        query.whereKey("HesapOnaylandi", equalTo: "Evet")
+        query.findObjectsInBackground { (objects, error) in
+            if error != nil {
+                
+            } else {
+                
+                for object in objects! {
+                    self.foodNamesArray.append(object.object(forKey: "foodName") as! String)
+                }
             }
         }
-        for tekArray in self.allHammaddeMiktarBigArray {
-            for tekUrun in tekArray  {
-                self.allHammaddeMiktarArray.append(tekUrun)
-            }
-        }
+        
     }
-    
     // Tüm hammadde ve sayıları arrayleri
     var allHammaddeBigArray = [[String]]()
     var allHammaddeArray = [String]()
     var allHammaddeMiktarBigArray = [[String]]()
     var allHammaddeMiktarArray = [String]()
-    var harcananHammaddeMiktarıArray = [Double]()
+    var doubledMiktarAray = [[Double]]()
     
     func getHarcananHammadde(){
         allHammaddeBigArray.removeAll(keepingCapacity: false)
         allHammaddeArray.removeAll(keepingCapacity: false)
         allHammaddeMiktarBigArray.removeAll(keepingCapacity: false)
         allHammaddeMiktarBigArray.removeAll(keepingCapacity: false)
-        harcananHammaddeMiktarıArray.removeAll(keepingCapacity: false)
+        doubledMiktarAray.removeAll(keepingCapacity: false)
+        
         let query = PFQuery(className:  "FoodInformation")
         query.whereKey("HesapOnaylandi", equalTo: "Evet")
         query.whereKey("foodNameOwner", equalTo: (PFUser.current()?.username)!)
         query.findObjectsInBackground { (objects, error) in
             if error != nil {
-               self.alertMessage(title: "Hata", message: "Bir hata oluştu")
+                self.alertMessage(title: "Hata", message: "Bir hata oluştu")
             } else {
                 for object in objects! {
                     if object["Hammadde"] != nil && object["HammaddeMiktarlari"] != nil {
@@ -157,56 +170,125 @@ class HammaddeVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
                         self.allHammaddeMiktarBigArray.append(object["HammaddeMiktarlari"] as! [String])
                     }
                 }
-                self.turnBigToSingleArray()
-                var counter: Double = 0
-                var intHamMiktarArray = [Double]()
-                
                 // miktarı int arraye çeviriyor
-                for hm in self.allHammaddeMiktarArray {
-                    if let a = Double(hm) {
-                        intHamMiktarArray.append(a)
+                
+                for _ in self.allHammaddeMiktarBigArray.indices {
+                    self.doubledMiktarAray.append([])
+                }
+                
+                for i in self.doubledMiktarAray.indices {
+                    for stringedValue in self.allHammaddeMiktarBigArray[i] {
+                        self.doubledMiktarAray[i].append(Double(stringedValue)!)
                     }
                 }
-                for _ in (self.hammaddeAdiArray.indices){
-                    self.harcananHammaddeMiktarıArray.append(0)
+                
+                self.getPaidFoodStock()
+                
+            }
+        }
+    }
+    
+    // Tüm siparişlerdeki yemek adları çekiliyor
+    var odendiSiparisArray = [[String]]()
+    var tumSiparisler = [String]()
+    
+    @objc func getPaidFoodStock() {
+        odendiSiparisArray.removeAll()
+        tumSiparisler.removeAll()
+        let query = PFQuery(className: "VerilenSiparisler")
+        query.whereKey("IsletmeSahibi", equalTo: (PFUser.current()?.username)!)
+        query.whereKey("HesapOdendi", equalTo: "Evet")
+        query.addDescendingOrder("createdAt")
+        query.findObjectsInBackground { (objects, error) in
+            if error != nil {
+                
+            } else {
+                self.tumSiparisler.removeAll()
+                for object in objects! {
+                    self.odendiSiparisArray.append(object["SiparisAdi"] as! [String])
+                    
                 }
-                ///////////////////////////////////////////////////
-                // Hammaddelerle miktarlarını eşitliyor
-                for hamIndex in self.hammaddeAdiArray.indices {
-                    counter = 0
-                    for i in self.allHammaddeArray.indices {
-                        if self.hammaddeAdiArray[hamIndex] == self.allHammaddeArray[i] {
-                            counter = intHamMiktarArray[i]
-                            self.harcananHammaddeMiktarıArray[hamIndex] += counter
+                for tekArray in self.odendiSiparisArray {
+                    for tekUrun in tekArray  {
+                        self.tumSiparisler.append(tekUrun)
+                    }
+                }
+                self.getHarcanan()
+            }
+            
+        }
+        
+    }
+    
+    var newYemekIcerik = [[[String:Double]]]()
+    
+    func getHarcanan() {
+        
+        newYemekIcerik.removeAll(keepingCapacity: false)
+        // -------- initializing the array --------
+        for _ in allHammaddeBigArray {
+            newYemekIcerik.append([["":0]])
+        }
+        
+        for ham in allHammaddeBigArray.indices {
+            if allHammaddeBigArray[ham].count > 1 {
+                for _ in 1...(allHammaddeBigArray[ham].count - 1) {
+                    newYemekIcerik[ham].append(["":0])
+                }
+            }
+        }
+        //--------- end of initialing -------------
+        //-----------------------------------------
+        //--------- filling the newYemekIcerik ---
+        
+        // TODO: REMOVE ALL ARRAYS !!!!!
+        
+        for arrayIndex in allHammaddeBigArray.indices {
+            for i in 0...(allHammaddeBigArray[arrayIndex].count - 1) {
+                newYemekIcerik[arrayIndex][i] = ["\(allHammaddeBigArray[arrayIndex][i])": doubledMiktarAray[arrayIndex][i]]
+            }
+        }
+       
+        
+        for siparis in tumSiparisler {
+            for yemekIndex in foodNamesArray.indices {
+                if siparis == foodNamesArray[yemekIndex] {
+                    for hammaddeIndex in self.hammaddeAdiArray.indices {
+                        for icerik in newYemekIcerik[yemekIndex] {
+                            if icerik[self.hammaddeAdiArray[hammaddeIndex]] != nil {
+                                harcananHammadde[hammaddeIndex] += icerik[self.hammaddeAdiArray[hammaddeIndex]]!
+                            }
                         }
                     }
                 }
-                print("----HAMMADDE ADI =",self.hammaddeAdiArray)
-                print("----HAMMADDE MİKTARI =",self.harcananHammaddeMiktarıArray)
-                self.calculateKalanHammadde()
             }
-    }
+        }
+        
+        print("Hammadde adı", self.hammaddeAdiArray)
+        print("harcanan hammadde ",harcananHammadde)
+        calculateKalanHammadde()
     }
     
     func calculateKalanHammadde(){
         print("İşlem tamam")
+        
         var maddeMiktarıDoubleArray = [Double]()
         maddeMiktarıDoubleArray.removeAll(keepingCapacity: false)
         for mad in self.hammaddeKalanMiktarArray {
             let a = Double(mad)
             maddeMiktarıDoubleArray.append(a!)
         }
-        for i in harcananHammaddeMiktarıArray.indices {
-            harcananHammaddeMiktarıArray[i] = harcananHammaddeMiktarıArray[i] / 1000
+        for i in harcananHammadde.indices {
+            harcananHammadde[i] = harcananHammadde[i] / 1000
         }
         // Substract arrays
         for i in hammaddeKalanMiktarArray.indices {
-            let total = String(maddeMiktarıDoubleArray[i] - harcananHammaddeMiktarıArray[i])
+            let total = String(maddeMiktarıDoubleArray[i] - harcananHammadde[i])
             hammaddeKalanMiktarArray[i] = total
         }
         self.hammaddeTableView.reloadData()
     }
-
+ 
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
       return hammaddeAdiArray.count
     }
@@ -229,7 +311,7 @@ class HammaddeVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
      func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         self.chosenHammadde = hammaddeAdiArray[indexPath.row]
     
-        self.performSegue(withIdentifier: "hammaddeDetails", sender: nil)
+       // self.performSegue(withIdentifier: "hammaddeDetails", sender: nil)
         
     }
     

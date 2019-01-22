@@ -440,15 +440,28 @@ class OncekiSiparislerVC: UIViewController, UITableViewDelegate, UITableViewData
         
     }
   
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "toTotalHammadde" {
+            if let destination = segue.destination as? TotalHammaddeVC {
+                
+            }
+        }
+    }
     
-    
+    var selectedUrunAdi = ""
+    var selectedHammadde = ""
+    var selectedHAmmaddeMiktarı = ""
    
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
       
         globalDateOncekiSparisler = dateArray[indexPath.row]
         globalTimeOncekiSiparisler = timeArray[indexPath.row]
         globaTotalPriceOncekiSiparisler = totalPriceArray[indexPath.row]
-        
+        if indexOfButtons == 1 {
+            selectedUrunAdi = foodNamesArray[indexPath.row]
+            
+            performSegue(withIdentifier: "toTotalHammadde", sender: nil)
+        }
         performSegue(withIdentifier: "foodDetails", sender: nil)
     }
     
@@ -480,7 +493,7 @@ class OncekiSiparislerVC: UIViewController, UITableViewDelegate, UITableViewData
                     cell.sumPriceLabel.text = sayiArray[indexPath.row]
                 }
                 cell.sumPriceLabel.isHidden = false
-                cell.isUserInteractionEnabled = false
+                //cell.isUserInteractionEnabled = false
             return cell
             } else {
                 for lab in cell.labelsToHide {
@@ -510,7 +523,7 @@ class OncekiSiparislerVC: UIViewController, UITableViewDelegate, UITableViewData
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         if indexOfButtons == 1 {
-            return 50
+            return 60
         }
         return 100
     }
