@@ -52,7 +52,7 @@ class OncekiSiparislerVC: UIViewController, UITableViewDelegate, UITableViewData
     
     var chosenMounth: String = ""
     
-    var mounthsArray = ["Oca","Şub","Mar","Nis","May","Haz","Tem","Ağu","Eyl","Eki","Kas","Ara"]
+    var mounthsArray = ["Ay Seçin","Oca","Şub","Mar","Nis","May","Haz","Tem","Ağu","Eyl","Eki","Kas","Ara"]
     
     var totalPrice = 0
     
@@ -104,7 +104,6 @@ class OncekiSiparislerVC: UIViewController, UITableViewDelegate, UITableViewData
             createToolbar()
             getFoodInfo()
             calculateBusinessLikedPoint()
-            
             getFoodNames()
             
         
@@ -113,7 +112,6 @@ class OncekiSiparislerVC: UIViewController, UITableViewDelegate, UITableViewData
             createToolbar()
             getFoodInfo()
             calculateBusinessLikedPoint()
-          
             getFoodNames()
            
         }
@@ -191,6 +189,7 @@ class OncekiSiparislerVC: UIViewController, UITableViewDelegate, UITableViewData
         odendiSiparisArray.removeAll()
         allOdendiSiparisArray.removeAll()
         allOdendıSiparisSayiArray.removeAll()
+    
         let query = PFQuery(className: "VerilenSiparisler")
         query.whereKey("IsletmeSahibi", equalTo: (PFUser.current()?.username)!)
         query.whereKey("HesapOdendi", equalTo: "Evet")
@@ -338,23 +337,23 @@ class OncekiSiparislerVC: UIViewController, UITableViewDelegate, UITableViewData
                     self.servisPuan1Bas = String(format: "%.1f", ceil(self.servicePoint*100)/100)
                      self.lezzetPuan1Bas = String(format: "%.1f", ceil(self.lezzetPoint*100)/100)
                     
-                    print("bütün servis puanlama sayısı:", self.serviceArray.count)
-                    print("bütün lezzet puanlama sayısı:", self.testeArray.count)
-                    print("---------------------------------")
-                    print("SERVIS beg-begme top:", self.totalServis)
-                    print("LEZZET beg-begme top:", self.totalLezzet)
-                     print("---------------------------------")
-                    print("servis beğenme sayısı:", self.servisBegenildiArray.count)
-                    print("servis beğenmeme sayısı:", self.servisBegenilmediArray.count)
-                     print("---------------------------------")
-                    print("lezzet beğenmeme sayısı:", self.lezzetBegenildiArray.count)
-                    print("lezzet beğenmeme sayısı:", self.lezzetBegenilmediArray.count)
-                     print("---------------------------------")
-                    print("servis puanı:", self.servicePoint)
-                    print("testePoint puanı:", self.lezzetPoint)
-                    print("---------------------------------")
-                    print("servis puanı 1 basamak:", self.servisPuan1Bas)
-                    print("testePoint puanı 1 basamak:", self.lezzetPuan1Bas)
+//                    print("bütün servis puanlama sayısı:", self.serviceArray.count)
+//                    print("bütün lezzet puanlama sayısı:", self.testeArray.count)
+//                    print("---------------------------------")
+//                    print("SERVIS beg-begme top:", self.totalServis)
+//                    print("LEZZET beg-begme top:", self.totalLezzet)
+//                     print("---------------------------------")
+//                    print("servis beğenme sayısı:", self.servisBegenildiArray.count)
+//                    print("servis beğenmeme sayısı:", self.servisBegenilmediArray.count)
+//                     print("---------------------------------")
+//                    print("lezzet beğenmeme sayısı:", self.lezzetBegenildiArray.count)
+//                    print("lezzet beğenmeme sayısı:", self.lezzetBegenilmediArray.count)
+//                     print("---------------------------------")
+//                    print("servis puanı:", self.servicePoint)
+//                    print("testePoint puanı:", self.lezzetPoint)
+//                    print("---------------------------------")
+//                    print("servis puanı 1 basamak:", self.servisPuan1Bas)
+//                    print("testePoint puanı 1 basamak:", self.lezzetPuan1Bas)
 
                 }
             }
@@ -453,6 +452,7 @@ class OncekiSiparislerVC: UIViewController, UITableViewDelegate, UITableViewData
             if let destination = segue.destination as? TotalHammaddeVC {
                 destination.selectedHammadde = selectedHammadde
                 destination.selectedHammaddeMiktar = selectedHAmmaddeMiktarı
+                destination.selectedUrunAdi = selectedUrunAdi
                 
                 print("-----selectedHammakdemiktarı", self.selectedHAmmaddeMiktarı)
             }
@@ -471,8 +471,11 @@ class OncekiSiparislerVC: UIViewController, UITableViewDelegate, UITableViewData
         globalDateOncekiSparisler = dateArray[indexPath.row]
         globalTimeOncekiSiparisler = timeArray[indexPath.row]
         globaTotalPriceOncekiSiparisler = totalPriceArray[indexPath.row]
+        
         if indexOfButtons == 1 {
+            
             selectedUrunAdi = foodNamesArray[indexPath.row]
+            
             for i in foodNamesArray.indices {
                 if foodNamesArray[i] == foodNamesArray[indexPath.row] {
                     selectedHammadde = hammaddeAdlari[i]
@@ -508,8 +511,10 @@ class OncekiSiparislerVC: UIViewController, UITableViewDelegate, UITableViewData
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
         let cell = tableView.dequeueReusableCell(withIdentifier: "DateTimeCell", for: indexPath) as! DateTimeCell
+        
             // Stok durumu için tableView ayarla
         if indexOfButtons == 1 {
+            
             if selectedMounth.text != "" {
                 for lab in cell.labelsToHide {
                     lab.isHidden = true
@@ -517,18 +522,22 @@ class OncekiSiparislerVC: UIViewController, UITableViewDelegate, UITableViewData
             cell.totalPriceLabel.text = foodNamesArray[indexPath.row]
             var sayiArray = [String] ()
                 sayiArray.removeAll()
+                
             for i in allOdendıSiparisSayiArray {
                 sayiArray.append(String(i))
             }
                 print("--------foodArray",self.foodNamesArray)
                 print("--------sayıArray",sayiArray)
                 if !sayiArray.isEmpty {
+                    
                     cell.sumPriceLabel.text = sayiArray[indexPath.row]
                 }
                 cell.sumPriceLabel.isHidden = false
-                //cell.isUserInteractionEnabled = false
+               
+                
             return cell
-            } else {
+            }
+            else {
                 for lab in cell.labelsToHide {
                     lab.isHidden = true
                 }
@@ -538,7 +547,7 @@ class OncekiSiparislerVC: UIViewController, UITableViewDelegate, UITableViewData
         }
         // Ciro için tableView ayarla
         if indexPath.row < dateArray.count && indexPath.row < timeArray.count {
-    
+         cell.isUserInteractionEnabled = true
             for lab in cell.labelsToHide {
                 lab.isHidden = false
             }

@@ -216,17 +216,17 @@
 				B93953802168C6AE005A5099 /* BilgilerimVC.swift */,
 				B9E6866F216E63F400EF4C65 /* ChangePasswordVC.swift */,
 				B95E2D7E21A47B75009CCD72 /* OncekiSiparislerVC.swift */,
+				B9D2609F21F1C0DE00B27FE6 /* TotalHammaddeVC.swift */,
 				B9960FD021ABFE9500C26569 /* PreviousOrdersInformationVC.swift */,
 				B9F6ED5F21D01675009066A5 /* HammaddeVC.swift */,
 				B9F6ED6121D017B9009066A5 /* HammaddeEkleVC.swift */,
 				B9F6ED6521D0281A009066A5 /* HammaddeDetails.swift */,
-				B9D2609F21F1C0DE00B27FE6 /* TotalHammaddeVC.swift */,
-				09E5C93621F7721E00A900B2 /* TotalHammaddeCell.swift */,
 				B9FF8BE221EE6FD20088EA23 /* UygulamaHakkindaVC.swift */,
+				B917458421CBB9B300F569D6 /* EkranSifresiVC.swift */,
+				09E5C93621F7721E00A900B2 /* TotalHammaddeCell.swift */,
 				B9F6ED6321D0256D009066A5 /* HammaddeCell.swift */,
 				B93CBAA221A85B46000FEC3F /* DateTimeCell.swift */,
 				B9960FD221ABFF0200C26569 /* FoodPriceCell.swift */,
-				B917458421CBB9B300F569D6 /* EkranSifresiVC.swift */,
 			);
 			path = Profil;
 			sourceTree = "<group>";

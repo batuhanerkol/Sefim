@@ -11,16 +11,10 @@ import Parse
 
 class HammaddeDetails: UIViewController {
     
-    @IBOutlet weak var totalPriceLabel: UILabel!
-    @IBOutlet weak var hammaddeFiyatiTextField: UITextField!
-    @IBOutlet weak var hammaddeMiktariTextFiedl: UITextField!
     @IBOutlet weak var hammaddeAdiTExtField: UITextField!
     var activityIndicator:UIActivityIndicatorView = UIActivityIndicatorView()
     
     var hammaddeAdi = ""
-    var hammaddeMiktari = ""
-    var hammaddeFiyati = ""
-    var toplamFiyat = ""
     var selectedHammadde = ""
     var objectId = ""
 
@@ -118,21 +112,14 @@ class HammaddeDetails: UIViewController {
             }
             else{
                 self.hammaddeAdi = ""
-                self.hammaddeFiyati = ""
-                self.hammaddeMiktari = ""
-                self.toplamFiyat = ""
+        
                 for object in objects! {
                     self.hammaddeAdi = (object.object(forKey: "HammaddeAdi") as! String)
-                     self.hammaddeMiktari = (object.object(forKey: "HammaddeMiktariGr") as! String)
-                     self.hammaddeFiyati = (object.object(forKey: "HammaddeUcreti") as! String)
-                    self.toplamFiyat = (object.object(forKey: "ToplamUcret") as! String)
+
                    
                 }
                 
                 self.hammaddeAdiTExtField.text = self.hammaddeAdi
-                self.hammaddeMiktariTextFiedl.text = self.hammaddeMiktari
-                self.hammaddeFiyatiTextField.text = self.hammaddeFiyati
-                self.totalPriceLabel.text = self.toplamFiyat
     
                 self.activityIndicator.stopAnimating()
                 UIApplication.shared.endIgnoringInteractionEvents()
@@ -155,9 +142,7 @@ class HammaddeDetails: UIViewController {
         
       var toplamUcret = 0
         
-        if hammaddeAdiTExtField.text != "" && hammaddeFiyatiTextField.text != "" && hammaddeMiktariTextFiedl.text != "" {
-            
-            toplamUcret = (Int(self.hammaddeFiyatiTextField.text!)! * Int(hammaddeMiktariTextFiedl.text!)!) / 1000
+        if hammaddeAdiTExtField.text != ""  {
             
         let query = PFQuery(className: "HammaddeBilgileri")
         query.whereKey("HammaddeSahibi", equalTo: "\(PFUser.current()!.username!)")
@@ -173,10 +158,6 @@ class HammaddeDetails: UIViewController {
             }else {
                 
                  objects!["HammaddeAdi"] = self.hammaddeAdiTExtField.text!
-                 objects!["HammaddeMiktariGr"] = self.hammaddeMiktariTextFiedl.text!
-                 objects!["HammaddeUcreti"] = self.hammaddeFiyatiTextField.text!
-                 objects!["ToplamUcret"] = toplamUcret
-                
                 
                 objects!.saveInBackground(block: { (success, error) in
                     if error != nil{

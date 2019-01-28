@@ -16,25 +16,35 @@ class TotalHammaddeVC: UIViewController, UITableViewDelegate, UITableViewDataSou
     
     var selectedHammadde = [String]()
     var selectedHammaddeMiktar = [String]()
+    var selectedUrunAdi = ""
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
         tableView.delegate = self
         tableView.dataSource = self
+        
+        secilenUrunAdi.text = "\(selectedUrunAdi) İçin 1 Ay Boyunca Toplam Harcanan"
     }
-    // bu sayfaya gelmek için identifier = toTotalHammadde
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
        return selectedHammadde.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        
+        
         let cell = tableView.dequeueReusableCell(withIdentifier: "totalcellidentifier", for: indexPath) as! TotalHammaddeCell
+    
             cell.hammaddeAdiLabel.text = selectedHammadde[indexPath.row]
             cell.hammaddeMiktarıLabel.text = selectedHammaddeMiktar[indexPath.row]
+        
+        print("selected hammadde", selectedHammadde)
+        print(" selectedHammaddeMiktar", selectedHammaddeMiktar)
         return cell
     }
-
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return 50
+    }
   
 }

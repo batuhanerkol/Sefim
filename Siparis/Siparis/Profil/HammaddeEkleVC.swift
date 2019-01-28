@@ -11,12 +11,8 @@ import Parse
 
 class HammaddeEkleVC: UIViewController  {
 
-    @IBOutlet weak var hammaddeKgUcretiTextField: UITextField!
-    @IBOutlet weak var hammaddeMiktariTextField: UITextField!
     @IBOutlet weak var hammaddeAdiTextField: UITextField!
     
-    var businessName = ""
-    var toplamUcret: Double = 0
     var activityIndicator:UIActivityIndicatorView = UIActivityIndicatorView()
     
     override func viewDidLoad() {
@@ -47,28 +43,26 @@ class HammaddeEkleVC: UIViewController  {
             self.present(alert, animated: true, completion: nil)
             
         case .wifi:
-            getBussinessNameData()
+            print("")
+         
         case .wwan:
-            getBussinessNameData()
+            print("")
+          
         }
     }
     @objc func statusManager(_ notification: Notification) {
         updateUserInterface()
     }
+    
     @IBAction func ekleButtonClicked(_ sender: Any) {
         
-        if hammaddeAdiTextField.text != "" && hammaddeMiktariTextField.text != "" && hammaddeKgUcretiTextField.text != "" {
+        if hammaddeAdiTextField.text != ""  {
             
-            toplamUcret = Double((Double(hammaddeMiktariTextField.text!)! * Double(hammaddeKgUcretiTextField.text!)!) / 1000)
-            if toplamUcret != 0 {
+
             
             let hammadde = PFObject(className: "HammaddeBilgileri")
             hammadde["HammaddeSahibi"] = PFUser.current()!.username!
             hammadde["HammaddeAdi"] = hammaddeAdiTextField.text
-            hammadde["HammaddeUcreti"] = hammaddeKgUcretiTextField.text
-            hammadde["HammaddeMiktariGr"] = hammaddeMiktariTextField.text
-            hammadde["ToplamUcret"] = String(toplamUcret)
-            hammadde["IsletmeAdi"] = businessName
             
             hammadde.saveInBackground { (success, error) in
                 
@@ -92,49 +86,15 @@ class HammaddeEkleVC: UIViewController  {
             }
             
         }
-            else{
-                let alert = UIAlertController(title: "Bir Hata Oluştu Lütfen Tekrar Deneyin", message: "", preferredStyle: UIAlertControllerStyle.alert)
-                let okButton = UIAlertAction(title: "TAMAM", style: UIAlertActionStyle.cancel, handler: nil)
-                alert.addAction(okButton)
-                self.present(alert, animated: true, completion: nil)
-                
-                self.activityIndicator.stopAnimating()
-                UIApplication.shared.endIgnoringInteractionEvents()
-            }
-        }
     
         else{
-            let alert = UIAlertController(title: "HATA", message: "Lütfen Bütün Bilgileri Giriniz", preferredStyle: UIAlertControllerStyle.alert)
+            let alert = UIAlertController(title: "HATA", message: "Lütfen Hammadde Adı Girin", preferredStyle: UIAlertControllerStyle.alert)
             let okButton = UIAlertAction(title: "TAMAM", style: UIAlertActionStyle.cancel, handler: nil)
             alert.addAction(okButton)
             self.present(alert, animated: true, completion: nil)
             
             self.activityIndicator.stopAnimating()
             UIApplication.shared.endIgnoringInteractionEvents()
-        }
-    }
-
-    func getBussinessNameData(){
-        let query = PFQuery(className: "BusinessInformation")
-        query.whereKey("businessUserName", equalTo: "\(PFUser.current()!.username!)")
-        
-        query.findObjectsInBackground { (objects, error) in
-            if error != nil{
-                let alert = UIAlertController(title: "HATA", message: error?.localizedDescription, preferredStyle: UIAlertController.Style.alert)
-                let okButton = UIAlertAction(title: "TAMAM", style: UIAlertAction.Style.cancel, handler: nil)
-                alert.addAction(okButton)
-                self.present(alert, animated: true, completion: nil)
-                
-                self.activityIndicator.stopAnimating()
-                UIApplication.shared.endIgnoringInteractionEvents()
-            }
-            else{
-                self.businessName =  ""
-                for object in objects!{
-                    self.businessName = (object.object(forKey: "businessName") as! String)
-                    
-                }
-            }
         }
     }
     
