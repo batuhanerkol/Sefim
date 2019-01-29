@@ -182,7 +182,7 @@ class HammaddeVC: UIViewController, UITableViewDelegate, UITableViewDataSource, 
     var carpilmisHammaddeArray = [Int]()
     var allcarpilmisHammaddeArray = [Int]()
     var allHammaddeAdlari = [String]()
-    var toplamHammaddeArray = [Int]()
+    var toplamHammaddeSayiArray = [Int]()
     
     func calculateStokAdet(){
         allOdendiSiparisSayiArray.removeAll()
@@ -227,43 +227,75 @@ class HammaddeVC: UIViewController, UITableViewDelegate, UITableViewDataSource, 
             print("hammadde adlari tek array", self.allHammaddeAdlari)
             print("sadece hammadde adi:", self.hammaddeAdiArray)
             
-          
-            
-           
             hammaddeSayi += 1
         }
-        var hammaddeIndex0 = 0
+     
         var hammaddeIndex1 = 0
         var hammaddeIndex2 = 0
         var toplamHammadde = 0
         
-        
-        while hammaddeIndex0 < self.hammaddeAdiArray.count{// kişinin girdiği hammadde sayısı kadar dönecek
+        while hammaddeIndex1 < self.hammaddeAdiArray.count{// kişinin girdiği hammadde sayısı kadar dönecek
             
-            while self.hammaddeAdiArray[hammaddeIndex1] != self.allHammaddeAdlari[hammaddeIndex2]{
+            if self.allHammaddeAdlari.contains(self.hammaddeAdiArray[hammaddeIndex1]) == true{
+            
+            print("---\(hammaddeIndex1)--", self.hammaddeAdiArray[hammaddeIndex1])
+                print("hammaddeAdiArray Count:", self.hammaddeAdiArray.count)
+                print("allHammaddeAdlari Count:", self.allHammaddeAdlari.count)
+                print("--------------------------------------------------------------")
+                print("hammaddeIndex1", hammaddeIndex1)
+                print("hammaddeIndex2", hammaddeIndex2)
+                print("--------------------------------------------------------------")
            
+            while self.hammaddeAdiArray[hammaddeIndex1] != self.allHammaddeAdlari[hammaddeIndex2]{
+                
               hammaddeIndex2 += 1
                 print("hammaddeIndex2",hammaddeIndex2)
                 
+                if hammaddeIndex2 == 10{self.toplamHammaddeSayiArray.append(toplamHammadde)}
+                
+                if self.allHammaddeAdlari.count == hammaddeIndex2{
+                    
+                    hammaddeIndex1 += 1
+                    hammaddeIndex2 = 0
+                    toplamHammadde = 0
+                   
+                }
             }
+            
             toplamHammadde = toplamHammadde + self.allcarpilmisHammaddeArray[hammaddeIndex2]
             print("toplamHammadde", toplamHammadde)
             self.toplamHammadde.append(Double(toplamHammadde))
             
-           
-            if self.allHammaddeAdlari.count == hammaddeIndex2{
-                hammaddeIndex0 += 1
-                hammaddeIndex1 += 1
+            
+
+            if self.allHammaddeAdlari.count != hammaddeIndex2{
+                print("-------if---------")
+                 hammaddeIndex2 += 1
+                if hammaddeIndex2 == 10{self.toplamHammaddeSayiArray.append(toplamHammadde)}
+               
+               print("count",self.allHammaddeAdlari.count)
+                print("Index2",hammaddeIndex2)
+               
+                if self.allHammaddeAdlari.count == hammaddeIndex2{
+                   
+                    print("---------2- IF------------")
+                    hammaddeIndex1 += 1
+                    print("hammaddeIndex1", hammaddeIndex1)
+                   hammaddeIndex2 = 0
+                    toplamHammadde = 0
+                    print("hammaddeIndex2", hammaddeIndex2)
+                }
                 
-            }else{
-                hammaddeIndex2 += 1
             }
-        }
-        
-        print("toplam hammadde", self.toplamhammadde)
-        
+            
+            print("toplamHammaddeSayiArray", self.toplamHammaddeSayiArray)
+            }else{
+                print("---------ARRAY ICINDE BULUNMAYAN KELİME-----------")
+                self.toplamHammaddeSayiArray.append(0)
+                hammaddeIndex1 += 1
+            }
     }
- 
+    }
  
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
       return hammaddeAdiArray.count
