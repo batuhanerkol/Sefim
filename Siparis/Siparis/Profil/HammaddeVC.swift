@@ -183,6 +183,7 @@ class HammaddeVC: UIViewController, UITableViewDelegate, UITableViewDataSource, 
     var allcarpilmisHammaddeArray = [Int]()
     var allHammaddeAdlari = [String]()
     var toplamHammaddeSayiArray = [Int]()
+    var stringToplamHammaddeSayiArray = [String]()
     
     func calculateStokAdet(){
         allOdendiSiparisSayiArray.removeAll()
@@ -233,12 +234,14 @@ class HammaddeVC: UIViewController, UITableViewDelegate, UITableViewDataSource, 
         var hammaddeIndex1 = 0
         var hammaddeIndex2 = 0
         var toplamHammadde = 0
+        var kontrolIndex0 = 0
         
         while hammaddeIndex1 < self.hammaddeAdiArray.count{// kişinin girdiği hammadde sayısı kadar dönecek
+            print("---------------------------- ILK DONGU----------------------------------")
             
             if self.allHammaddeAdlari.contains(self.hammaddeAdiArray[hammaddeIndex1]) == true{
             
-            print("---\(hammaddeIndex1)--", self.hammaddeAdiArray[hammaddeIndex1])
+                print("---\(hammaddeIndex1)--", self.hammaddeAdiArray[hammaddeIndex1])
                 print("hammaddeAdiArray Count:", self.hammaddeAdiArray.count)
                 print("allHammaddeAdlari Count:", self.allHammaddeAdlari.count)
                 print("--------------------------------------------------------------")
@@ -248,42 +251,44 @@ class HammaddeVC: UIViewController, UITableViewDelegate, UITableViewDataSource, 
            
             while self.hammaddeAdiArray[hammaddeIndex1] != self.allHammaddeAdlari[hammaddeIndex2]{
                 
-              hammaddeIndex2 += 1
-                print("hammaddeIndex2",hammaddeIndex2)
-                
-                if hammaddeIndex2 == 10{self.toplamHammaddeSayiArray.append(toplamHammadde)}
-                
+               hammaddeIndex2 += 1
+                print(" - hammaddeIndex2",hammaddeIndex2)
+                kontrolIndex0 = 0
+        
                 if self.allHammaddeAdlari.count == hammaddeIndex2{
-                    
+                    print("-------- 0 - IF -------")
+                    self.toplamHammaddeSayiArray.append(toplamHammadde)
                     hammaddeIndex1 += 1
                     hammaddeIndex2 = 0
                     toplamHammadde = 0
-                   
+                    kontrolIndex0 = 1
+                    break
                 }
             }
-            
+                if kontrolIndex0 == 0{
             toplamHammadde = toplamHammadde + self.allcarpilmisHammaddeArray[hammaddeIndex2]
             print("toplamHammadde", toplamHammadde)
             self.toplamHammadde.append(Double(toplamHammadde))
-            
-            
-
+                }
+                
             if self.allHammaddeAdlari.count != hammaddeIndex2{
-                print("-------if---------")
+                print("------- 1 - if---------")
                  hammaddeIndex2 += 1
-                if hammaddeIndex2 == 10{self.toplamHammaddeSayiArray.append(toplamHammadde)}
-               
+                if hammaddeIndex2 == self.allHammaddeAdlari.count{self.toplamHammaddeSayiArray.append(toplamHammadde)}
+                kontrolIndex0 = 0
+                
                print("count",self.allHammaddeAdlari.count)
-                print("Index2",hammaddeIndex2)
+                print("hammaddeIndex2, inside if:",hammaddeIndex2)
                
                 if self.allHammaddeAdlari.count == hammaddeIndex2{
                    
-                    print("---------2- IF------------")
+                    print("--------- 2 - IF------------")
                     hammaddeIndex1 += 1
                     print("hammaddeIndex1", hammaddeIndex1)
                    hammaddeIndex2 = 0
                     toplamHammadde = 0
-                    print("hammaddeIndex2", hammaddeIndex2)
+                    print("hammaddeIndex2 inside 2. if:", hammaddeIndex2)
+                    kontrolIndex0 = 1
                 }
                 
             }
@@ -294,7 +299,10 @@ class HammaddeVC: UIViewController, UITableViewDelegate, UITableViewDataSource, 
                 self.toplamHammaddeSayiArray.append(0)
                 hammaddeIndex1 += 1
             }
+            
+            print("---------------------------- SON ----------------------------------")
     }
+         self.stringToplamHammaddeSayiArray = toplamHammaddeSayiArray.map { String($0) }
     }
  
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -307,6 +315,7 @@ class HammaddeVC: UIViewController, UITableViewDelegate, UITableViewDataSource, 
       
        
         cell.hammaddeNameLAbel.text = hammaddeAdiArray[indexPath.row]
+        cell.hammaddeKalanLabel.text = stringToplamHammaddeSayiArray[indexPath.row]
        
         
         return cell
@@ -343,5 +352,7 @@ class HammaddeVC: UIViewController, UITableViewDelegate, UITableViewDataSource, 
         
     }
     
-
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return 45
+    }
 }

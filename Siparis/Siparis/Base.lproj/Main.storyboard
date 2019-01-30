@@ -820,34 +820,34 @@ Türk Ceza Kanunu’nun 138. maddesinde ve Kanunu’nun 7. maddesinde düzenlend
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="qDS-n7-CA8" userLabel="TableView">
-                                <rect key="frame" x="159" y="0.0" width="705" height="768"/>
+                            <view contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="qDS-n7-CA8" userLabel="TableView">
+                                <rect key="frame" x="159" y="-101" width="56" height="768"/>
                                 <subviews>
-                                    <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="WDp-ob-la6">
-                                        <rect key="frame" x="27.5" y="59" width="650" height="650"/>
+                                    <tableView clipsSubviews="YES" contentMode="scaleToFill" ambiguous="YES" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="WDp-ob-la6">
+                                        <rect key="frame" x="27.5" y="59" width="1" height="650"/>
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <prototypes>
                                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="Cell" rowHeight="51" id="Cxa-aU-geB" customClass="PopUpTVC" customModule="Siparis" customModuleProvider="target">
-                                                <rect key="frame" x="0.0" y="28" width="650" height="51"/>
+                                                <rect key="frame" x="0.0" y="28" width="1" height="51"/>
                                                 <autoresizingMask key="autoresizingMask"/>
-                                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" ambiguous="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="Cxa-aU-geB" id="ojv-QX-S2J">
-                                                    <rect key="frame" x="0.0" y="0.0" width="650" height="50.5"/>
+                                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="Cxa-aU-geB" id="ojv-QX-S2J">
+                                                    <rect key="frame" x="0.0" y="0.0" width="1" height="50.5"/>
                                                     <autoresizingMask key="autoresizingMask"/>
                                                     <subviews>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Food Name" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="U3r-0W-B7u">
-                                                            <rect key="frame" x="15" y="16" width="247.5" height="24"/>
+                                                            <rect key="frame" x="15" y="16" width="247" height="24"/>
                                                             <fontDescription key="fontDescription" type="boldSystem" pointSize="20"/>
                                                             <nil key="textColor"/>
                                                             <nil key="highlightedColor"/>
                                                         </label>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="yemek notu" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="3" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="acr-hC-kLt">
-                                                            <rect key="frame" x="270.5" y="16" width="56.5" height="24"/>
+                                                            <rect key="frame" x="270" y="16" width="234" height="24"/>
                                                             <fontDescription key="fontDescription" type="system" pointSize="10"/>
                                                             <nil key="textColor"/>
                                                             <nil key="highlightedColor"/>
                                                         </label>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="time" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="yQk-mU-DI4">
-                                                            <rect key="frame" x="335" y="16" width="128" height="24"/>
+                                                            <rect key="frame" x="512" y="16" width="128" height="24"/>
                                                             <constraints>
                                                                 <constraint firstAttribute="width" constant="128" id="eJO-Dp-f5h"/>
                                                             </constraints>
@@ -856,7 +856,7 @@ Türk Ceza Kanunu’nun 138. maddesinde ve Kanunu’nun 7. maddesinde düzenlend
                                                             <nil key="highlightedColor"/>
                                                         </label>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="oiJ-wD-XsC">
-                                                            <rect key="frame" x="15" y="16" width="247.5" height="24"/>
+                                                            <rect key="frame" x="15" y="16" width="247" height="24"/>
                                                             <color key="backgroundColor" red="0.29529064890000001" green="0.64371454719999999" blue="0.15804424880000001" alpha="0.55395657592024539" colorSpace="custom" customColorSpace="sRGB"/>
                                                             <constraints>
                                                                 <constraint firstAttribute="width" constant="247" id="2Sx-39-OG1"/>
@@ -951,10 +951,10 @@ Türk Ceza Kanunu’nun 138. maddesinde ve Kanunu’nun 7. maddesinde düzenlend
                                     <constraint firstAttribute="height" constant="768" id="zhw-64-1Ak"/>
                                 </constraints>
                             </view>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="kSb-jJ-jEJ" userLabel="LeftButtonsView">
-                                <rect key="frame" x="0.0" y="0.0" width="159" height="768"/>
+                            <view contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="kSb-jJ-jEJ" userLabel="LeftButtonsView">
+                                <rect key="frame" x="0.0" y="-101" width="159" height="768"/>
                                 <subviews>
-                                    <button opaque="NO" contentMode="scaleAspectFit" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="wordWrap" translatesAutoresizingMaskIntoConstraints="NO" id="Nn8-q0-WqY">
+                                    <button opaque="NO" contentMode="scaleAspectFit" ambiguous="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="wordWrap" translatesAutoresizingMaskIntoConstraints="NO" id="Nn8-q0-WqY">
                                         <rect key="frame" x="19.5" y="324" width="120" height="120"/>
                                         <color key="backgroundColor" red="0.047981512890000001" green="0.58657990719999997" blue="0.14368817219999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <constraints>
@@ -969,7 +969,7 @@ Türk Ceza Kanunu’nun 138. maddesinde ve Kanunu’nun 7. maddesinde düzenlend
                                             <action selector="orderHasGivenButtonClicked:" destination="4Uq-T9-kuY" eventType="touchUpInside" id="dfo-7r-j3j"/>
                                         </connections>
                                     </button>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="wordWrap" translatesAutoresizingMaskIntoConstraints="NO" id="CZv-Bb-czj">
+                                    <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="wordWrap" translatesAutoresizingMaskIntoConstraints="NO" id="CZv-Bb-czj">
                                         <rect key="frame" x="19.5" y="452" width="120" height="120"/>
                                         <color key="backgroundColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <constraints>
@@ -984,7 +984,7 @@ Türk Ceza Kanunu’nun 138. maddesinde ve Kanunu’nun 7. maddesinde düzenlend
                                             <action selector="chechkHasPaidButtonClicked:" destination="4Uq-T9-kuY" eventType="touchUpInside" id="dbF-XG-864"/>
                                         </connections>
                                     </button>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="wordWrap" translatesAutoresizingMaskIntoConstraints="NO" id="f8X-bI-9Te">
+                                    <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="wordWrap" translatesAutoresizingMaskIntoConstraints="NO" id="f8X-bI-9Te">
                                         <rect key="frame" x="19.5" y="196" width="120" height="120"/>
                                         <color key="backgroundColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <constraints>
@@ -1011,10 +1011,10 @@ Türk Ceza Kanunu’nun 138. maddesinde ve Kanunu’nun 7. maddesinde düzenlend
                                     <constraint firstItem="Nn8-q0-WqY" firstAttribute="centerX" secondItem="kSb-jJ-jEJ" secondAttribute="centerX" id="z2t-we-vyh"/>
                                 </constraints>
                             </view>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="3gV-bi-Nuy" userLabel="RightButtonsView">
-                                <rect key="frame" x="864" y="0.0" width="160" height="768"/>
+                            <view contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="3gV-bi-Nuy" userLabel="RightButtonsView">
+                                <rect key="frame" x="215" y="-101" width="160" height="768"/>
                                 <subviews>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Hesap Durumu" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="4" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="TmX-EW-uZ4">
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="Hesap Durumu" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="4" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="TmX-EW-uZ4">
                                         <rect key="frame" x="20" y="196" width="120" height="120"/>
                                         <color key="backgroundColor" red="1" green="0.14913141730000001" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <constraints>
@@ -1025,7 +1025,7 @@ Türk Ceza Kanunu’nun 138. maddesinde ve Kanunu’nun 7. maddesinde düzenlend
                                         <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <nil key="highlightedColor"/>
                                     </label>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="wordWrap" translatesAutoresizingMaskIntoConstraints="NO" id="CuA-Lr-RBm">
+                                    <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="wordWrap" translatesAutoresizingMaskIntoConstraints="NO" id="CuA-Lr-RBm">
                                         <rect key="frame" x="20" y="324" width="120" height="120"/>
                                         <color key="backgroundColor" red="1" green="0.57810515169999999" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <constraints>
@@ -1040,7 +1040,7 @@ Türk Ceza Kanunu’nun 138. maddesinde ve Kanunu’nun 7. maddesinde düzenlend
                                             <action selector="manuelEkleClicked:" destination="4Uq-T9-kuY" eventType="touchUpInside" id="U8S-ZU-y5K"/>
                                         </connections>
                                     </button>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Geri" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="vSu-ih-uJR">
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="Geri" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="vSu-ih-uJR">
                                         <rect key="frame" x="20" y="452" width="120" height="120"/>
                                         <color key="backgroundColor" red="0.58072251080000004" green="0.066734083" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <constraints>
@@ -2480,11 +2480,11 @@ Türk Ceza Kanunu’nun 138. maddesinde ve Kanunu’nun 7. maddesinde düzenlend
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Hammadde Adi" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="fmw-Qn-ec8">
-                                <rect key="frame" x="16" y="63" width="186" height="35"/>
+                                <rect key="frame" x="16" y="63" width="172" height="35"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="35" id="pSC-iM-wlV"/>
+                                    <constraint firstAttribute="height" constant="35" id="LmJ-2r-cnN"/>
                                 </constraints>
-                                <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
+                                <fontDescription key="fontDescription" type="system" weight="heavy" pointSize="17"/>
                                 <color key="textColor" red="0.89751533490000002" green="0.36379011649999998" blue="0.0015735325379999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
@@ -2499,25 +2499,25 @@ Türk Ceza Kanunu’nun 138. maddesinde ve Kanunu’nun 7. maddesinde düzenlend
                                             <rect key="frame" x="0.0" y="0.0" width="343" height="43.5"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="HammaddeAdi" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7Wq-7E-qK1">
-                                                    <rect key="frame" x="12" y="-9" width="150" height="61.5"/>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="HammaddeAdi" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7Wq-7E-qK1">
+                                                    <rect key="frame" x="15" y="4" width="150" height="34"/>
+                                                    <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="16"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Toplam" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="9G5-XB-lN1">
-                                                    <rect key="frame" x="217" y="-9" width="75" height="61.5"/>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Toplam" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="9G5-XB-lN1">
+                                                    <rect key="frame" x="173" y="4" width="118" height="34"/>
                                                     <constraints>
-                                                        <constraint firstAttribute="width" constant="75" id="Lje-fb-mCZ"/>
+                                                        <constraint firstAttribute="width" constant="118" id="Ovi-Ko-JIc"/>
                                                     </constraints>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="16"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="&gt;" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="DRZ-w0-V1H">
-                                                    <rect key="frame" x="299" y="11" width="31" height="23"/>
+                                                    <rect key="frame" x="297" y="4" width="31" height="34"/>
                                                     <constraints>
-                                                        <constraint firstAttribute="width" constant="31" id="3hO-5M-0GJ"/>
+                                                        <constraint firstAttribute="width" constant="31" id="SRH-iK-1tB"/>
                                                     </constraints>
                                                     <fontDescription key="fontDescription" type="system" pointSize="19"/>
                                                     <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -2525,17 +2525,16 @@ Türk Ceza Kanunu’nun 138. maddesinde ve Kanunu’nun 7. maddesinde düzenlend
                                                 </label>
                                             </subviews>
                                             <constraints>
-                                                <constraint firstItem="7Wq-7E-qK1" firstAttribute="leading" secondItem="ndv-Kk-1mx" secondAttribute="leadingMargin" constant="-3" id="5jh-f5-0kl"/>
-                                                <constraint firstItem="7Wq-7E-qK1" firstAttribute="baseline" secondItem="9G5-XB-lN1" secondAttribute="baseline" id="Iii-um-A5B"/>
-                                                <constraint firstItem="9G5-XB-lN1" firstAttribute="top" secondItem="DRZ-w0-V1H" secondAttribute="top" id="J2M-ud-NSG"/>
-                                                <constraint firstItem="9G5-XB-lN1" firstAttribute="leading" secondItem="7Wq-7E-qK1" secondAttribute="trailing" constant="55" id="NiV-Hx-Iej"/>
-                                                <constraint firstAttribute="trailingMargin" secondItem="DRZ-w0-V1H" secondAttribute="trailing" constant="-3" id="QVM-cE-UuK"/>
-                                                <constraint firstItem="7Wq-7E-qK1" firstAttribute="firstBaseline" secondItem="9G5-XB-lN1" secondAttribute="firstBaseline" id="R04-wq-joO"/>
-                                                <constraint firstItem="DRZ-w0-V1H" firstAttribute="leading" secondItem="9G5-XB-lN1" secondAttribute="trailing" constant="8" symbolic="YES" id="agn-Wl-Cof"/>
-                                                <constraint firstItem="9G5-XB-lN1" firstAttribute="bottom" secondItem="DRZ-w0-V1H" secondAttribute="bottom" id="aiY-vq-Mqy"/>
-                                                <constraint firstItem="9G5-XB-lN1" firstAttribute="height" secondItem="7Wq-7E-qK1" secondAttribute="height" id="nr3-5a-v6S"/>
-                                                <constraint firstItem="7Wq-7E-qK1" firstAttribute="top" secondItem="ndv-Kk-1mx" secondAttribute="topMargin" constant="-20" id="pdh-Rz-aMh"/>
-                                                <constraint firstItem="7Wq-7E-qK1" firstAttribute="centerY" secondItem="ndv-Kk-1mx" secondAttribute="centerY" id="rEH-Sc-BxI"/>
+                                                <constraint firstItem="7Wq-7E-qK1" firstAttribute="baseline" secondItem="9G5-XB-lN1" secondAttribute="baseline" id="16T-du-dMu"/>
+                                                <constraint firstItem="7Wq-7E-qK1" firstAttribute="firstBaseline" secondItem="9G5-XB-lN1" secondAttribute="firstBaseline" id="3XD-Ig-RDl"/>
+                                                <constraint firstItem="9G5-XB-lN1" firstAttribute="bottom" secondItem="DRZ-w0-V1H" secondAttribute="bottom" id="6Yd-T8-pDh"/>
+                                                <constraint firstItem="7Wq-7E-qK1" firstAttribute="leading" secondItem="ndv-Kk-1mx" secondAttribute="leadingMargin" id="ITE-Zh-pMK"/>
+                                                <constraint firstItem="7Wq-7E-qK1" firstAttribute="centerY" secondItem="ndv-Kk-1mx" secondAttribute="centerY" id="NhG-jq-XRS"/>
+                                                <constraint firstAttribute="trailingMargin" secondItem="DRZ-w0-V1H" secondAttribute="trailing" id="WU1-pV-ApK"/>
+                                                <constraint firstItem="9G5-XB-lN1" firstAttribute="top" secondItem="DRZ-w0-V1H" secondAttribute="top" id="eMR-N0-RRH"/>
+                                                <constraint firstItem="9G5-XB-lN1" firstAttribute="leading" secondItem="7Wq-7E-qK1" secondAttribute="trailing" constant="8" symbolic="YES" id="hE7-JK-M1p"/>
+                                                <constraint firstItem="7Wq-7E-qK1" firstAttribute="top" secondItem="ndv-Kk-1mx" secondAttribute="topMargin" constant="-7" id="jIF-5h-81h"/>
+                                                <constraint firstItem="DRZ-w0-V1H" firstAttribute="leading" secondItem="9G5-XB-lN1" secondAttribute="trailing" constant="6" id="nMT-3z-J16"/>
                                             </constraints>
                                         </tableViewCellContentView>
                                         <connections>
@@ -2545,53 +2544,54 @@ Türk Ceza Kanunu’nun 138. maddesinde ve Kanunu’nun 7. maddesinde düzenlend
                                     </tableViewCell>
                                 </prototypes>
                             </tableView>
-                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Ay Seçiniz" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="EHu-WS-sVK">
-                                <rect key="frame" x="210" y="20" width="149" height="35"/>
-                                <constraints>
-                                    <constraint firstAttribute="width" constant="149" id="83i-cb-2z7"/>
-                                </constraints>
+                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Ay Seçiniz" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="EHu-WS-sVK">
+                                <rect key="frame" x="187" y="20" width="172" height="35"/>
                                 <nil key="textColor"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <textInputTraits key="textInputTraits"/>
                             </textField>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Mevcut Ay:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="QwG-BU-TNx">
-                                <rect key="frame" x="16" y="20" width="186" height="35"/>
+                                <rect key="frame" x="16" y="20" width="172" height="35"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="35" id="uyW-KN-MZN"/>
+                                    <constraint firstAttribute="height" constant="35" id="mtY-mA-VjN"/>
                                 </constraints>
-                                <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
+                                <fontDescription key="fontDescription" type="system" weight="heavy" pointSize="17"/>
                                 <color key="textColor" red="0.89751533490000002" green="0.36379011649999998" blue="0.0015735325379999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Toplam Miktar (kg)" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7Sw-lv-4e8">
-                                <rect key="frame" x="210" y="63" width="149" height="35"/>
-                                <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
+                                <rect key="frame" x="187" y="63" width="172" height="35"/>
+                                <fontDescription key="fontDescription" type="system" weight="heavy" pointSize="17"/>
                                 <color key="textColor" red="0.89751533490000002" green="0.36379011649999998" blue="0.0015735325379999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
                         </subviews>
                         <color key="backgroundColor" red="0.92143100499999997" green="0.92145264149999995" blue="0.92144101860000005" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
-                            <constraint firstItem="EHu-WS-sVK" firstAttribute="trailing" secondItem="7Sw-lv-4e8" secondAttribute="trailing" id="1zJ-RD-VU1"/>
-                            <constraint firstItem="7Sw-lv-4e8" firstAttribute="trailing" secondItem="Yje-Hc-J3h" secondAttribute="trailing" id="6KL-Ov-B9q"/>
-                            <constraint firstItem="Yje-Hc-J3h" firstAttribute="top" secondItem="fmw-Qn-ec8" secondAttribute="bottom" constant="8" symbolic="YES" id="9UL-cc-3GX"/>
-                            <constraint firstItem="QwG-BU-TNx" firstAttribute="top" secondItem="bZc-yC-HPH" secondAttribute="top" id="Dgo-c4-jnB"/>
-                            <constraint firstItem="7Sw-lv-4e8" firstAttribute="height" secondItem="QwG-BU-TNx" secondAttribute="height" id="HqF-AZ-e75"/>
-                            <constraint firstItem="EHu-WS-sVK" firstAttribute="leading" secondItem="QwG-BU-TNx" secondAttribute="trailing" constant="8" symbolic="YES" id="Mdz-wa-zWX"/>
-                            <constraint firstItem="fmw-Qn-ec8" firstAttribute="baseline" secondItem="7Sw-lv-4e8" secondAttribute="baseline" id="NFW-fb-9Q1"/>
-                            <constraint firstItem="QwG-BU-TNx" firstAttribute="leading" secondItem="O16-eG-X8E" secondAttribute="leadingMargin" id="Rjs-cI-5iO"/>
-                            <constraint firstItem="fmw-Qn-ec8" firstAttribute="leading" secondItem="Yje-Hc-J3h" secondAttribute="leading" id="TYu-lf-kWJ"/>
-                            <constraint firstItem="QwG-BU-TNx" firstAttribute="leading" secondItem="fmw-Qn-ec8" secondAttribute="leading" id="VIG-w9-2nB"/>
-                            <constraint firstItem="Yje-Hc-J3h" firstAttribute="bottom" secondItem="bZc-yC-HPH" secondAttribute="bottom" id="bbd-pe-ok5"/>
-                            <constraint firstItem="7Sw-lv-4e8" firstAttribute="top" secondItem="EHu-WS-sVK" secondAttribute="bottom" constant="8" symbolic="YES" id="chv-ny-6ZB"/>
-                            <constraint firstItem="fmw-Qn-ec8" firstAttribute="firstBaseline" secondItem="7Sw-lv-4e8" secondAttribute="firstBaseline" id="dFu-8v-zUC"/>
-                            <constraint firstItem="EHu-WS-sVK" firstAttribute="trailing" secondItem="O16-eG-X8E" secondAttribute="trailingMargin" id="fjW-t8-MEu"/>
-                            <constraint firstItem="fmw-Qn-ec8" firstAttribute="top" secondItem="QwG-BU-TNx" secondAttribute="bottom" constant="8" symbolic="YES" id="i1h-zv-8Xk"/>
-                            <constraint firstItem="EHu-WS-sVK" firstAttribute="height" secondItem="QwG-BU-TNx" secondAttribute="height" id="k6H-eP-v9E"/>
-                            <constraint firstItem="7Sw-lv-4e8" firstAttribute="leading" secondItem="fmw-Qn-ec8" secondAttribute="trailing" constant="8" symbolic="YES" id="kAO-zY-bAZ"/>
-                            <constraint firstItem="QwG-BU-TNx" firstAttribute="top" secondItem="EHu-WS-sVK" secondAttribute="top" id="rM2-oG-qdJ"/>
-                            <constraint firstItem="fmw-Qn-ec8" firstAttribute="height" secondItem="QwG-BU-TNx" secondAttribute="height" id="xka-xA-A17"/>
-                            <constraint firstItem="EHu-WS-sVK" firstAttribute="leading" secondItem="7Sw-lv-4e8" secondAttribute="leading" id="xud-Ve-mTx"/>
+                            <constraint firstItem="7Sw-lv-4e8" firstAttribute="trailing" secondItem="Yje-Hc-J3h" secondAttribute="trailing" id="2TE-am-UxX"/>
+                            <constraint firstItem="bZc-yC-HPH" firstAttribute="trailing" secondItem="QwG-BU-TNx" secondAttribute="trailing" constant="187" id="2XO-O0-oZQ"/>
+                            <constraint firstItem="7Sw-lv-4e8" firstAttribute="height" secondItem="QwG-BU-TNx" secondAttribute="height" id="4eU-Qn-eO6"/>
+                            <constraint firstItem="Yje-Hc-J3h" firstAttribute="top" secondItem="fmw-Qn-ec8" secondAttribute="bottom" constant="8" symbolic="YES" id="5YB-Kl-rH7"/>
+                            <constraint firstItem="QwG-BU-TNx" firstAttribute="leading" secondItem="O16-eG-X8E" secondAttribute="leadingMargin" id="Lqt-Eh-LqF"/>
+                            <constraint firstItem="QwG-BU-TNx" firstAttribute="top" secondItem="EHu-WS-sVK" secondAttribute="top" id="MHY-T8-nOD"/>
+                            <constraint firstItem="fmw-Qn-ec8" firstAttribute="baseline" secondItem="7Sw-lv-4e8" secondAttribute="baseline" id="MWh-dT-lSi"/>
+                            <constraint firstItem="fmw-Qn-ec8" firstAttribute="height" secondItem="QwG-BU-TNx" secondAttribute="height" id="N5W-6b-4UY"/>
+                            <constraint firstItem="QwG-BU-TNx" firstAttribute="top" secondItem="bZc-yC-HPH" secondAttribute="top" id="WT9-aL-rj3"/>
+                            <constraint firstItem="EHu-WS-sVK" firstAttribute="leading" secondItem="bZc-yC-HPH" secondAttribute="leading" constant="187" id="X6u-rW-1fy"/>
+                            <constraint firstItem="EHu-WS-sVK" firstAttribute="trailing" secondItem="7Sw-lv-4e8" secondAttribute="trailing" id="Yh7-S7-89k"/>
+                            <constraint firstItem="EHu-WS-sVK" firstAttribute="leading" secondItem="7Sw-lv-4e8" secondAttribute="leading" id="bap-FP-x6l"/>
+                            <constraint firstItem="fmw-Qn-ec8" firstAttribute="top" secondItem="QwG-BU-TNx" secondAttribute="bottom" constant="8" symbolic="YES" id="bch-cK-sDV"/>
+                            <constraint firstItem="fmw-Qn-ec8" firstAttribute="leading" secondItem="Yje-Hc-J3h" secondAttribute="leading" id="h1X-Mc-SQX"/>
+                            <constraint firstItem="7Sw-lv-4e8" firstAttribute="width" secondItem="QwG-BU-TNx" secondAttribute="width" id="h7b-td-sgC"/>
+                            <constraint firstItem="EHu-WS-sVK" firstAttribute="height" secondItem="QwG-BU-TNx" secondAttribute="height" id="hhW-oS-X48"/>
+                            <constraint firstItem="fmw-Qn-ec8" firstAttribute="firstBaseline" secondItem="7Sw-lv-4e8" secondAttribute="firstBaseline" id="joS-nA-Y5m"/>
+                            <constraint firstItem="fmw-Qn-ec8" firstAttribute="width" secondItem="QwG-BU-TNx" secondAttribute="width" id="kEc-B4-S2q"/>
+                            <constraint firstItem="Yje-Hc-J3h" firstAttribute="bottom" secondItem="bZc-yC-HPH" secondAttribute="bottom" id="kob-jB-jgM"/>
+                            <constraint firstItem="EHu-WS-sVK" firstAttribute="width" secondItem="QwG-BU-TNx" secondAttribute="width" id="sq0-Eh-nef"/>
+                            <constraint firstItem="QwG-BU-TNx" firstAttribute="trailing" secondItem="fmw-Qn-ec8" secondAttribute="trailing" id="wFO-ux-y8p"/>
+                            <constraint firstItem="fmw-Qn-ec8" firstAttribute="top" secondItem="EHu-WS-sVK" secondAttribute="bottom" constant="8" symbolic="YES" id="xAD-SA-jNb"/>
+                            <constraint firstItem="EHu-WS-sVK" firstAttribute="trailing" secondItem="O16-eG-X8E" secondAttribute="trailingMargin" id="z27-wm-5mm"/>
+                            <constraint firstItem="QwG-BU-TNx" firstAttribute="leading" secondItem="fmw-Qn-ec8" secondAttribute="leading" id="zyi-xG-QJH"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="bZc-yC-HPH"/>
                     </view>
@@ -2999,13 +2999,13 @@ Türk Ceza Kanunu’nun 138. maddesinde ve Kanunu’nun 7. maddesinde düzenlend
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Hammadde" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="5I1-Kl-L3l">
-                                                    <rect key="frame" x="13" y="11" width="186" height="22"/>
+                                                    <rect key="frame" x="13" y="10.5" width="186" height="22.5"/>
                                                     <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Miktar" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="eGw-zH-ZYy">
-                                                    <rect key="frame" x="207" y="11" width="124" height="22"/>
+                                                    <rect key="frame" x="207" y="10.5" width="124" height="22.5"/>
                                                     <constraints>
                                                         <constraint firstAttribute="width" constant="124" id="wjU-UH-kJF"/>
                                                     </constraints>
