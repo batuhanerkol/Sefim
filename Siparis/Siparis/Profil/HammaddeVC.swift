@@ -51,7 +51,9 @@ class HammaddeVC: UIViewController, UITableViewDelegate, UITableViewDataSource, 
     }
     
     override func viewWillAppear(_ animated: Bool) {
+        
           updateUserInterface()
+        hammaddeTableView.reloadData()
     }
     @objc func dismissKeyboard(){
         view.endEditing(true)

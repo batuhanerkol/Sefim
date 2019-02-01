@@ -154,10 +154,12 @@ class HammaddeDetails: UIViewController {
     var foodInfoHammadde = [[String]]()
     var index0 = 0
     var index1 = 0
+    var index2 = 0
+    var indexArray = [String]()
+    var reverseIndexArray = [String]()
     
     func changeHammaddeInFoodInfo(){
         
-       
             print("index-1:", self.index1)
        
             let query = PFQuery(className: "FoodInformation")
@@ -192,30 +194,43 @@ class HammaddeDetails: UIViewController {
                         print("Seçili array:", self.foodInfoHammadde[self.index0])
                         print("hammadde Array : ",  self.foodInfoHammadde )
                        self.foodInfoHammadde[self.index0][arrayIndex] = self.hammaddeAdiTExtField.text!
-                        print("Değişmiş Hammadde Array:", self.foodInfoHammadde)
-                            self.changeFoodInfoHammaddeNames()
                         self.index0 += 1
                         self.index1 += 1
                         
+                            self.indexArray.append(String(arrayIndex))
                         }
                         else{
                             self.index0 += 1
                         }
+                        self.reverseIndexArray = Array(self.indexArray.reversed()) // arrayi ters çevirmek için
                 }
+                    
+                    print("Değişmiş Hammadde Array:", self.foodInfoHammadde)
+                    self.changeFoodInfoHammaddeNames()
             }
         }
         
     }
+    let dispatchGroup = DispatchGroup()
     
     func changeFoodInfoHammaddeNames(){
-        print("------------------------------------ changeFoodInfoHammaddeNames e girildi ------------------------------------")
+        self.index2 = 0
+
+        while index2 < self.foodNameObjectIdArray.count{
+            self.dispatchGroup.enter()
+            // parse a veri yazma işlemi tamamlanamdan döngü kendini tamamlıyor.
+            print("------------------------------------ changeFoodInfoHammaddeNames e girildi ------------------------------------")
+            print("SEÇİLİ URUN OBJECT ID:", foodNameObjectIdArray[self.index2])
+            print("Array Index:", self.indexArray)
+            print("reverseIndexArray:", self.reverseIndexArray)
             print("index0--", self.index0)
             print("index1--", self.index1)
-        
+            print("index2:", self.index2)
+            
             let query = PFQuery(className: "FoodInformation")
             query.whereKey("foodNameOwner", equalTo: "\(PFUser.current()!.username!)")
             
-            query.getObjectInBackground(withId: foodNameObjectIdArray[self.index1]) { (objects, error) in
+            query.getObjectInBackground(withId: foodNameObjectIdArray[self.index2]) { (objects, error) in
                 if error != nil{
                     let alert = UIAlertController(title: "HATA", message: error?.localizedDescription, preferredStyle: UIAlertController.Style.alert)
                     let okButton = UIAlertAction(title: "TAMAM", style: UIAlertAction.Style.cancel, handler: nil)
@@ -224,7 +239,7 @@ class HammaddeDetails: UIViewController {
                     
                 }else {
                     print("DEĞİŞİM İÇİNDE ARRAY:", self.foodInfoHammadde)
-                    objects!["Hammadde"] = self.foodInfoHammadde[self.index0]
+                    objects!["Hammadde"] = self.foodInfoHammadde[Int(self.reverseIndexArray[self.index2])!]
                     
                     objects!.saveInBackground(block: { (success, error) in
                         if error != nil{
@@ -234,15 +249,23 @@ class HammaddeDetails: UIViewController {
                             self.present(alert, animated: true, completion: nil)
                             
                         }else{
+                            print("--------------------KAYDEDİLDİ")
                             let alert = UIAlertController(title: "Güncelleme Gerçekleşti", message: "", preferredStyle: UIAlertController.Style.alert)
                             let okButton = UIAlertAction(title: "TAMAM", style: UIAlertAction.Style.cancel, handler: nil)
                             alert.addAction(okButton)
                             self.present(alert, animated: true, completion: nil)
+                            
+                            self.dispatchGroup.leave()
                         }
                     })
+                   
                 }
             }
-            
+            self.index2 += 1
+        }
+        self.dispatchGroup.notify(queue: DispatchQueue.main, execute: {
+            print("------------ DOngu dısına cıkıldı.")
+        })
         }
     
 
