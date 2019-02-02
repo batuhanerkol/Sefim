@@ -324,10 +324,12 @@ class HammaddeVC: UIViewController, UITableViewDelegate, UITableViewDataSource, 
         
     }
     
+    
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "hammaddeDetails"{
             let destinationVC = segue.destination as! HammaddeDetails
             destinationVC.selectedHammadde = self.chosenHammadde
+            destinationVC.allHammaddeNamesArray = self.allHammaddeAdlari
         }
     }
 
