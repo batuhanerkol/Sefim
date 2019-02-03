@@ -4062,23 +4062,57 @@ Türk Ceza Kanunu’nun 138. maddesinde ve Kanunu’nun 7. maddesinde düzenlend
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ubu-A9-e7j">
+                                <rect key="frame" x="16" y="423" width="170" height="40"/>
+                                <color key="backgroundColor" red="0.0" green="0.32852089410000002" blue="0.57488495110000004" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="170" id="UJ7-24-KsE"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
+                                <state key="normal" title="Menü Göster">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                </state>
+                                <connections>
+                                    <action selector="showMenuButtonClicked:" destination="wfm-3T-t7A" eventType="touchUpInside" id="9fu-RA-Ewe"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="NPD-RC-W1W">
+                                <rect key="frame" x="193" y="423" width="170" height="40"/>
+                                <color key="backgroundColor" red="0.58072251080000004" green="0.066734083" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
+                                <state key="normal" title="Menü Gösterme">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                </state>
+                                <connections>
+                                    <action selector="dontShowMenuButtonClicked:" destination="wfm-3T-t7A" eventType="touchUpInside" id="oxl-tm-xPZ"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" red="0.92143100499999997" green="0.92145264149999995" blue="0.92144101860000005" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
                             <constraint firstItem="X4T-2H-MQY" firstAttribute="trailing" secondItem="jVE-CQ-ueY" secondAttribute="trailing" id="2LN-ly-D6v"/>
                             <constraint firstItem="ibZ-w2-5hC" firstAttribute="trailing" secondItem="X4T-2H-MQY" secondAttribute="trailing" id="718-F3-hXA"/>
+                            <constraint firstItem="QL3-Jn-bO3" firstAttribute="bottom" secondItem="ubu-A9-e7j" secondAttribute="bottom" constant="91" id="7nT-mn-rgU"/>
                             <constraint firstItem="ibZ-w2-5hC" firstAttribute="leading" secondItem="gDi-DM-biw" secondAttribute="leadingMargin" id="8GJ-Uq-04O"/>
+                            <constraint firstItem="ubu-A9-e7j" firstAttribute="top" secondItem="LtK-7w-ncT" secondAttribute="bottom" constant="8" symbolic="YES" id="9iw-a1-MYK"/>
                             <constraint firstItem="ibZ-w2-5hC" firstAttribute="leading" secondItem="X4T-2H-MQY" secondAttribute="leading" id="Ddi-Pq-al5"/>
+                            <constraint firstItem="NPD-RC-W1W" firstAttribute="height" secondItem="ubu-A9-e7j" secondAttribute="height" id="E4y-Kr-lJd"/>
                             <constraint firstItem="X4T-2H-MQY" firstAttribute="leading" secondItem="jVE-CQ-ueY" secondAttribute="leading" id="EK9-mJ-oCG"/>
+                            <constraint firstItem="NPD-RC-W1W" firstAttribute="leading" secondItem="ubu-A9-e7j" secondAttribute="trailing" constant="7" id="EMV-3X-Kbr"/>
                             <constraint firstItem="ibZ-w2-5hC" firstAttribute="trailing" secondItem="gDi-DM-biw" secondAttribute="trailingMargin" id="EUh-2u-E4Y"/>
+                            <constraint firstItem="ubu-A9-e7j" firstAttribute="leading" secondItem="LtK-7w-ncT" secondAttribute="leading" id="Hca-Bp-H2z"/>
                             <constraint firstItem="oMg-Y0-csi" firstAttribute="leading" secondItem="LtK-7w-ncT" secondAttribute="trailing" id="Hpb-2v-5U4"/>
                             <constraint firstItem="LtK-7w-ncT" firstAttribute="firstBaseline" secondItem="oMg-Y0-csi" secondAttribute="firstBaseline" id="Ibl-hx-guC"/>
+                            <constraint firstItem="QL3-Jn-bO3" firstAttribute="trailing" secondItem="NPD-RC-W1W" secondAttribute="trailing" constant="12" id="KXf-25-EO2"/>
                             <constraint firstItem="X4T-2H-MQY" firstAttribute="top" secondItem="ibZ-w2-5hC" secondAttribute="bottom" constant="8" symbolic="YES" id="OCF-Op-yZ4"/>
                             <constraint firstItem="QL3-Jn-bO3" firstAttribute="bottom" secondItem="LtK-7w-ncT" secondAttribute="bottom" constant="139" id="YYY-8g-RFk"/>
                             <constraint firstItem="jVE-CQ-ueY" firstAttribute="leading" secondItem="LtK-7w-ncT" secondAttribute="leading" id="Yoz-Nw-ovt"/>
                             <constraint firstItem="ibZ-w2-5hC" firstAttribute="top" secondItem="QL3-Jn-bO3" secondAttribute="top" constant="59" id="dCH-Gu-ffS"/>
                             <constraint firstItem="jVE-CQ-ueY" firstAttribute="trailing" secondItem="oMg-Y0-csi" secondAttribute="trailing" id="hvN-OD-V2Z"/>
+                            <constraint firstItem="ubu-A9-e7j" firstAttribute="baseline" secondItem="NPD-RC-W1W" secondAttribute="firstBaseline" id="kTp-34-2t8"/>
+                            <constraint firstItem="NPD-RC-W1W" firstAttribute="width" secondItem="ubu-A9-e7j" secondAttribute="width" id="kmd-Od-EFS"/>
                             <constraint firstItem="LtK-7w-ncT" firstAttribute="baseline" secondItem="oMg-Y0-csi" secondAttribute="baseline" id="oeX-Kd-bex"/>
+                            <constraint firstItem="ubu-A9-e7j" firstAttribute="top" secondItem="NPD-RC-W1W" secondAttribute="top" id="q2h-gP-1Vz"/>
                             <constraint firstItem="LtK-7w-ncT" firstAttribute="top" secondItem="jVE-CQ-ueY" secondAttribute="bottom" constant="8" symbolic="YES" id="q5G-uN-Nuo"/>
                             <constraint firstItem="jVE-CQ-ueY" firstAttribute="top" secondItem="X4T-2H-MQY" secondAttribute="bottom" constant="8" symbolic="YES" id="uV7-z3-pSX"/>
                         </constraints>

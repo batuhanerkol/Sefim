@@ -181,6 +181,8 @@ class AddFoodInformationVC: UIViewController, UIImagePickerControllerDelegate, U
             foodInformation["HesapOnaylandi"] = ""
             foodInformation["Hammadde"] = hammaddeToplamAdiArray
             foodInformation["HammaddeMiktarlari"] = hammaddeMiktarlariArray
+            foodInformation["MenudeGorunsun"] = "Evet"
+            
 
             
             if let imageData = UIImageJPEGRepresentation(selectedImage.image!, 0.5){

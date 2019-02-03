@@ -59,8 +59,10 @@ class FoodInformationShowVC: UIViewController {
             
         case .wifi:
              findFood()
+              getObjectId()
         case .wwan:
              findFood()
+            getObjectId()
         }
     }
     @objc func statusManager(_ notification: Notification) {
@@ -118,4 +120,97 @@ class FoodInformationShowVC: UIViewController {
 }
 }
 }
+    var objectId = ""
+    
+    func getObjectId(){
+        let query = PFQuery(className: "FoodInformation")
+        query.whereKey("foodNameOwner", equalTo: (PFUser.current()?.username)!)
+        query.whereKey("foodName", equalTo: self.selectedFood)
+
+        
+        query.findObjectsInBackground { (objects, error) in
+            if error != nil{
+                let alert = UIAlertController(title: "HATA", message: error?.localizedDescription, preferredStyle: UIAlertController.Style.alert)
+                let okButton = UIAlertAction(title: "TAMAM", style: UIAlertAction.Style.cancel, handler: nil)
+                alert.addAction(okButton)
+                self.present(alert, animated: true, completion: nil)
+            }
+            else{
+                self.objectId = ""
+                
+                for object in objects! {
+                    self.objectId = (object.objectId!)
+                }
+            }
+        }
+    }
+    @IBAction func showMenuButtonClicked(_ sender: Any) {
+        let query = PFQuery(className: "FoodInformation")
+        query.whereKey("foodNameOwner", equalTo: (PFUser.current()?.username)!)
+        
+        query.getObjectInBackground(withId: objectId) { (objects, error) in
+            if error != nil{
+                let alert = UIAlertController(title: "HATA", message: error?.localizedDescription, preferredStyle: UIAlertController.Style.alert)
+                let okButton = UIAlertAction(title: "TAMAM", style: UIAlertAction.Style.cancel, handler: nil)
+                alert.addAction(okButton)
+                self.present(alert, animated: true, completion: nil)
+                
+            }else {
+                
+                objects!["MenudeGorunsun"] = "Evet"
+                objects!.saveInBackground(block: { (success, error) in
+                    
+                    if error != nil{
+                        let alert = UIAlertController(title: "Lütfen Tekrar Deneyin", message: "", preferredStyle: UIAlertController.Style.alert)
+                        let okButton = UIAlertAction(title: "TAMAM", style: UIAlertAction.Style.cancel, handler: nil)
+                        alert.addAction(okButton)
+                        self.present(alert, animated: true, completion: nil)
+                        
+                    }else{
+                        let alert = UIAlertController(title: "Urun Menu de Gösteriliyor", message: "", preferredStyle: UIAlertController.Style.alert)
+                        let okButton = UIAlertAction(title: "TAMAM", style: UIAlertAction.Style.cancel, handler: nil)
+                        alert.addAction(okButton)
+                        self.present(alert, animated: true, completion: nil)
+                    }
+                })
+                
+            }
+            
+        }
+    }
+    
+    @IBAction func dontShowMenuButtonClicked(_ sender: Any) {
+        let query = PFQuery(className: "FoodInformation")
+        query.whereKey("foodNameOwner", equalTo: (PFUser.current()?.username)!)
+        
+        query.getObjectInBackground(withId: objectId) { (objects, error) in
+            if error != nil{
+                let alert = UIAlertController(title: "HATA", message: error?.localizedDescription, preferredStyle: UIAlertController.Style.alert)
+                let okButton = UIAlertAction(title: "TAMAM", style: UIAlertAction.Style.cancel, handler: nil)
+                alert.addAction(okButton)
+                self.present(alert, animated: true, completion: nil)
+                
+            }else {
+                
+                objects!["MenudeGorunsun"] = "Hayır"
+                objects!.saveInBackground(block: { (success, error) in
+                    
+                    if error != nil{
+                        let alert = UIAlertController(title: "Lütfen Tekrar Deneyin", message: "", preferredStyle: UIAlertController.Style.alert)
+                        let okButton = UIAlertAction(title: "TAMAM", style: UIAlertAction.Style.cancel, handler: nil)
+                        alert.addAction(okButton)
+                        self.present(alert, animated: true, completion: nil)
+                        
+                    }else{
+                        let alert = UIAlertController(title: "Urun Menu de Gösterilmiyor", message: "", preferredStyle: UIAlertController.Style.alert)
+                        let okButton = UIAlertAction(title: "TAMAM", style: UIAlertAction.Style.cancel, handler: nil)
+                        alert.addAction(okButton)
+                        self.present(alert, animated: true, completion: nil)
+                    }
+                })
+                
+            }
+            
+        }
+    }
 }
