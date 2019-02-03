@@ -11,6 +11,7 @@ import Parse
 
 class FoodInformationShowVC: UIViewController {
 
+    @IBOutlet weak var menudeGorunsunLabel: UILabel!
     @IBOutlet weak var priceLabel: UILabel!
     @IBOutlet weak var foodText: UITextView!
     @IBOutlet weak var foodImage: UIImageView!
@@ -22,6 +23,7 @@ class FoodInformationShowVC: UIViewController {
     var foodPriceArray = [String]()
     var fooduuid = [String]()
     var imageArray = [PFFile]()
+    var hammaddeGorunumu = ""
     
       var activityIndicator:UIActivityIndicatorView = UIActivityIndicatorView()
     
@@ -88,16 +90,19 @@ class FoodInformationShowVC: UIViewController {
                 self.foodInformationArray.removeAll(keepingCapacity: false)
                 self.foodPriceArray.removeAll(keepingCapacity: false)
                 self.imageArray.removeAll(keepingCapacity: false)
+                self.hammaddeGorunumu = ""
                 
                 for object in objects!{
                       self.foodNameArray.append(object.object(forKey: "foodName") as! String)
                       self.foodInformationArray.append(object.object(forKey: "foodInformation") as! String)
                       self.foodPriceArray.append(object.object(forKey: "foodPrice") as! String)
                       self.imageArray.append(object.object(forKey: "image") as! PFFile)
+                      self.hammaddeGorunumu = (object.object(forKey: "MenudeGorunsun") as! String)
                     
                     self.foodLabel.text = "\(self.foodNameArray.last!)"
                     self.foodText.text = "\(self.foodInformationArray.last!)"
                     self.priceLabel.text = "\(self.foodPriceArray.last!)"
+                    self.menudeGorunsunLabel.text = self.hammaddeGorunumu
                     
                     self.imageArray.last?.getDataInBackground(block: { (data, error) in
                         if error != nil{
@@ -145,6 +150,9 @@ class FoodInformationShowVC: UIViewController {
         }
     }
     @IBAction func showMenuButtonClicked(_ sender: Any) {
+        activityIndicator.startAnimating()
+        UIApplication.shared.beginIgnoringInteractionEvents()
+        
         let query = PFQuery(className: "FoodInformation")
         query.whereKey("foodNameOwner", equalTo: (PFUser.current()?.username)!)
         
@@ -165,21 +173,28 @@ class FoodInformationShowVC: UIViewController {
                         let okButton = UIAlertAction(title: "TAMAM", style: UIAlertAction.Style.cancel, handler: nil)
                         alert.addAction(okButton)
                         self.present(alert, animated: true, completion: nil)
+                        self.activityIndicator.stopAnimating()
+                        UIApplication.shared.endIgnoringInteractionEvents()
                         
                     }else{
-                        let alert = UIAlertController(title: "Urun Menu de Gösteriliyor", message: "", preferredStyle: UIAlertController.Style.alert)
+                        let alert = UIAlertController(title: "Ürün Menu de Gösteriliyor", message: "", preferredStyle: UIAlertController.Style.alert)
                         let okButton = UIAlertAction(title: "TAMAM", style: UIAlertAction.Style.cancel, handler: nil)
                         alert.addAction(okButton)
                         self.present(alert, animated: true, completion: nil)
+                        self.activityIndicator.stopAnimating()
+                        UIApplication.shared.endIgnoringInteractionEvents()
                     }
                 })
-                
+                self.menudeGorunsunLabel.text = "Evet"
             }
             
         }
     }
     
     @IBAction func dontShowMenuButtonClicked(_ sender: Any) {
+        activityIndicator.startAnimating()
+        UIApplication.shared.beginIgnoringInteractionEvents()
+        
         let query = PFQuery(className: "FoodInformation")
         query.whereKey("foodNameOwner", equalTo: (PFUser.current()?.username)!)
         
@@ -189,6 +204,8 @@ class FoodInformationShowVC: UIViewController {
                 let okButton = UIAlertAction(title: "TAMAM", style: UIAlertAction.Style.cancel, handler: nil)
                 alert.addAction(okButton)
                 self.present(alert, animated: true, completion: nil)
+                self.activityIndicator.stopAnimating()
+                UIApplication.shared.endIgnoringInteractionEvents()
                 
             }else {
                 
@@ -200,15 +217,19 @@ class FoodInformationShowVC: UIViewController {
                         let okButton = UIAlertAction(title: "TAMAM", style: UIAlertAction.Style.cancel, handler: nil)
                         alert.addAction(okButton)
                         self.present(alert, animated: true, completion: nil)
+                        self.activityIndicator.stopAnimating()
+                        UIApplication.shared.endIgnoringInteractionEvents()
                         
                     }else{
-                        let alert = UIAlertController(title: "Urun Menu de Gösterilmiyor", message: "", preferredStyle: UIAlertController.Style.alert)
+                        let alert = UIAlertController(title: "Ürün Menu de Gösterilmiyor", message: "", preferredStyle: UIAlertController.Style.alert)
                         let okButton = UIAlertAction(title: "TAMAM", style: UIAlertAction.Style.cancel, handler: nil)
                         alert.addAction(okButton)
                         self.present(alert, animated: true, completion: nil)
+                        self.activityIndicator.stopAnimating()
+                        UIApplication.shared.endIgnoringInteractionEvents()
                     }
                 })
-                
+                self.menudeGorunsunLabel.text = "Hayır"
             }
             
         }
