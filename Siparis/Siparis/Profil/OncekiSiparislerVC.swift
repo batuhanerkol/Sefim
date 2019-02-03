@@ -152,12 +152,10 @@ class OncekiSiparislerVC: UIViewController, UITableViewDelegate, UITableViewData
     
     var hammaddeAdlari = [[String]]()
     var hammaddeMiktarlari = [[String]]()
-    
     var foodNamesArray = [String]()
+    
     func getFoodNames(){
-        foodNamesArray.removeAll()
-        hammaddeAdlari.removeAll(keepingCapacity: false)
-        hammaddeMiktarlari.removeAll(keepingCapacity: false)
+        
         let query = PFQuery(className: "FoodInformation")
         query.whereKey("foodNameOwner", equalTo: (PFUser.current()?.username)!)
         query.whereKey("HesapOnaylandi", equalTo: "Evet")
@@ -165,6 +163,10 @@ class OncekiSiparislerVC: UIViewController, UITableViewDelegate, UITableViewData
             if error != nil {
                 
             } else {
+                
+                self.foodNamesArray.removeAll(keepingCapacity: false)
+                self.hammaddeAdlari.removeAll(keepingCapacity: false)
+                self.hammaddeMiktarlari.removeAll(keepingCapacity: false)
                 
                 for object in objects! {
                     self.foodNamesArray.append(object.object(forKey: "foodName") as! String)
@@ -182,13 +184,10 @@ class OncekiSiparislerVC: UIViewController, UITableViewDelegate, UITableViewData
      // Son kullanılacak array bu !!!!! yukarıdaki foodNamesArray ile eşleştirip tek tek bir sayı belirlemen gerekli
     var odendiSiparisArray = [[String]]()
     var allOdendiSiparisArray = [String]()
-    var allOdendıSiparisSayiArray = [Int]()
+    var allOdendiSiparisSayiArray = [Int]()
     
    @objc func getPaidFoodStock() {
         getFoodInfo()
-        odendiSiparisArray.removeAll()
-        allOdendiSiparisArray.removeAll()
-        allOdendıSiparisSayiArray.removeAll()
     
         let query = PFQuery(className: "VerilenSiparisler")
         query.whereKey("IsletmeSahibi", equalTo: (PFUser.current()?.username)!)
@@ -199,6 +198,8 @@ class OncekiSiparislerVC: UIViewController, UITableViewDelegate, UITableViewData
             if error != nil {
                 
             } else {
+                self.odendiSiparisArray.removeAll()
+                self.allOdendiSiparisSayiArray.removeAll()
                 self.allOdendiSiparisArray.removeAll()
                 for object in objects! {
                     self.odendiSiparisArray.append(object["SiparisAdi"] as! [String])
@@ -215,7 +216,7 @@ class OncekiSiparislerVC: UIViewController, UITableViewDelegate, UITableViewData
     }
     
     func calculateStokAdet(){
-        allOdendıSiparisSayiArray.removeAll()
+        allOdendiSiparisSayiArray.removeAll()
         for foodName in self.foodNamesArray {
             var counter = 0
             for siparisFoodName in self.allOdendiSiparisArray {
@@ -223,19 +224,19 @@ class OncekiSiparislerVC: UIViewController, UITableViewDelegate, UITableViewData
                     counter += 1
                 }
             }
-            self.allOdendıSiparisSayiArray.append(counter)
+            self.allOdendiSiparisSayiArray.append(counter)
             dismissKeyboard()
         }
-//        print("siparisArray",self.allOdendiSiparisArray)
-//        print("sayıArray", self.allOdendıSiparisSayiArray)
+        print("siparisArray",self.allOdendiSiparisArray)
+        print("sayıArray", self.allOdendiSiparisSayiArray)
         previousOrderInfoTable.reloadData()
     }
     
     func getFoodInfo(){
         if chosenMounth != ""{
             
-                  activityIndicator.startAnimating()
-                  UIApplication.shared.beginIgnoringInteractionEvents()
+        activityIndicator.startAnimating()
+        UIApplication.shared.beginIgnoringInteractionEvents()
         
         let query = PFQuery(className: "VerilenSiparisler")
         query.whereKey("IsletmeSahibi", equalTo: (PFUser.current()?.username)!)
@@ -488,7 +489,7 @@ class OncekiSiparislerVC: UIViewController, UITableViewDelegate, UITableViewData
             }
             
             for i in intMiktar.indices {
-                intMiktar[i] = intMiktar[i] * allOdendıSiparisSayiArray[indexPath.row]
+                intMiktar[i] = intMiktar[i] * allOdendiSiparisSayiArray[indexPath.row]
             }
             for i in intMiktar.indices {
                 selectedHAmmaddeMiktarı[i] = String(intMiktar[i])
@@ -523,7 +524,7 @@ class OncekiSiparislerVC: UIViewController, UITableViewDelegate, UITableViewData
             var sayiArray = [String] ()
                 sayiArray.removeAll()
                 
-            for i in allOdendıSiparisSayiArray {
+            for i in allOdendiSiparisSayiArray {
                 sayiArray.append(String(i))
             }
                 print("--------foodArray",self.foodNamesArray)

@@ -67,9 +67,11 @@ class FoodDetailsTVC: UITableViewController {
             
         case .wifi:
                getFoodName()
+               getVerilenSiparisler()
                self.editButton.isEnabled = true
         case .wwan:
                getFoodName()
+               getVerilenSiparisler()
                self.editButton.isEnabled = true
         }
     }
@@ -158,7 +160,45 @@ class FoodDetailsTVC: UITableViewController {
         }
         
     }
-   
+   var verilenSiparisArray = [[String]]()
+    var allVrilenSiparisArray = [String]()
+    
+    func getVerilenSiparisler(){ // yemeği silmeden önce geçmişteki siparişlerde var mı yok mu kontrol etmek için
+        
+        let query = PFQuery(className: "VerilenSiparisler")
+        query.whereKey("IsletmeSahibi", equalTo: "\(PFUser.current()!.username!)")
+        query.findObjectsInBackground { (objects, error) in
+            
+            if error != nil{
+                let alert = UIAlertController(title: "HATA", message: error?.localizedDescription, preferredStyle: UIAlertControllerStyle.alert)
+                let okButton = UIAlertAction(title: "TAMAM", style: UIAlertActionStyle.cancel, handler: nil)
+                alert.addAction(okButton)
+                self.present(alert, animated: true, completion: nil)
+                
+                self.activityIndicator.stopAnimating()
+                UIApplication.shared.endIgnoringInteractionEvents()
+            }
+            else{
+                self.verilenSiparisArray.removeAll(keepingCapacity: false)
+                self.allVrilenSiparisArray.removeAll(keepingCapacity: false)
+                
+                for object in objects! {
+                    self.verilenSiparisArray.append(object.object(forKey: "SiparisAdi") as! [String])
+                }
+                
+            }
+            self.activityIndicator.stopAnimating()
+            UIApplication.shared.endIgnoringInteractionEvents()
+            
+            for i in self.verilenSiparisArray{
+                self.allVrilenSiparisArray.append(contentsOf: i)
+            }
+
+            print("allVrilenSiparisArray,", self.allVrilenSiparisArray)
+            
+        }
+        
+    }
     // segue öncesi bilgi aktarımı
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "FoodDetaisTVCToFoodInformationShowVC"{
@@ -178,13 +218,19 @@ class FoodDetailsTVC: UITableViewController {
     
     override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
         if (editingStyle == .delete){
+            
             let foodIndexName = nameTableView.cellForRow(at: indexPath)?.textLabel?.text!
-
+            if self.allVrilenSiparisArray.contains(foodIndexName!) == false{
             foodNameArray.remove(at: indexPath.item) 
             tableView.deleteRows(at: [indexPath], with: .automatic)
-            
-           
             deleteData(foodIndexName: foodIndexName!)
+            }
+            else{
+                let alert = UIAlertController(title: "Sipariş Geçmişinde Bulunduğu İçin Silemezsiniz", message: "Ürünün Menünüzde Görünmemesi İçin Yandaki Alana Tıklayabilirsiniz", preferredStyle: UIAlertControllerStyle.alert)
+                let okButton = UIAlertAction(title: "TAMAM", style: UIAlertActionStyle.cancel, handler: nil)
+                alert.addAction(okButton)
+                self.present(alert, animated: true, completion: nil)
+            }
         }
     }
     
