@@ -195,7 +195,10 @@ class AddLocationVC: UIViewController, MKMapViewDelegate, CLLocationManagerDeleg
         object["MasaSayisi"] = "0"
         object["HesapOnaylandi"] = ""
         object["EkranSifresi"] = ""
-        object["EkranSifresi"] = ""
+        
+        if let imageData = UIImageJPEGRepresentation(self.bosFoto!, 0.5){
+            object["image"] = PFFile(name: "image.jpg", data: imageData)
+        }
         
         object.saveInBackground { (success, error) in
             if error != nil{

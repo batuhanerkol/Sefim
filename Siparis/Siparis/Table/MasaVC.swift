@@ -231,10 +231,7 @@ class MasaVC: UIViewController {
                     self.siraIndex += 1
                     
                     self.siraLabelBackgroundColorChange[tableButtonIndex].text = "sıra:\(self.siraIndex)"
-                  
-                    
-
-                    self.siraLabel.text = "aaaaaaaa"
+   
                     print("tableButtonIndex:", tableButtonIndex) // +1 == rengi değişmiş masa
                 }
                 else  if self.siparisVerildiArray[hesapMasaSayisiIndex] == "Evet" && self.yemekHazirArray[hesapMasaSayisiIndex] == "Evet" && self.yemekTeslimArray[hesapMasaSayisiIndex] == ""  && self.hesapIstendiArray[hesapMasaSayisiIndex] == "" && self.hesapOdendiArray[hesapMasaSayisiIndex] == ""{
@@ -328,8 +325,11 @@ class MasaVC: UIViewController {
     var tableButton = UIButton()
     func createTableButton(){
         tableButton = UIButton()
-
-        tableButton.frame = CGRect(x:   xLocation, y:   yLocation, width: buttonWidth, height: buttonHeight)
+        if UIDevice.current.orientation.isPortrait{
+        tableButton.frame = CGRect(x:   xLocation, y:   yLocation + 25, width: buttonWidth, height: buttonHeight)
+        }else{
+            tableButton.frame = CGRect(x:   xLocation, y:   yLocation + 5 , width: buttonWidth, height: buttonHeight)
+        }
         tableButton.backgroundColor = tableBottomBackgroundColor
         tableButton.setTitle("\(tableNumber + 1)", for: .normal)
         tableButton.addTarget(self, action: #selector(buttonAction), for: .touchUpInside)
@@ -343,8 +343,11 @@ class MasaVC: UIViewController {
     var siraLabel = UILabel()
     func createSiraLabel(){
         siraLabel = UILabel()
-        
-        siraLabel.frame = CGRect(x:   xLocation, y:   yLocation - (buttonHeight / 3), width: buttonWidth, height: buttonHeight / 3)
+        if UIDevice.current.orientation.isPortrait{
+        siraLabel.frame = CGRect(x:   xLocation, y:   yLocation - (buttonHeight / 3) + 25, width: buttonWidth, height: buttonHeight / 3)
+        }else{
+            siraLabel.frame = CGRect(x:   xLocation, y:   yLocation - (buttonHeight / 3) + 5, width: buttonWidth, height: buttonHeight / 3)
+        }
         siraLabel.backgroundColor = tableBottomBackgroundColor
         siraLabel.textColor = .white
         siraLabel.text = "Sıra:..."
@@ -495,6 +498,21 @@ class MasaVC: UIViewController {
         self.view.endEditing(true)
     }
     
-
+    override func didRotate(from fromInterfaceOrientation: UIInterfaceOrientation) {
+        var text=""
+        switch UIDevice.current.orientation{
+        case .portrait:
+            text="Portrait"
+        case .portraitUpsideDown:
+            text="PortraitUpsideDown"
+        case .landscapeLeft:
+            text="LandscapeLeft"
+        case .landscapeRight:
+            text="LandscapeRight"
+        default:
+            text="Another"
+        }
+        NSLog("You have moved: \(text)")
+    }
 }
 
