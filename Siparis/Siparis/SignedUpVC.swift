@@ -87,7 +87,6 @@ class SignedUpVC: UIViewController, UITextFieldDelegate {
             userSignUp["lastname"] = lastNameTextField.text!
             userSignUp["UyelikTipi"] = ("İsyeriSahibi")
     
-            
             userSignUp.signUpInBackground { (success, error) in
                 
                 if error != nil{

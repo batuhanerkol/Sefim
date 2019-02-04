@@ -14,6 +14,7 @@ class IsletmeProfilVC: UIViewController {
     @IBOutlet weak var bussinessInfoButton: UIButton!
     
     var screenPassword = ""
+     var activityIndicator:UIActivityIndicatorView = UIActivityIndicatorView()
     
     var passwordTextField: UITextField?
 
@@ -58,7 +59,8 @@ class IsletmeProfilVC: UIViewController {
             alert)
         let action = UIAlertAction(title: "Tamam", style: .default) { (action) in
             
-            
+            self.activityIndicator.startAnimating()
+            UIApplication.shared.beginIgnoringInteractionEvents()
             
             let query = PFQuery(className: "BusinessInformation")
             query.whereKey("businessUserName", equalTo: "\(PFUser.current()!.username!)")
@@ -70,6 +72,8 @@ class IsletmeProfilVC: UIViewController {
                     alert.addAction(okButton)
                     self.present(alert, animated: true, completion: nil)
                 
+                    self.activityIndicator.stopAnimating()
+                    UIApplication.shared.endIgnoringInteractionEvents()
                 }
                 else{
                     
@@ -83,10 +87,14 @@ class IsletmeProfilVC: UIViewController {
                     
                     if alertController.textFields?.first?.text! == self.screenPassword{
                         print("Şifreler eşleşiyor")
+                        self.activityIndicator.stopAnimating()
+                        UIApplication.shared.endIgnoringInteractionEvents()
                     }
                     else{
                         
                         self.viewWillAppear(false)
+                        self.activityIndicator.stopAnimating()
+                        UIApplication.shared.endIgnoringInteractionEvents()
                     }
                     
                 }

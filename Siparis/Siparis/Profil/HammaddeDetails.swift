@@ -155,7 +155,7 @@ class HammaddeDetails: UIViewController {
             self.present(alert, animated: true, completion: nil)
         }
         }else{
-            let alert = UIAlertController(title: "Seçili Hammadde, Satılan Yemeklerde Bulunduğu İçin Adını Değiştiremezsiniz", message: "", preferredStyle: UIAlertController.Style.alert)
+            let alert = UIAlertController(title: "Seçili Hammadde, Satılan Urunler de Bulunduğu İçin Adını Değiştiremezsiniz", message: "", preferredStyle: UIAlertController.Style.alert)
             let okButton = UIAlertAction(title: "TAMAM", style: UIAlertAction.Style.cancel, handler: nil)
             alert.addAction(okButton)
             self.present(alert, animated: true, completion: nil)

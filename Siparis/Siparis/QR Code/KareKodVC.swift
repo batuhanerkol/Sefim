@@ -95,7 +95,8 @@ class KareKodVC: UIViewController , UIImagePickerControllerDelegate, UINavigatio
             alert)
         let action = UIAlertAction(title: "Tamam", style: .default) { (action) in
             
-            
+            self.activityIndicator.startAnimating()
+            UIApplication.shared.beginIgnoringInteractionEvents()
             
             let query = PFQuery(className: "BusinessInformation")
             query.whereKey("businessUserName", equalTo: "\(PFUser.current()!.username!)")
@@ -122,10 +123,14 @@ class KareKodVC: UIViewController , UIImagePickerControllerDelegate, UINavigatio
                     
                     if alertController.textFields?.first?.text! == self.screenPassword{
                         print("Şifreler eşleşiyor")
+                        self.activityIndicator.stopAnimating()
+                        UIApplication.shared.endIgnoringInteractionEvents()
                     }
                     else{
                         
                         self.viewWillAppear(false)
+                        self.activityIndicator.stopAnimating()
+                        UIApplication.shared.endIgnoringInteractionEvents()
                     }
                     
                 }

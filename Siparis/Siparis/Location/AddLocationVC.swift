@@ -60,7 +60,7 @@ class AddLocationVC: UIViewController, MKMapViewDelegate, CLLocationManagerDeleg
         self.chosenLatitude = ""
         self.chosenLongitude = ""
         
-  
+        updateUserInterface()
     }
     // i.k sonrası yapıalcaklar
     func updateUserInterface() {
@@ -74,7 +74,6 @@ class AddLocationVC: UIViewController, MKMapViewDelegate, CLLocationManagerDeleg
             
             
             self.addButton.isEnabled = false
-            
             
         case .wifi:
          print("wifiConnection")
@@ -181,7 +180,7 @@ class AddLocationVC: UIViewController, MKMapViewDelegate, CLLocationManagerDeleg
         }
        
     }
-    
+    var bosFoto = UIImage(named: "bos.png")
     func saveLocation(){
         let actualLocation = PFGeoPoint(latitude:self.chosenLatitudeDouble,longitude:self.chosenLongitudeDouble)
         let object = PFObject(className: "BusinessInformation")
@@ -196,6 +195,8 @@ class AddLocationVC: UIViewController, MKMapViewDelegate, CLLocationManagerDeleg
         object["MasaSayisi"] = "0"
         object["HesapOnaylandi"] = ""
         object["EkranSifresi"] = ""
+        object["EkranSifresi"] = ""
+        
         object.saveInBackground { (success, error) in
             if error != nil{
                 let alert = UIAlertController(title: "HATA", message: error?.localizedDescription, preferredStyle: UIAlertControllerStyle.alert)

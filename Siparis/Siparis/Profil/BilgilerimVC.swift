@@ -86,7 +86,6 @@ class BilgilerimVC: UIViewController, UIImagePickerControllerDelegate, UINavigat
             getObjectId()
             whenTextFiledsChange()
             getUserInfoFromParse()
-            getLogoFromParse()
             getBusnessPoints()
             self.saceLogoButton.isEnabled = true
             self.saveChangesButton.isEnabled = true
@@ -96,7 +95,6 @@ class BilgilerimVC: UIViewController, UIImagePickerControllerDelegate, UINavigat
             getObjectId()
             whenTextFiledsChange()
             getUserInfoFromParse()
-            getLogoFromParse()
             getBusnessPoints()
             self.saceLogoButton.isEnabled = true
             self.saveChangesButton.isEnabled = true
@@ -172,7 +170,6 @@ class BilgilerimVC: UIViewController, UIImagePickerControllerDelegate, UINavigat
                     self.lastnameTextField.text = "\(self.surnameArray.last!)"
                     self.usernameLabel.text = "\(self.userNameArray.last!)"
                     self.phoneNumberLabel.text = "\(self.phoneNumberArray.last!)"
-                   
                     
                 }
                 self.activityIndicator.stopAnimating()
@@ -232,10 +229,26 @@ class BilgilerimVC: UIViewController, UIImagePickerControllerDelegate, UINavigat
             else{
                 self.testePointArray.removeAll(keepingCapacity: false)
                 self.servicePointArray.removeAll(keepingCapacity: false)
+                self.BusinessLogoNameArray.removeAll(keepingCapacity: false)
                 
                 for object in objects! {
                     self.testePointArray.append(object.object(forKey: "LezzetPuan") as! String)
                      self.servicePointArray.append(object.object(forKey: "HizmetPuan") as! String)
+                    
+                    self.BusinessLogoNameArray.append(object.object(forKey: "image") as! PFFile)
+                    
+                    self.BusinessLogoNameArray.last?.getDataInBackground(block: { (data, error) in
+                        if error != nil{
+                            let alert = UIAlertController(title: "HATA", message: error?.localizedDescription, preferredStyle: UIAlertControllerStyle.alert)
+                            let okButton = UIAlertAction(title: "TAMAM", style: UIAlertActionStyle.cancel, handler: nil)
+                            alert.addAction(okButton)
+                            self.present(alert, animated: true, completion: nil)
+                            self.logoImageView.image = UIImage(named: "QRIcınDokun.png")
+                        }
+                        else{
+                            self.logoImageView.image = UIImage(data: (data)!)
+                        }
+                    })
                     
                 }
                 if self.testePointArray.isEmpty == false && self.servicePointArray.isEmpty == false{
@@ -276,45 +289,6 @@ class BilgilerimVC: UIViewController, UIImagePickerControllerDelegate, UINavigat
         }
     }
     
-    func getLogoFromParse(){
-        let query = PFQuery(className: "BusinessInformation")
-        query.whereKey("businessUserName", equalTo: (PFUser.current()?.username)!)
-        query.whereKeyExists("image")
-        query.findObjectsInBackground { (objects, error) in
-            
-            if error != nil{
-                let alert = UIAlertController(title: "HATA", message: error?.localizedDescription, preferredStyle: UIAlertControllerStyle.alert)
-                let okButton = UIAlertAction(title: "TAMAM", style: UIAlertActionStyle.cancel, handler: nil)
-                alert.addAction(okButton)
-                self.present(alert, animated: true, completion: nil)
-            }
-            else{
-                self.BusinessLogoNameArray.removeAll(keepingCapacity: false)
-                
-                for object in objects!{
-
-                    self.BusinessLogoNameArray.append(object.object(forKey: "image") as! PFFile)
-                    
-                    self.BusinessLogoNameArray.last?.getDataInBackground(block: { (data, error) in
-                        if error != nil{
-                            let alert = UIAlertController(title: "HATA", message: error?.localizedDescription, preferredStyle: UIAlertControllerStyle.alert)
-                            let okButton = UIAlertAction(title: "TAMAM", style: UIAlertActionStyle.cancel, handler: nil)
-                            alert.addAction(okButton)
-                            self.present(alert, animated: true, completion: nil)
-                            self.logoImageView.image = UIImage(named: "QRIcınDokun.png")
-                        }
-                        else{
-                            self.logoImageView.image = UIImage(data: (data)!)
-    
-                            
-                        }
-                    })
-                }
-            }
-        }
-        
-    }
-
     @objc func selectImage() {
         
         let picker = UIImagePickerController()
