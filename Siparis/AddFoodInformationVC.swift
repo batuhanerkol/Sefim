@@ -17,12 +17,13 @@ class AddFoodInformationVC: UIViewController, UIImagePickerControllerDelegate, U
     var hammaddeToplamAdiArray = [String]()
     var hammaddeMiktarlariArray = [String]()
     
-    var hammaddePicker = UIPickerView()
+     var hammadde1Picker = UIPickerView()
      var hammadde2Picker = UIPickerView()
      var hammadde3Picker = UIPickerView()
      var hammadde4Picker = UIPickerView()
+    var hammadde5Picker = UIPickerView()
     
-
+   var bosFoto = UIImage()
     
     @IBOutlet weak var yorumTextField: UITextView!
     @IBOutlet weak var confirmButton: UIButton!
@@ -30,7 +31,7 @@ class AddFoodInformationVC: UIViewController, UIImagePickerControllerDelegate, U
     @IBOutlet weak var textField: UITextField!
     @IBOutlet weak var selectedImage: UIImageView!
     
-
+    @IBOutlet weak var hammadde5Text: UITextField!
     @IBOutlet weak var hammadde1Text: UITextField!
     @IBOutlet weak var hammadde2Text: UITextField!
     @IBOutlet weak var hammadde3Text: UITextField!
@@ -39,10 +40,9 @@ class AddFoodInformationVC: UIViewController, UIImagePickerControllerDelegate, U
     @IBOutlet weak var miktar2Text: UITextField!
     @IBOutlet weak var miktar3Text: UITextField!
     @IBOutlet weak var miktar4Text: UITextField!
+    @IBOutlet weak var miktar5Text: UITextField!
     
-    
-        var activityIndicator:UIActivityIndicatorView = UIActivityIndicatorView()
-    
+    var activityIndicator:UIActivityIndicatorView = UIActivityIndicatorView()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -50,14 +50,12 @@ class AddFoodInformationVC: UIViewController, UIImagePickerControllerDelegate, U
         //internet kontrolu
         NotificationCenter.default.addObserver(self, selector: #selector(statusManager), name: .flagsChanged, object: Network.reachability)
         updateUserInterface()
-
-
+        
         // yemek bilgisi eklerken Fotograf ekleyebilme ayarları
           selectedImage.isUserInteractionEnabled = true
           let gestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(AddFoodInformationVC.selectImage))
           selectedImage.addGestureRecognizer(gestureRecognizer)
         
-     
         // loading sembolu
         activityIndicator.center = self.view.center
         activityIndicator.hidesWhenStopped = true
@@ -69,21 +67,26 @@ class AddFoodInformationVC: UIViewController, UIImagePickerControllerDelegate, U
           miktar2Text.delegate = self
           miktar3Text.delegate = self
           miktar4Text.delegate = self
+         miktar5Text.delegate = self
         
-        hammaddePicker.delegate = self
+        hammadde1Picker.delegate = self
         hammadde2Picker.delegate = self
         hammadde3Picker.delegate = self
         hammadde4Picker.delegate = self
+        hammadde5Picker.delegate = self
         
         // text e tıklandığında listeden seç, ekranını çıkartmak için
-        hammadde1Text.inputView = hammaddePicker
+        hammadde1Text.inputView = hammadde1Picker
         hammadde2Text.inputView = hammadde2Picker
         hammadde3Text.inputView = hammadde3Picker
         hammadde4Text.inputView = hammadde4Picker
+        hammadde5Text.inputView = hammadde5Picker
         
     }
     override func viewWillAppear(_ animated: Bool) {
         updateUserInterface()
+        
+        bosFoto = UIImage(named: "bos.png")!
     }
     
     // İ.k Kontrolü
@@ -128,13 +131,12 @@ class AddFoodInformationVC: UIViewController, UIImagePickerControllerDelegate, U
         hammadde2Text.inputAccessoryView = toolBar
         hammadde3Text.inputAccessoryView = toolBar
         hammadde4Text.inputAccessoryView = toolBar
+        hammadde5Text.inputAccessoryView = toolBar
         
     }
     @objc func dismissKeyboard(){
         view.endEditing(true)
     }
-    
-
     
     @objc func selectImage() {
         
@@ -145,32 +147,36 @@ class AddFoodInformationVC: UIViewController, UIImagePickerControllerDelegate, U
         self.present(picker, animated: true, completion: nil)
     }
     
+    var fotoKontrol = false
+    
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
         selectedImage.image = info[UIImagePickerControllerEditedImage] as? UIImage
         self.dismiss(animated: true, completion: nil)
+        
+     self.fotoKontrol = true
     }
 
-    
-    
     @IBAction func confirmButtonPressed(_ sender: Any) {
-        // loading sembolu, erişim engelleyici baslatma
-        activityIndicator.startAnimating()
-        UIApplication.shared.beginIgnoringInteractionEvents()
-    
+        if self.hammadde1Text.text != self.hammadde2Text.text && self.hammadde1Text.text != self.hammadde3Text.text && self.hammadde1Text.text != self.hammadde4Text.text && self.hammadde1Text.text != self.hammadde5Text.text && self.hammadde2Text.text != self.hammadde3Text.text && self.hammadde2Text.text != self.hammadde4Text.text && self.hammadde2Text.text != self.hammadde5Text.text && self.hammadde3Text.text != self.hammadde4Text.text && self.hammadde3Text.text != self.hammadde5Text.text && self.hammadde4Text.text != self.hammadde5Text.text {
         addFoodInfo()
-     
+        }else{
+            let alert = UIAlertController(title: "Hammadde İsimleri Aynı Olamaz", message: "Lütfen Kontrol Edin", preferredStyle: UIAlertController.Style.alert)
+            let okButton = UIAlertAction(title: "TAMAM", style: UIAlertAction.Style.cancel, handler: nil)
+            alert.addAction(okButton)
+            self.present(alert, animated: true, completion: nil)
+        }
     }
     
     func addFoodInfo(){
+        activityIndicator.startAnimating()
+        UIApplication.shared.beginIgnoringInteractionEvents()
         
-        if textField.text != "" && yorumTextField.text != "" && priceTextField.text != ""  {
+        if textField.text != "" && priceTextField.text != ""  {
             if controlTextFields(){
-           
+                
             self.confirmButton.isHidden = true
-            
             addFiyatToArray()
 
-            
             let foodInformation = PFObject(className: "FoodInformation")
             foodInformation["foodName"] = textField.text!
             foodInformation["foodInformation"] = yorumTextField.text!
@@ -178,20 +184,27 @@ class AddFoodInformationVC: UIViewController, UIImagePickerControllerDelegate, U
             foodInformation["foodNameOwner"] = PFUser.current()!.username!
             foodInformation["foodTitle"] = selectecTitle
             foodInformation["BusinessName"] = businessName
-            foodInformation["HesapOnaylandi"] = ""
+            foodInformation["HesapOnaylandi"] = "Evet"
             foodInformation["Hammadde"] = hammaddeToplamAdiArray
             foodInformation["HammaddeMiktarlari"] = hammaddeMiktarlariArray
             foodInformation["MenudeGorunsun"] = "Evet"
-            
-
-            
+        
+                if self.fotoKontrol == true{
+                    
             if let imageData = UIImageJPEGRepresentation(selectedImage.image!, 0.5){
                 foodInformation["image"] = PFFile(name: "image.jpg", data: imageData)
             }
-            
+                }
+                else{
+                    selectedImage.image = self.bosFoto
+                   if let imageData = UIImagePNGRepresentation(self.bosFoto){
+                        foodInformation["image"] = PFFile(name: "image.jpg", data: imageData)
+                    }
+                }
+                
             foodInformation.saveInBackground { (success, error) in
                 
-                if self.textField.text != "" && self.yorumTextField.text != "" && self.priceTextField.text != ""{
+                if self.textField.text != "" && self.priceTextField.text != ""{
                     
                     if error != nil{
                         let alert = UIAlertController(title: "HATA", message: error?.localizedDescription, preferredStyle: UIAlertControllerStyle.alert)
@@ -214,17 +227,23 @@ class AddFoodInformationVC: UIViewController, UIImagePickerControllerDelegate, U
                         self.hammadde2Text.text = ""
                         self.hammadde3Text.text = ""
                         self.hammadde4Text.text = ""
+                        self.hammadde5Text.text = ""
+                        
                         self.miktar1Text.text = ""
                         self.miktar2Text.text = ""
                         self.miktar3Text.text = ""
                         self.miktar4Text.text = ""
+                        self.miktar5Text.text = ""
+                        self.fotoKontrol = false
+                        
+                        self.view.endEditing(true)
                         
                         self.activityIndicator.stopAnimating()
                         UIApplication.shared.endIgnoringInteractionEvents()
                         
                     }
                 }
-                else if self.textField.text == "" || self.yorumTextField.text == "" || self.priceTextField.text == ""{
+                else if self.textField.text == "" || self.priceTextField.text == ""{
                     let alert = UIAlertController(title: "HATA", message: "Lütfen Bilgileri Tam Giriniz", preferredStyle: UIAlertControllerStyle.alert)
                     let okButton = UIAlertAction(title: "TAMAM", style: UIAlertActionStyle.cancel, handler: nil)
                     alert.addAction(okButton)
@@ -295,6 +314,17 @@ class AddFoodInformationVC: UIViewController, UIImagePickerControllerDelegate, U
             UIApplication.shared.endIgnoringInteractionEvents()
             return false
         }
+       else if self.hammadde5Text.text != "" && miktar5Text.text == "" {
+            let alert = UIAlertController(title: "Lütfen 5. Miktarı Girin", message: "", preferredStyle: UIAlertControllerStyle.alert)
+            let okButton = UIAlertAction(title: "TAMAM", style: UIAlertActionStyle.cancel, handler: nil)
+            alert.addAction(okButton)
+            self.present(alert, animated: true, completion: nil)
+            
+            self.activityIndicator.stopAnimating()
+            UIApplication.shared.endIgnoringInteractionEvents()
+            
+            return false
+        }
         else{
             self.activityIndicator.stopAnimating()
             UIApplication.shared.endIgnoringInteractionEvents()
@@ -317,6 +347,10 @@ class AddFoodInformationVC: UIViewController, UIImagePickerControllerDelegate, U
                     
                     if hammadde4Text.text != "" && miktar4Text.text != ""{
                         hammaddeMiktarlariArray.append(miktar4Text.text!)
+                        
+                        if hammadde5Text.text != "" && miktar5Text.text != ""{
+                            hammaddeMiktarlariArray.append(miktar4Text.text!)
+                        }
                     }
                 }
             }
@@ -398,7 +432,7 @@ class AddFoodInformationVC: UIViewController, UIImagePickerControllerDelegate, U
     }
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
         
-        if pickerView == hammaddePicker{
+        if pickerView == hammadde1Picker{
               hammadde1Text.text = hammaddeAdiArray[row]
             hammaddeToplamAdiArray.append( hammadde1Text.text!)
         }
@@ -414,6 +448,10 @@ class AddFoodInformationVC: UIViewController, UIImagePickerControllerDelegate, U
             hammadde4Text.text = hammaddeAdiArray[row]
              hammaddeToplamAdiArray.append( hammadde4Text.text!)
         }
+        else if pickerView == hammadde5Picker{
+            hammadde5Text.text = hammaddeAdiArray[row]
+            hammaddeToplamAdiArray.append( hammadde5Text.text!)
+        }
      
     
     }
@@ -423,12 +461,12 @@ class AddFoodInformationVC: UIViewController, UIImagePickerControllerDelegate, U
     }
     
     func textFieldDidBeginEditing(_ textField: UITextField) {
-        moveTextField(textField, moveDistance: -250, up: true)
+        moveTextField(textField, moveDistance: -200, up: true)
     }
     
     // Finish Editing The Text Field
     func textFieldDidEndEditing(_ textField: UITextField) {
-        moveTextField(textField, moveDistance: -250, up: false)
+        moveTextField(textField, moveDistance: -200, up: false)
     }
     
     // Hide the keyboard when the return key pressed

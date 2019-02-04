@@ -226,7 +226,7 @@ class FoodDetailsTVC: UITableViewController {
             deleteData(foodIndexName: foodIndexName!)
             }
             else{
-                let alert = UIAlertController(title: "Sipariş Geçmişinde Bulunduğu İçin Silemezsiniz", message: "Ürünün Menünüzde Görünmemesi İçin Yandaki Alana Tıklayabilirsiniz", preferredStyle: UIAlertControllerStyle.alert)
+                let alert = UIAlertController(title: "Sipariş Geçmişinde Bulunduğu İçin Silemezsiniz", message: "Ürünün menünüzde görünmemesi için ürün adına sonrasın da - Menu de Gösterme -tıklayabilirsiniz.", preferredStyle: UIAlertControllerStyle.alert)
                 let okButton = UIAlertAction(title: "TAMAM", style: UIAlertActionStyle.cancel, handler: nil)
                 alert.addAction(okButton)
                 self.present(alert, animated: true, completion: nil)
