@@ -87,7 +87,7 @@ class HammaddeVC: UIViewController, UITableViewDelegate, UITableViewDataSource, 
         let toolBar = UIToolbar()
         toolBar.sizeToFit()
         
-        let doneButton = UIBarButtonItem(title: "Seç", style: .plain, target: self, action: #selector(OncekiSiparislerVC.getPaidFoodStock))
+        let doneButton = UIBarButtonItem(title: "Seç", style: .plain, target: self, action: #selector(HammaddeVC.getPaidFoodStock))
         
         toolBar.setItems([doneButton], animated: false)
         toolBar.isUserInteractionEnabled = true
@@ -103,6 +103,7 @@ class HammaddeVC: UIViewController, UITableViewDelegate, UITableViewDataSource, 
 
             if error != nil{
                 self.alertMessage(title: "HATA", message: (error?.localizedDescription)!)
+                
                 self.activityIndicator.stopAnimating()
                 UIApplication.shared.endIgnoringInteractionEvents()
             }
@@ -113,6 +114,7 @@ class HammaddeVC: UIViewController, UITableViewDelegate, UITableViewDataSource, 
                     self.hammaddeAdiArray.append(object.object(forKey: "HammaddeAdi") as! String)
                 }
                 print("hammaddeAdi",self.hammaddeAdiArray)
+                
                 self.activityIndicator.stopAnimating()
                 UIApplication.shared.endIgnoringInteractionEvents()
             }
@@ -131,11 +133,12 @@ class HammaddeVC: UIViewController, UITableViewDelegate, UITableViewDataSource, 
             if error != nil {
                 
             } else {
-                self.foodNamesArray.removeAll()
+                self.foodNamesArray.removeAll(keepingCapacity: false)
                 self.hammaddeAdlari.removeAll(keepingCapacity: false)
                 self.hammaddeMiktarlari.removeAll(keepingCapacity: false)
                 
                 for object in objects! {
+                    
                     self.foodNamesArray.append(object.object(forKey: "foodName") as! String)
                     self.hammaddeAdlari.append(object.object(forKey: "Hammadde") as! [String])
                     self.hammaddeMiktarlari.append(object.object(forKey: "HammaddeMiktarlari") as! [String])
@@ -154,10 +157,9 @@ class HammaddeVC: UIViewController, UITableViewDelegate, UITableViewDataSource, 
     var allOdendiSiparisSayiArray = [Int]()
     
     @objc func getPaidFoodStock() {
-        odendiSiparisArray.removeAll()
-        allOdendiSiparisArray.removeAll()
-        allOdendiSiparisSayiArray.removeAll()
         
+        print("---------------------- getPaidFoodStock ---------------------")
+    
         let query = PFQuery(className: "VerilenSiparisler")
         query.whereKey("IsletmeSahibi", equalTo: (PFUser.current()?.username)!)
         query.whereKey("HesapOdendi", equalTo: "Evet")
@@ -168,6 +170,9 @@ class HammaddeVC: UIViewController, UITableViewDelegate, UITableViewDataSource, 
                 
             } else {
                 self.allOdendiSiparisArray.removeAll()
+                self.odendiSiparisArray.removeAll()
+                self.allOdendiSiparisSayiArray.removeAll()
+            
                 for object in objects! {
                     self.odendiSiparisArray.append(object["SiparisAdi"] as! [String])
                     
@@ -188,7 +193,14 @@ class HammaddeVC: UIViewController, UITableViewDelegate, UITableViewDataSource, 
     var stringToplamHammaddeSayiArray = [String]()
     
     func calculateStokAdet(){
+        print("---------------------- calculateStokAdet ---------------------")
+        
         allOdendiSiparisSayiArray.removeAll()
+        allOdendiSiparisSayiArray.removeAll()
+        allOdendiSiparisSayiArray.removeAll()
+        allOdendiSiparisSayiArray.removeAll()
+        allOdendiSiparisSayiArray.removeAll()
+      
         for foodName in self.foodNamesArray {
             var counter = 0
             for siparisFoodName in self.allOdendiSiparisArray {
@@ -204,6 +216,8 @@ class HammaddeVC: UIViewController, UITableViewDelegate, UITableViewDataSource, 
         print("siparis verilmis yemek sayilari:", self.allOdendiSiparisSayiArray)
         hammaddeTableView.reloadData()
         
+        allcarpilmisHammaddeArray.removeAll(keepingCapacity: false)
+        allHammaddeAdlari.removeAll(keepingCapacity: false)
         var hammaddeSayi = 0
         while hammaddeSayi < self.foodNamesArray.count{
             
@@ -238,6 +252,7 @@ class HammaddeVC: UIViewController, UITableViewDelegate, UITableViewDataSource, 
         var toplamHammadde = 0
         var kontrolIndex0 = 0
         
+        toplamHammaddeSayiArray.removeAll(keepingCapacity: false)
         while hammaddeIndex1 < self.hammaddeAdiArray.count{// kişinin girdiği hammadde sayısı kadar dönecek
             print("---------------------------- ILK DONGU----------------------------------")
             
@@ -304,7 +319,48 @@ class HammaddeVC: UIViewController, UITableViewDelegate, UITableViewDataSource, 
             
             print("---------------------------- SON ----------------------------------")
     }
+        stringToplamHammaddeSayiArray.removeAll(keepingCapacity: false)
          self.stringToplamHammaddeSayiArray = toplamHammaddeSayiArray.map { String($0) }
+        
+        print("carpilmisHammaddeArray:",self.carpilmisHammaddeArray)
+        print("allcarpilmisHammaddeArray:",self.allcarpilmisHammaddeArray)
+        print("allHammaddeAdlari:",self.allHammaddeAdlari)
+        print("toplamHammaddeSayiArray:",self.toplamHammaddeSayiArray)
+        print("stringToplamHammaddeSayiArray:",self.stringToplamHammaddeSayiArray)
+   
+    
+    }
+    
+    
+  
+    func deleteData(hammaddeNameIndex : String){
+        let query = PFQuery(className: "HammaddeBilgileri")
+        query.whereKey("HammaddeSahibi", equalTo: "\(PFUser.current()!.username!)")
+        query.whereKey("HammaddeAdi", equalTo: hammaddeNameIndex)
+        
+        query.findObjectsInBackground { (objects, error) in
+            if error != nil{
+                let alert = UIAlertController(title: "HATA", message: error?.localizedDescription, preferredStyle: UIAlertControllerStyle.alert)
+                let okButton = UIAlertAction(title: "TAMAM", style: UIAlertActionStyle.cancel, handler: nil)
+                alert.addAction(okButton)
+                self.present(alert, animated: true, completion: nil)
+                
+                self.activityIndicator.stopAnimating()
+                UIApplication.shared.endIgnoringInteractionEvents()
+            }
+            else{
+                for object in objects! {
+                    object.deleteInBackground()
+                }
+
+                self.getHammaddeInfo()
+                
+                self.activityIndicator.stopAnimating()
+                UIApplication.shared.endIgnoringInteractionEvents()
+            }
+            
+        }
+        
     }
  
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -339,7 +395,32 @@ class HammaddeVC: UIViewController, UITableViewDelegate, UITableViewDataSource, 
         self.performSegue(withIdentifier: "hammaddeDetails", sender: nil)
         
     }
-    
+     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
+        if (editingStyle == .delete){
+            
+            activityIndicator.startAnimating()
+            UIApplication.shared.beginIgnoringInteractionEvents()
+            
+            let hammaddeNameIndex = hammaddeAdiArray[indexPath.row]
+            
+            if  self.allHammaddeAdlari.contains(hammaddeNameIndex) == false{
+                hammaddeAdiArray.remove(at: indexPath.item)
+                tableView.deleteRows(at: [indexPath], with: .automatic)
+                deleteData(hammaddeNameIndex: hammaddeNameIndex)
+                
+                
+            }
+            else{
+                let alert = UIAlertController(title: "Silinmek İstenen Hammadde Menü de Bulunan Ürün-Ürünlerde Bulunduğu için Silemezsiniz", message: "", preferredStyle: UIAlertControllerStyle.alert)
+                let okButton = UIAlertAction(title: "TAMAM", style: UIAlertActionStyle.cancel, handler: nil)
+                alert.addAction(okButton)
+                self.present(alert, animated: true, completion: nil)
+                
+                self.activityIndicator.stopAnimating()
+                UIApplication.shared.endIgnoringInteractionEvents()
+            }
+        }
+    }
     func numberOfComponents(in pickerView: UIPickerView) -> Int {
         return 1
     }
@@ -353,7 +434,6 @@ class HammaddeVC: UIViewController, UITableViewDelegate, UITableViewDataSource, 
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
         chosenMounth = mounthsArray[row]
         mounthTextField.text! = chosenMounth
-        
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
