@@ -41,8 +41,6 @@ class MasaVC: UIViewController {
     var buttonWidth = 80
     var buttonHeight = 80
     
-    var spacer = 10
-    
     var tableNumber = 0
     
     var tableNumberArray = [String]()
@@ -257,7 +255,7 @@ class MasaVC: UIViewController {
                      self.tableButtonBackgroundColorChange[tableButtonIndex].backgroundColor = UIColor.gray
                     self.siraLabelBackgroundColorChange[tableButtonIndex].backgroundColor = UIColor.gray
                     
-                     self.siraLabelBackgroundColorChange[tableButtonIndex].text = "sıra:..."
+                     self.siraLabelBackgroundColorChange[tableButtonIndex].text = "Sıra:..."
                     
                         }
                 
@@ -308,11 +306,11 @@ class MasaVC: UIViewController {
                     self.tableNumber = self.tableNumber + 1
                     
                     if CGFloat(self.xLocation) < self.screenWidth - CGFloat(self.buttonWidth * 2) {
-                        self.xLocation = self.xLocation + self.buttonWidth + self.spacer
+                        self.xLocation = self.xLocation + self.buttonWidth + 10
                     }
                     else if CGFloat(self.xLocation) >= self.screenWidth - CGFloat(self.buttonWidth * 2)  {
                         self.xLocation = 10
-                        self.yLocation = self.yLocation + self.buttonWidth + self.spacer + 10
+                        self.yLocation = self.yLocation + self.buttonWidth + 15
                     }
                     
                 }
@@ -344,15 +342,20 @@ class MasaVC: UIViewController {
     func createSiraLabel(){
         siraLabel = UILabel()
         if UIDevice.current.orientation.isPortrait{
-        siraLabel.frame = CGRect(x:   xLocation, y:   yLocation - (buttonHeight / 3) + 25, width: buttonWidth, height: buttonHeight / 3)
+        siraLabel.frame = CGRect(x:   xLocation, y:   yLocation , width: buttonWidth, height: buttonHeight / 3)
         }else{
-            siraLabel.frame = CGRect(x:   xLocation, y:   yLocation - (buttonHeight / 3) + 5, width: buttonWidth, height: buttonHeight / 3)
+            siraLabel.frame = CGRect(x:   xLocation, y:   yLocation , width: buttonWidth, height: buttonHeight / 3)
         }
         siraLabel.backgroundColor = tableBottomBackgroundColor
         siraLabel.textColor = .white
         siraLabel.text = "Sıra:..."
-        siraLabel.font = siraLabel.font.withSize(9)
+        siraLabel.textAlignment = .center
         siraLabelBackgroundColorChange.append(siraLabel)
+        if screenWidth > 1000{
+            siraLabel.font = siraLabel.font.withSize(20)
+        }else{
+            siraLabel.font = siraLabel.font.withSize(10)
+        }
         
         self.view.addSubview(siraLabel)
     }
@@ -396,11 +399,11 @@ class MasaVC: UIViewController {
                  tableNumber = tableNumber + 1
                 
                 if CGFloat(xLocation) < screenWidth - CGFloat(buttonWidth * 2) {
-                xLocation = xLocation + buttonWidth + spacer
+                xLocation = xLocation + buttonWidth + 10
                 }
                 else if CGFloat(xLocation) >= screenWidth - CGFloat(buttonWidth * 2)  {
                 xLocation = 10
-                yLocation = yLocation + buttonWidth + spacer
+                yLocation = yLocation + buttonWidth + 10
                 }
               
             }
