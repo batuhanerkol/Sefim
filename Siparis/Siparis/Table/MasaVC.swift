@@ -65,6 +65,11 @@ class MasaVC: UIViewController {
         return UIScreen.main.bounds.height
     }
     
+    @IBOutlet weak var greenLabel: UILabel!
+    @IBOutlet weak var grayLabel: UILabel!
+    @IBOutlet weak var redLabel: UILabel!
+    @IBOutlet weak var blueLabel: UILabel!
+    @IBOutlet weak var orangeLabel: UILabel!
     @IBOutlet weak var tableNumberLabel: UILabel!
     @IBOutlet weak var createButton: UIButton!
     @IBOutlet weak var textField: UITextField!
@@ -132,17 +137,36 @@ class MasaVC: UIViewController {
             
             xLocation = 10
             yLocation = 90
+            
+            orangeLabel.font = orangeLabel.font.withSize(15)
+            grayLabel.font = orangeLabel.font.withSize(15)
+            redLabel.font = orangeLabel.font.withSize(15)
+            greenLabel.font = orangeLabel.font.withSize(15)
+            blueLabel.font = blueLabel.font.withSize(15)
         }
         else if screenWidth > 1200{
             buttonWidth = 140
             buttonHeight = 140
-        }
+            
+            orangeLabel.font = orangeLabel.font.withSize(20)
+            grayLabel.font = orangeLabel.font.withSize(20)
+            redLabel.font = orangeLabel.font.withSize(20)
+            greenLabel.font = orangeLabel.font.withSize(20)
+            blueLabel.font = blueLabel.font.withSize(20)
+            
+            }
         else if screenWidth < 1000{
             buttonWidth = 40
             buttonHeight = 40
             
             xLocation = 10
             yLocation = 70
+        
+            orangeLabel.font = orangeLabel.font.withSize(12)
+            grayLabel.font = orangeLabel.font.withSize(12)
+            redLabel.font = orangeLabel.font.withSize(12)
+            greenLabel.font = orangeLabel.font.withSize(12)
+            blueLabel.font = blueLabel.font.withSize(12)
         }
      
     }
@@ -300,6 +324,7 @@ class MasaVC: UIViewController {
                     
                     
                 }
+                if self.tableNumberArray.isEmpty == false{
                 while self.tableNumber < self.mevcutMasaSayisi {
                     self.createTableButton()
                     self.createSiraLabel()
@@ -314,6 +339,7 @@ class MasaVC: UIViewController {
                     }
                     
                 }
+                }
             }
         }
        
@@ -323,8 +349,10 @@ class MasaVC: UIViewController {
     var tableButton = UIButton()
     func createTableButton(){
         tableButton = UIButton()
+        
         if UIDevice.current.orientation.isPortrait{
-        tableButton.frame = CGRect(x:   xLocation, y:   yLocation + 25, width: buttonWidth, height: buttonHeight)
+            
+        tableButton.frame = CGRect(x:   xLocation, y:   yLocation + 30, width: buttonWidth, height: buttonHeight)
         }else{
             tableButton.frame = CGRect(x:   xLocation, y:   yLocation + 5 , width: buttonWidth, height: buttonHeight)
         }
@@ -341,8 +369,10 @@ class MasaVC: UIViewController {
     var siraLabel = UILabel()
     func createSiraLabel(){
         siraLabel = UILabel()
+        
         if UIDevice.current.orientation.isPortrait{
-        siraLabel.frame = CGRect(x:   xLocation, y:   yLocation , width: buttonWidth, height: buttonHeight / 3)
+            
+        siraLabel.frame = CGRect(x:   xLocation, y:   yLocation + 30, width: buttonWidth, height: buttonHeight / 3)
         }else{
             siraLabel.frame = CGRect(x:   xLocation, y:   yLocation , width: buttonWidth, height: buttonHeight / 3)
         }
@@ -371,73 +401,98 @@ class MasaVC: UIViewController {
    
     
     @IBAction func createButtonClicked(_ sender: Any) {
-        
-        if tableNumberLabel == nil {
-            let alert = UIAlertController(title: "Eski Masa Sayısını Silin", message: "", preferredStyle: UIAlertControllerStyle.alert)
-            let okButton = UIAlertAction(title: "TAMAM", style: UIAlertActionStyle.cancel, handler: nil)
-            alert.addAction(okButton)
-            self.present(alert, animated: true, completion: nil)
-        }
-        else if tableNumberLabel != nil{
             
         if textField.text != "" {
         
             dismissKeyboard()
-
             let query = PFQuery(className: "BusinessInformation")
-            query.whereKey("businessUserName", equalTo: "\(PFUser.current()!.username!)")
-            query.whereKeyExists("businessName")
+            query.whereKey("businessUserName", equalTo: (PFUser.current()?.username)!)
             
-            let textfieldInt: Int? = Int(textField.text!)
             
-            if textfieldInt! <= 50 {
-              
-            while tableNumber < textfieldInt! {
-                
-                 createTableButton()
-                createSiraLabel()
-                 tableNumber = tableNumber + 1
-                
-                if CGFloat(xLocation) < screenWidth - CGFloat(buttonWidth * 2) {
-                xLocation = xLocation + buttonWidth + 10
-                }
-                else if CGFloat(xLocation) >= screenWidth - CGFloat(buttonWidth * 2)  {
-                xLocation = 10
-                yLocation = yLocation + buttonWidth + 10
-                }
-              
-            }
-                query.getObjectInBackground(withId: objectId) { (objects, error) in
+            query.getObjectInBackground(withId: objectId) { (objects, error) in
+                if error != nil{
+                    let alert = UIAlertController(title: "HATA", message: error?.localizedDescription, preferredStyle: UIAlertController.Style.alert)
+                    let okButton = UIAlertAction(title: "TAMAM", style: UIAlertAction.Style.cancel, handler: nil)
+                    alert.addAction(okButton)
+                    self.present(alert, animated: true, completion: nil)
+                    
+                }else {
+                    
+                    objects!["MasaSayisi"] = self.textField.text
+                    objects!.saveInBackground(block: { (success, error) in
+                        
                         if error != nil{
-                            let alert = UIAlertController(title: "HATA", message: error?.localizedDescription, preferredStyle: UIAlertControllerStyle.alert)
-                            let okButton = UIAlertAction(title: "TAMAM", style: UIAlertActionStyle.cancel, handler: nil)
+                            let alert = UIAlertController(title: "Lütfen Tekrar Deneyin", message: "", preferredStyle: UIAlertController.Style.alert)
+                            let okButton = UIAlertAction(title: "TAMAM", style: UIAlertAction.Style.cancel, handler: nil)
+                            alert.addAction(okButton)
+                            self.present(alert, animated: true, completion: nil)
+                            
+                        }else{
+                            let alert = UIAlertController(title: "Lütfen Uygulamayı Baştan Başlatın", message: "", preferredStyle: UIAlertController.Style.alert)
+                            let okButton = UIAlertAction(title: "TAMAM", style: UIAlertAction.Style.cancel, handler: nil)
                             alert.addAction(okButton)
                             self.present(alert, animated: true, completion: nil)
                         }
-                        else{
-                            
-                            objects!["MasaSayisi"] = String(self.tableNumber)
-                             objects!.saveInBackground()
-                            
-                            let alert = UIAlertController(title: "Masa Oluşturuldu", message: error?.localizedDescription, preferredStyle: UIAlertControllerStyle.alert)
-                            let okButton = UIAlertAction(title: "TAMAM", style: UIAlertActionStyle.cancel, handler: nil)
-                            alert.addAction(okButton)
-                            self.present(alert, animated: true, completion: nil)
-                    }
+                    })
+                    
                 }
-             
-        }
                 
-            else{
-                let alert = UIAlertController(title: "En Fazla 50 Masa Olabilir", message: "", preferredStyle: UIAlertControllerStyle.alert)
-                let okButton = UIAlertAction(title: "TAMAM", style: UIAlertActionStyle.cancel, handler: nil)
-                alert.addAction(okButton)
-                self.present(alert, animated: true, completion: nil)
             }
-            tableNumberLabel.text!=textField.text!
-            self.textField.text = ""
-            createButton.isHidden = false
-            
+            //
+//            let query = PFQuery(className: "BusinessInformation")
+//            query.whereKey("businessUserName", equalTo: "\(PFUser.current()!.username!)")
+//            query.whereKeyExists("businessName")
+//
+//            let textfieldInt: Int? = Int(textField.text!)
+//
+//            if textfieldInt! <= 50 {
+//
+//            while tableNumber < textfieldInt! {
+//
+//                 createTableButton()
+//                createSiraLabel()
+//                 tableNumber = tableNumber + 1
+//
+//                if CGFloat(xLocation) < screenWidth - CGFloat(buttonWidth * 2) {
+//                xLocation = xLocation + buttonWidth + 10
+//                }
+//                else if CGFloat(xLocation) >= screenWidth - CGFloat(buttonWidth * 2)  {
+//                xLocation = 10
+//                yLocation = yLocation + buttonWidth + 10
+//                }
+//
+//            }
+//                query.getObjectInBackground(withId: objectId) { (objects, error) in
+//                        if error != nil{
+//                            let alert = UIAlertController(title: "HATA", message: error?.localizedDescription, preferredStyle: UIAlertControllerStyle.alert)
+//                            let okButton = UIAlertAction(title: "TAMAM", style: UIAlertActionStyle.cancel, handler: nil)
+//                            alert.addAction(okButton)
+//                            self.present(alert, animated: true, completion: nil)
+//                        }
+//                        else{
+//
+//                            objects!["MasaSayisi"] = String(self.tableNumber)
+//                             objects!.saveInBackground()
+//
+//                            let alert = UIAlertController(title: "Masa Oluşturuldu", message: error?.localizedDescription, preferredStyle: UIAlertControllerStyle.alert)
+//                            let okButton = UIAlertAction(title: "TAMAM", style: UIAlertActionStyle.cancel, handler: nil)
+//                            alert.addAction(okButton)
+//                            self.present(alert, animated: true, completion: nil)
+//                    }
+//                }
+//
+//        }
+//
+//            else{
+//                let alert = UIAlertController(title: "En Fazla 50 Masa Olabilir", message: "", preferredStyle: UIAlertControllerStyle.alert)
+//                let okButton = UIAlertAction(title: "TAMAM", style: UIAlertActionStyle.cancel, handler: nil)
+//                alert.addAction(okButton)
+//                self.present(alert, animated: true, completion: nil)
+//            }
+//            tableNumberLabel.text!=textField.text!
+//            self.textField.text = ""
+//            createButton.isHidden = false
+//
         }
     
         else{
@@ -446,7 +501,7 @@ class MasaVC: UIViewController {
             alert.addAction(okButton)
             self.present(alert, animated: true, completion: nil)
         }
-    }
+    
         
     }
     
