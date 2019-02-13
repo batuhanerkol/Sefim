@@ -61,7 +61,6 @@
 		B9FCE525213D90CE006BCB6C /* KareKodVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9FCE524213D90CE006BCB6C /* KareKodVC.swift */; };
 		B9FCE527213D90E0006BCB6C /* MasaVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9FCE526213D90E0006BCB6C /* MasaVC.swift */; };
 		B9FCE529213D90F5006BCB6C /* IsletmeProfilVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9FCE528213D90F5006BCB6C /* IsletmeProfilVC.swift */; };
-		B9FF8BE321EE6FD20088EA23 /* UygulamaHakkindaVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9FF8BE221EE6FD20088EA23 /* UygulamaHakkindaVC.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -122,7 +121,6 @@
 		B9FCE524213D90CE006BCB6C /* KareKodVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KareKodVC.swift; sourceTree = "<group>"; };
 		B9FCE526213D90E0006BCB6C /* MasaVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MasaVC.swift; sourceTree = "<group>"; };
 		B9FCE528213D90F5006BCB6C /* IsletmeProfilVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IsletmeProfilVC.swift; sourceTree = "<group>"; };
-		B9FF8BE221EE6FD20088EA23 /* UygulamaHakkindaVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UygulamaHakkindaVC.swift; sourceTree = "<group>"; };
 		C4FBEC4FE39D0A3680A56A0E /* Pods-Siparis.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Siparis.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Siparis/Pods-Siparis.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -224,7 +222,6 @@
 				B9F6ED5F21D01675009066A5 /* HammaddeVC.swift */,
 				B9F6ED6121D017B9009066A5 /* HammaddeEkleVC.swift */,
 				B9F6ED6521D0281A009066A5 /* HammaddeDetails.swift */,
-				B9FF8BE221EE6FD20088EA23 /* UygulamaHakkindaVC.swift */,
 				B917458421CBB9B300F569D6 /* EkranSifresiVC.swift */,
 				09E5C93621F7721E00A900B2 /* TotalHammaddeCell.swift */,
 				B9F6ED6321D0256D009066A5 /* HammaddeCell.swift */,
@@ -430,7 +427,6 @@
 				B941D00621C03FDE00CF7246 /* PaymentVC.swift in Sources */,
 				B9F529D02144364F00BD45A6 /* FoodDetailsTVC.swift in Sources */,
 				B941CFFE21BFBA9300CF7246 /* ManuelEkleVC.swift in Sources */,
-				B9FF8BE321EE6FD20088EA23 /* UygulamaHakkindaVC.swift in Sources */,
 				B9828012215D2B4700CBE76B /* CreateQR.swift in Sources */,
 				B9F529CE2144239E00BD45A6 /* AddFoodTitleVC.swift in Sources */,
 				B9FCE51F213D8E49006BCB6C /* SingInVC.swift in Sources */,

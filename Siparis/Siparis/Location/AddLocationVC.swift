@@ -59,6 +59,10 @@ class AddLocationVC: UIViewController, MKMapViewDelegate, CLLocationManagerDeleg
     override func viewWillAppear(_ animated: Bool) {
         self.chosenLatitude = ""
         self.chosenLongitude = ""
+       
+        if globalBusinessNameTextFieldKonumVC != ""{
+            businessNameTextField.isUserInteractionEnabled = false
+        }
         
         updateUserInterface()
     }
@@ -131,6 +135,7 @@ class AddLocationVC: UIViewController, MKMapViewDelegate, CLLocationManagerDeleg
     // seçilen pin in konumunu kaytı etmek
     // mevcut lokasyon bilgilerini güncellemek
     @IBAction func addButtonClicked(_ sender: Any) {
+       
         if globalBusinessNameTextFieldKonumVC != ""{
             
             if self.chosenLatitude != "" && self.chosenLongitude != ""{
@@ -168,7 +173,7 @@ class AddLocationVC: UIViewController, MKMapViewDelegate, CLLocationManagerDeleg
         }else{
             if businessNameTextField.text != "" {// eğer önceden kayıt edilmiş lokasyon yok ise burada tanımlanıyor 
                 saveLocation()
-                self.performSegue(withIdentifier: "addLocationVCToKonumVC", sender: nil)
+               
             }
             else{
                 let alert = UIAlertController(title: "HATA", message: "Lütfen İşletme İsmi Giriniz", preferredStyle: UIAlertControllerStyle.alert)
@@ -190,8 +195,8 @@ class AddLocationVC: UIViewController, MKMapViewDelegate, CLLocationManagerDeleg
         object["longitude"] = self.chosenLongitude
         object["Lokasyon"] = actualLocation
         object["businessName"] = businessNameTextField.text!
-        object["LezzetPuan"] = ""
-        object["HizmetPuan"] = ""
+        object["LezzetPuan"] = "0"
+        object["HizmetPuan"] = "0"
         object["MasaSayisi"] = "0"
         object["HesapOnaylandi"] = ""
         object["EkranSifresi"] = ""
@@ -208,7 +213,7 @@ class AddLocationVC: UIViewController, MKMapViewDelegate, CLLocationManagerDeleg
                 self.present(alert, animated: true, completion: nil)
             }
             else{
-             
+              self.performSegue(withIdentifier: "addLocationVCToKonumVC", sender: nil)
             }
         }
         
@@ -245,12 +250,12 @@ class AddLocationVC: UIViewController, MKMapViewDelegate, CLLocationManagerDeleg
     }
   
     func textFieldDidBeginEditing(_ textField: UITextField) {
-        moveTextField(textField, moveDistance: -250, up: true)
+        moveTextField(textField, moveDistance: -200, up: true)
     }
     
     // Finish Editing The Text Field
     func textFieldDidEndEditing(_ textField: UITextField) {
-        moveTextField(textField, moveDistance: -250, up: false)
+        moveTextField(textField, moveDistance: -200, up: false)
     }
     
     // Hide the keyboard when the return key pressed

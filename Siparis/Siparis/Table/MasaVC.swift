@@ -316,11 +316,10 @@ class MasaVC: UIViewController {
             else{
                 for object in objects!{
                     self.tableNumberArray.append(object.object(forKey: "MasaSayisi") as! String)
-                    self.tableNumberLabel.text = "\(self.tableNumberArray.last!)"
+                
+                    self.textField.text! = "\(self.tableNumberArray.last!)"
                     
-                    self.textField.text! = self.tableNumberLabel.text!
-                    
-                    self.mevcutMasaSayisi = Int(self.tableNumberLabel.text!)!
+                    self.mevcutMasaSayisi = Int(self.tableNumberArray.last!)!
                     
                     
                 }
