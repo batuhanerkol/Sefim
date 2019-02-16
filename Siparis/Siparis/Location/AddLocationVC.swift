@@ -59,11 +59,11 @@ class AddLocationVC: UIViewController, MKMapViewDelegate, CLLocationManagerDeleg
     override func viewWillAppear(_ animated: Bool) {
         self.chosenLatitude = ""
         self.chosenLongitude = ""
+        whenTextFiledsChange()
        
         if globalBusinessNameTextFieldKonumVC != ""{
             businessNameTextField.isUserInteractionEnabled = false
         }
-        
         updateUserInterface()
     }
     // i.k sonrası yapıalcaklar
@@ -82,11 +82,13 @@ class AddLocationVC: UIViewController, MKMapViewDelegate, CLLocationManagerDeleg
         case .wifi:
          print("wifiConnection")
              self.addButton.isEnabled = true
+        
             getObjectId()
             
         case .wwan:
           print("wwanConnection")
              self.addButton.isEnabled = true
+         
             getObjectId()
         }
     }
@@ -245,34 +247,25 @@ class AddLocationVC: UIViewController, MKMapViewDelegate, CLLocationManagerDeleg
             }
         }
     }
+   var i = 0
+    func whenTextFiledsChange(){
+        businessNameTextField.addTarget(self, action: #selector(AddLocationVC.textFieldDidChange(_:)), for: UIControlEvents.editingChanged)
+        
+    }
+    @objc func textFieldDidChange(_ textField: UITextField) {
+        if self.i == 0{
+        let alert = UIAlertController(title: "DİKKAT!", message: "İşletme İsmi Kayıt Edildikten Sonra Değiştirilemez, Lütfen Doğru Yazıldığından Emin Olduktan Sonra Kayıt Edin", preferredStyle: UIAlertController.Style.alert)
+        let okButton = UIAlertAction(title: "TAMAM", style: UIAlertAction.Style.cancel, handler: nil)
+        alert.addAction(okButton)
+        self.present(alert, animated: true, completion: nil)
+            i += 1
+        }
+    }
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         self.view.endEditing(true)
     }
-  
-    func textFieldDidBeginEditing(_ textField: UITextField) {
-        moveTextField(textField, moveDistance: -200, up: true)
-    }
-    
-    // Finish Editing The Text Field
-    func textFieldDidEndEditing(_ textField: UITextField) {
-        moveTextField(textField, moveDistance: -200, up: false)
-    }
-    
-    // Hide the keyboard when the return key pressed
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-        textField.resignFirstResponder()
-        return true
-    }
-    
-    // Move the text field in a pretty animation!
-    func moveTextField(_ textField: UITextField, moveDistance: Int, up: Bool) {
-        let moveDuration = 0.3
-        let movement: CGFloat = CGFloat(up ? moveDistance : -moveDistance)
-        
-        UIView.beginAnimations("animateTextField", context: nil)
-        UIView.setAnimationBeginsFromCurrentState(true)
-        UIView.setAnimationDuration(moveDuration)
-        self.view.frame = self.view.frame.offsetBy(dx: 0, dy: movement)
-        UIView.commitAnimations()
+        self.view.endEditing(true)
+        return false
     }
 }

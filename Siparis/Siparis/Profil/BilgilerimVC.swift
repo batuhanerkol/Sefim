@@ -87,6 +87,7 @@ class BilgilerimVC: UIViewController, UIImagePickerControllerDelegate, UINavigat
             whenTextFiledsChange()
             getUserInfoFromParse()
             getBusnessPoints()
+            
             self.saceLogoButton.isEnabled = true
             self.saveChangesButton.isEnabled = true
             self.saveChangesButton.isEnabled = true
@@ -96,6 +97,7 @@ class BilgilerimVC: UIViewController, UIImagePickerControllerDelegate, UINavigat
             whenTextFiledsChange()
             getUserInfoFromParse()
             getBusnessPoints()
+            
             self.saceLogoButton.isEnabled = true
             self.saveChangesButton.isEnabled = true
             self.saveChangesButton.isEnabled = true
