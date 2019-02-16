@@ -30,6 +30,10 @@ class ManuelEkleVC: UIViewController, UITableViewDelegate, UITableViewDataSource
     var chosenFoodPrice = ""
     var businessName = ""
     
+    public var screenWidth: CGFloat {
+        return UIScreen.main.bounds.width
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -246,6 +250,13 @@ class ManuelEkleVC: UIViewController, UITableViewDelegate, UITableViewDataSource
     
 }
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 50
+        if screenWidth > 500 && screenWidth < 1000 {
+          return 35
+        }
+        else if screenWidth > 1000 && screenWidth < 1200{
+            return 50
+        }else{
+            return 40
+        }
     }
 }
