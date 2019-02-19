@@ -9,11 +9,12 @@
 import UIKit
 import Parse
 
-class FoodInformationShowVC: UIViewController {
+class FoodInformationShowVC: UIViewController, UITextFieldDelegate {
 
+    @IBOutlet weak var guncelleButton: UIButton!
+    @IBOutlet weak var yemekAciklamasi: UITextField!
+    @IBOutlet weak var ucretTextField: UITextField!
     @IBOutlet weak var menudeGorunsunLabel: UILabel!
-    @IBOutlet weak var priceLabel: UILabel!
-    @IBOutlet weak var foodText: UITextView!
     @IBOutlet weak var foodImage: UIImageView!
     @IBOutlet weak var foodLabel: UILabel!
     
@@ -44,6 +45,9 @@ class FoodInformationShowVC: UIViewController {
         
         activityIndicator.startAnimating()
         UIApplication.shared.beginIgnoringInteractionEvents()
+        
+        ucretTextField.delegate = self
+        yemekAciklamasi.delegate = self
 
     }
     override func viewWillAppear(_ animated: Bool) {
@@ -100,8 +104,8 @@ class FoodInformationShowVC: UIViewController {
                       self.hammaddeGorunumu = (object.object(forKey: "MenudeGorunsun") as! String)
                     
                     self.foodLabel.text = "\(self.foodNameArray.last!)"
-                    self.foodText.text = "\(self.foodInformationArray.last!)"
-                    self.priceLabel.text = "\(self.foodPriceArray.last!)"
+                    self.yemekAciklamasi.text = "\(self.foodInformationArray.last!)"
+                    self.ucretTextField.text = "\(self.foodPriceArray.last!)₺"
                     self.menudeGorunsunLabel.text = self.hammaddeGorunumu
                     
                     self.imageArray.last?.getDataInBackground(block: { (data, error) in
@@ -132,7 +136,6 @@ class FoodInformationShowVC: UIViewController {
         query.whereKey("foodNameOwner", equalTo: (PFUser.current()?.username)!)
         query.whereKey("foodName", equalTo: self.selectedFood)
 
-        
         query.findObjectsInBackground { (objects, error) in
             if error != nil{
                 let alert = UIAlertController(title: "HATA", message: error?.localizedDescription, preferredStyle: UIAlertController.Style.alert)
@@ -233,5 +236,83 @@ class FoodInformationShowVC: UIViewController {
             }
             
         }
+    }
+    
+    @IBAction func guncelleButtonPressed(_ sender: Any) {
+        activityIndicator.startAnimating()
+        UIApplication.shared.beginIgnoringInteractionEvents()
+        
+        let query = PFQuery(className: "FoodInformation")
+        query.whereKey("foodNameOwner", equalTo: (PFUser.current()?.username)!)
+        
+        query.getObjectInBackground(withId: objectId) { (objects, error) in
+            if error != nil{
+                let alert = UIAlertController(title: "HATA", message: error?.localizedDescription, preferredStyle: UIAlertController.Style.alert)
+                let okButton = UIAlertAction(title: "TAMAM", style: UIAlertAction.Style.cancel, handler: nil)
+                alert.addAction(okButton)
+                self.present(alert, animated: true, completion: nil)
+                self.activityIndicator.stopAnimating()
+                UIApplication.shared.endIgnoringInteractionEvents()
+                
+            }else {
+                
+                objects!["foodPrice"] = self.ucretTextField.text
+                objects!["foodInformation"] = self.yemekAciklamasi.text
+                
+                objects!.saveInBackground(block: { (success, error) in
+                    
+                    if error != nil{
+                        let alert = UIAlertController(title: "Lütfen Tekrar Deneyin", message: "", preferredStyle: UIAlertController.Style.alert)
+                        let okButton = UIAlertAction(title: "TAMAM", style: UIAlertAction.Style.cancel, handler: nil)
+                        alert.addAction(okButton)
+                        self.present(alert, animated: true, completion: nil)
+                        self.activityIndicator.stopAnimating()
+                        UIApplication.shared.endIgnoringInteractionEvents()
+                        
+                    }else{
+                        
+                        let alert = UIAlertController(title: "Güncelleme Tamamlandı", message: "", preferredStyle: UIAlertController.Style.alert)
+                        let okButton = UIAlertAction(title: "TAMAM", style: UIAlertAction.Style.cancel, handler: nil)
+                        alert.addAction(okButton)
+                        self.present(alert, animated: true, completion: nil)
+                        
+                        self.activityIndicator.stopAnimating()
+                        UIApplication.shared.endIgnoringInteractionEvents()
+                    }
+                })
+            }
+            
+        }
+    }
+    
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        self.view.endEditing(true)
+    }
+    
+    func textFieldDidBeginEditing(_ textField: UITextField) {
+        moveTextField(textField, moveDistance: -200, up: true)
+    }
+    
+    // Finish Editing The Text Field
+    func textFieldDidEndEditing(_ textField: UITextField) {
+        moveTextField(textField, moveDistance: -200, up: false)
+    }
+    
+    // Hide the keyboard when the return key pressed
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        textField.resignFirstResponder()
+        return true
+    }
+    
+    // Move the text field in a pretty animation!
+    func moveTextField(_ textField: UITextField, moveDistance: Int, up: Bool) {
+        let moveDuration = 0.3
+        let movement: CGFloat = CGFloat(up ? moveDistance : -moveDistance)
+        
+        UIView.beginAnimations("animateTextField", context: nil)
+        UIView.setAnimationBeginsFromCurrentState(true)
+        UIView.setAnimationDuration(moveDuration)
+        self.view.frame = self.view.frame.offsetBy(dx: 0, dy: movement)
+        UIView.commitAnimations()
     }
 }
