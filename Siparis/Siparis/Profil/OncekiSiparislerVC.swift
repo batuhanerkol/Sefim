@@ -521,6 +521,7 @@ class OncekiSiparislerVC: UIViewController, UITableViewDelegate, UITableViewData
                     lab.isHidden = true
             }
             cell.totalPriceLabel.text = foodNamesArray[indexPath.row]
+            cell.totalPriceLabel.textAlignment = .center
             var sayiArray = [String] ()
                 sayiArray.removeAll()
                 
@@ -532,6 +533,7 @@ class OncekiSiparislerVC: UIViewController, UITableViewDelegate, UITableViewData
                 if !sayiArray.isEmpty {
                     
                     cell.sumPriceLabel.text = sayiArray[indexPath.row]
+                     cell.sumPriceLabel.textAlignment = .center
                 }
                 cell.sumPriceLabel.isHidden = false
                
@@ -548,16 +550,17 @@ class OncekiSiparislerVC: UIViewController, UITableViewDelegate, UITableViewData
         }
         // Ciro için tableView ayarla
         if indexPath.row < dateArray.count && indexPath.row < timeArray.count {
-         cell.isUserInteractionEnabled = true
             for lab in cell.labelsToHide {
                 lab.isHidden = false
             }
     
+             cell.sumPriceLabel.textAlignment = .left
+             cell.totalPriceLabel.textAlignment = .left
+            
             cell.totalPriceLabel.text = "Toplam fiyat"
-            cell.isUserInteractionEnabled = true
             cell.dateLabel.text = dateArray[indexPath.row]
             cell.timeLabel.text = timeArray[indexPath.row]
-            cell.sumPriceLabel.text = totalPriceArray[indexPath.row]
+            cell.sumPriceLabel.text = "\(totalPriceArray[indexPath.row])₺"
             cell.paymentLabel.text = paymentArray[indexPath.row]
             
         }

@@ -11,7 +11,6 @@ import Parse
 
 class DateTimeCell: UITableViewCell {
    
-    @IBOutlet weak var tlLabel: UILabel!
     @IBOutlet weak var odemeYontemi: UILabel!
     @IBOutlet weak var totalPriceLabel: UILabel!
     @IBOutlet weak var paymentLabel: UILabel!
@@ -20,7 +19,7 @@ class DateTimeCell: UITableViewCell {
     @IBOutlet weak var timeLabel: UILabel!
     @IBOutlet weak var dateLabel: UILabel!
     
-    lazy var labelsToHide: [UILabel] = [tlLabel,odemeYontemi,paymentLabel,timeLabel,dateLabel]
+    lazy var labelsToHide: [UILabel] = [odemeYontemi,paymentLabel,timeLabel,dateLabel]
     
     var setLabelsCenter = false
     

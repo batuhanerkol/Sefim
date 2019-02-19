@@ -543,7 +543,7 @@ class PopUpVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
     
     
     
-    
+    var deletingFoodPriceArray = [String]()
     
     func deleteData(foodobjectId : String){ // kaydırarak silmek
         let query = PFQuery(className: "Siparisler")
@@ -592,11 +592,13 @@ class PopUpVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
                             
                             self.deletingFoodNameArray.removeAll(keepingCapacity: false)
                             self.objectIdArray.removeAll(keepingCapacity: false)
+                            self.deletingFoodPriceArray.removeAll(keepingCapacity: false)
                             
                             for object in objects! {
                                 
                                 self.deletingFoodNameArray = object["SiparisAdi"] as! [String]
                                 self.objectIdArray.append(object.objectId! as String)
+                                self.deletingFoodPriceArray = object["SiparisFiyati"] as! [String]
                             }
                             
                             print("verilen Siparisler yemek arrayi", self.deletingFoodNameArray)
@@ -605,6 +607,7 @@ class PopUpVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
                             if self.deletingFoodNameArray.contains(self.deletingFoodName){
                                 print("deleteIndex:", self.deleteIndex)
                                     self.deletingFoodNameArray.remove(at: self.deleteIndex)
+                                   self.deletingFoodPriceArray.remove(at: self.deleteIndex)
                         
                                     
                                     //----------------------------------------------------------------------
@@ -629,6 +632,7 @@ class PopUpVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
                                                 
                                             }else{
                                             objects!["SiparisAdi"] = self.deletingFoodNameArray
+                                            objects!["SiparisFiyati"] = self.deletingFoodPriceArray
                                             objects!.saveInBackground(block: { (success, error) in
                                                 if error != nil{
                                                     let alert = UIAlertController(title: "Lütfen Tekrar Deneyin", message: "", preferredStyle: UIAlertController.Style.alert)
@@ -637,8 +641,7 @@ class PopUpVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
                                                     self.present(alert, animated: true, completion: nil)
                                                     
                                                 }else{
-                                                    self.activityIndicator.stopAnimating()
-                                                    UIApplication.shared.endIgnoringInteractionEvents()
+                                                   
                                                     self.getOrderData()
                                                     self.orderTableView.reloadData()
                                                 }
@@ -652,6 +655,9 @@ class PopUpVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
                     }
                 }
                self.orderTableView.reloadData()
+                
+                self.activityIndicator.stopAnimating()
+                UIApplication.shared.endIgnoringInteractionEvents()
             }
         }
     }

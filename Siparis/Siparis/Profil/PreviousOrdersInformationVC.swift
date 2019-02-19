@@ -124,9 +124,10 @@ class PreviousOrdersInformationVC: UIViewController, UITableViewDelegate, UITabl
        
             
             let cell = tableView.dequeueReusableCell(withIdentifier: "FoodPriceCell", for: indexPath) as! FoodPriceCell
+        if indexPath.row < foodPriceArray.count{
             cell.foodNameLabel.text = foodNameArray[indexPath.row]
             cell.foodPriceLabel.text = foodPriceArray[indexPath.row]
-            
+        }
             return cell
        
         
