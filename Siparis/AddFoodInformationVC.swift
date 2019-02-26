@@ -155,11 +155,23 @@ class AddFoodInformationVC: UIViewController, UIImagePickerControllerDelegate, U
         
      self.fotoKontrol = true
     }
+    
+//    self.hammadde1Text.text != self.hammadde2Text.text && self.hammadde1Text.text != self.hammadde3Text.text && self.hammadde1Text.text != self.hammadde4Text.text && self.hammadde1Text.text != self.hammadde5Text.text && self.hammadde2Text.text != self.hammadde3Text.text && self.hammadde2Text.text != self.hammadde4Text.text && self.hammadde2Text.text != self.hammadde5Text.text && self.hammadde3Text.text != self.hammadde4Text.text && self.hammadde3Text.text != self.hammadde5Text.text && self.hammadde4Text.text != self.hammadde5Text.text
 
     @IBAction func confirmButtonPressed(_ sender: Any) {
-        if self.hammadde1Text.text != self.hammadde2Text.text && self.hammadde1Text.text != self.hammadde3Text.text && self.hammadde1Text.text != self.hammadde4Text.text && self.hammadde1Text.text != self.hammadde5Text.text && self.hammadde2Text.text != self.hammadde3Text.text && self.hammadde2Text.text != self.hammadde4Text.text && self.hammadde2Text.text != self.hammadde5Text.text && self.hammadde3Text.text != self.hammadde4Text.text && self.hammadde3Text.text != self.hammadde5Text.text && self.hammadde4Text.text != self.hammadde5Text.text {
+        if self.hammadde1Text.text != "" &&  self.hammadde1Text.text != self.hammadde2Text.text && self.hammadde1Text.text != self.hammadde3Text.text && self.hammadde1Text.text != self.hammadde4Text.text && self.hammadde1Text.text != self.hammadde5Text.text{
         addFoodInfo()
-        }else{
+        }else if self.hammadde2Text.text != "" && self.hammadde2Text.text != self.hammadde1Text.text && self.hammadde2Text.text != self.hammadde3Text.text && self.hammadde2Text.text != self.hammadde4Text.text && self.hammadde2Text.text != self.hammadde5Text.text{
+             addFoodInfo()
+        }else if self.hammadde3Text.text != "" && self.hammadde3Text.text != self.hammadde1Text.text && self.hammadde3Text.text != self.hammadde2Text.text && self.hammadde3Text.text != self.hammadde4Text.text && self.hammadde3Text.text != self.hammadde5Text.text{
+            addFoodInfo()
+        }else if self.hammadde4Text.text != "" && self.hammadde4Text.text != self.hammadde1Text.text && self.hammadde4Text.text != self.hammadde3Text.text && self.hammadde4Text.text != self.hammadde2Text.text && self.hammadde4Text.text != self.hammadde5Text.text{
+            addFoodInfo()
+        }else if self.hammadde5Text.text != "" && self.hammadde5Text.text != self.hammadde1Text.text && self.hammadde5Text.text != self.hammadde3Text.text && self.hammadde5Text.text != self.hammadde4Text.text && self.hammadde5Text.text != self.hammadde2Text.text{
+            addFoodInfo()
+        }
+        
+        else{
             let alert = UIAlertController(title: "Hammadde İsimleri Aynı Olamaz", message: "Lütfen Kontrol Edin", preferredStyle: UIAlertController.Style.alert)
             let okButton = UIAlertAction(title: "TAMAM", style: UIAlertAction.Style.cancel, handler: nil)
             alert.addAction(okButton)

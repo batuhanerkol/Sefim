@@ -821,18 +821,18 @@ Türk Ceza Kanunu’nun 138. maddesinde ve Kanunu’nun 7. maddesinde düzenlend
                         <rect key="frame" x="0.0" y="0.0" width="375" height="812"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="qDS-n7-CA8" userLabel="TableView">
-                                <rect key="frame" x="159.00000000000006" y="0.0" width="705.33333333333348" height="768"/>
+                            <view contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="qDS-n7-CA8" userLabel="TableView">
+                                <rect key="frame" x="159" y="10" width="56" height="768"/>
                                 <subviews>
-                                    <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="WDp-ob-la6">
-                                        <rect key="frame" x="27.666666666666629" y="59" width="650" height="650"/>
+                                    <tableView clipsSubviews="YES" contentMode="scaleToFill" ambiguous="YES" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="WDp-ob-la6">
+                                        <rect key="frame" x="27.666666666666657" y="59" width="1" height="650"/>
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <prototypes>
                                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="Cell" rowHeight="51" id="Cxa-aU-geB" customClass="PopUpTVC" customModule="Siparis" customModuleProvider="target">
-                                                <rect key="frame" x="0.0" y="28" width="650" height="51"/>
+                                                <rect key="frame" x="0.0" y="28" width="1" height="51"/>
                                                 <autoresizingMask key="autoresizingMask"/>
                                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="Cxa-aU-geB" id="ojv-QX-S2J">
-                                                    <rect key="frame" x="0.0" y="0.0" width="650" height="50.666666666666664"/>
+                                                    <rect key="frame" x="0.0" y="0.0" width="1" height="50.666666666666664"/>
                                                     <autoresizingMask key="autoresizingMask"/>
                                                     <subviews>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Food Name" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="U3r-0W-B7u">
@@ -907,7 +907,7 @@ Türk Ceza Kanunu’nun 138. maddesinde ve Kanunu’nun 7. maddesinde düzenlend
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="no" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="BgL-QH-jhG">
-                                        <rect key="frame" x="116" y="12" width="75.333333333333314" height="39"/>
+                                        <rect key="frame" x="116" y="12" width="75" height="39"/>
                                         <color key="backgroundColor" red="0.93389850854873657" green="0.74567192792892456" blue="0.58054029941558838" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <constraints>
                                             <constraint firstAttribute="width" constant="75" id="tiF-zM-fPr"/>
@@ -952,10 +952,10 @@ Türk Ceza Kanunu’nun 138. maddesinde ve Kanunu’nun 7. maddesinde düzenlend
                                     <constraint firstAttribute="height" constant="768" id="zhw-64-1Ak"/>
                                 </constraints>
                             </view>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="kSb-jJ-jEJ" userLabel="LeftButtonsView">
-                                <rect key="frame" x="0.0" y="0.0" width="159" height="768"/>
+                            <view contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="kSb-jJ-jEJ" userLabel="LeftButtonsView">
+                                <rect key="frame" x="0.0" y="10" width="159" height="768"/>
                                 <subviews>
-                                    <button opaque="NO" contentMode="scaleAspectFit" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="wordWrap" translatesAutoresizingMaskIntoConstraints="NO" id="Nn8-q0-WqY">
+                                    <button opaque="NO" contentMode="scaleAspectFit" ambiguous="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="wordWrap" translatesAutoresizingMaskIntoConstraints="NO" id="Nn8-q0-WqY">
                                         <rect key="frame" x="19.666666666666686" y="324" width="120" height="120"/>
                                         <color key="backgroundColor" red="0.047981512890000001" green="0.58657990719999997" blue="0.14368817219999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <constraints>
@@ -970,7 +970,7 @@ Türk Ceza Kanunu’nun 138. maddesinde ve Kanunu’nun 7. maddesinde düzenlend
                                             <action selector="orderHasGivenButtonClicked:" destination="4Uq-T9-kuY" eventType="touchUpInside" id="dfo-7r-j3j"/>
                                         </connections>
                                     </button>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="wordWrap" translatesAutoresizingMaskIntoConstraints="NO" id="CZv-Bb-czj">
+                                    <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="wordWrap" translatesAutoresizingMaskIntoConstraints="NO" id="CZv-Bb-czj">
                                         <rect key="frame" x="19.666666666666686" y="452" width="120" height="120"/>
                                         <color key="backgroundColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <constraints>
@@ -985,7 +985,7 @@ Türk Ceza Kanunu’nun 138. maddesinde ve Kanunu’nun 7. maddesinde düzenlend
                                             <action selector="chechkHasPaidButtonClicked:" destination="4Uq-T9-kuY" eventType="touchUpInside" id="dbF-XG-864"/>
                                         </connections>
                                     </button>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="wordWrap" translatesAutoresizingMaskIntoConstraints="NO" id="f8X-bI-9Te">
+                                    <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="wordWrap" translatesAutoresizingMaskIntoConstraints="NO" id="f8X-bI-9Te">
                                         <rect key="frame" x="19.666666666666686" y="196" width="120" height="120"/>
                                         <color key="backgroundColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <constraints>
@@ -1012,10 +1012,10 @@ Türk Ceza Kanunu’nun 138. maddesinde ve Kanunu’nun 7. maddesinde düzenlend
                                     <constraint firstItem="Nn8-q0-WqY" firstAttribute="centerX" secondItem="kSb-jJ-jEJ" secondAttribute="centerX" id="z2t-we-vyh"/>
                                 </constraints>
                             </view>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="3gV-bi-Nuy" userLabel="RightButtonsView">
-                                <rect key="frame" x="864.33333333333326" y="0.0" width="160" height="768"/>
+                            <view contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="3gV-bi-Nuy" userLabel="RightButtonsView">
+                                <rect key="frame" x="215" y="10" width="160" height="768"/>
                                 <subviews>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Hesap Durumu" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="4" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="TmX-EW-uZ4">
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="Hesap Durumu" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="4" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="TmX-EW-uZ4">
                                         <rect key="frame" x="20" y="196" width="120" height="120"/>
                                         <color key="backgroundColor" red="1" green="0.14913141730000001" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <constraints>
@@ -1026,7 +1026,7 @@ Türk Ceza Kanunu’nun 138. maddesinde ve Kanunu’nun 7. maddesinde düzenlend
                                         <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <nil key="highlightedColor"/>
                                     </label>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="wordWrap" translatesAutoresizingMaskIntoConstraints="NO" id="CuA-Lr-RBm">
+                                    <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="wordWrap" translatesAutoresizingMaskIntoConstraints="NO" id="CuA-Lr-RBm">
                                         <rect key="frame" x="20" y="324" width="120" height="120"/>
                                         <color key="backgroundColor" red="1" green="0.57810515169999999" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <constraints>
@@ -1041,7 +1041,7 @@ Türk Ceza Kanunu’nun 138. maddesinde ve Kanunu’nun 7. maddesinde düzenlend
                                             <action selector="manuelEkleClicked:" destination="4Uq-T9-kuY" eventType="touchUpInside" id="U8S-ZU-y5K"/>
                                         </connections>
                                     </button>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Geri" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="vSu-ih-uJR">
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="Geri" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="vSu-ih-uJR">
                                         <rect key="frame" x="20" y="452" width="120" height="120"/>
                                         <color key="backgroundColor" red="0.58072251080000004" green="0.066734083" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <constraints>
@@ -3851,13 +3851,13 @@ Türk Ceza Kanunu’nun 138. maddesinde ve Kanunu’nun 7. maddesinde düzenlend
                                                 <fontDescription key="fontDescription" type="boldSystem" pointSize="14"/>
                                                 <textInputTraits key="textInputTraits"/>
                                             </textField>
-                                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="miktar 2" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="G5E-ut-rvu">
+                                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="gram" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="G5E-ut-rvu">
                                                 <rect key="frame" x="223" y="580" width="144" height="30"/>
                                                 <nil key="textColor"/>
                                                 <fontDescription key="fontDescription" type="boldSystem" pointSize="14"/>
                                                 <textInputTraits key="textInputTraits" keyboardType="numberPad"/>
                                             </textField>
-                                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="miktar 1" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="TJD-Ej-n5u">
+                                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="gram" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="TJD-Ej-n5u">
                                                 <rect key="frame" x="223" y="542" width="144" height="30"/>
                                                 <constraints>
                                                     <constraint firstAttribute="width" constant="144" id="f2N-k2-sbZ"/>
@@ -3866,13 +3866,13 @@ Türk Ceza Kanunu’nun 138. maddesinde ve Kanunu’nun 7. maddesinde düzenlend
                                                 <fontDescription key="fontDescription" type="boldSystem" pointSize="14"/>
                                                 <textInputTraits key="textInputTraits" keyboardType="numberPad"/>
                                             </textField>
-                                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="miktar 3" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="osV-CV-Stu">
+                                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="gram" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="osV-CV-Stu">
                                                 <rect key="frame" x="223" y="618" width="144" height="30"/>
                                                 <nil key="textColor"/>
                                                 <fontDescription key="fontDescription" type="boldSystem" pointSize="14"/>
                                                 <textInputTraits key="textInputTraits" keyboardType="numberPad"/>
                                             </textField>
-                                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="miktar 4" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="c5I-7t-vlB">
+                                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="gram" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="c5I-7t-vlB">
                                                 <rect key="frame" x="223" y="656" width="144" height="30"/>
                                                 <nil key="textColor"/>
                                                 <fontDescription key="fontDescription" type="boldSystem" pointSize="14"/>
@@ -3884,7 +3884,7 @@ Türk Ceza Kanunu’nun 138. maddesinde ve Kanunu’nun 7. maddesinde düzenlend
                                                 <fontDescription key="fontDescription" type="boldSystem" pointSize="14"/>
                                                 <textInputTraits key="textInputTraits"/>
                                             </textField>
-                                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="miktar 5" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="L7f-32-Ot0">
+                                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="geram" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="L7f-32-Ot0">
                                                 <rect key="frame" x="223" y="694" width="144" height="30"/>
                                                 <nil key="textColor"/>
                                                 <fontDescription key="fontDescription" type="boldSystem" pointSize="14"/>
