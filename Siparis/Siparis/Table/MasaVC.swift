@@ -34,22 +34,16 @@ class MasaVC: UIViewController {
     var objectIdArray = [String]()
     var objectId = ""
     
-    
     var xLocation = 10
     var yLocation = 150
-    
     var buttonWidth = 80
     var buttonHeight = 80
-    
     var tableNumber = 0
-    
     var tableNumberArray = [String]()
     var tableNumberText = ""
-    
     var mevcutMasaSayisi = 0
-    
     var siraIndex = 0
-    
+    var isletmeMasaSayisi = "0"
    
     var activityIndicator:UIActivityIndicatorView = UIActivityIndicatorView()
 
@@ -185,8 +179,10 @@ class MasaVC: UIViewController {
             }
             else{
                 self.objectIdArray.removeAll(keepingCapacity: false)
-                
+                self.isletmeMasaSayisi = ""
+            
                 for object in objects! {
+                    self.isletmeMasaSayisi = (object.object(forKey: "MasaSayisi") as! String)
                     self.objectIdArray.append(object.objectId! )
                     
                     self.objectId = "\(self.objectIdArray.last!)"
@@ -200,6 +196,7 @@ class MasaVC: UIViewController {
     
         let query = PFQuery(className: "VerilenSiparisler")
         query.whereKey("IsletmeSahibi", equalTo: (PFUser.current()?.username)!)
+        query.limit = Int(isletmeMasaSayisi)! * 3 // bütün geçmiş siparişlerin bilgisini çekiyor gelecekte problem olabilir
 
         query.findObjectsInBackground { (objects, error) in
             
@@ -227,13 +224,12 @@ class MasaVC: UIViewController {
                   self.hesapOdendiArray.append(object.object(forKey: "HesapOdendi") as! String)
                 }
 
-//                print("-----------control of buttons----------------")
-//                print("hesapMasaSayisi",self.hesapMasaSAyisiArray)
-//                print("siparisVerildi",self.siparisVerildiArray )
-//                print("yemekHazir", self.yemekHazirArray)
-//                print("YemekTeslim:",  self.yemekTeslimArray)
-//                print("hesapIstendi", self.hesapIstendiArray)
-//                print("hesapmasaArray,", self.hesapMasaSAyisiArray)
+                print("-----------control of buttons----------------")
+                print("hesapMasaSayisi",self.hesapMasaSAyisiArray)
+                print("siparisVerildi",self.siparisVerildiArray )
+                print("yemekHazir", self.yemekHazirArray)
+                print("YemekTeslim:",  self.yemekTeslimArray)
+                print("hesapIstendi", self.hesapIstendiArray)
 
                 // BUARADA MASALARIN DURUMUANA GÖRE "YEMEK HAZIR VB"  RENK DEĞİŞİMLERİNİ GERÇEKLEŞTİRİLİYOR
         
