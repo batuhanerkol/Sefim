@@ -490,8 +490,8 @@ class PopUpVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
                     self.masaDoluArray.append(object.object(forKey: "SiparisVerildi") as! String)
                     
                 }
-                if self.masaDoluArray.isEmpty != true{
-                    let alert = UIAlertController(title: "Telefon İle Sipariş Verilmiş Masaya Manül Ekleme Yapılamaz.", message: "", preferredStyle: UIAlertController.Style.alert)
+                if self.masaDoluArray.isEmpty == false{
+                    let alert = UIAlertController(title: "Telefon İle Sipariş Verilmiş Masaya Manuel Ekleme Yapılamaz.", message: "", preferredStyle: UIAlertController.Style.alert)
                     let okButton = UIAlertAction(title: "TAMAM", style: UIAlertAction.Style.cancel, handler: nil)
                     alert.addAction(okButton)
                     self.present(alert, animated: true, completion: nil)
@@ -550,7 +550,6 @@ class PopUpVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
         query.whereKey("IsletmeSahibi", equalTo: "\(PFUser.current()!.username!)")
         query.whereKey("objectId", equalTo: foodobjectId)
     
-        
         query.findObjectsInBackground { (objects, error) in
             if error != nil{
                 let alert = UIAlertController(title: "HATA", message: error?.localizedDescription, preferredStyle: UIAlertController.Style.alert)
@@ -655,9 +654,6 @@ class PopUpVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
                     }
                 }
                self.orderTableView.reloadData()
-                
-                self.activityIndicator.stopAnimating()
-                UIApplication.shared.endIgnoringInteractionEvents()
             }
         }
     }
@@ -681,10 +677,10 @@ class PopUpVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
         
                 if allFoodsNamesArray.count > indexPath.row && allPricesArray.count > indexPath.row && allNoteArray.count > indexPath.row{
                     
-//        if indexPath.row < Int(numberOfDeliveredOrder)!  {
-//
-//                cell.doneLabel.isHidden = false
-//            }
+        if indexPath.row < Int(numberOfDeliveredOrder)!  {
+
+                cell.doneLabel.isHidden = false
+            }
                     
         cell.foodNameLabel.text = allFoodsNamesArray[indexPath.row]
         cell.foodPriceLabel.text = allPricesArray[indexPath.row]
@@ -747,8 +743,19 @@ class PopUpVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
                     self.deleteIndex = indexPath.row
                     
                     obejctIdOne = self.siparislerObjectId[indexPath.row]
-                    self.deleteData(foodobjectId: obejctIdOne)
-                    
+                    if self.yemekHazir != "Evet"{
+                           self.deleteData(foodobjectId: obejctIdOne)
+                    }else{
+                        let alert = UIAlertController(title: "Hazırlanmış Siparişi Silemezsiniz", message: error?.localizedDescription, preferredStyle: UIAlertController.Style.alert)
+                        let okButton = UIAlertAction(title: "TAMAM", style: UIAlertAction.Style.cancel, handler: nil)
+                        alert.addAction(okButton)
+                        self.present(alert, animated: true, completion: nil)
+                        
+                        
+                        self.activityIndicator.stopAnimating()
+                        UIApplication.shared.endIgnoringInteractionEvents()
+                        
+                    }
                 }
             }
        

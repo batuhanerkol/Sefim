@@ -66,6 +66,7 @@ class PreviousOrdersInformationVC: UIViewController, UITableViewDelegate, UITabl
         updateUserInterface()
     }
     func getFoodInfo(){
+        print("globaTotalPriceOncekiSiparisler:", globaTotalPriceOncekiSiparisler)
         
         let query = PFQuery(className: "VerilenSiparisler")
         query.whereKey("IsletmeSahibi", equalTo: (PFUser.current()?.username)!)
@@ -86,7 +87,6 @@ class PreviousOrdersInformationVC: UIViewController, UITableViewDelegate, UITabl
             }
             else{
                 
-               
                 self.foodNameArray.removeAll(keepingCapacity: false)
                 self.foodPriceArray.removeAll(keepingCapacity: false)
                 self.yorumArray.removeAll(keepingCapacity: false)
@@ -109,7 +109,7 @@ class PreviousOrdersInformationVC: UIViewController, UITableViewDelegate, UITabl
                 self.activityIndicator.stopAnimating()
                 UIApplication.shared.endIgnoringInteractionEvents()
                 self.foodNameTable.reloadData()
-                
+                print("YAPILAN YORUM:", self.yorumArray)
             }
         }
     }

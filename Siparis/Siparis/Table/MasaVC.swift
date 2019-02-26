@@ -260,25 +260,27 @@ class MasaVC: UIViewController {
                     
                     self.tableButtonBackgroundColorChange[tableButtonIndex].backgroundColor = UIColor.blue
                     self.siraLabelBackgroundColorChange[tableButtonIndex].backgroundColor = UIColor.blue
+                    self.siraLabelBackgroundColorChange[tableButtonIndex].text = "sıra:..."
                 
                     }
                 else  if self.siparisVerildiArray[hesapMasaSayisiIndex] == "Evet" && self.yemekHazirArray[hesapMasaSayisiIndex] == "Evet" && self.yemekTeslimArray[hesapMasaSayisiIndex] == "Evet"  && self.hesapIstendiArray[hesapMasaSayisiIndex] == "" && self.hesapOdendiArray[hesapMasaSayisiIndex] == ""{
                     
                     self.tableButtonBackgroundColorChange[tableButtonIndex].backgroundColor = UIColor.green
                     self.siraLabelBackgroundColorChange[tableButtonIndex].backgroundColor = UIColor.green
+                    self.siraLabelBackgroundColorChange[tableButtonIndex].text = "sıra:..."
                  
                     }
                 else  if self.siparisVerildiArray[hesapMasaSayisiIndex] == "Evet" && self.yemekHazirArray[hesapMasaSayisiIndex] == "Evet" && self.yemekTeslimArray[hesapMasaSayisiIndex] == "Evet"  && self.hesapIstendiArray[hesapMasaSayisiIndex] != "" && self.hesapOdendiArray[hesapMasaSayisiIndex] == ""{
                     
                     self.tableButtonBackgroundColorChange[tableButtonIndex].backgroundColor = UIColor.red
                     self.siraLabelBackgroundColorChange[tableButtonIndex].backgroundColor = UIColor.red
+                    self.siraLabelBackgroundColorChange[tableButtonIndex].text = "sıra:..."
               
                     }
                 else  if self.siparisVerildiArray[hesapMasaSayisiIndex] == "Evet" && self.yemekHazirArray[hesapMasaSayisiIndex] == "Evet" && self.yemekTeslimArray[hesapMasaSayisiIndex] == "Evet"  && self.hesapIstendiArray[hesapMasaSayisiIndex] != "" && self.hesapOdendiArray[hesapMasaSayisiIndex] != ""{
                     
                      self.tableButtonBackgroundColorChange[tableButtonIndex].backgroundColor = UIColor.gray
                     self.siraLabelBackgroundColorChange[tableButtonIndex].backgroundColor = UIColor.gray
-                    
                      self.siraLabelBackgroundColorChange[tableButtonIndex].text = "Sıra:..."
                     
                         }
@@ -293,7 +295,7 @@ class MasaVC: UIViewController {
                 self.activityIndicator.stopAnimating()
                 UIApplication.shared.endIgnoringInteractionEvents()
                 
-                   self.siraIndex = 0
+                self.siraIndex = 0
             }
             
         }
@@ -316,9 +318,7 @@ class MasaVC: UIViewController {
             else{
                 for object in objects!{
                     self.tableNumberArray.append(object.object(forKey: "MasaSayisi") as! String)
-                
-                    self.textField.text! = "\(self.tableNumberArray.last!)"
-                    
+            
                     self.mevcutMasaSayisi = Int(self.tableNumberArray.last!)!
                     
                     

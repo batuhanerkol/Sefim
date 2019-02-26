@@ -411,7 +411,7 @@ class OncekiSiparislerVC: UIViewController, UITableViewDelegate, UITableViewData
     }
     
     // Buttonlara basıldığında index değiştirip table a yaz
-    var indexOfButtons = 2
+    var indexOfButtons = 0
     
     @IBAction func ciroButtonClicked(_ sender: Any) {
         
@@ -522,6 +522,7 @@ class OncekiSiparislerVC: UIViewController, UITableViewDelegate, UITableViewData
             }
             cell.totalPriceLabel.text = foodNamesArray[indexPath.row]
             cell.totalPriceLabel.textAlignment = .center
+               
             var sayiArray = [String] ()
                 sayiArray.removeAll()
                 
@@ -554,7 +555,7 @@ class OncekiSiparislerVC: UIViewController, UITableViewDelegate, UITableViewData
                 lab.isHidden = false
             }
     
-             cell.sumPriceLabel.textAlignment = .left
+             cell.sumPriceLabel.textAlignment = .right
              cell.totalPriceLabel.textAlignment = .left
             
             cell.totalPriceLabel.text = "Toplam fiyat"
