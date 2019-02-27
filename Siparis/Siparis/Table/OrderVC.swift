@@ -44,9 +44,6 @@ class OrderVC: UIViewController,UITableViewDelegate, UITableViewDataSource {
     var deliveredOrderNumber = ""
     var hesapOdendi = ""
     
-    
-   var editingStyleCheck = true
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         dateTime()
@@ -106,20 +103,16 @@ class OrderVC: UIViewController,UITableViewDelegate, UITableViewDataSource {
 
         case .wifi:
             getOrderData()
-            getObjectId()
             checkGivenOrder()
 
-            
             self.sendKitchenButton.isEnabled = true
             self.cancelButton.isEnabled = true
             self.hasPaidButton.isEnabled = true
             
         case .wwan:
             getOrderData()
-            getObjectId()
             checkGivenOrder()
 
-            
             self.sendKitchenButton.isEnabled = true
             self.cancelButton.isEnabled = true
             self.hasPaidButton.isEnabled = true
@@ -165,20 +158,21 @@ class OrderVC: UIViewController,UITableViewDelegate, UITableViewDataSource {
                 self.priceArray.removeAll(keepingCapacity: false)
                 self.orderNoteArray.removeAll(keepingCapacity: false)
                 self.businessName = ""
+                 self.objectIdArray.removeAll(keepingCapacity: false)
+                
                 for object in objects! {
+                    
                     self.foodNameArray.append(object.object(forKey: "SiparisAdi") as! String)
                     self.priceArray.append(object.object(forKey: "SiparisFiyati") as! String)
                     self.orderNoteArray.append(object.object(forKey: "YemekNotu") as! String)
                     self.businessName = (object.object(forKey: "IsletmeAdi") as! String)
-                    
+                    self.objectIdArray.append(object.objectId!)
                     
                 }
                 self.activityIndicator.stopAnimating()
                 UIApplication.shared.endIgnoringInteractionEvents()
                 
                 self.orderTable.reloadData()
-                
-                self.editingStyleCheck = false
                 
                 self.calculateSumPrice()
                 globalBusinessNameOrderVC = self.businessName
@@ -187,30 +181,6 @@ class OrderVC: UIViewController,UITableViewDelegate, UITableViewDataSource {
             
         }
         
-    }
-    
-    func getObjectId(){ // siparişin ekli olduğu satırın obejct Id si
-        let query = PFQuery(className: "Siparisler")
-        query.whereKey("SiparisSahibi", equalTo: (PFUser.current()?.username)!)
-        query.whereKey("IsletmeSahibi", equalTo: (PFUser.current()?.username)!)
-        query.whereKey("MasaNumarasi", equalTo: globalChosenTableNumberMasaVC)
-        
-        query.findObjectsInBackground { (objects, error) in
-            if error != nil{
-                let alert = UIAlertController(title: "HATA", message: error?.localizedDescription, preferredStyle: UIAlertController.Style.alert)
-                let okButton = UIAlertAction(title: "TAMAM", style: UIAlertAction.Style.cancel, handler: nil)
-                alert.addAction(okButton)
-                self.present(alert, animated: true, completion: nil)
-            }
-            else{
-                self.objectIdArray.removeAll(keepingCapacity: false)
-                
-                for object in objects! {
-                    self.objectIdArray.append(object.objectId!)
-                    
-                }
-            }
-        }
     }
     
     func deleteData(oderIndex : String){ // KAYDIRARAK SİLMEK İÇİN
@@ -239,10 +209,7 @@ class OrderVC: UIViewController,UITableViewDelegate, UITableViewDataSource {
                         }
                     })
                 }
-                
-               
-                self.orderTable.reloadData()
-                
+                self.getOrderData()
             }
         }
     }
@@ -267,7 +234,11 @@ class OrderVC: UIViewController,UITableViewDelegate, UITableViewDataSource {
                 self.foodNameArray.removeAll(keepingCapacity: false)
                 
                 for object in objects! {
-                    object.deleteInBackground()
+                    object.deleteInBackground(block: { (success, error) in
+                        if error != nil{
+                            self.showMassage(EnterMassage: "Lütfen Tekrar Deneyin", Enter2Massage: "")
+                        }
+                    })
                     
                     self.totalPriceLabel.text = ""
                     self.orderTable.reloadData()
@@ -326,6 +297,7 @@ class OrderVC: UIViewController,UITableViewDelegate, UITableViewDataSource {
                         self.siparislerChangeSituation()
                         self.siparisIndexNumber += 1
                     }
+                    self.orderTable.reloadData()
                     self.activityIndicator.stopAnimating()
                     UIApplication.shared.endIgnoringInteractionEvents()
                 }
@@ -392,7 +364,6 @@ class OrderVC: UIViewController,UITableViewDelegate, UITableViewDataSource {
         query.whereKey("MasaNo", equalTo: globalChosenTableNumberMasaVC)
         query.whereKey("HesapOdendi", equalTo: "")
         
-        
         query.findObjectsInBackground { (objects, error) in
             
             if error != nil{
@@ -428,14 +399,13 @@ class OrderVC: UIViewController,UITableViewDelegate, UITableViewDataSource {
         }
     }
 
-    func deletePreviousOrder(){ // geçmiş siparişe ekleme yapıldıgında eskisini silmek için
+    func deletePreviousOrderReUpload(){ // geçmiş siparişe ekleme yapıldıgında eskisini silmek için
         
         let query = PFQuery(className: "VerilenSiparisler")
         query.whereKey("SiparisSahibi", equalTo: (PFUser.current()?.username)!)
         query.whereKey("IsletmeSahibi", equalTo: (PFUser.current()?.username)!)
         query.whereKey("MasaNo", equalTo: tableNumberLabel.text!)
         query.whereKey("HesapOdendi", equalTo: "")
-        
         
         query.findObjectsInBackground { (objects, error) in
             
@@ -551,23 +521,19 @@ class OrderVC: UIViewController,UITableViewDelegate, UITableViewDataSource {
     
         if self.foodNameArray.isEmpty == false && self.checkFoodNamesArray != self.foodNameArray {
             
-            if self.deliveredOrderNumberArray.isEmpty == true{
+               if self.deliveredOrderNumberArray.isEmpty == true{
                 uploadOrderData()
               
-                
             }
             else if  self.deliveredOrderNumberArray.isEmpty == false {
                 
                 print("DEvieredArray", self.deliveredOrderNumberArray.last!)
-                deletePreviousOrder()
-           
+                deletePreviousOrderReUpload()
                 
             }
-            
-            
         }
         else{
-            let alert = UIAlertController(title: "Siparişiniz Boş veya Bir Değişiklik Yapılmamış", message: "", preferredStyle: UIAlertController.Style.alert)
+            let alert = UIAlertController(title: "Sipariş Boş veya Bir Değişiklik Yapılmamış", message: "", preferredStyle: UIAlertController.Style.alert)
             let okButton = UIAlertAction(title: "TAMAM", style: UIAlertAction.Style.cancel, handler: nil)
             alert.addAction(okButton)
             self.present(alert, animated: true, completion: nil)
@@ -583,9 +549,6 @@ class OrderVC: UIViewController,UITableViewDelegate, UITableViewDataSource {
        deleteGivenOrderData()
     }
     
-        
-        
-        
     func tableView(_ tableView: UITableView, canMoveRowAt indexPath: IndexPath) -> Bool {
         return true
     }
@@ -596,14 +559,26 @@ class OrderVC: UIViewController,UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
-        if editingStyle == .delete && editingStyleCheck == true{
-            
+        if editingStyle == .delete {
+         
             objectId = objectIdArray[indexPath.row]
-            deleteData(oderIndex: objectId)
+               print("Kaydırma baslatıldı:", objectId)
+            
+            if objectId != ""{
+                deleteData(oderIndex: objectId)
+            }else{
+                showMassage(EnterMassage: "Lütfen Tekrar Deneyin", Enter2Massage: "")
+            }
+            
             
         }
     }
-    
+    func showMassage(EnterMassage: String, Enter2Massage: String){
+        let alert = UIAlertController(title: "\(EnterMassage)", message: "\(Enter2Massage)", preferredStyle: UIAlertController.Style.alert)
+        let okButton = UIAlertAction(title: "TAMAM", style: UIAlertAction.Style.cancel, handler: nil)
+        alert.addAction(okButton)
+        self.present(alert, animated: true, completion: nil)
+    }
  
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 50
