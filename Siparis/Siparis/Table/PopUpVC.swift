@@ -70,7 +70,7 @@ class PopUpVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
         orderTableView.delegate = self
         orderTableView.dataSource = self
         
-        tableNumberLabel.text = globalChosenTableNumberMasaVC
+        tableNumberLabel.text = "Masa NO:\(globalChosenTableNumberMasaVC)"
         
         // loading sembolu
         activityIndicator.center = self.view.center
@@ -684,7 +684,6 @@ class PopUpVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
         cell.foodNameLabel.text = allFoodsNamesArray[indexPath.row]
         cell.foodNoteLabel.text = allNoteArray[indexPath.row]
     
-        
         cell.dateLabel.text = allDateArray.last
         cell.timeLabel.text = allTimeArray.last
                     
